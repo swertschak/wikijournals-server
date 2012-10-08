@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Wikijournals-server by swertschak</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Wikijournals-server</h1>
+        <h2>Semantic Database for articles, publishers, publications and authors</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/swertschak/wikijournals-server/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/swertschak/wikijournals-server/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/swertschak/wikijournals-server" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>wikijournals-server</h1>
+
+<h2>Description</h2>
+
+<p>Wikijournals-server is a webapplication, based on Semantic Mediawiki. This application allowed collecting articles, publishers, publications and authors in a semantic database. The following functions are available:</p>
+
+<ul>
+<li>Saving semantic attributes for articles like persons, companies and locations</li>
+<li>Searching for articles, publications, publishers and authors by using semantic attributes</li>
+<li>Basic social network functions for registered users (f.e. user board for sending internal messages)</li>
+</ul><h2>Requirements</h2>
+
+<ul>
+<li>Webserver: Apache &gt; 2.0</li>
+<li>Database: MySQL &gt; 5.0.2</li>
+<li>Scripting Language: PHP &gt; 5.2.3</li>
+<li>Minimum space on server: 200 MB</li>
+</ul><h2>Installation</h2>
+
+<p>For the installation of wikijournals on you own webserver please execute the following steps:</p>
+
+<ol>
+<li>Download the full package form github (the complete wikijournals directory)</li>
+<li>Copy the wikijournals directory onto the htdocs dircetory of your webserver </li>
+<li>Start the webserver and the database server, if the are not on</li>
+<li>Create a database and a database user for wikijournals (you can also use the root user, but this is not recommended)</li>
+<li>Call the url /wikijournals/installation in the browser</li>
+<li>Follow the installation steps of the installer</li>
+<li>If the installer ends succesfully please copy the LocalSettings.php from the config directory of the installation directory into the main wikijournals directory</li>
+<li>Now you can start wikijournals by calling the url /wikijournals</li>
+<li>Please note: The default password of the Administrator account (Login:Administrator) is "wikijournals". We recommend changing this password after first login !!</li>
+</ol>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
