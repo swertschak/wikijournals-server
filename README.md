@@ -23,7 +23,8 @@ Installation
 For the installation of wikijournals on you own webserver please execute the following steps:
 
 - Download the full package form github (the complete wikijournals directory)
-- Copy the wikijournals directory onto the htdocs dircetory of your webserver 
+- Copy the wikijournals directory onto the htdocs dircetory of your webserver
+- Note: The directory wikijournals\images must be writable for the webserver (including all subdirectories) 
 - Start the webserver and the database server, if the are not on
 - Create a database and a database user for wikijournals (you can also use the root user, but this is not recommended)
 - Call the url <www-root>/wikijournals/installation in the browser
