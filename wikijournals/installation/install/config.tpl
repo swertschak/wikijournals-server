@@ -34,6 +34,7 @@ $wgEnableUserEmail  = true; # UPO
 $wgEnotifUserTalk      = false; # UPO
 $wgEnotifWatchlist     = false; # UPO
 $wgEmailAuthentication = true;
+$wgEmailConfirmToEdit = true;
 
 ## Database settings
 
@@ -101,7 +102,7 @@ $wgDefaultSkin = "cavendish";
 ## License and Creative Commons licenses are supported so far.
 $wgRightsPage = ""; # Set to the title of a wiki page that describes your license/copyright
 $wgRightsUrl  = "http://creativecommons.org/licenses/by/3.0/";
-$wgRightsText = "Creative Commons „Namensnennung“";
+$wgRightsText = "Creative Commons ï¿½Namensnennungï¿½";
 $wgRightsIcon = "{$wgStylePath}/common/images/cc-by.png";
 # $wgRightsCode = ""; # Not yet used
 
@@ -117,7 +118,7 @@ $wgResourceLoaderMaxQueryLength = -1;
 # The following permissions were set based on your choice in the installer
 $wgGroupPermissions['*']['edit'] = false;
 $wgGroupPermissions['sysop']['interwiki'] = true;
-$wgGroupPermissions['*']['createaccount']=true;
+$wgGroupPermissions['*']['createaccount']=false;
 $wgGroupPermissions['user']['collectionsaveasuserpage'] = true;
 $wgGroupPermissions['user']['collectionsaveascommunitypage'] = true;
 
@@ -132,6 +133,7 @@ require_once( "$IP/extensions/ConfirmEdit/ConfirmEdit.php" );
 $wgCaptchaClass='SimpleCaptcha';
 require_once( "$IP/extensions/Nuke/Nuke.php" );
 require_once( "$IP/extensions/Gadgets/Gadgets.php" );
+require_once("$IP/extensions/ConfirmAccount/ConfirmAccount.php");
 
 # End of automatically generated settings.
 # Add more configuration options below.
