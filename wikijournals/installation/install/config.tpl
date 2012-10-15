@@ -34,7 +34,7 @@ $wgEnableUserEmail  = true; # UPO
 $wgEnotifUserTalk      = false; # UPO
 $wgEnotifWatchlist     = false; # UPO
 $wgEmailAuthentication = true;
-$wgEmailConfirmToEdit = true;
+$wgEmailConfirmToEdit = false;
 
 ## Database settings
 
@@ -152,5 +152,23 @@ $wgUserProfileDisplay['friends'] = true;
 $wgUserProfileDisplay['foes'] = true;
 $wgUserBoard = true;
 $wgUserProfileDisplay['board'] = true;
+
+require_once( "$IP/extensions/Translate/Translate.php" );
+
+$wgGroupPermissions['translator']['translate'] = true;
+# You can replace qqq with something more meaningful like info
+$wgTranslateDocumentationLanguageCode = 'qqq';
+
+# Add these too if you want to enable page translation
+$wgGroupPermissions['sysop']['pagetranslation'] = true;
+$wgEnablePageTranslation = true;
+
+$wgTranslateCC['wiki-sidebar'] = 'addSidebarMessageGroup';
+function addSidebarMessageGroup( $id ) {
+$mg = new WikiMessageGroup( $id, 'sidebar-messages' );
+$mg->setLabel( 'Sidebar' );
+$mg->setDescription( 'Messages used in the sidebar of this wiki' );
+return $mg;
+}
 
 ?>
