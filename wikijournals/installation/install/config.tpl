@@ -171,4 +171,12 @@ $mg->setDescription( 'Messages used in the sidebar of this wiki' );
 return $mg;
 }
 
+$wgTranslateCC['wiki-mainpage'] = 'addMainpageMessageGroup';
+function addMainpageMessageGroup( $id ) {
+$mg = new WikiMessageGroup( $id, 'mainpage-messages' );
+$mg->setLabel( 'Mainpage' );
+$mg->setDescription( 'Messages used in the mainpage of this wiki' );
+return $mg;
+}
+
 ?>
