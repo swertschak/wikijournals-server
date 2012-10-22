@@ -179,4 +179,12 @@ $mg->setDescription( 'Messages used in the mainpage of this wiki' );
 return $mg;
 }
 
+$wgTranslateCC['wiki-wjforms'] = 'addWjformsMessageGroup';
+function addWjformsMessageGroup( $id ) {
+$mg = new WikiMessageGroup( $id, 'wjforms-messages' );
+$mg->setLabel( 'Wjforms' );
+$mg->setDescription( 'Messages used in the forms of this wiki' );
+return $mg;
+}
+
 ?>
