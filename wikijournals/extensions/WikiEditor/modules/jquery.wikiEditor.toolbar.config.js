@@ -149,7 +149,7 @@ getDefaultConfig: function() {
 								'options': {
 									'pre': '[[' + fileNamespace + ':',
 									'periMsg': 'wikieditor-toolbar-tool-file-example',
-									'post': "]]"
+									'post': "|" + mw.config.get( 'wgWikiEditorMagicWords' ).img_thumbnail + "]]"
 								}
 							}
 						},
@@ -462,7 +462,7 @@ getDefaultConfig: function() {
 							'action': {
 								'type': 'encapsulate',
 								'options': {
-									'pre': "#REDIRECT [[",
+									'pre': mw.config.get( 'wgWikiEditorMagicWords' ).redirect + ' [[',
 									'periMsg': 'wikieditor-toolbar-tool-redirect-example',
 									'post': "]]",
 									'ownline': true
@@ -613,9 +613,42 @@ getDefaultConfig: function() {
 						"\u20ac", "\u20a0", "\u20a3", "\u0192", "\u20b4", "\u20ad", "\u20a4", "\u2133", "\u20a5",
 						"\u20a6", "\u2116", "\u20a7", "\u20b0", "\u00a3", "\u17db", "\u20a8", "\u20aa", "\u09f3",
 						"\u20ae", "\u20a9", "\u00a5", "\u2660", "\u2663", "\u2665", "\u2666", "m\u00b2", "m\u00b3",
-						"\u2013", "\u2014", "\u2026", "\u2018", "\u2019", "\u201c", "\u201d", "\u00b0", "\u2032",
-						"\u2033", "\u2248", "\u2260", "\u2264", "\u2265", "\u00b1", "\u2212", "\u00d7", "\u00f7",
-						"\u2190", "\u2192", "\u00b7", "\u00a7", "\u203D"
+						{
+							'label': "\u2013",
+							'titleMsg': 'wikieditor-toolbar-characters-endash',
+							'action' : {
+								'type' : 'replace',
+								'options' : {
+									'peri' : "\u2013",
+									'selectPeri': false
+								}
+							}
+						},
+						{
+							'label': "\u2014",
+							'titleMsg': 'wikieditor-toolbar-characters-emdash',
+							'action' : {
+								'type' : 'replace',
+								'options' : {
+									'peri' : "\u2014",
+									'selectPeri': false
+								}
+							}
+						},
+						"\u2026", "\u2018", "\u2019", "\u201c", "\u201d", "\u00b0", "\u2032",
+						"\u2033", "\u2248", "\u2260", "\u2264", "\u2265", "\u00b1",
+						{
+							'label': "\u2212",
+							'titleMsg': 'wikieditor-toolbar-characters-minus',
+							'action' : {
+								'type' : 'replace',
+								'options' : {
+									'peri' : "\u2212",
+									'selectPeri': false
+								}
+							}
+						},
+						"\u00d7", "\u00f7", "\u2190", "\u2192", "\u00b7", "\u00a7", "\u203D"
 					]
 				},
 				'greek': {
@@ -1271,7 +1304,7 @@ getDefaultConfig: function() {
 						{
 							'description': { 'htmlMsg': 'wikieditor-toolbar-help-content-file-description' },
 							'syntax': { 'htmlMsg': [ 'wikieditor-toolbar-help-content-file-syntax', fileNamespace ] },
-							'result': { 'htmlMsg': [ 'wikieditor-toolbar-help-content-file-result', mw.config.get( 'stylepath' ) ] }
+							'result': { 'htmlMsg': [ 'wikieditor-toolbar-help-content-file-result', mw.config.get( 'stylepath' ), mw.config.get( 'wgExtensionAssetsPath' ) ] }
 						}
 					]
 				},

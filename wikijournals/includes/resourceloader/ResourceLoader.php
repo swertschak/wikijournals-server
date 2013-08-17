@@ -1,5 +1,7 @@
 <?php
 /**
+ * Base class for resource loading system.
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -161,11 +163,11 @@ class ResourceLoader {
 						$wgResourceLoaderMinifierStatementsOnOwnLine,
 						$wgResourceLoaderMinifierMaxLineLength
 					);
-					$result .= "\n\n/* cache key: $key */\n";
+					$result .= "\n/* cache key: $key */";
 					break;
 				case 'minify-css':
 					$result = CSSMin::minify( $data );
-					$result .= "\n\n/* cache key: $key */\n";
+					$result .= "\n/* cache key: $key */";
 					break;
 			}
 
@@ -174,6 +176,7 @@ class ResourceLoader {
 		} catch ( Exception $exception ) {
 			// Return exception as a comment
 			$result = $this->makeComment( $exception->__toString() );
+			$this->hasErrors = true;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -215,7 +218,7 @@ class ResourceLoader {
 	 * Registers a module with the ResourceLoader system.
 	 *
 	 * @param $name Mixed: Name of module as a string or List of name/object pairs as an array
-	 * @param $info Module info array. For backwards compatibility with 1.17alpha,
+	 * @param $info array Module info array. For backwards compatibility with 1.17alpha,
 	 *   this may also be a ResourceLoaderModule object. Optional when using
 	 *   multiple-registration calling style.
 	 * @throws MWException: If a duplicate module registration is attempted
@@ -239,9 +242,9 @@ class ResourceLoader {
 				);
 			}
 
-			// Check $name for illegal characters
-			if ( preg_match( '/[|,!]/', $name ) ) {
-				throw new MWException( "ResourceLoader module name '$name' is invalid. Names may not contain pipes (|), commas (,) or exclamation marks (!)" );
+			// Check $name for validity
+			if ( !self::isValidModuleName( $name ) ) {
+				throw new MWException( "ResourceLoader module name '$name' is invalid, see ResourceLoader::isValidModuleName()" );
 			}
 
 			// Attach module
@@ -354,6 +357,7 @@ class ResourceLoader {
 	 * @return Array
 	 */
 	public function getTestModuleNames( $framework = 'all' ) {
+		/// @TODO: api siteinfo prop testmodulenames modulenames
 		if ( $framework == 'all' ) {
 			return $this->testModuleNames;
 		} elseif ( isset( $this->testModuleNames[$framework] ) && is_array( $this->testModuleNames[$framework] ) ) {
@@ -431,6 +435,7 @@ class ResourceLoader {
 
 		wfProfileIn( __METHOD__ );
 		$errors = '';
+		$this->hasErrors = false;
 
 		// Split requested modules into two groups, modules and missing
 		$modules = array();
@@ -442,6 +447,7 @@ class ResourceLoader {
 				// This is a security issue, see bug 34907.
 				if ( $module->getGroup() === 'private' ) {
 					$errors .= $this->makeComment( "Cannot show private module \"$name\"" );
+					$this->hasErrors = true;
 					continue;
 				}
 				$modules[$name] = $this->getModule( $name );
@@ -456,6 +462,7 @@ class ResourceLoader {
 		} catch( Exception $e ) {
 			// Add exception to the output as a comment
 			$errors .= $this->makeComment( $e->__toString() );
+			$this->hasErrors = true;
 		}
 
 		wfProfileIn( __METHOD__.'-getModifiedTime' );
@@ -473,13 +480,11 @@ class ResourceLoader {
 			} catch ( Exception $e ) {
 				// Add exception to the output as a comment
 				$errors .= $this->makeComment( $e->__toString() );
+				$this->hasErrors = true;
 			}
 		}
 
 		wfProfileOut( __METHOD__.'-getModifiedTime' );
-
-		// Send content type and cache related headers
-		$this->sendResponseHeaders( $context, $mtime );
 
 		// If there's an If-Modified-Since header, respond with a 304 appropriately
 		if ( $this->tryRespondLastModified( $context, $mtime ) ) {
@@ -497,11 +502,8 @@ class ResourceLoader {
 		// response in a comment if we're in debug mode.
 		if ( $context->getDebug() && strlen( $warnings = ob_get_contents() ) ) {
 			$response = $this->makeComment( $warnings ) . $response;
+			$this->hasErrors = true;
 		}
-
-		// Remove the output buffer and output the response
-		ob_end_clean();
-		echo $response;
 
 		// Save response to file cache unless there are errors
 		if ( isset( $fileCache ) && !$errors && !$missing ) {
@@ -515,6 +517,13 @@ class ResourceLoader {
 			}
 		}
 
+		// Send content type and cache related headers
+		$this->sendResponseHeaders( $context, $mtime, $this->hasErrors );
+
+		// Remove the output buffer and output the response
+		ob_end_clean();
+		echo $response;
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -522,13 +531,15 @@ class ResourceLoader {
 	 * Send content type and last modified headers to the client.
 	 * @param $context ResourceLoaderContext
 	 * @param $mtime string TS_MW timestamp to use for last-modified
+	 * @param $error bool Whether there are commented-out errors in the response
 	 * @return void
 	 */
-	protected function sendResponseHeaders( ResourceLoaderContext $context, $mtime ) {
+	protected function sendResponseHeaders( ResourceLoaderContext $context, $mtime, $errors ) {
 		global $wgResourceLoaderMaxage;
 		// If a version wasn't specified we need a shorter expiry time for updates
 		// to propagate to clients quickly
-		if ( is_null( $context->getVersion() ) ) {
+		// If there were errors, we also need a shorter expiry time so we can recover quickly
+		if ( is_null( $context->getVersion() ) || $errors ) {
 			$maxage  = $wgResourceLoaderMaxage['unversioned']['client'];
 			$smaxage = $wgResourceLoaderMaxage['unversioned']['server'];
 		// If a version was specified we can use a longer expiry time since changing
@@ -598,7 +609,7 @@ class ResourceLoader {
 	/**
 	 * Send out code for a response from file cache if possible
 	 *
-	 * @param $fileCache ObjectFileCache: Cache object for this request URL
+	 * @param $fileCache ResourceFileCache: Cache object for this request URL
 	 * @param $context ResourceLoaderContext: Context in which to generate a response
 	 * @return bool If this found a cache file and handled the response
 	 */
@@ -676,12 +687,14 @@ class ResourceLoader {
 			} catch ( Exception $e ) {
 				// Add exception to the output as a comment
 				$exceptions .= $this->makeComment( $e->__toString() );
+				$this->hasErrors = true;
 			}
 		} else {
 			$blobs = array();
 		}
 
 		// Generate output
+		$isRaw = false;
 		foreach ( $modules as $name => $module ) {
 			/**
 			 * @var $module ResourceLoaderModule
@@ -699,7 +712,7 @@ class ResourceLoader {
 						$scripts = $module->getScriptURLsForDebug( $context );
 					} else {
 						$scripts = $module->getScript( $context );
-						if ( is_string( $scripts ) ) {
+						if ( is_string( $scripts ) && strlen( $scripts ) && substr( $scripts, -1 ) !== ';' ) {
 							// bug 27054: Append semicolon to prevent weird bugs
 							// caused by files not terminating their statements right
 							$scripts .= ";\n";
@@ -709,12 +722,39 @@ class ResourceLoader {
 				// Styles
 				$styles = array();
 				if ( $context->shouldIncludeStyles() ) {
-					// If we are in debug mode, we'll want to return an array of URLs
-					// See comment near shouldIncludeScripts() for more details
-					if ( $context->getDebug() && !$context->getOnly() && $module->supportsURLLoading() ) {
-						$styles = $module->getStyleURLsForDebug( $context );
-					} else {
-						$styles = $module->getStyles( $context );
+					// Don't create empty stylesheets like array( '' => '' ) for modules
+					// that don't *have* any stylesheets (bug 38024).
+					$stylePairs = $module->getStyles( $context );
+					if ( count ( $stylePairs ) ) {
+						// If we are in debug mode without &only= set, we'll want to return an array of URLs
+						// See comment near shouldIncludeScripts() for more details
+						if ( $context->getDebug() && !$context->getOnly() && $module->supportsURLLoading() ) {
+							$styles = array(
+								'url' => $module->getStyleURLsForDebug( $context )
+							);
+						} else {
+							// Minify CSS before embedding in mw.loader.implement call
+							// (unless in debug mode)
+							if ( !$context->getDebug() ) {
+								foreach ( $stylePairs as $media => $style ) {
+									// Can be either a string or an array of strings.
+									if ( is_array( $style ) ) {
+										$stylePairs[$media] = array();
+										foreach ( $style as $cssText ) {
+											if ( is_string( $cssText ) ) {
+												$stylePairs[$media][] = $this->filter( 'minify-css', $cssText );
+											}
+										}
+									} elseif ( is_string( $style ) ) {
+										$stylePairs[$media] = $this->filter( 'minify-css', $style );
+									}
+								}
+							}
+							// Wrap styles into @media groups as needed and flatten into a numerical array
+							$styles = array(
+								'css' => self::makeCombinedStyles( $stylePairs )
+							);
+						}
 					}
 				}
 
@@ -733,42 +773,40 @@ class ResourceLoader {
 						}
 						break;
 					case 'styles':
-						$out .= self::makeCombinedStyles( $styles );
+						// We no longer seperate into media, they are all combined now with
+						// custom media type groups into @media .. {} sections as part of the css string.
+						// Module returns either an empty array or a numerical array with css strings.
+						$out .= isset( $styles['css'] ) ? implode( '', $styles['css'] ) : '';
 						break;
 					case 'messages':
 						$out .= self::makeMessageSetScript( new XmlJsCode( $messagesBlob ) );
 						break;
 					default:
-						// Minify CSS before embedding in mw.loader.implement call
-						// (unless in debug mode)
-						if ( !$context->getDebug() ) {
-							foreach ( $styles as $media => $style ) {
-								if ( is_string( $style ) ) {
-									$styles[$media] = $this->filter( 'minify-css', $style );
-								}
-							}
-						}
-						$out .= self::makeLoaderImplementScript( $name, $scripts, $styles,
-							new XmlJsCode( $messagesBlob ) );
+						$out .= self::makeLoaderImplementScript(
+							$name,
+							$scripts,
+							$styles,
+							new XmlJsCode( $messagesBlob )
+						);
 						break;
 				}
 			} catch ( Exception $e ) {
 				// Add exception to the output as a comment
 				$exceptions .= $this->makeComment( $e->__toString() );
+				$this->hasErrors = true;
 
 				// Register module as missing
 				$missing[] = $name;
 				unset( $modules[$name] );
 			}
+			$isRaw |= $module->isRaw();
 			wfProfileOut( __METHOD__ . '-' . $name );
 		}
 
 		// Update module states
-		if ( $context->shouldIncludeScripts() ) {
+		if ( $context->shouldIncludeScripts() && !$context->getRaw() && !$isRaw ) {
 			// Set the state of modules loaded as only scripts to ready
-			if ( count( $modules ) && $context->getOnly() === 'scripts'
-				&& !isset( $modules['startup'] ) )
-			{
+			if ( count( $modules ) && $context->getOnly() === 'scripts' ) {
 				$out .= self::makeLoaderStateScript(
 					array_fill_keys( array_keys( $modules ), 'ready' ) );
 			}
@@ -796,9 +834,9 @@ class ResourceLoader {
 	 * Returns JS code to call to mw.loader.implement for a module with
 	 * given properties.
 	 *
-	 * @param $name Module name
+	 * @param $name string Module name
 	 * @param $scripts Mixed: List of URLs to JavaScript files or String of JavaScript code
-	 * @param $styles Mixed: List of CSS strings keyed by media type, or list of lists of URLs to
+	 * @param $styles Mixed: Array of CSS strings keyed by media type, or an array of lists of URLs to
 	 * CSS files keyed by media type
 	 * @param $messages Mixed: List of messages associated with this module. May either be an
 	 *     associative array mapping message key to value, or a JSON-encoded message blob containing
@@ -808,7 +846,7 @@ class ResourceLoader {
 	 */
 	public static function makeLoaderImplementScript( $name, $scripts, $styles, $messages ) {
 		if ( is_string( $scripts ) ) {
-			$scripts = new XmlJsCode( "function( $ ) {{$scripts}}" );
+			$scripts = new XmlJsCode( "function () {\n{$scripts}\n}" );
 		} elseif ( !is_array( $scripts ) ) {
 			throw new MWException( 'Invalid scripts error. Array of URLs or string of code expected.' );
 		}
@@ -817,6 +855,11 @@ class ResourceLoader {
 			array(
 				$name,
 				$scripts,
+				// Force objects. mw.loader.implement requires them to be javascript objects.
+				// Although these variables are associative arrays, which become javascript
+				// objects through json_encode. In many cases they will be empty arrays, and
+				// PHP/json_encode() consider empty arrays to be numerical arrays and
+				// output javascript "[]" instead of "{}". This fixes that.
 				(object)$styles,
 				(object)$messages
 			) );
@@ -836,26 +879,34 @@ class ResourceLoader {
 
 	/**
 	 * Combines an associative array mapping media type to CSS into a
-	 * single stylesheet with @media blocks.
+	 * single stylesheet with "@media" blocks.
 	 *
-	 * @param $styles Array: List of CSS strings keyed by media type
+	 * @param $styles Array: Array keyed by media type containing (arrays of) CSS strings.
 	 *
-	 * @return string
+	 * @return Array
 	 */
-	public static function makeCombinedStyles( array $styles ) {
-		$out = '';
-		foreach ( $styles as $media => $style ) {
-			// Transform the media type based on request params and config
-			// The way that this relies on $wgRequest to propagate request params is slightly evil
-			$media = OutputPage::transformCssMedia( $media );
+	private static function makeCombinedStyles( array $stylePairs ) {
+		$out = array();
+		foreach ( $stylePairs as $media => $styles ) {
+			// ResourceLoaderFileModule::getStyle can return the styles
+			// as a string or an array of strings. This is to allow separation in
+			// the front-end.
+			$styles = (array) $styles;
+			foreach ( $styles as $style ) {
+				$style = trim( $style );
+				// Don't output an empty "@media print { }" block (bug 40498)
+				if ( $style !== '' ) {
+					// Transform the media type based on request params and config
+					// The way that this relies on $wgRequest to propagate request params is slightly evil
+					$media = OutputPage::transformCssMedia( $media );
 
-			if ( $media === null ) {
-				// Skip
-			} elseif ( $media === '' || $media == 'all' ) {
-				// Don't output invalid or frivolous @media statements
-				$out .= "$style\n";
-			} else {
-				$out .= "@media $media {\n" . str_replace( "\n", "\n\t", "\t" . $style ) . "\n}\n";
+					if ( $media === '' || $media == 'all' ) {
+						$out[] = $style;
+					} else if ( is_string( $media ) ) {
+						$out[] = "@media $media {\n" . str_replace( "\n", "\n\t", "\t" . $style ) . "}";
+					}
+					// else: skip
+				}
 			}
 		}
 		return $out;
@@ -902,7 +953,7 @@ class ResourceLoader {
 	public static function makeCustomLoaderScript( $name, $version, $dependencies, $group, $source, $script ) {
 		$script = str_replace( "\n", "\n\t", trim( $script ) );
 		return Xml::encodeJsCall(
-			"( function( name, version, dependencies, group, source ) {\n\t$script\n} )",
+			"( function ( name, version, dependencies, group, source ) {\n\t$script\n} )",
 			array( $name, $version, $dependencies, $group, $source ) );
 	}
 
@@ -975,7 +1026,7 @@ class ResourceLoader {
 	 * @return string
 	 */
 	public static function makeLoaderConditionalScript( $script ) {
-		return "if(window.mw){\n".trim( $script )."\n}";
+		return "if(window.mw){\n" . trim( $script ) . "\n}";
 	}
 
 	/**
@@ -1090,5 +1141,18 @@ class ResourceLoader {
 		// Make queries uniform in order
 		ksort( $query );
 		return $query;
+	}
+
+	/**
+	 * Check a module name for validity.
+	 *
+	 * Module names may not contain pipes (|), commas (,) or exclamation marks (!) and can be
+	 * at most 255 bytes.
+	 *
+	 * @param $moduleName string Module name to check
+	 * @return bool Whether $moduleName is a valid module name
+	 */
+	public static function isValidModuleName( $moduleName ) {
+		return !preg_match( '/[|,!]/', $moduleName ) && strlen( $moduleName ) <= 255;
 	}
 }

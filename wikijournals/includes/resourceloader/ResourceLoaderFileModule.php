@@ -1,5 +1,7 @@
 <?php
 /**
+ * Resource loader module based on local JavaScript/CSS files.
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -109,6 +111,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	protected $position = 'bottom';
 	/** Boolean: Link to raw files in debug mode */
 	protected $debugRaw = true;
+	/** Boolean: Whether mw.loader.state() call should be omitted */
+	protected $raw = false;
 	/**
 	 * Array: Cache for mtime
 	 * @par Usage:
@@ -238,6 +242,7 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 					break;
 				// Single booleans
 				case 'debugRaw':
+				case 'raw':
 					$this->{$member} = (bool) $option;
 					break;
 			}
@@ -303,15 +308,19 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		// Collect referenced files
 		$this->localFileRefs = array_unique( $this->localFileRefs );
 		// If the list has been modified since last time we cached it, update the cache
-		if ( $this->localFileRefs !== $this->getFileDependencies( $context->getSkin() ) && !wfReadOnly() ) {
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->replace( 'module_deps',
-				array( array( 'md_module', 'md_skin' ) ), array(
-					'md_module' => $this->getName(),
-					'md_skin' => $context->getSkin(),
-					'md_deps' => FormatJson::encode( $this->localFileRefs ),
-				)
-			);
+		try {
+			if ( $this->localFileRefs !== $this->getFileDependencies( $context->getSkin() ) ) {
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->replace( 'module_deps',
+					array( array( 'md_module', 'md_skin' ) ), array(
+						'md_module' => $this->getName(),
+						'md_skin' => $context->getSkin(),
+						'md_deps' => FormatJson::encode( $this->localFileRefs ),
+					)
+				);
+			}
+		} catch ( Exception $e ) {
+			wfDebug( __METHOD__ . " failed to update DB: $e\n" );
 		}
 		return $styles;
 	}
@@ -363,6 +372,13 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 	 */
 	public function getDependencies() {
 		return $this->dependencies;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isRaw() {
+		return $this->raw;
 	}
 
 	/**
@@ -622,7 +638,8 @@ class ResourceLoaderFileModule extends ResourceLoaderModule {
 		// Get and register local file references
 		$this->localFileRefs = array_merge(
 			$this->localFileRefs,
-			CSSMin::getLocalFileReferences( $style, $dir ) );
+			CSSMin::getLocalFileReferences( $style, $dir )
+		);
 		return CSSMin::remap(
 			$style, $dir, $remoteDir, true
 		);

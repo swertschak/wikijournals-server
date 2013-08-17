@@ -95,7 +95,7 @@ $wgUpgradeKey = "96b7050f9ec01185";
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook', 'vector':
-$wgDefaultSkin = "vector";
+$wgDefaultSkin = "cavendishmw";
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
@@ -153,38 +153,41 @@ $wgUserProfileDisplay['foes'] = true;
 $wgUserBoard = true;
 $wgUserProfileDisplay['board'] = true;
 
-require_once( "$IP/extensions/Translate/Translate.php" );
+#### start deactivate translate
+#require_once( "$IP/extensions/Translate/Translate.php" );
 
-$wgGroupPermissions['translator']['translate'] = true;
+#$wgGroupPermissions['translator']['translate'] = true;
 # You can replace qqq with something more meaningful like info
-$wgTranslateDocumentationLanguageCode = 'qqq';
+#$wgTranslateDocumentationLanguageCode = 'qqq';
 
 # Add these too if you want to enable page translation
-$wgGroupPermissions['sysop']['pagetranslation'] = true;
-$wgEnablePageTranslation = true;
+#$wgGroupPermissions['sysop']['pagetranslation'] = true;
+#$wgEnablePageTranslation = true;
 
-$wgTranslateCC['wiki-sidebar'] = 'addSidebarMessageGroup';
-function addSidebarMessageGroup( $id ) {
-$mg = new WikiMessageGroup( $id, 'sidebar-messages' );
-$mg->setLabel( 'Sidebar' );
-$mg->setDescription( 'Messages used in the sidebar of this wiki' );
-return $mg;
-}
+#$wgTranslateCC['wiki-sidebar'] = 'addSidebarMessageGroup';
+#function addSidebarMessageGroup( $id ) {
+#$mg = new WikiMessageGroup( $id, 'sidebar-messages' );
+#$mg->setLabel( 'Sidebar' );
+#$mg->setDescription( 'Messages used in the sidebar of this wiki' );
+#return $mg;
+#}
 
-$wgTranslateCC['wiki-mainpage'] = 'addMainpageMessageGroup';
-function addMainpageMessageGroup( $id ) {
-$mg = new WikiMessageGroup( $id, 'mainpage-messages' );
-$mg->setLabel( 'Mainpage' );
-$mg->setDescription( 'Messages used in the mainpage of this wiki' );
-return $mg;
-}
+#$wgTranslateCC['wiki-mainpage'] = 'addMainpageMessageGroup';
+#function addMainpageMessageGroup( $id ) {
+#$mg = new WikiMessageGroup( $id, 'mainpage-messages' );
+#$mg->setLabel( 'Mainpage' );
+#$mg->setDescription( 'Messages used in the mainpage of this wiki' );
+#return $mg;
+#}
 
-$wgTranslateCC['wiki-wjforms'] = 'addWjformsMessageGroup';
-function addWjformsMessageGroup( $id ) {
-$mg = new WikiMessageGroup( $id, 'wjforms-messages' );
-$mg->setLabel( 'Wjforms' );
-$mg->setDescription( 'Messages used in the forms of this wiki' );
-return $mg;
-}
+#$wgTranslateCC['wiki-wjforms'] = 'addWjformsMessageGroup';
+#function addWjformsMessageGroup( $id ) {
+#$mg = new WikiMessageGroup( $id, 'wjforms-messages' );
+#$mg->setLabel( 'Wjforms' );
+#$mg->setDescription( 'Messages used in the forms of this wiki' );
+#return $mg;
+#}
+
+require_once("$IP/skins/cavendishmw/cavendishmw.php");
 
 ?>

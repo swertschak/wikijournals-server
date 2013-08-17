@@ -7,152 +7,209 @@
  * @ingroup Language
  * @file
  *
+ * @author D'AroemenenZullenNiVergaan
  * @author Dumitrachi T. Fundu
  * @author Hakka
  */
 
 $messages = array(
 # Dates
-'sunday'        => 'Dumãnicã',
-'monday'        => 'Lune',
-'tuesday'       => 'Martsã',
-'wednesday'     => 'Njercure',
-'thursday'      => 'Gioia',
-'friday'        => 'Vinirã',
-'saturday'      => 'Sãmbãtã',
-'january'       => 'Yinar',
-'february'      => 'Shcurtu',
-'march'         => 'Martsu',
-'april'         => 'Aprir',
-'may_long'      => 'Mailu',
-'june'          => 'Cirishar',
-'july'          => 'Alunar',
-'august'        => 'Avgustu',
-'september'     => 'Yizmaciunjle',
-'october'       => 'Xumedru',
-'november'      => 'Brumar',
-'december'      => 'Andreulu',
-'january-gen'   => 'Yinar',
-'february-gen'  => 'Shcurtu',
-'march-gen'     => 'Martsu',
-'april-gen'     => 'Aprir',
-'may-gen'       => 'Mailu',
-'june-gen'      => 'Cirishar',
-'july-gen'      => 'Alunar',
-'august-gen'    => 'Avgustu',
+'sunday' => 'Dumãnicã',
+'monday' => 'Lune',
+'tuesday' => 'Martsã',
+'wednesday' => 'Njercure',
+'thursday' => 'Gioia',
+'friday' => 'Vinirã',
+'saturday' => 'Sãmbãtã',
+'january' => 'yinar',
+'february' => 'șcurtu',
+'march' => 'marțu',
+'april' => 'aprir',
+'may_long' => 'maiu',
+'june' => 'cirișar',
+'july' => 'alunar',
+'august' => 'avgustu',
+'september' => 'yizmăciun',
+'october' => 'xumedru',
+'november' => 'brumar',
+'december' => 'andreu',
+'january-gen' => 'Yinar',
+'february-gen' => 'Shcurtu',
+'march-gen' => 'Martsu',
+'april-gen' => 'Aprir',
+'may-gen' => 'Mailu',
+'june-gen' => 'Cirishar',
+'july-gen' => 'Alunar',
+'august-gen' => 'Avgustu',
 'september-gen' => 'Yizmaciunjle',
-'october-gen'   => 'Xumedru',
-'november-gen'  => 'Brumar',
-'december-gen'  => 'Andreulu',
+'october-gen' => 'Xumedru',
+'november-gen' => 'Brumar',
+'december-gen' => 'Andreulu',
+'jan' => 'yinar',
+'feb' => 'șcurtu',
+'mar' => 'marțu',
+'apr' => 'aprir',
+'may' => 'maiu',
+'jun' => 'cirișar',
+'jul' => 'alunar',
+'aug' => 'avgustu',
+'sep' => 'yizmăciun',
+'oct' => 'xumedru',
+'nov' => 'brumar',
+'dec' => 'andreu',
 
-'article'    => 'Articlu',
-'cancel'     => 'Alasã',
-'mytalk'     => 'Zburare-a mea',
-'navigation' => 'Navigatsia',
+# Categories related messages
+'pagecategories' => '{{PLURAL:$1|Categorie|Categorii}}',
+'category_header' => 'Frândzâ ti categoria "$1"',
+'hidden-categories' => '{{PLURAL:$1|Categorie ascumsâ|Categorii ascumsi}}',
+
+'article' => 'Articlu',
+'cancel' => 'Alasã',
+'mytalk' => 'Zburare-a mea',
+'navigation' => 'Navigație',
 
 # Cologne Blue skin
-'qbedit'         => 'Alãxiri',
+'qbedit' => 'Alãxiri',
 'qbspecialpages' => 'Frãndzã spetsiale',
 
-'help'             => 'Agiutor',
-'search'           => 'Caftã',
-'searchbutton'     => 'Caftã',
-'go'               => 'Du-vã',
-'searcharticle'    => 'Du-vã',
-'history_short'    => 'Istoria',
+# Vector skin
+'vector-view-history' => 'Vedz istoric',
+'namespaces' => 'Spațiu di numi',
+'variants' => 'Variante',
+
+'tagline' => 'Ditu {{SITENAME}}',
+'help' => 'Agiutor',
+'search' => 'Câftare',
+'searchbutton' => 'Caftã',
+'go' => 'Du-vã',
+'searcharticle' => 'Du-vã',
+'history_short' => 'Istoric',
 'printableversion' => 'Verzia ti tipuseare',
-'permalink'        => 'Ligãtura permanentã',
-'edit'             => 'Alãxiri',
-'delete'           => 'Ashcirdzire',
-'protect'          => 'Apurã',
-'talk'             => 'Discusiur',
-'toolbox'          => 'Cutia di hãlate',
-'otherlanguages'   => 'Pi alte limbe',
+'permalink' => 'Legătură permanentă',
+'edit' => 'Alâxire',
+'delete' => 'Ashcirdzire',
+'protect' => 'Apurã',
+'newpage' => 'Frândzâ nauă',
+'talkpagelinktext' => 'Zburari',
+'talk' => 'Discusiur',
+'views' => 'Videri',
+'toolbox' => 'Cutia di hãlate',
+'otherlanguages' => 'Pi alte limbe',
 'jumptonavigation' => 'Navigatsia',
-'jumptosearch'     => 'Caftã',
+'jumptosearch' => 'Câftare',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
-'currentevents'        => 'Evenimente di tora',
-'disclaimers'          => 'Nipricunuschire',
-'edithelp'             => 'Agiutor ti alãxire',
-'mainpage'             => 'Prota frãndzã',
+'aboutsite' => 'Tu {{SITENAME}}',
+'currentevents' => 'Evenimente di tora',
+'disclaimers' => 'Nipricunuschire',
+'edithelp' => 'Agiutor ti alãxire',
+'helppage' => 'Help:Conținut',
+'mainpage' => 'Prota frândză',
 'mainpage-description' => 'Prota frãndzã',
-'portal'               => 'Portal-a comunitatiljei',
+'portal' => 'Portal-a comunitatiľei',
+'portal-url' => 'Project:Portal-a comunitatiľei',
+'privacy' => 'Politică di confidențialitate',
 
-'newmessageslink'         => 'dimãndare nao',
+'newmessageslink' => 'dimãndare nao',
 'youhavenewmessagesmulti' => 'Avets nãi dimãndãri pi $1',
-'editsection'             => 'Alãxiri',
-'editold'                 => 'Alãxiri',
+'editsection' => 'alâxire',
+'editold' => 'Alâxiri',
+'viewsourceold' => 'videari izvor',
+'viewsourcelink' => 'videari izvor',
+'editsectionhint' => 'Alâxire parti: $1',
+'site-atom-feed' => '$1 Atom feed',
+'red-link-title' => '$1 (frândza nu easti)',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
-'nstab-main'     => 'Articlu',
-'nstab-user'     => 'Frãndza-a ufilizitirolui',
-'nstab-template' => 'Shablon',
+'nstab-main' => 'Articlu',
+'nstab-user' => 'Frãndza-a ufilizitirolui',
+'nstab-special' => 'Frândzâ specială',
+'nstab-template' => 'Format',
+'nstab-category' => 'Categorie',
 
 # General errors
 'viewsource' => 'Videts-u fãntãnã',
 
 # Login and logout pages
-'welcomecreation'    => '== Ghine vinish, $1 ==
+'welcomecreation' => '== Ghine vinish, $1 ==
 
 Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {{SITENAME}}.',
-'yourname'           => 'Numa di ufilizitor:',
-'yourpassword'       => 'Cljao:',
-'yourpasswordagain'  => 'Bãgats-u cljao iara:',
+'yourname' => 'Numa di ufilizitor:',
+'yourpassword' => 'Cljao:',
+'yourpasswordagain' => 'Bãgats-u cljao iara:',
 'remembermypassword' => 'Apurã-u ligãtura-a mea pi compiuterlu aistu (for a maximum of $1 {{PLURAL:$1|day|days}})',
-'login'              => 'Ligats-vã',
-'userlogin'          => 'Ligats-vã / Fãtsets Isape',
-'logout'             => 'Disligats-vã',
-'userlogout'         => 'Disligats-vã',
-'notloggedin'        => 'Nu hits ligats',
-'createaccount'      => 'Fãtsets Isape',
-'gotaccountlink'     => 'Ligats-vã',
+'login' => 'Ligats-vã',
+'userlogin' => 'Ligats-vã / Fãtsets Isape',
+'logout' => 'Disligats-vã',
+'userlogout' => 'Disligats-vã',
+'notloggedin' => 'Nu hits ligats',
+'createaccount' => 'Fãtsets Isape',
+'gotaccountlink' => 'Ligats-vã',
 
 # Edit pages
-'summary'      => 'Rezime:',
-'minoredit'    => 'Aistã easte alãxire njicã',
-'watchthis'    => 'Mutrits-u frãndzã aistã',
-'savearticle'  => 'Avigljats-u frãndzã',
-'showpreview'  => 'Spuni u-privideare',
-'showdiff'     => 'Spuni le-alãxirle',
+'summary' => 'Rezime:',
+'minoredit' => 'Aistã easte alãxire njicã',
+'watchthis' => 'Mutrits-u frãndzã aistã',
+'savearticle' => 'Avigljats-u frãndzã',
+'showpreview' => 'Spuni u-privideare',
+'showdiff' => 'Spuni le-alãxirle',
 'loginreqlink' => 'Ligats-vã',
 
+# Diffs
+'lineno' => 'Linia $1:',
+'editundo' => 'arisire',
+
 # Search results
+'searchresults' => 'Rezultate di câftare',
+'searchresults-title' => 'Rezultate di câftare ti "$1"',
+'shown-title' => 'Vedz $1 {{PLURAL:$1|rezultat|rezultate}} pi frândză',
+'searchprofile-everything' => 'Tuti',
+'searchprofile-project-tooltip' => 'Câftare ti $1',
+'search-result-size' => '$1 ({{PLURAL:$2|1 zbor|$2 zboarâ}})',
+'search-section' => '(partea $1)',
+'searchall' => 'tuti',
 'powersearch' => 'Caftã',
 
 # Preferences page
-'preferences'       => 'Alidzerle-a meale',
-'mypreferences'     => 'Alidzerle-a meale',
-'prefsnologin'      => 'Nu hits ligats',
+'preferences' => 'Alidzerle-a meale',
+'mypreferences' => 'Alidzerle-a meale',
+'prefsnologin' => 'Nu hits ligats',
 'searchresultshead' => 'Caftã',
-'youremail'         => 'E-mail:',
-'username'          => 'Numa di ufilizitor:',
+'youremail' => 'E-mail:',
+'username' => 'Numa di ufilizitor:',
 
 # Recent changes
-'recentchanges' => 'Alãxiri',
+'recentchanges' => 'Alâxiri',
+'diff' => 'dif',
+'hist' => 'ist',
+'show' => 'Vedz',
 
 # Recent changes linked
-'recentchangeslinked'         => 'Alãxiri ligate',
-'recentchangeslinked-feed'    => 'Alãxiri ligate',
-'recentchangeslinked-toolbox' => 'Alãxiri ligate',
+'recentchangeslinked' => 'Alãxiri ligate',
+'recentchangeslinked-feed' => 'Alãxiri ligate',
+'recentchangeslinked-toolbox' => 'Alâxiri ligate',
 
 # Upload
-'upload'          => 'Pitritsets file',
-'uploadbtn'       => 'Pitritsets file',
-'uploadnologin'   => 'Nu hits ligats',
-'filedesc'        => 'Rezime',
+'upload' => 'Pitritsets file',
+'uploadbtn' => 'Pitritsets file',
+'uploadnologin' => 'Nu hits ligats',
+'filedesc' => 'Rezime',
 'watchthisupload' => 'Mutrits-u frãndzã aistã',
 
-# Random page
-'randompage' => 'Frãndzã di nipandicã',
+# File description page
+'file-anchor-link' => 'Fișier',
 
-'brokenredirects-edit'   => 'Alãxiri',
+# Random page
+'randompage' => 'Frândză di nipandică',
+
+'brokenredirects-edit' => 'Alãxiri',
 'brokenredirects-delete' => 'Ashcirdzire',
 
 # Miscellaneous special pages
+'nbytes' => '$1 {{PLURAL:$1|octet|octeți}}',
 'newpages-username' => 'Numa di ufilizitor:',
-'move'              => 'Tradzets',
-'movethispage'      => 'Tradzets-u frãndza aistã',
+'move' => 'Tradzets',
+'movethispage' => 'Tradzets-u frãndza aistã',
 
 # Book sources
 'booksources-go' => 'Du-vã',
@@ -161,12 +218,12 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 'allpagessubmit' => 'Du-vã',
 
 # Watchlist
-'watchlist'     => 'Lista-a mea di videare',
-'mywatchlist'   => 'Lista-a mea di videare',
-'watchnologin'  => 'Nu hits ligats',
-'watch'         => 'Videts',
+'watchlist' => 'Lista-a mea di videare',
+'mywatchlist' => 'Lista-a mea di videare',
+'watchnologin' => 'Nu hits ligats',
+'watch' => 'Videts',
 'watchthispage' => 'Mutrits-u frãndzã aistã',
-'unwatch'       => 'Azãptãsits videare',
+'unwatch' => 'Azãptãsits videare',
 
 # Protect
 'prot_1movedto2' => '[[$1]] s-trãdzi tu [[$2]]',
@@ -178,34 +235,43 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 # Undelete
 'undelete-search-submit' => 'Caftã',
 
+# Namespace form on various pages
+'blanknamespace' => '(Prota)',
+
 # Contributions
 'contributions' => 'Ufilizitor:Contributsiur',
-'mycontris'     => 'Contributsiile-a meale',
+'mycontris' => 'Contributsiile-a meale',
 
 'sp-contributions-submit' => 'Caftã',
 
 # What links here
 'whatlinkshere' => 'Tsi s-leadze cu aistu',
+'whatlinkshere-page' => 'Frândză:',
 
 # Block/unblock
-'ipbreason'          => 'Itia:',
+'ipbreason' => 'Itia:',
 'ipblocklist-submit' => 'Caftã',
+'contribslink' => 'contribuții',
 
 # Move page
 'move-page-legend' => 'Tradzets-u frãndzã',
-'movearticle'      => 'Tradzets-u frãndzã:',
-'move-watch'       => 'Mutrits-u frãndzã aistã',
-'movepagebtn'      => 'Tradzets-u frãndzã',
-'movedto'          => 'tradzitã tu',
-'movereason'       => 'Itia:',
+'movearticle' => 'Tradzets-u frãndzã:',
+'move-watch' => 'Mutrits-u frãndzã aistã',
+'movepagebtn' => 'Tradzets-u frãndzã',
+'movedto' => 'tradzitã tu',
+'movereason' => 'Itia:',
 
 # Namespace 8 related
 'allmessages' => 'Dimãndãri systemitse',
 
 # Tooltip help for the actions
 'tooltip-pt-preferences' => 'Alidzerle-a meale',
-'tooltip-pt-logout'      => 'Disligats-vã',
-'tooltip-p-logo'         => 'Prota frãndzã',
+'tooltip-pt-logout' => 'Disligats-vã',
+'tooltip-search' => 'Câftare tru {{SITENAME}}',
+'tooltip-p-logo' => 'Prota frãndzã',
+'tooltip-n-mainpage' => 'Vedz prota frândză',
+'tooltip-t-specialpages' => 'Unâ listâ di tuti frândzele',
+'tooltip-ca-nstab-category' => 'Vedz frândza di categorie',
 
 # Special:NewFiles
 'ilsubmit' => 'Caftã',
@@ -217,6 +283,6 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 'table_pager_limit_submit' => 'Du-vã',
 
 # Special:SpecialPages
-'specialpages' => 'Frãndzã spetsiale',
+'specialpages' => 'Frândzâ speciale',
 
 );
