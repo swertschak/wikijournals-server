@@ -2,14 +2,14 @@
 
 <html>
 <head>
-	<title>Installation</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Installation</title>
 </head>
 <body>
 
 <br />
 &nbsp; Wikijournals Installer<br />
-&nbsp; Click <a href='install.php'>here</a> to start installation process.
+&nbsp; Click <a href='install/start.php'>here</a> to start installation process.
 
 </body>
 </html>

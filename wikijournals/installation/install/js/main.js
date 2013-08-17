@@ -1,13 +1,3 @@
-function toggleInstructions(key){
-    if(key == "1"){
-        $('#divWizard').show('slow');
-        $('#divManually').hide('slow');     
-    }else{
-        $('#divWizard').hide('slow');
-        $('#divManually').show('slow');
-    }
-}
-
 function textboxOnFocus(key){
     $("#notes_message").attr("style", "display:none;");
     $('#'+key).show();
@@ -41,7 +31,8 @@ function testDatabaseConnection(){
 			    db_name:database_name,
 				db_username:database_username,
 				db_password:database_password,
-				check_key : "apphpei"}),
+				check_key : "apphpei"
+		}),
 		dataType: "html",
 		async:false,
 		error: function(html){
@@ -49,7 +40,7 @@ function testDatabaseConnection(){
             $("#notes_message").html(EasyInstaller._MSG["ajax_connection_error"]);
 		},
 		success: function(html){
-			var obj = jQuery.parseJSON(html);            			
+			var obj = jQuery.parseJSON(html);
 			if(obj.status == "1"){
 				if(obj.db_connection_status == "1"){
 					$("#notes_message").html("<h4 class='success'>"+EasyInstaller._MSG["success"]+"</h4><p>"+EasyInstaller._MSG["db_version"]+": "+obj.db_version+"</p><p>"+EasyInstaller._MSG["connection_was_established"]+"</p>");	
@@ -67,21 +58,11 @@ function testDatabaseConnection(){
 }
 
 function buttonDisable(){	
-	$("#button_test").attr("src", EI_LOCAL_PATH+"buttons/button_test_disabled.gif");
 	$("#button_test").attr("style", "cursor:default;");	
 }
 
 function buttonEnable(){
-	$("#button_test").attr("src", EI_LOCAL_PATH+"buttons/button_test.gif");
 	$("#button_test").attr("style", "cursor:pointer;");
-}
-
-function buttonOver(key, path){
-    $("#"+key).attr("src", EI_LOCAL_PATH+"buttons/"+key+"_over.gif");
-}
-
-function buttonOut(key){
-    $("#"+key).attr("src", EI_LOCAL_PATH+"buttons/"+key+".gif");
 }
 
 function installTypeOnClick(val){

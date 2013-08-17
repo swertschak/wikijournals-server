@@ -95,7 +95,7 @@ $wgUpgradeKey = "96b7050f9ec01185";
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook', 'vector':
-$wgDefaultSkin = "cavendish";
+$wgDefaultSkin = "vector";
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
@@ -139,7 +139,7 @@ require_once("$IP/extensions/ConfirmAccount/ConfirmAccount.php");
 # Add more configuration options below.
 
 require_once( "$IP/extensions/semantic-bundle/SemanticBundleSettings.php" );
-require_once( "$IP/extensions/uuid/uuid.php" );
+# require_once( "$IP/extensions/uuid/uuid.php" );
 require_once("$IP/extensions/Interwiki/Interwiki.php");
 $smwgQMaxSize=25;
 $smwqQMaxDepth=15;

@@ -1,11 +1,11 @@
 ################################################################################
 ##              -= YOU MAY NOT REMOVE OR CHANGE THIS NOTICE =-                 #
 ## --------------------------------------------------------------------------- #
-##  ApPHP EasyInstaller Pro version 3.1.2                                      #
+##  ApPHP EasyInstaller Pro version 3.2.3                                      #
 ##  Developed by:  ApPHP <info@apphp.com>                                      #
 ##  License:       GNU LGPL v.3                                                #
 ##  Site:          http://www.apphp.com/php-easyinstaller/                     #
-##  Copyright:     ApPHP EasyInstaller (c) 2009-2011. All rights reserved.     #
+##  Copyright:     ApPHP EasyInstaller (c) 2009-2013. All rights reserved.     #
 ##                                                                             #
 ################################################################################
 
