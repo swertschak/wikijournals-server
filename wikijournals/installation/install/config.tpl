@@ -189,5 +189,5 @@ $wgUserProfileDisplay['board'] = true;
 #}
 
 require_once("$IP/skins/cavendishmw/cavendishmw.php");
-
+require_once "$IP/extensions/MyVariables/MyVariables.php";
 ?>
