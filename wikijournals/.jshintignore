@@ -19,7 +19,6 @@ resources/jquery.effects/
 resources/jquery.tipsy/
 resources/jquery.ui/
 resources/mediawiki.libs/
-tests/jasmine/
 
 # legacy scripts
 skins/common/

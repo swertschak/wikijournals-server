@@ -6,24 +6,16 @@
  */
 
 /** Tests for MediaWiki languages/classes/LanguageDsb.php */
-class LanguageDsbTest extends MediaWikiTestCase {
-	private $lang;
-
-	function setUp() {
-		$this->lang = Language::factory( 'dsb' );
-	}
-	function tearDown() {
-		unset( $this->lang );
-	}
+class LanguageDsbTest extends LanguageClassesTestCase {
 
 	/** @dataProvider providePlural */
 	function testPlural( $result, $value ) {
-		$forms =  array( 'one', 'two', 'few', 'other' );
-		$this->assertEquals( $result, $this->lang->convertPlural( $value, $forms ) );
+		$forms = array( 'one', 'two', 'few', 'other' );
+		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
 	function providePlural() {
-		return array (
+		return array(
 			array( 'other', 0 ),
 			array( 'one', 1 ),
 			array( 'one', 101 ),

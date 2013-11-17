@@ -7,24 +7,16 @@
  */
 
 /** Tests for MediaWiki languages/classes/LanguageRu.php */
-class LanguageRuTest extends MediaWikiTestCase {
-	private $lang;
-
-	function setUp() {
-		$this->lang = Language::factory( 'ru' );
-	}
-	function tearDown() {
-		unset( $this->lang );
-	}
+class LanguageRuTest extends LanguageClassesTestCase {
 
 	/** @dataProvider providePluralFourForms */
 	function testPluralFourForms( $result, $value ) {
 		$forms = array( 'one', 'few', 'many', 'other' );
-		$this->assertEquals( $result, $this->lang->convertPlural( $value, $forms ) );
+		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
 	function providePluralFourForms() {
-		return array (
+		return array(
 			array( 'one', 1 ),
 			array( 'many', 11 ),
 			array( 'one', 91 ),
@@ -38,17 +30,49 @@ class LanguageRuTest extends MediaWikiTestCase {
 			array( 'many', 120 ),
 		);
 	}
+
 	/** @dataProvider providePluralTwoForms */
 	function testPluralTwoForms( $result, $value ) {
-		$forms =  array( 'one', 'several' );
-		$this->assertEquals( $result, $this->lang->convertPlural( $value, $forms ) );
+		$forms = array( 'one', 'several' );
+		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
+
 	function providePluralTwoForms() {
-		return array (
+		return array(
 			array( 'one', 1 ),
 			array( 'several', 11 ),
 			array( 'several', 91 ),
 			array( 'several', 121 ),
+		);
+	}
+
+	/** @dataProvider providerGrammar */
+	function testGrammar( $result, $word, $case ) {
+		$this->assertEquals( $result, $this->getLang()->convertGrammar( $word, $case ) );
+	}
+
+	function providerGrammar() {
+		return array(
+			array(
+				'Википедии',
+				'Википедия',
+				'genitive',
+			),
+			array(
+				'Викитеки',
+				'Викитека',
+				'genitive',
+			),
+			array(
+				'Викитеке',
+				'Викитека',
+				'prepositional',
+			),
+			array(
+				'Викиданных',
+				'Викиданные',
+				'prepositional',
+			),
 		);
 	}
 }

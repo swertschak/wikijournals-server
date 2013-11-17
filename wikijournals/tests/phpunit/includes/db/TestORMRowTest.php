@@ -58,7 +58,7 @@ class TestORMRowTest extends ORMRowTest {
 		return TestORMTable::singleton();
 	}
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		$dbw = wfGetDB( DB_MASTER );
@@ -78,8 +78,16 @@ class TestORMRowTest extends ORMRowTest {
 				test_stuff                 BLOB                NOT NULL,
 				test_moarstuff             BLOB                NOT NULL,
 				test_time                  varbinary(14)       NOT NULL
-			);'
+			);',
+			__METHOD__
 		);
+	}
+
+	protected function tearDown() {
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->dropTable( 'orm_test', __METHOD__ );
+
+		parent::tearDown();
 	}
 
 	public function constructorTestProvider() {
@@ -87,6 +95,7 @@ class TestORMRowTest extends ORMRowTest {
 			array(
 				array(
 					'name' => 'Foobar',
+					'time' => '20120101020202',
 					'age' => 42,
 					'height' => 9000.1,
 					'awesome' => true,
@@ -95,6 +104,22 @@ class TestORMRowTest extends ORMRowTest {
 				),
 				true
 			),
+		);
+	}
+
+	/**
+	 * @since 1.21
+	 * @return array
+	 */
+	protected function getMockValues() {
+		return array(
+			'id' => 1,
+			'str' => 'foobar4645645',
+			'int' => 42,
+			'float' => 4.2,
+			'bool' => '',
+			'array' => array( 42, 'foobar' ),
+			'blob' => new stdClass()
 		);
 	}
 
@@ -155,7 +180,7 @@ class TestORMTable extends ORMTable {
 			'awesome' => 'bool',
 			'stuff' => 'array',
 			'moarstuff' => 'blob',
-			'time' => 'int', // TS_MW
+			'time' => 'str', // TS_MW
 		);
 	}
 

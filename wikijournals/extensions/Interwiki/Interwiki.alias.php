@@ -23,19 +23,34 @@ $specialPageAliases['arz'] = array(
 	'Interwiki' => array( 'إنترويكى' ),
 );
 
-/** Bulgarian (Български) */
+/** Assamese (অসমীয়া) */
+$specialPageAliases['as'] = array(
+	'Interwiki' => array( 'আন্তঃৱিকি' ),
+);
+
+/** Bulgarian (български) */
 $specialPageAliases['bg'] = array(
 	'Interwiki' => array( 'Междууикита' ),
 );
 
-/** Breton (Brezhoneg) */
+/** Breton (brezhoneg) */
 $specialPageAliases['br'] = array(
 	'Interwiki' => array( 'Etrewiki' ),
 );
 
-/** Bosnian (Bosanski) */
+/** Bosnian (bosanski) */
 $specialPageAliases['bs'] = array(
 	'Interwiki' => array( 'Medjuwiki' ),
+);
+
+/** German (Deutsch) */
+$specialPageAliases['de'] = array(
+	'Interwiki' => array( 'Interwikitabelle', 'Interwiki-Tabelle' ),
+);
+
+/** Zazaki (Zazaki) */
+$specialPageAliases['diq'] = array(
+	'Interwiki' => array( 'İnterwiki' ),
 );
 
 /** Esperanto (Esperanto) */
@@ -43,9 +58,14 @@ $specialPageAliases['eo'] = array(
 	'Interwiki' => array( 'Intervikia_ligilo' ),
 );
 
-/** Spanish (Español) */
+/** Spanish (español) */
 $specialPageAliases['es'] = array(
 	'Interwiki' => array( 'Enlaces_interligüísticos' ),
+);
+
+/** Estonian (eesti) */
+$specialPageAliases['et'] = array(
+	'Interwiki' => array( 'Interviki' ),
 );
 
 /** Persian (فارسی) */
@@ -53,7 +73,7 @@ $specialPageAliases['fa'] = array(
 	'Interwiki' => array( 'میان‌ویکی' ),
 );
 
-/** Franco-Provençal (Arpetan) */
+/** Franco-Provençal (arpetan) */
 $specialPageAliases['frp'] = array(
 	'Interwiki' => array( 'Entèrvouiqui' ),
 );
@@ -61,6 +81,11 @@ $specialPageAliases['frp'] = array(
 /** Gagauz (Gagauz) */
 $specialPageAliases['gag'] = array(
 	'Interwiki' => array( 'İnterviki' ),
+);
+
+/** Galician (galego) */
+$specialPageAliases['gl'] = array(
+	'Interwiki' => array( 'Interwikis' ),
 );
 
 /** Hebrew (עברית) */
@@ -73,7 +98,7 @@ $specialPageAliases['ht'] = array(
 	'Interwiki' => array( 'Entèwiki' ),
 );
 
-/** Hungarian (Magyar) */
+/** Hungarian (magyar) */
 $specialPageAliases['hu'] = array(
 	'Interwiki' => array( 'Wikiközi_hivatkozások' ),
 );
@@ -108,6 +133,11 @@ $specialPageAliases['ksh'] = array(
 	'Interwiki' => array( 'EngerWiki', 'Engerwiki' ),
 );
 
+/** Cornish (kernowek) */
+$specialPageAliases['kw'] = array(
+	'Interwiki' => array( 'Yntrawiki' ),
+);
+
 /** Latin (Latina) */
 $specialPageAliases['la'] = array(
 	'Interwiki' => array( 'Intervici' ),
@@ -118,9 +148,9 @@ $specialPageAliases['lad'] = array(
 	'Interwiki' => array( 'Interviki' ),
 );
 
-/** Macedonian (Македонски) */
+/** Macedonian (македонски) */
 $specialPageAliases['mk'] = array(
-	'Interwiki' => array( 'Интервики' ),
+	'Interwiki' => array( 'Меѓувики' ),
 );
 
 /** Malayalam (മലയാളം) */
@@ -133,12 +163,22 @@ $specialPageAliases['mr'] = array(
 	'Interwiki' => array( 'आंतरविकि' ),
 );
 
-/** Portuguese (Português) */
+/** Punjabi (ਪੰਜਾਬੀ) */
+$specialPageAliases['pa'] = array(
+	'Interwiki' => array( 'ਇੰਟਰਵਿਕੀ' ),
+);
+
+/** Portuguese (português) */
 $specialPageAliases['pt'] = array(
 	'Interwiki' => array( 'Interwikis' ),
 );
 
-/** Sanskrit (संस्कृत) */
+/** Russian (русский) */
+$specialPageAliases['ru'] = array(
+	'Interwiki' => array( 'Интервики' ),
+);
+
+/** Sanskrit (संस्कृतम्) */
 $specialPageAliases['sa'] = array(
 	'Interwiki' => array( 'आंन्तरविकि' ),
 );
@@ -163,17 +203,42 @@ $specialPageAliases['tr'] = array(
 	'Interwiki' => array( 'İnterviki' ),
 );
 
+/** Tatar (Cyrillic script) (татарча) */
+$specialPageAliases['tt-cyrl'] = array(
+	'Interwiki' => array( 'Интервики' ),
+);
+
+/** Ukrainian (українська) */
+$specialPageAliases['uk'] = array(
+	'Interwiki' => array( 'Інтервікі' ),
+);
+
+/** Urdu (اردو) */
+$specialPageAliases['ur'] = array(
+	'Interwiki' => array( 'بین_الویکی' ),
+);
+
 /** Vietnamese (Tiếng Việt) */
 $specialPageAliases['vi'] = array(
 	'Interwiki' => array( 'Liên_wiki' ),
 );
 
-/** Traditional Chinese (‪中文(繁體)‬) */
+/** Yiddish (ייִדיש) */
+$specialPageAliases['yi'] = array(
+	'Interwiki' => array( 'אינטערוויקי' ),
+);
+
+/** Cantonese (粵語) */
+$specialPageAliases['yue'] = array(
+	'Interwiki' => array( '其他維基連接' ),
+);
+
+/** Simplified Chinese (中文（简体）‎) */
+$specialPageAliases['zh-hans'] = array(
+	'Interwiki' => array( '跨wiki', '跨维基' ),
+);
+
+/** Traditional Chinese (中文（繁體）‎) */
 $specialPageAliases['zh-hant'] = array(
 	'Interwiki' => array( '跨維基連結' ),
 );
-
-/**
- * For backwards compatibility with MediaWiki 1.15 and earlier.
- */
-$aliases =& $specialPageAliases;

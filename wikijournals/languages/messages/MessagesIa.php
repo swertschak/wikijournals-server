@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Geitost
  * @author Julian Mendez
  * @author Kaganer
  * @author Malafaya
@@ -111,7 +112,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Modificationes_recente' ),
 	'Recentchangeslinked'       => array( 'Modificationes_recente_ligate', 'Modificationes_connexe' ),
 	'Revisiondelete'            => array( 'Deletion_de_versiones' ),
-	'RevisionMove'              => array( 'Displaciar_versiones' ),
 	'Search'                    => array( 'Recerca' ),
 	'Shortpages'                => array( 'Paginas_curte' ),
 	'Specialpages'              => array( 'Paginas_special' ),
@@ -150,12 +150,12 @@ $messages = array(
 'tog-hidepatrolled' => 'Celar le modificationes patruliate in le modificationes recente',
 'tog-newpageshidepatrolled' => 'Celar le paginas patruliate del lista de nove paginas',
 'tog-extendwatchlist' => 'Displicar le observatorio pro monstrar tote le modificationes, non solmente les plus recente',
-'tog-usenewrc' => 'Gruppar modificationes per pagina in modificationes recente e observatorio (require JavaScript)',
+'tog-usenewrc' => 'Gruppar modificationes per pagina in modificationes recente e observatorio',
 'tog-numberheadings' => 'Numerar titulos automaticamente',
-'tog-showtoolbar' => 'Monstrar instrumentario de modification (require JavaScript)',
-'tog-editondblclick' => 'Duple clic pro modificar un pagina (require JavaScript)',
+'tog-showtoolbar' => 'Monstrar instrumentario de modification',
+'tog-editondblclick' => 'Modificar paginas con duple clic',
 'tog-editsection' => 'Activar le modification de sectiones con ligamines "[modificar]"',
-'tog-editsectiononrightclick' => 'Activar modification de sectiones con clic-a-dextra super lor titulos (require JavaScript)',
+'tog-editsectiononrightclick' => 'Permitter modification de sectiones con clic-a-dextra sur titulos de section',
 'tog-showtoc' => 'Monstrar tabula de contento (in paginas con plus de 3 sectiones)',
 'tog-rememberpassword' => 'Memorar mi contrasigno in iste navigator (pro un maximo de $1 {{PLURAL:$1|die|dies}})',
 'tog-watchcreations' => 'Adder le paginas que io crea e le files que io incarga a mi observatorio',
@@ -176,7 +176,7 @@ $messages = array(
 'tog-externaleditor' => 'Usar un editor externe qua standard (pro expertos solmente, necessita configuration special in tu computator. [//www.mediawiki.org/wiki/Manual:External_editors Plus informationes.])',
 'tog-externaldiff' => "Usar un programma ''diff'' externe qua standard (pro expertos solmente, necessita configuration special in tu computator. [//www.mediawiki.org/wiki/Manual:External_editors Plus informationes.])",
 'tog-showjumplinks' => 'Activar ligamines de accessibilitate "saltar a"',
-'tog-uselivepreview' => 'Usar previsualisation in directo (require JavaScript) (experimental)',
+'tog-uselivepreview' => 'Usar previsualisation in directo (experimental)',
 'tog-forceeditsummary' => 'Avisar me si io non entra un summario de modification',
 'tog-watchlisthideown' => 'Celar mi proprie modificationes in le observatorio',
 'tog-watchlisthidebots' => 'Celar le modificationes de robots in le observatorio',
@@ -277,6 +277,7 @@ $messages = array(
 'newwindow' => '(se aperi in un nove fenestra)',
 'cancel' => 'Cancellar',
 'moredotdotdot' => 'Plus...',
+'morenotlisted' => 'Iste lista non es complete.',
 'mypage' => 'Pagina',
 'mytalk' => 'Discussion',
 'anontalk' => 'Discussion pro iste adresse IP',
@@ -288,7 +289,6 @@ $messages = array(
 'qbbrowse' => 'Foliar',
 'qbedit' => 'Modificar',
 'qbpageoptions' => 'Iste pagina',
-'qbpageinfo' => 'Contexto',
 'qbmyoptions' => 'Mi paginas',
 'qbspecialpages' => 'Paginas special',
 'faq' => 'FAQ',
@@ -311,6 +311,7 @@ $messages = array(
 'namespaces' => 'Spatios de nomines',
 'variants' => 'Variantes',
 
+'navigation-heading' => 'Menu de navigation',
 'errorpagetitle' => 'Error',
 'returnto' => 'Retornar a $1.',
 'tagline' => 'De {{SITENAME}}',
@@ -378,7 +379,7 @@ $1',
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'A proposito de {{SITENAME}}',
 'aboutpage' => 'Project:A proposito',
-'copyright' => 'Le contento es disponibile sub $1.',
+'copyright' => 'Le contento es disponibile sub $1 si non alteremente specificate.',
 'copyrightpage' => '{{ns:project}}:Copyright',
 'currentevents' => 'Actualitates',
 'currentevents-url' => 'Project:Actualitates',
@@ -553,10 +554,9 @@ Le administrator qui lo blocava offereva iste explication: "$3".',
 # Login and logout pages
 'logouttext' => "'''Tu ha claudite le session.'''
 
-Tu pote continuar a usar {{SITENAME}} anonymemente, o tu pote [[Special:UserLogin|aperir un nove session]] con le mesme nomine de usator o con un altere.
 Nota que alcun paginas pote continuar a apparer como si tu esserea ancora authenticate. Pro remediar isto, tu pote vacuar le cache de tu navigator.",
-'welcomecreation' => '== Benvenite, $1! ==
-Tu conto ha essite create.
+'welcomeuser' => 'Benvenite, $1!',
+'welcomecreation-msg' => 'Tu conto ha essite create.
 Non oblida personalisar tu [[Special:Preferences|preferentias in {{SITENAME}}]].',
 'yourname' => 'Nomine de usator:',
 'yourpassword' => 'Contrasigno:',
@@ -574,13 +574,13 @@ Non oblida personalisar tu [[Special:Preferences|preferentias in {{SITENAME}}]].
 'logout' => 'Clauder session',
 'userlogout' => 'Clauder session',
 'notloggedin' => 'Tu non ha aperite un session',
-'nologin' => "Tu non ha un conto? '''$1'''.",
+'nologin' => 'Tu non ha un conto? $1.',
 'nologinlink' => 'Crear un conto',
 'createaccount' => 'Crear conto',
 'gotaccount' => "Tu jam ha un conto? '''$1'''.",
 'gotaccountlink' => 'Aperir session',
 'userlogin-resetlink' => 'Datos de authentication oblidate?',
-'createaccountmail' => 'per e-mail',
+'createaccountmail' => 'Usar un contrasigno aleatori temporari e inviar lo al adresse de e-mail specificate',
 'createaccountreason' => 'Motivo:',
 'badretype' => 'Le duo contrasignos que tu scribeva non es identic.',
 'userexists' => 'Iste nomine de usator es jam in uso.
@@ -645,7 +645,7 @@ Entra un adresse ben formatate, o vacua ille campo.',
 'cannotchangeemail' => 'Le adresses de e-mail associate al contos non pote esser cambiate in iste wiki.',
 'emaildisabled' => 'Iste sito non pote inviar e-mail.',
 'accountcreated' => 'Conto create',
-'accountcreatedtext' => 'Le conto del usator $1 ha essite create.',
+'accountcreatedtext' => 'Le conto de usator [[{{ns:User}}:$1|$1]] ([[{{ns:User talk}}:$1|discussion]]) ha essite create.',
 'createaccount-title' => 'Creation de un conto pro {{SITENAME}}',
 'createaccount-text' => 'Un persona ha create un conto in tu adresse de e-mail a {{SITENAME}} ($4) denominate "$2", con le contrasigno "$3".
 Tu deberea aperir un session e cambiar tu contrasigno ora.
@@ -661,6 +661,7 @@ Per favor attende ante de probar lo novemente.',
 # Email sending
 'php-mail-error-unknown' => 'Error incognite in le function mail() de PHP',
 'user-mail-no-addy' => 'Tentava inviar e-mail sin adresse de e-mail.',
+'user-mail-no-body' => 'Tentava inviar e-mail con texto vacue o multo curte.',
 
 # Change password dialog
 'resetpass' => 'Cambiar contrasigno',
@@ -672,7 +673,8 @@ Pro completar le accesso, tu debe definir un nove contrasigno hic:',
 'newpassword' => 'Nove contrasigno:',
 'retypenew' => 'Repete le nove contrasigno:',
 'resetpass_submit' => 'Definir contrasigno e aperir un session',
-'resetpass_success' => 'Tu contrasigno ha essite cambiate! Ora se aperi tu session...',
+'resetpass_success' => 'Tu contrasigno ha essite cambiate correctemente!
+Ora, apertura de session in progresso…',
 'resetpass_forbidden' => 'Le contrasignos non pote esser cambiate',
 'resetpass-no-info' => 'Tu debe aperir un session pro poter acceder directemente a iste pagina.',
 'resetpass-submit-loggedin' => 'Cambiar contrasigno',
@@ -680,6 +682,7 @@ Pro completar le accesso, tu debe definir un nove contrasigno hic:',
 'resetpass-wrong-oldpass' => 'Le contrasigno temporari o actual es invalide.
 Es possibile que tu ha ja cambiate tu contrasigno o requestate un nove contrasigno temporari.',
 'resetpass-temp-password' => 'Contrasigno temporari:',
+'resetpass-abort-generic' => 'Le cambio del contrasigno ha essite abortate per un extension.',
 
 # Special:PasswordReset
 'passwordreset' => 'Reinitialisar contrasigno',
@@ -704,7 +707,7 @@ Tu deberea ora aperir session e eliger un nove contrasigno. Si un altere persona
 requesta, o si tu te ha rememorate tu contrasigno original e non plus
 vole cambiar lo, tu pote ignorar iste message e continuar a usar le ancian
 contrasigno.',
-'passwordreset-emailtext-user' => 'Le usator $1 in {{SITENAME}} requestava un rememoration del detalios de tu conto in {{SITENAME}}
+'passwordreset-emailtext-user' => 'Le usator $1 in {{SITENAME}} requestava un reinitialisation de tu contrasigno in {{SITENAME}}
 ($4). Le {{PLURAL:$3|conto|contos}} de usator sequente es associate con iste adresse de e-mail:
 
 $2
@@ -716,8 +719,8 @@ vole cambiar lo, tu pote ignorar iste message e continuar a usar le ancian
 contrasigno.',
 'passwordreset-emailelement' => 'Nomine de usator: $1
 Contrasigno temporari: $2',
-'passwordreset-emailsent' => 'Un e-mail de rememoration ha essite inviate.',
-'passwordreset-emailsent-capture' => 'Un e-mail de rememoration ha essite inviate; iste message es monstrate hic infra.',
+'passwordreset-emailsent' => 'Un message de e-mail pro le reinitialisation del contrasigno ha essite inviate.',
+'passwordreset-emailsent-capture' => 'Un message de e-mail pro le reinitialisation del contrasigno ha essite inviate; iste message es monstrate hic infra.',
 'passwordreset-emailerror-capture' => 'Un e-mail de rememoration ha essite generate; iste message es monstrate hic infra, ma le invio al usator ha fallite: $1',
 
 # Special:ChangeEmail
@@ -728,6 +731,7 @@ Contrasigno temporari: $2',
 'changeemail-oldemail' => 'Adresse de e-mail actual:',
 'changeemail-newemail' => 'Adresse de e-mail nove:',
 'changeemail-none' => '(nulle)',
+'changeemail-password' => 'Contrasigno de {{SITENAME}}:',
 'changeemail-submit' => 'Cambiar e-mail',
 'changeemail-cancel' => 'Cancellar',
 
@@ -812,9 +816,7 @@ Illo pote haber essite displaciate o delite durante que tu legeva le pagina.',
 'loginreqlink' => 'aperir un session',
 'loginreqpagetext' => 'Tu debe $1 pro poter vider altere paginas.',
 'accmailtitle' => 'Contrasigno inviate.',
-'accmailtext' => "Un contrasigno generate aleatorimente pro [[User talk:$1|$1]] ha essite inviate a $2.
-
-Le contrasigno de iste nove conto pote esser cambiate in le pagina ''[[Special:ChangePassword|Cambiar contrasigno]]'' post que tu ha aperite un session.",
+'accmailtext' => "Un contrasigno generate aleatorimente pro [[User talk:$1|$1]] ha essite inviate a $2. Illo pote esser cambiate in le pagina ''[[Special:ChangePassword|Cambiar contrasigno]]'' post que tu ha aperite un session.",
 'newarticle' => '(Nove)',
 'newarticletext' => "Tu ha sequite un ligamine verso un pagina que non existe ancora.
 Pro crear iste pagina, comencia a scriber in le quadro infra (consulta le [[{{MediaWiki:Helppage}}|pagina de adjuta]] pro plus informationes).
@@ -917,13 +919,12 @@ Le administrator qui ha blocate le base de datos ha fornite iste explication: $1
 'template-semiprotected' => '(semi-protegite)',
 'hiddencategories' => 'Iste pagina es membro de {{PLURAL:$1|1 categoria|$1 categorias}} celate:',
 'edittools' => '<!-- Iste texto se monstrara sub le formularios de modificar articulos e de incargar files. -->',
-'nocreatetitle' => 'Creation de paginas limitate',
 'nocreatetext' => '{{SITENAME}} ha restringite le possibilitate de crear nove paginas.
 Tu pote retornar e modificar un pagina existente, o [[Special:UserLogin|aperir un session, o crear un conto]].',
 'nocreate-loggedin' => 'Tu non ha le permission de crear nove paginas.',
 'sectioneditnotsupported-title' => 'Modification de sectiones non supportate',
 'sectioneditnotsupported-text' => 'Non es possibile modificar sectiones individual in iste pagina de modification.',
-'permissionserrors' => 'Errores de permissiones',
+'permissionserrors' => 'Error de permission',
 'permissionserrorstext' => 'Tu non ha le permission de facer isto, pro le sequente {{PLURAL:$1|motivo|motivos}}:',
 'permissionserrorstext-withaction' => 'Tu non ha le permission de $2, pro le sequente {{PLURAL:$1|motivo|motivos}}:',
 'recreate-moveddeleted-warn' => "'''Attention: Tu es sur le puncto de recrear un pagina que esseva anteriormente delite.'''
@@ -942,6 +943,15 @@ Pare que illo ha essite delite.',
 'edit-already-exists' => 'Non poteva crear un nove pagina.
 Illo existe ja.',
 'defaultmessagetext' => 'Texto predefinite del message',
+'content-failed-to-parse' => 'Impossibile processar le contento $2 pro le modello $1: $3',
+'invalid-content-data' => 'Datos de contento invalide',
+'content-not-allowed-here' => 'Le contento "$1" non es permittite in le pagina [[$2]]',
+
+# Content models
+'content-model-wikitext' => 'wikitexto',
+'content-model-text' => 'texto simple',
+'content-model-javascript' => 'JavaScript',
+'content-model-css' => 'CSS',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => 'Attention: Iste pagina contine troppo de appellos costose al functiones del analysator syntactic.
@@ -998,8 +1008,8 @@ Legenda: '''({{int:cur}})''' = comparar con le version actual,
 '''({{int:last}})''' = comparar con le version precedente, '''{{int:minoreditletter}}''' = modification minor.",
 'history-fieldset-title' => 'Examinar historia',
 'history-show-deleted' => 'Delite solmente',
-'histfirst' => 'Prime',
-'histlast' => 'Ultime',
+'histfirst' => 'le plus ancian',
+'histlast' => 'le plus nove',
 'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
 'historyempty' => '(vacue)',
 
@@ -1265,7 +1275,7 @@ Nota que lor indices del contento de {{SITENAME}} pote esser obsolete.',
 'prefs-rendering' => 'Apparentia',
 'saveprefs' => 'Confirmar',
 'resetprefs' => 'Reverter cambios',
-'restoreprefs' => 'Restaurar tote le configurationes predefinite',
+'restoreprefs' => 'Restaurar tote le preselectiones (in tote le sectiones)',
 'prefs-editing' => 'Modification',
 'prefs-edit-boxsize' => 'Dimensiones del fenestra de modification.',
 'rows' => 'Lineas:',
@@ -1313,9 +1323,9 @@ Le operation non pote esser disfacite.',
 'prefs-emailconfirm-label' => 'Confirmation del e-mail:',
 'prefs-textboxsize' => 'Dimension del fenestra de modification',
 'youremail' => 'E-mail:',
-'username' => 'Nomine de usator:',
-'uid' => 'ID del usator:',
-'prefs-memberingroups' => 'Membro de {{PLURAL:$1|gruppo|gruppos}}:',
+'username' => '{{GENDER:$1|Nomine de usator}}:',
+'uid' => 'ID del {{GENDER:$1|usator}}:',
+'prefs-memberingroups' => '{{GENDER:$2|Membro}} de {{PLURAL:$1|gruppo|gruppos}}:',
 'prefs-registration' => 'Data de registration:',
 'yourrealname' => 'Nomine real:',
 'yourlanguage' => 'Lingua:',
@@ -1326,11 +1336,13 @@ Le operation non pote esser disfacite.',
 'badsig' => 'Signatura crude invalide; verificar le etiquettas HTML.',
 'badsiglength' => 'Tu signatura es troppo longe.
 Illo debe haber minus de $1 {{PLURAL:$1|character|characteres}}.',
-'yourgender' => 'Sexo:',
-'gender-unknown' => 'Non specificate',
-'gender-male' => 'Masculin',
-'gender-female' => 'Feminin',
-'prefs-help-gender' => 'Optional: usate pro facer le software adressar te correctemente secundo tu sexo. Iste information es public.',
+'yourgender' => 'Como prefere tu esser describite?',
+'gender-unknown' => 'Io prefere non specificar',
+'gender-male' => 'Ille modifica paginas wiki',
+'gender-female' => 'Illa modifica paginas wiki',
+'prefs-help-gender' => 'Definir iste preferentia es optional.
+Le software lo usa pro adressar e mentionar te correctemente con le genere appropriate.
+Iste information es public.',
 'email' => 'E-mail',
 'prefs-help-realname' => 'Le nomine real es optional.
 Si tu opta pro dar lo, isto essera usate pro dar te attribution pro tu contributiones.',
@@ -1342,7 +1354,7 @@ Si tu opta pro dar lo, isto essera usate pro dar te attribution pro tu contribut
 'prefs-signature' => 'Signatura',
 'prefs-dateformat' => 'Formato de data',
 'prefs-timeoffset' => 'Differentia de tempore',
-'prefs-advancedediting' => 'Optiones avantiate',
+'prefs-advancedediting' => 'Optiones general',
 'prefs-advancedrc' => 'Optiones avantiate',
 'prefs-advancedrendering' => 'Optiones avantiate',
 'prefs-advancedsearchoptions' => 'Optiones avantiate',
@@ -1374,7 +1386,7 @@ Si tu opta pro dar lo, isto essera usate pro dar te attribution pro tu contribut
 'userrights-no-interwiki' => 'Tu non ha le permission de modificar le derectos de usatores in altere wikis.',
 'userrights-nodatabase' => 'Le base de datos $1 non existe o non es local.',
 'userrights-nologin' => 'Tu debe [[Special:UserLogin|aperir un session]] con un conto de administrator pro poter assignar derectos de usator.',
-'userrights-notallowed' => 'Tu conto non ha le permission de adder o remover derectos de usator.',
+'userrights-notallowed' => 'Tu non ha le permission de adder o remover derectos de usator.',
 'userrights-changeable-col' => 'Gruppos que tu pote modificar',
 'userrights-unchangeable-col' => 'Gruppos que tu non pote modificar',
 
@@ -1420,7 +1432,7 @@ Si tu opta pro dar lo, isto essera usate pro dar te attribution pro tu contribut
 'right-reupload-shared' => 'Supplantar localmente le files del respositorio commun de media',
 'right-upload_by_url' => 'Incargar un file ab un adresse URL',
 'right-purge' => 'Purgar le cache de un pagina in le sito sin confirmation',
-'right-autoconfirmed' => 'Modificar paginas semiprotegite',
+'right-autoconfirmed' => 'Non esser subjecte al limites de frequentia a base de adresse IP',
 'right-bot' => 'Esser tractate como processo automatic',
 'right-nominornewtalk' => 'Non reciper notification de nove messages quando se face modificationes minor in le pagina de discussion',
 'right-apihighlimits' => 'Usar limites plus alte in consultas via API',
@@ -1441,7 +1453,7 @@ Si tu opta pro dar lo, isto essera usate pro dar te attribution pro tu contribut
 'right-ipblock-exempt' => 'Contornar le blocadas de adresses IP, blocadas automatic e blocadas de intervallos IP',
 'right-proxyunbannable' => 'Contornar le blocadas automatic de proxy',
 'right-unblockself' => 'Disblocar se mesme',
-'right-protect' => 'Cambiar nivellos de protection e modificar paginas protegite',
+'right-protect' => 'Cambiar nivellos de protection e modificar paginas protegite in cascada',
 'right-editprotected' => 'Modificar paginas protegite (sin cascada)',
 'right-editinterface' => 'Modificar le interfacie de usator',
 'right-editusercssjs' => 'Modificar le files CSS e JS de altere usatores',
@@ -1464,12 +1476,13 @@ Si tu opta pro dar lo, isto essera usate pro dar te attribution pro tu contribut
 'right-sendemail' => 'Inviar e-mail a altere usatores',
 'right-passwordreset' => 'Vider le e-mails pro reinitialisar le contrasigno',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Registro de creation de usatores',
+'newuserlogpagetext' => 'Isto es un registro de creation de usatores.',
+
 # User rights log
 'rightslog' => 'Registro de derectos de usator',
 'rightslogtext' => 'Isto es un registro de cambios in derectos de usator.',
-'rightslogentry' => 'cambiava le gruppos del quales $1 es membro de $2 a $3',
-'rightslogentry-autopromote' => 'ha essite automaticamente promovite de $2 a $3',
-'rightsnone' => '(nulle)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'leger iste pagina',
@@ -1497,8 +1510,8 @@ Si tu opta pro dar lo, isto essera usate pro dar te attribution pro tu contribut
 'action-block' => 'blocar iste usator de facer modificationes',
 'action-protect' => 'cambiar le nivellos de protection pro iste pagina',
 'action-rollback' => 'revocar rapidemente le modificationes del ultime usator qui modificava un particular pagina',
-'action-import' => 'importar iste pagina ab un altere wiki',
-'action-importupload' => 'importar iste pagina ex un file incargate',
+'action-import' => 'importar paginas ab un altere wiki',
+'action-importupload' => 'importar paginas ex un file incargate',
 'action-patrol' => 'marcar le modificationes de alteros como patruliate',
 'action-autopatrol' => 'haber tu modification marcate como patruliate',
 'action-unwatchedpages' => 'vider le lista de paginas non observate',
@@ -1540,7 +1553,7 @@ Si tu opta pro dar lo, isto essera usate pro dar te attribution pro tu contribut
 'rc_categories_any' => 'Qualcunque',
 'rc-change-size-new' => '$1 {{PLURAL:$1|byte|bytes}} post cambio',
 'newsectionsummary' => '/* $1 */ nove section',
-'rc-enhanced-expand' => 'Revelar detalios (require JavaScript)',
+'rc-enhanced-expand' => 'Revelar detalios',
 'rc-enhanced-hide' => 'Celar detalios',
 'rc-old-title' => 'originalmente create como "$1"',
 
@@ -1716,6 +1729,7 @@ Si le problema persiste, contacta un [[Special:ListUsers/sysop|administrator]].'
 'backend-fail-notsame' => 'Un file non identic jam existe a $1.',
 'backend-fail-invalidpath' => '$1 non es un cammino valide de immagazinage.',
 'backend-fail-delete' => 'Impossibile deler file $1.',
+'backend-fail-describe' => 'Impossibile cambiar le metadatos pro le file "$1".',
 'backend-fail-alreadyexists' => 'Le file $1 jam existe.',
 'backend-fail-store' => 'Non poteva immagazinar le file $1 a $2',
 'backend-fail-copy' => 'Impossibile copiar file $1 a $2',
@@ -1814,8 +1828,7 @@ Pote esser preferite reprovar quando le sito es minus occupate.',
 'upload_source_file' => ' (un file in tu computator)',
 
 # Special:ListFiles
-'listfiles-summary' => 'Iste pagina special monstra tote le files incargate.
-Si un filtro per usator es active, es monstrate solmente le files del quales le usator in question ha incargate le version le plus recente.',
+'listfiles-summary' => 'Iste pagina special monstra tote le files incargate.',
 'listfiles_search_for' => 'Cercar un nomine de media:',
 'imgfile' => 'file',
 'listfiles' => 'Lista de files',
@@ -1953,6 +1966,12 @@ Template:Disambiguation',
 'disambiguations-text' => "Le sequente paginas contine al minus un ligamine a un '''pagina de disambiguation'''.
 Istes debe forsan ligar directemente al articulo sur le thema in question.<br />
 Un pagina se tracta como pagina de disambiguation si illo usa un patrono que es ligate ab [[MediaWiki:Disambiguationspage]].",
+
+'pageswithprop' => 'Paginas con un proprietate de pagina',
+'pageswithprop-legend' => 'Paginas con un proprietate de pagina',
+'pageswithprop-text' => 'Iste pagina lista le paginas que usa un certe proprietate de pagina.',
+'pageswithprop-prop' => 'Nomine del proprietate:',
+'pageswithprop-submit' => 'Va',
 
 'doubleredirects' => 'Redirectiones duple',
 'doubleredirectstext' => 'Iste pagina lista paginas de redirection verso altere paginas de redirection.
@@ -2108,7 +2127,7 @@ Vide etiam le [[Special:WantedCategories|categorias desirate]].',
 'linksearch-ok' => 'Cercar',
 'linksearch-text' => 'Es possibile usar metacharacteres como in "*.wikipedia.org".
 Isto necessita specificar al minus le dominio de nivello superior, per exemplo "*.org".<br />
-Protocollos supportate: <code>$1</code> (http:// es assumite si nulle protocollo es specificate).',
+{{PLURAL:$2|Le protocollo|Protocollos}} supportate: <code>$1</code> (http:// es assumite si nulle protocollo es specificate).',
 'linksearch-line' => '$1 ligate ab $2',
 'linksearch-error' => 'Le metacharacteres pote apparer solmente al initio del nomine de host.',
 
@@ -2127,15 +2146,12 @@ Protocollos supportate: <code>$1</code> (http:// es assumite si nulle protocollo
 'activeusers-hidesysops' => 'Celar administratores',
 'activeusers-noresult' => 'Nulle usator trovate.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Registro de creation de usatores',
-'newuserlogpagetext' => 'Isto es un registro de creation de usatores.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Derectos del gruppos de usatores',
 'listgrouprights-summary' => 'Lo sequente es un lista de gruppos de usatores definite in iste wiki, con lor derectos de accesso associate.
 Il pote haber [[{{MediaWiki:Listgrouprights-helppage}}|informationes additional]] super derectos individual.',
-'listgrouprights-key' => '* <span class="listgrouprights-granted">Derecto concedite</span>
+'listgrouprights-key' => 'Legenda:
+* <span class="listgrouprights-granted">Derecto concedite</span>
 * <span class="listgrouprights-revoked">Derecto revocate</span>',
 'listgrouprights-group' => 'Gruppo',
 'listgrouprights-rights' => 'Derectos',
@@ -2228,31 +2244,33 @@ Le modificationes futur in iste pagina e in le pagina de discussion associate es
 
 'enotif_mailer' => 'Systema de notification via e-mail de {{SITENAME}}',
 'enotif_reset' => 'Marcar tote le paginas como visitate',
-'enotif_newpagetext' => 'Isto es un nove pagina.',
 'enotif_impersonal_salutation' => 'Usator de {{SITENAME}}',
-'changed' => 'modificate',
-'created' => 'create',
-'enotif_subject' => 'Le pagina $PAGETITLE de {{SITENAME}} ha essite $CHANGEDORCREATED per $PAGEEDITOR',
+'enotif_subject_deleted' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|delite}} per $2',
+'enotif_subject_created' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|create}} per $2',
+'enotif_subject_moved' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|renominate}} per $2',
+'enotif_subject_restored' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|restaurate}} per $2',
+'enotif_subject_changed' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|modificate}} per $2',
+'enotif_body_intro_deleted' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|delite}} le $PAGEEDITDATE per $2, vide $3.',
+'enotif_body_intro_created' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|create}} le $PAGEEDITDATE per $2, vide $3 pro le version actual.',
+'enotif_body_intro_moved' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|renominate}} le $PAGEEDITDATE per $2, vide $3 pro le version actual.',
+'enotif_body_intro_restored' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|restaurate}} le $PAGEEDITDATE per $2, vide $3 pro le version actual.',
+'enotif_body_intro_changed' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|modificate}} le $PAGEEDITDATE per $2, vide $3 pro le version actual.',
 'enotif_lastvisited' => 'Vide $1 pro tote le modificationes depost tu ultime visita.',
 'enotif_lastdiff' => 'Vide $1 pro revider iste modification.',
 'enotif_anon_editor' => 'usator anonyme $1',
 'enotif_body' => 'Car $WATCHINGUSERNAME,
 
-
-Le pagina de {{SITENAME}} titulate $PAGETITLE ha essite $CHANGEDORCREATED le $PAGEEDITDATE per $PAGEEDITOR. Vide $PAGETITLE_URL pro le version actual.
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 Summario del redactor: $PAGESUMMARY $PAGEMINOREDIT
 
 Pro contactar le redactor:
-e-mail: $PAGEEDITOR_EMAIL
+mail: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-Si tu non visita iste pagina, tu non recipera altere notificationes in caso de modificationes ulterior.
-Como alternativa tu pote reinitialisar le optiones de notification pro tote le paginas in tu observatorio.
+Tu non recipera altere notificationes de activitate si tu non visita iste pagina. Tu pote anque reinitialisar le optiones de notification pro tote le paginas in tu observatorio.
 
-             Le systema de notification de {{SITENAME}}, a tu servicio
+Le systema de notification de {{SITENAME}}, a tu servicio
 
 -- 
 Pro configurar le notification per e-mail, visita
@@ -2266,6 +2284,8 @@ $UNWATCHURL
 
 Feedback e ulterior assistentia:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'create',
+'changed' => 'modificate',
 
 # Delete
 'deletepage' => 'Deler pagina',
@@ -2317,7 +2337,7 @@ un altere persona ha ja modificate o revocate le pagina.
 Le ultime modification esseva facite per [[User:$3|$3]] ([[User talk:$3|discussion]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
 'editcomment' => "Le summario del modification esseva: \"''\$1''\".",
 'revertpage' => 'Reverteva modificationes per [[Special:Contributions/$2|$2]] ([[User talk:$2|Discussion]]) al ultime version per [[User:$1|$1]]',
-'revertpage-nouser' => 'Reverteva modificationes per (nomine de usator removite) al ultime version per [[User:$1|$1]]',
+'revertpage-nouser' => 'Reverteva modificationes per un usator celate al ultime version per {{GENDER:$1|[[User:$1|$1]]}}',
 'rollback-success' => 'Revocava modificationes per $1;
 retornava al version per $2.',
 
@@ -2340,6 +2360,8 @@ Vide le [[Special:ProtectedPages|lista de paginas protegite]] pro le lista de pr
 'prot_1movedto2' => 'displaciava [[$1]] verso [[$2]]',
 'protect-badnamespace-title' => 'Spatio de nomines non protegibile',
 'protect-badnamespace-text' => 'Le paginas in iste spatio de nomines non pote esser protegite.',
+'protect-norestrictiontypes-text' => 'Iste pagina non pote esser protegite perque il non ha alcun typo de restriction disponibile.',
+'protect-norestrictiontypes-title' => 'Pagina non protegibile',
 'protect-legend' => 'Confirmar protection',
 'protectcomment' => 'Motivo:',
 'protectexpiry' => 'Expiration:',
@@ -2426,8 +2448,8 @@ Es possibile que le adresse URL es invalide, o que le version ha essite restaura
 'undeletedrevisions' => '{{PLURAL:$1|1 version|$1 versiones}} restaurate',
 'undeletedrevisions-files' => '{{PLURAL:$1|1 version|$1 versiones}} e {{PLURAL:$2|1 file|$2 files}} restaurate',
 'undeletedfiles' => '$1 {{PLURAL:$1|archivo|archivos}} restaurate',
-'cannotundelete' => 'Le restauration ha fallite;
-es possibile que un altere persona ha ja restaurate le pagina.',
+'cannotundelete' => 'Le restauration ha fallite:
+$1',
 'undeletedpage' => "'''$1 ha essite restaurate'''
 
 Consulta le [[Special:Log/delete|registro de deletiones]] pro un lista de deletiones e restaurationes recente.",
@@ -2459,7 +2481,7 @@ $1',
 'blanknamespace' => '(Principal)',
 
 # Contributions
-'contributions' => 'Contributiones del usator',
+'contributions' => 'Contributiones del {{GENDER:$1|usator}}',
 'contributions-title' => 'Contributiones del usator $1',
 'mycontris' => 'Contributiones',
 'contribsub2' => 'Pro $1 ($2)',
@@ -2742,6 +2764,7 @@ non pote renominar un pagina al mesme titulo.',
 'immobile-target-namespace-iw' => 'Un ligamine interwiki non es un destination valide pro le renomination de un pagina.',
 'immobile-source-page' => 'Iste pagina non es renominabile.',
 'immobile-target-page' => 'Non pote renominar a iste titulo de destination.',
+'bad-target-model' => 'Le destination desirate usa un altere modello de contento. Non es possibile converter de $1 a $2.',
 'imagenocrossnamespace' => 'Impossibile renominar un file verso un spatio de nomines non-file',
 'nonfile-cannot-move-to-file' => 'Impossibile renominar un non-file verso le spatio de nomines file',
 'imagetypemismatch' => 'Le nove extension del nomine del file non corresponde al typo del file',
@@ -2852,6 +2875,7 @@ Salveguarda lo in tu computator e incarga lo hic.',
 'import-error-interwiki' => 'Le pagina "$1" non es importate perque su nomine es reservate pro ligation externe (interwiki).',
 'import-error-special' => 'Le pagina "$1" non es importate perque illo pertine a un spatio de nomines special que non permitte paginas.',
 'import-error-invalid' => 'Le pagina "$1" non es importate perque su nomine es invalide.',
+'import-error-unserialize' => 'Le version $2 del pagina "$1" non pote esser disserialisate. Il ha essite reportate que iste version usa le modello de contento $3 serialisate como $4.',
 'import-options-wrong' => 'Mal {{PLURAL:$2|option|optiones}}: <nowiki>$1</nowiki>',
 'import-rootpage-invalid' => 'Le pagina radice specificate es un titulo invalide.',
 'import-rootpage-nosubpage' => 'Le spatio de nomines "$1" del pagina radice non permitte subpaginas.',
@@ -2866,7 +2890,6 @@ Salveguarda lo in tu computator e incarga lo hic.',
 
 # JavaScriptTest
 'javascripttest' => 'Test de JavaScript',
-'javascripttest-disabled' => 'Iste function non ha essite activate in iste wiki.',
 'javascripttest-title' => 'Execution de $1 tests',
 'javascripttest-pagetext-noframework' => 'Iste pagina es reservate pro le execution de tests de JavaScript.',
 'javascripttest-pagetext-unknownframework' => 'Structura de test "$1" incognite.',
@@ -3008,12 +3031,14 @@ Le causa es probabilemente un ligamine verso un sito externe que es presente in 
 'pageinfo-default-sort' => 'Clave de ordination predefinite',
 'pageinfo-length' => 'Dimension del pagina (in bytes)',
 'pageinfo-article-id' => 'ID del pagina',
-'pageinfo-robot-policy' => 'Stato del motor de recerca',
-'pageinfo-robot-index' => 'Indexabile',
-'pageinfo-robot-noindex' => 'Non indexabile',
+'pageinfo-language' => 'Lingua del contento del pagina',
+'pageinfo-robot-policy' => 'Indexation per robots',
+'pageinfo-robot-index' => 'Permittite',
+'pageinfo-robot-noindex' => 'Non permittite',
 'pageinfo-views' => 'Numero de visitas',
 'pageinfo-watchers' => 'Numero de observatores del pagina',
-'pageinfo-redirects-name' => 'Redirectiones verso iste pagina',
+'pageinfo-few-watchers' => 'Minus de $1 {{PLURAL:$1|observator|observatores}}',
+'pageinfo-redirects-name' => 'Numero de redirectiones verso iste pagina',
 'pageinfo-subpages-name' => 'Subpaginas de iste pagina',
 'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|redirection|redirectiones}}; $3 {{PLURAL:$3|non-redirection|non-redirectiones}})',
 'pageinfo-firstuser' => 'Creator del pagina',
@@ -3027,6 +3052,19 @@ Le causa es probabilemente un ligamine verso un sito externe que es presente in 
 'pageinfo-magic-words' => '{{PLURAL:$1|Parola|Parolas}} magic ($1)',
 'pageinfo-hidden-categories' => '{{PLURAL:$1|Categoria|Categorias}} celate ($1)',
 'pageinfo-templates' => '{{PLURAL:$1|Patrono|Patronos}} transcludite ($1)',
+'pageinfo-transclusions' => '{{PLURAL:$1|Pagina|Paginas}} in que iste pagina es transcludite ($1)',
+'pageinfo-toolboxlink' => 'Information sur le pagina',
+'pageinfo-redirectsto' => 'Redirige a',
+'pageinfo-redirectsto-info' => 'info',
+'pageinfo-contentpage' => 'Contate como pagina de contento',
+'pageinfo-contentpage-yes' => 'Si',
+'pageinfo-protect-cascading' => 'Protection in cascada a partir de hic',
+'pageinfo-protect-cascading-yes' => 'Si',
+'pageinfo-protect-cascading-from' => 'Protection in cascada a partir de',
+'pageinfo-category-info' => 'Information de categoria',
+'pageinfo-category-pages' => 'Numero de paginas',
+'pageinfo-category-subcats' => 'Numero de subcategorias',
+'pageinfo-category-files' => 'Numero de files',
 
 # Skin names
 'skinname-standard' => 'Classic',
@@ -3048,6 +3086,8 @@ Le causa es probabilemente un ligamine verso un sito externe que es presente in 
 'markedaspatrollederror' => 'Impossibile marcar como patruliate',
 'markedaspatrollederrortext' => 'Tu debe specificar un version a marcar como patruliate.',
 'markedaspatrollederror-noautopatrol' => 'Tu non es permittite a marcar tu proprie modificationes como patruliate.',
+'markedaspatrollednotify' => 'Iste modification de $1 ha essite marcate como patruliate.',
+'markedaspatrollederrornotify' => 'Le marcar como patruliate ha fallite.',
 
 # Patrol log
 'patrol-log-page' => 'Registro de patrulia',
@@ -3081,6 +3121,7 @@ Le execution de illo pote compromitter le securitate de tu systema.",
 'file-nohires' => 'Non disponibile in resolution plus alte.',
 'svg-long-desc' => 'File SVG, dimensiones nominal: $1 × $2 pixels, grandor del file: $3',
 'svg-long-desc-animated' => 'File SVG animate, dimensiones nominal: $1 × $2 pixels, grandor del file: $3',
+'svg-long-error' => 'File SVG invalide: $1',
 'show-big-image' => 'Plen resolution',
 'show-big-image-preview' => ' Dimension de iste previsualisation: $1.',
 'show-big-image-other' => 'Altere {{PLURAL:$2|resolution|resolutiones}}: $1.',
@@ -3110,7 +3151,10 @@ Le execution de illo pote compromitter le securitate de tu systema.",
 'minutes' => '{{PLURAL:$1|$1 minuta|$1 minutas}}',
 'hours' => '{{PLURAL:$1|$1 hora|$1 horas}}',
 'days' => '{{PLURAL:$1|$1 die|$1 dies}}',
+'months' => '{{PLURAL:$1|$1 mense|$1 menses}}',
+'years' => '{{PLURAL:$1|$1 anno|$1 annos}}',
 'ago' => '$1 retro',
+'just-now' => 'Justo nunc',
 
 # Bad image list
 'bad_image_list' => 'Le formato es como seque:
@@ -3326,7 +3370,7 @@ Le alteres essera initialmente celate.
 'exif-compression-4' => 'CCITT Group 4 codification fax',
 
 'exif-copyrighted-true' => 'Sub copyright',
-'exif-copyrighted-false' => 'Dominio public',
+'exif-copyrighted-false' => 'Stato de copyright non definite',
 
 'exif-unknowndate' => 'Data incognite',
 
@@ -3596,7 +3640,7 @@ Iste codice de confirmation expirara a $4.',
 'confirmemail_body_set' => 'Un persona, probabilemente tu, usante le adresse IP $1,
 ha specificate que iste adresse de e-mail pertine al conto "$2" in {{SITENAME}}.
 
-Pro confirmar que iste conto es realmente tue, e pro activar le functiones
+Pro confirmar que iste conto vermente pertine a te, e pro activar le functionalitate
 de e-mail in {{SITENAME}}, visita iste ligamine in tu navigator:
 
 $3
@@ -3606,13 +3650,14 @@ pro cancellar le confirmation del adresse de e-mail:
 
 $5
 
-Iste codice de confirmation expirara a $4.',
+Iste codice de confirmation expirara le $6 a $7.',
 'confirmemail_invalidated' => 'Confirmation del adresse de e-mail cancellate',
 'invalidateemail' => 'Cancellar confirmation del adresse de e-mail',
 
 # Scary transclusion
 'scarytranscludedisabled' => '[Le transclusion interwiki es disactivate]',
 'scarytranscludefailed' => '[Falleva de obtener le patrono pro $1]',
+'scarytranscludefailed-httpstatus' => '[Obtention de patrono fallite pro $1: HTTP $2]',
 'scarytranscludetoolong' => '[URL es troppo longe]',
 
 # Delete conflict
@@ -3722,6 +3767,7 @@ Tu pote etiam [[Special:EditWatchlist|usar le editor standard]].',
 'version-license' => 'Licentia',
 'version-poweredby-credits' => "Iste wiki es actionate per '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others' => 'alteres',
+'version-credits-summary' => 'Nos vole recognoscer le sequente personas pro lor contribution a [[Special:Version|MediaWiki]].',
 'version-license-info' => 'MediaWiki es software libere; vos pote redistribuer lo e/o modificar lo sub le conditiones del Licentia Public General de GNU publicate per le Free Software Foundation; version 2 del Licentia, o (a vostre option) qualcunque version posterior.
 
 Iste programma es distribuite in le sperantia que illo sia utile, ma SIN GARANTIA; sin mesmo le implicite garantia de COMMERCIALISATION o APTITUDE PRO UN PROPOSITO PARTICULAR. Vide le Licentia Public General de GNU pro plus detalios.
@@ -3838,17 +3884,17 @@ Le imagines se monstra in plen resolution, le altere typos de file se executa di
 'sqlite-no-fts' => '$1 sin supporto de recerca de texto integre',
 
 # New logging system
-'logentry-delete-delete' => '$1 deleva le pagina $3',
-'logentry-delete-restore' => '$1 restaurava le pagina $3',
-'logentry-delete-event' => '$1 cambiava le visibilitate de {{PLURAL:$5|un entrata|$5 entratas}} de registro in $3: $4',
-'logentry-delete-revision' => '$1 cambiava le visibilitate de {{PLURAL:$5|un version|$5 versiones}} del pagina $3: $4',
-'logentry-delete-event-legacy' => '$1 cambiava le visibilitate de entratas de registro in $3',
-'logentry-delete-revision-legacy' => '$1 cambiava le visibilitate de versiones del pagina $3',
-'logentry-suppress-delete' => '$1 supprimeva le pagina $3',
-'logentry-suppress-event' => '$1 secretemente cambiava le visibilitate de {{PLURAL:$5|un entrata|$5 entratas}} de registro in $3: $4',
-'logentry-suppress-revision' => '$1 secretemente cambiava le visibilitate de {{PLURAL:$5|un version|$5 versiones}} del pagina $3: $4',
-'logentry-suppress-event-legacy' => '$1 secretemente cambiava le visibilitate de entratas de registro in $3',
-'logentry-suppress-revision-legacy' => '$1 secretemente cambiava le visibilitate de versiones del pagina $3',
+'logentry-delete-delete' => '$1 {{GENDER:$2|deleva}} le pagina $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|restaurava}} le pagina $3',
+'logentry-delete-event' => '$1 {{GENDER:$2|cambiava}} le visibilitate de {{PLURAL:$5|un entrata|$5 entratas}} de registro in $3: $4',
+'logentry-delete-revision' => '$1 {{GENDER:$2|cambiava}} le visibilitate de {{PLURAL:$5|un version|$5 versiones}} del pagina $3: $4',
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|cambiava}} le visibilitate de entratas de registro in $3',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|cambiava}} le visibilitate de versiones del pagina $3',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|supprimeva}} le pagina $3',
+'logentry-suppress-event' => '$1 secretemente {{GENDER:$2|cambiava}} le visibilitate de {{PLURAL:$5|un entrata|$5 entratas}} de registro in $3: $4',
+'logentry-suppress-revision' => '$1 secretemente {{GENDER:$2|cambiava}} le visibilitate de {{PLURAL:$5|un version|$5 versiones}} del pagina $3: $4',
+'logentry-suppress-event-legacy' => '$1 secretemente {{GENDER:$2|cambiava}} le visibilitate de entratas de registro in $3',
+'logentry-suppress-revision-legacy' => '$1 secretemente {{GENDER:$2|cambiava}} le visibilitate de versiones del pagina $3',
 'revdelete-content-hid' => 'contento celate',
 'revdelete-summary-hid' => 'summario del modification celate',
 'revdelete-uname-hid' => 'nomine de usator celate',
@@ -3857,17 +3903,21 @@ Le imagines se monstra in plen resolution, le altere typos de file se executa di
 'revdelete-uname-unhid' => 'nomine de usator non plus celate',
 'revdelete-restricted' => 'restrictiones applicate al administratores',
 'revdelete-unrestricted' => 'restrictiones eliminate pro administratores',
-'logentry-move-move' => '$1 renominava le pagina $3 a $4',
-'logentry-move-move-noredirect' => '$1 renominava le pagina $3 a $4 sin lassar un redirection',
-'logentry-move-move_redir' => '$1 renominava le pagina $3 a $4, superscribente un redirection',
-'logentry-move-move_redir-noredirect' => '$1 renominava le pagina $3 a $4, superscribente un redirection sin lassar un nove redirection',
-'logentry-patrol-patrol' => '$1 marcava le version $4 del pagina $3 como patruliate',
-'logentry-patrol-patrol-auto' => '$1 automaticamente marcava le version $4 del pagina $3 como patruliate',
-'logentry-newusers-newusers' => 'Le conto de usator $1 ha essite create',
-'logentry-newusers-create' => 'Le conto de usator $1 ha essite create',
-'logentry-newusers-create2' => 'Le conto de usator $3 ha essite create per $1',
-'logentry-newusers-autocreate' => 'Le conto $1 ha essite create automaticamente',
-'newuserlog-byemail' => 'contrasigno inviate per e-mail',
+'logentry-move-move' => '$1 {{GENDER:$2|renominava}} le pagina $3 a $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|renominava}} le pagina $3 a $4 sin lassar un redirection',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|renominava}} le pagina $3 a $4, superscribente un redirection',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|renominava}} le pagina $3 a $4, superscribente un redirection sin lassar un nove redirection',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|marcava}} le version $4 del pagina $3 como patruliate',
+'logentry-patrol-patrol-auto' => '$1 automaticamente {{GENDER:$2|marcava}} le version $4 del pagina $3 como patruliate',
+'logentry-newusers-newusers' => 'Le conto de usator $1 ha essite {{GENDER:$2|create}}',
+'logentry-newusers-create' => 'Le conto de usator $1 ha essite {{GENDER:$2|create}}',
+'logentry-newusers-create2' => 'Le conto de usator $3 ha essite {{GENDER:$2|create}} per $1',
+'logentry-newusers-byemail' => 'Le conto de usator $3 ha essite {{GENDER:$2|create}} per $1 e le contrasigno ha essite inviate per e-mail',
+'logentry-newusers-autocreate' => 'Le conto $1 ha essite {{GENDER:$2|create}} automaticamente',
+'logentry-rights-rights' => '$1 {{GENDER:$2|cambiava}} le appertinentia a gruppos pro $3 de $4 a $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$2|cambiava}} le appertinentia a gruppos pro $3',
+'logentry-rights-autopromote' => '$1 ha essite automaticamente {{GENDER:$2|promovite}} de $4 a $5',
+'rightsnone' => '(nulle)',
 
 # Feedback
 'feedback-bugornote' => 'Si tu es preste a describer un problema technic in detalio, per favor [$1 reporta un falta].
@@ -3921,6 +3971,7 @@ Si non, tu pote usar le formulario facile hic infra. Tu commento essera addite a
 'api-error-ok-but-empty' => 'Error interne: nulle responsa del servitor.',
 'api-error-overwrite' => 'Superscriber un file existente non es permittite.',
 'api-error-stashfailed' => 'Error interne: le servitor non poteva immagazinar le file temporari.',
+'api-error-publishfailed' => 'Error interne: le servitor non poteva publicar le file temporari.',
 'api-error-timeout' => 'Le servitor non ha respondite intra le tempore expectate.',
 'api-error-unclassified' => 'Un error incognite ha occurrite.',
 'api-error-unknown-code' => 'Error incognite: "$1"',
@@ -3934,11 +3985,14 @@ Si non, tu pote usar le formulario facile hic infra. Tu commento essera addite a
 'duration-seconds' => '$1 {{PLURAL:$1|secunda|secundas}}',
 'duration-minutes' => '$1 {{PLURAL:$1|minuta|minutas}}',
 'duration-hours' => '$1 {{PLURAL:$1|hora|horas}}',
-'duration-days' => '$1 {{PLURAL:$1|die|dies}} retro',
+'duration-days' => '$1 {{PLURAL:$1|die|dies}}',
 'duration-weeks' => '$1 {{PLURAL:$1|septimana|septimanas}}',
 'duration-years' => '$1 {{PLURAL:$1|anno|annos}}',
 'duration-decades' => '$1 {{PLURAL:$1|decennio|decennios}}',
 'duration-centuries' => '$1 {{PLURAL:$1|seculo|seculos}}',
 'duration-millennia' => '$1 {{PLURAL:$1|millennio|millennios}}',
+
+# Image rotation
+'rotate-comment' => 'Imagine rotate de $1 {{PLURAL:$1|grado|grados}} in senso horologic',
 
 );

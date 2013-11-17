@@ -1,23 +1,25 @@
 <?php
-# Copyright (C) 2004, 2010 Brion Vibber <brion@pobox.com>
-# http://www.mediawiki.org/
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-# http://www.gnu.org/copyleft/gpl.html
-
 /**
+ * Helper code for the MediaWiki parser test suite.
+ *
+ * Copyright © 2004, 2010 Brion Vibber <brion@pobox.com>
+ * http://www.mediawiki.org/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
  * @todo Make this more independent of the configuration (and if possible the database)
  * @todo document
  * @file
@@ -72,6 +74,7 @@ class ParserTest {
 
 	public $regex = "";
 	private $savedGlobals = array();
+
 	/**
 	 * Sets terminal colorization and diff/quick modes depending on OS and
 	 * command-line options (--color and --quick).
@@ -81,14 +84,14 @@ class ParserTest {
 		$this->color = !wfIsWindows() && Maintenance::posix_isatty( 1 );
 
 		if ( isset( $options['color'] ) ) {
-			switch( $options['color'] ) {
-			case 'no':
-				$this->color = false;
-				break;
-			case 'yes':
-			default:
-				$this->color = true;
-				break;
+			switch ( $options['color'] ) {
+				case 'no':
+					$this->color = false;
+					break;
+				case 'yes':
+				default:
+					$this->color = true;
+					break;
 			}
 		}
 
@@ -100,7 +103,7 @@ class ParserTest {
 		$this->showProgress = !isset( $options['quiet'] );
 		$this->showFailure = !(
 			isset( $options['quiet'] )
-			&& ( isset( $options['record'] )
+				&& ( isset( $options['record'] )
 				|| isset( $options['compare'] ) ) ); // redundant output
 
 		$this->showOutput = isset( $options['show-output'] );
@@ -128,6 +131,7 @@ class ParserTest {
 		}
 
 		$this->runDisabled = isset( $options['run-disabled'] );
+		$this->runParsoid = isset( $options['run-parsoid'] );
 
 		$this->hooks = array();
 		$this->functionHooks = array();
@@ -150,23 +154,26 @@ class ParserTest {
 		$wgExtensionAssetsPath = '/extensions';
 		$wgThumbnailScriptPath = false;
 		$wgLockManagers = array( array(
-			'name'          => 'fsLockManager',
-			'class'         => 'FSLockManager',
+			'name' => 'fsLockManager',
+			'class' => 'FSLockManager',
 			'lockDirectory' => wfTempDir() . '/test-repo/lockdir',
+		), array(
+			'name' => 'nullLockManager',
+			'class' => 'NullLockManager',
 		) );
 		$wgLocalFileRepo = array(
-			'class'           => 'LocalRepo',
-			'name'            => 'local',
-			'url'             => 'http://example.com/images',
-			'hashLevels'      => 2,
+			'class' => 'LocalRepo',
+			'name' => 'local',
+			'url' => 'http://example.com/images',
+			'hashLevels' => 2,
 			'transformVia404' => false,
-			'backend'         => new FSFileBackend( array(
-				'name'        => 'local-backend',
+			'backend' => new FSFileBackend( array(
+				'name' => 'local-backend',
 				'lockManager' => 'fsLockManager',
 				'containerPaths' => array(
-					'local-public'  => wfTempDir() . '/test-repo/public',
-					'local-thumb'   => wfTempDir() . '/test-repo/thumb',
-					'local-temp'    => wfTempDir() . '/test-repo/temp',
+					'local-public' => wfTempDir() . '/test-repo/public',
+					'local-thumb' => wfTempDir() . '/test-repo/thumb',
+					'local-temp' => wfTempDir() . '/test-repo/temp',
 					'local-deleted' => wfTempDir() . '/test-repo/deleted',
 				)
 			) )
@@ -201,16 +208,16 @@ class ParserTest {
 		$wgRequest = $context->getRequest();
 
 		if ( $wgStyleDirectory === false ) {
-			$wgStyleDirectory   = "$IP/skins";
+			$wgStyleDirectory = "$IP/skins";
 		}
 
 	}
 
-	public function setupRecorder ( $options ) {
+	public function setupRecorder( $options ) {
 		if ( isset( $options['record'] ) ) {
 			$this->recorder = new DbTestRecorder( $this );
 			$this->recorder->version = isset( $options['setversion'] ) ?
-					$options['setversion'] : SpecialVersion::getVersion();
+				$options['setversion'] : SpecialVersion::getVersion();
 		} elseif ( isset( $options['compare'] ) ) {
 			$this->recorder = new DbTestPreviewer( $this );
 		} else {
@@ -222,11 +229,10 @@ class ParserTest {
 	 * Remove last character if it is a newline
 	 * @group utility
 	 */
-	static public function chomp( $s ) {
+	public static function chomp( $s ) {
 		if ( substr( $s, -1 ) === "\n" ) {
 			return substr( $s, 0, -1 );
-		}
-		else {
+		} else {
 			return $s;
 		}
 	}
@@ -385,7 +391,7 @@ class ParserTest {
 
 			$this->teardownDatabase();
 			$this->recorder->report();
-		} catch (DBError $e) {
+		} catch ( DBError $e ) {
 			echo $e->getMessage();
 		}
 		$this->recorder->end();
@@ -458,8 +464,7 @@ class ParserTest {
 
 		if ( isset( $opts['title'] ) ) {
 			$titleText = $opts['title'];
-		}
-		else {
+		} else {
 			$titleText = 'Parser test';
 		}
 
@@ -627,29 +632,32 @@ class ParserTest {
 			self::getOptionValue( 'wgLinkHolderBatchSize', $opts, 1000 );
 
 		$settings = array(
-			'wgServer' => 'http://Britney-Spears',
+			'wgServer' => 'http://example.org',
 			'wgScript' => '/index.php',
 			'wgScriptPath' => '/',
 			'wgArticlePath' => '/wiki/$1',
 			'wgActionPaths' => array(),
-			'wgLockManagers' => array(
-				'name'          => 'fsLockManager',
-				'class'         => 'FSLockManager',
+			'wgLockManagers' => array( array(
+				'name' => 'fsLockManager',
+				'class' => 'FSLockManager',
 				'lockDirectory' => $this->uploadDir . '/lockdir',
-			),
+			), array(
+				'name' => 'nullLockManager',
+				'class' => 'NullLockManager',
+			) ),
 			'wgLocalFileRepo' => array(
 				'class' => 'LocalRepo',
 				'name' => 'local',
 				'url' => 'http://example.com/images',
 				'hashLevels' => 2,
 				'transformVia404' => false,
-				'backend'         => new FSFileBackend( array(
-					'name'        => 'local-backend',
+				'backend' => new FSFileBackend( array(
+					'name' => 'local-backend',
 					'lockManager' => 'fsLockManager',
 					'containerPaths' => array(
-						'local-public'  => $this->uploadDir,
-						'local-thumb'   => $this->uploadDir . '/thumb',
-						'local-temp'    => $this->uploadDir . '/temp',
+						'local-public' => $this->uploadDir,
+						'local-thumb' => $this->uploadDir . '/thumb',
+						'local-temp' => $this->uploadDir . '/temp',
 						'local-deleted' => $this->uploadDir . '/delete',
 					)
 				) )
@@ -669,7 +677,7 @@ class ParserTest {
 			'wgNoFollowLinks' => true,
 			'wgNoFollowDomainExceptions' => array(),
 			'wgThumbnailScriptPath' => false,
-			'wgUseImageResize' => false,
+			'wgUseImageResize' => true,
 			'wgLocaltimezone' => 'UTC',
 			'wgAllowExternalImages' => true,
 			'wgUseTidy' => false,
@@ -677,10 +685,10 @@ class ParserTest {
 			'wgVariantArticlePath' => false,
 			'wgGroupPermissions' => array( '*' => array(
 				'createaccount' => true,
-				'read'          => true,
-				'edit'          => true,
-				'createpage'    => true,
-				'createtalk'    => true,
+				'read' => true,
+				'edit' => true,
+				'createpage' => true,
+				'createtalk' => true,
 			) ),
 			'wgNamespaceProtection' => array( NS_MEDIAWIKI => 'editinterface' ),
 			'wgDefaultExternalStore' => array(),
@@ -747,7 +755,7 @@ class ParserTest {
 		$tables = array( 'user', 'user_properties', 'user_former_groups', 'page', 'page_restrictions',
 			'protected_titles', 'revision', 'text', 'pagelinks', 'imagelinks',
 			'categorylinks', 'templatelinks', 'externallinks', 'langlinks', 'iwlinks',
-			'site_stats', 'hitcounter',	'ipblocks', 'image', 'oldimage',
+			'site_stats', 'hitcounter', 'ipblocks', 'image', 'oldimage',
 			'recentchanges', 'watchlist', 'interwiki', 'logging',
 			'querycache', 'objectcache', 'job', 'l10n_cache', 'redirect', 'querycachetwo',
 			'archive', 'user_groups', 'page_props', 'category', 'msg_resource', 'msg_resource_links'
@@ -810,44 +818,44 @@ class ParserTest {
 
 			# Anonymous user
 			$this->db->insert( 'user', array(
-				'user_id'         => 0,
-				'user_name'       => 'Anonymous' ) );
+				'user_id' => 0,
+				'user_name' => 'Anonymous' ) );
 		}
 
 		# Hack: insert a few Wikipedia in-project interwiki prefixes,
 		# for testing inter-language links
 		$this->db->insert( 'interwiki', array(
 			array( 'iw_prefix' => 'wikipedia',
-				   'iw_url'    => 'http://en.wikipedia.org/wiki/$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 0 ),
+				'iw_url' => 'http://en.wikipedia.org/wiki/$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 0 ),
 			array( 'iw_prefix' => 'meatball',
-				   'iw_url'    => 'http://www.usemod.com/cgi-bin/mb.pl?$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 0 ),
+				'iw_url' => 'http://www.usemod.com/cgi-bin/mb.pl?$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 0 ),
 			array( 'iw_prefix' => 'zh',
-				   'iw_url'    => 'http://zh.wikipedia.org/wiki/$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 1 ),
+				'iw_url' => 'http://zh.wikipedia.org/wiki/$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 1 ),
 			array( 'iw_prefix' => 'es',
-				   'iw_url'    => 'http://es.wikipedia.org/wiki/$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 1 ),
+				'iw_url' => 'http://es.wikipedia.org/wiki/$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 1 ),
 			array( 'iw_prefix' => 'fr',
-				   'iw_url'    => 'http://fr.wikipedia.org/wiki/$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 1 ),
+				'iw_url' => 'http://fr.wikipedia.org/wiki/$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 1 ),
 			array( 'iw_prefix' => 'ru',
-				   'iw_url'    => 'http://ru.wikipedia.org/wiki/$1',
-				   'iw_api'    => '',
-				   'iw_wikiid' => '',
-				   'iw_local'  => 1 ),
-			) );
+				'iw_url' => 'http://ru.wikipedia.org/wiki/$1',
+				'iw_api' => '',
+				'iw_wikiid' => '',
+				'iw_local' => 1 ),
+		) );
 
 		# Update certain things in site_stats
 		$this->db->insert( 'site_stats', array( 'ss_row_id' => 1, 'ss_images' => 2, 'ss_good_articles' => 1 ) );
@@ -862,30 +870,30 @@ class ParserTest {
 		$user = User::createNew( 'WikiSysop' );
 		$image = wfLocalFile( Title::makeTitle( NS_FILE, 'Foobar.jpg' ) );
 		$image->recordUpload2( '', 'Upload of some lame file', 'Some lame file', array(
-			'size'        => 12345,
-			'width'       => 1941,
-			'height'      => 220,
-			'bits'        => 24,
-			'media_type'  => MEDIATYPE_BITMAP,
-			'mime'        => 'image/jpeg',
-			'metadata'    => serialize( array() ),
-			'sha1'        => wfBaseConvert( '', 16, 36, 31 ),
-			'fileExists'  => true
-			), $this->db->timestamp( '20010115123500' ), $user );
+			'size' => 12345,
+			'width' => 1941,
+			'height' => 220,
+			'bits' => 24,
+			'media_type' => MEDIATYPE_BITMAP,
+			'mime' => 'image/jpeg',
+			'metadata' => serialize( array() ),
+			'sha1' => wfBaseConvert( '', 16, 36, 31 ),
+			'fileExists' => true
+		), $this->db->timestamp( '20010115123500' ), $user );
 
 		# This image will be blacklisted in [[MediaWiki:Bad image list]]
 		$image = wfLocalFile( Title::makeTitle( NS_FILE, 'Bad.jpg' ) );
 		$image->recordUpload2( '', 'zomgnotcensored', 'Borderline image', array(
-			'size'        => 12345,
-			'width'       => 320,
-			'height'      => 240,
-			'bits'        => 24,
-			'media_type'  => MEDIATYPE_BITMAP,
-			'mime'        => 'image/jpeg',
-			'metadata'    => serialize( array() ),
-			'sha1'        => wfBaseConvert( '', 16, 36, 31 ),
-			'fileExists'  => true
-			), $this->db->timestamp( '20010115123500' ), $user );
+			'size' => 12345,
+			'width' => 320,
+			'height' => 240,
+			'bits' => 24,
+			'media_type' => MEDIATYPE_BITMAP,
+			'mime' => 'image/jpeg',
+			'metadata' => serialize( array() ),
+			'sha1' => wfBaseConvert( '', 16, 36, 31 ),
+			'fileExists' => true
+		), $this->db->timestamp( '20010115123500' ), $user );
 	}
 
 	public function teardownDatabase() {
@@ -899,7 +907,7 @@ class ParserTest {
 		$this->databaseSetupDone = false;
 
 		if ( $this->useTemporaryTables ) {
-			if( $this->db->getType() == 'sqlite' ) {
+			if ( $this->db->getType() == 'sqlite' ) {
 				# Under SQLite the searchindex table is virtual and need
 				# to be explicitly destroyed. See bug 29912
 				# See also MediaWikiTestCase::destroyDB()
@@ -918,8 +926,9 @@ class ParserTest {
 			$this->db->query( $sql );
 		}
 
-		if ( $this->db->getType() == 'oracle' )
+		if ( $this->db->getType() == 'oracle' ) {
 			$this->db->query( 'BEGIN FILL_WIKI_INFO; END;' );
+		}
 
 		$this->teardownGlobals();
 	}
@@ -964,7 +973,7 @@ class ParserTest {
 	private function teardownGlobals() {
 		RepoGroup::destroySingleton();
 		FileBackendGroup::destroySingleton();
-		LockManagerGroup::destroySingleton();
+		LockManagerGroup::destroySingletons();
 		LinkCache::singleton()->clear();
 
 		foreach ( $this->savedGlobals as $var => $val ) {
@@ -982,12 +991,22 @@ class ParserTest {
 
 		// delete the files first, then the dirs.
 		self::deleteFiles(
-			array (
+			array(
 				"$dir/3/3a/Foobar.jpg",
 				"$dir/thumb/3/3a/Foobar.jpg/180px-Foobar.jpg",
 				"$dir/thumb/3/3a/Foobar.jpg/200px-Foobar.jpg",
 				"$dir/thumb/3/3a/Foobar.jpg/640px-Foobar.jpg",
 				"$dir/thumb/3/3a/Foobar.jpg/120px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/1280px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/20px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/270px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/300px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/30px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/360px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/400px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/40px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/70px-Foobar.jpg",
+				"$dir/thumb/3/3a/Foobar.jpg/960px-Foobar.jpg",
 
 				"$dir/0/09/Bad.jpg",
 
@@ -996,7 +1015,7 @@ class ParserTest {
 		);
 
 		self::deleteDirs(
-			array (
+			array(
 				"$dir/3/3a",
 				"$dir/3",
 				"$dir/thumb/6/65",
@@ -1117,8 +1136,8 @@ class ParserTest {
 		$outfile = "$prefix-$outFileTail";
 		$this->dumpToFile( $output, $outfile );
 
-		$shellInfile = wfEscapeShellArg($infile);
-		$shellOutfile = wfEscapeShellArg($outfile);
+		$shellInfile = wfEscapeShellArg( $infile );
+		$shellOutfile = wfEscapeShellArg( $outfile );
 
 		global $wgDiff3;
 		// we assume that people with diff3 also have usual diff
@@ -1154,7 +1173,7 @@ class ParserTest {
 		return preg_replace(
 			array( '/^(-.*)$/m', '/^(\+.*)$/m' ),
 			array( $this->term->color( 34 ) . '$1' . $this->term->reset(),
-				   $this->term->color( 31 ) . '$1' . $this->term->reset() ),
+				$this->term->color( 31 ) . '$1' . $this->term->reset() ),
 			$text );
 	}
 
@@ -1177,7 +1196,7 @@ class ParserTest {
 	 * @param $line Integer: the input line number, for reporting errors
 	 * @param $ignoreDuplicate Boolean: whether to silently ignore duplicate pages
 	 */
-	static public function addArticle( $name, $text, $line = 'unknown', $ignoreDuplicate = '' ) {
+	public static function addArticle( $name, $text, $line = 'unknown', $ignoreDuplicate = '' ) {
 		global $wgCapitalLinks;
 
 		$oldCapitalLinks = $wgCapitalLinks;
@@ -1203,7 +1222,7 @@ class ParserTest {
 			}
 		}
 
-		$page->doEdit( $text, '', EDIT_NEW );
+		$page->doEditContent( ContentHandler::makeContent( $text, $title ), '', EDIT_NEW );
 
 		$wgCapitalLinks = $oldCapitalLinks;
 	}
@@ -1219,7 +1238,7 @@ class ParserTest {
 	public function requireHook( $name ) {
 		global $wgParser;
 
-		$wgParser->firstCallInit( ); // make sure hooks are loaded.
+		$wgParser->firstCallInit(); // make sure hooks are loaded.
 
 		if ( isset( $wgParser->mTagHooks[$name] ) ) {
 			$this->hooks[$name] = $wgParser->mTagHooks[$name];
@@ -1242,7 +1261,7 @@ class ParserTest {
 	public function requireFunctionHook( $name ) {
 		global $wgParser;
 
-		$wgParser->firstCallInit( ); // make sure hooks are loaded.
+		$wgParser->firstCallInit(); // make sure hooks are loaded.
 
 		if ( isset( $wgParser->mFunctionHooks[$name] ) ) {
 			$this->functionHooks[$name] = $wgParser->mFunctionHooks[$name];
@@ -1274,9 +1293,9 @@ class ParserTest {
 	private function wellFormed( $text ) {
 		$html =
 			Sanitizer::hackDocType() .
-			'<html>' .
-			$text .
-			'</html>';
+				'<html>' .
+				$text .
+				'</html>';
 
 		$parser = xml_parser_create( "UTF-8" );
 

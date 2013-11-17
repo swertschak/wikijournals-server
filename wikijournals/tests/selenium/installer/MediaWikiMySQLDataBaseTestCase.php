@@ -1,5 +1,4 @@
 <?php
-
 /**
  * MediaWikiOnAlreadyInstalledTestCase
  *
@@ -22,57 +21,51 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * http://www.gnu.org/copyleft/gpl.html
- *
- * @addtogroup Maintenance
- *
  */
 
-
-require_once (__DIR__.'/'.'MediaWikiInstallationCommonFunction.php');
+require_once ( __DIR__ . '/MediaWikiInstallationCommonFunction.php' );
 
 /**
  * Test Case ID   : 01 (http://www.mediawiki.org/wiki/New_installer/Test_plan)
  * Test Case Name : Install Mediawiki using 'MySQL' database type successfully
  * Version        : MediaWiki 1.18alpha
-*/
+ */
 
 class MediaWikiMySQLDataBaseTestCase extends MediaWikiInstallationCommonFunction {
+	function setUp() {
+		parent::setUp();
+	}
 
-    function setUp() {
-        parent::setUp();
-    }
+	// Verify  MediaWiki installation using 'MySQL' database type
+	public function testMySQLDatabaseSuccess() {
+		$databaseName = DB_NAME_PREFIX . "_sql_db";
 
-    // Verify  MediaWiki installation using 'MySQL' database type
-    public function testMySQLDatabaseSuccess() {
+		parent::navigateConnetToDatabasePage();
 
-        $databaseName = DB_NAME_PREFIX."_sql_db";
+		// Verify 'MySQL" is selected as the default database type
+		$this->assertEquals( "MySQL settings", $this->getText( "//div[@id='DB_wrapper_mysql']/h3" ) );
 
-        parent::navigateConnetToDatabasePage();
+		// Change 'Database name'
+		$defaultDbName = $this->getText( "mysql_wgDBname" );
+		$this->type( "mysql_wgDBname", " " );
+		$this->type( "mysql_wgDBname", $databaseName );
+		$this->assertNotEquals( $defaultDbName, $databaseName );
 
-        // Verify 'MySQL" is selected as the default database type
-        $this->assertEquals( "MySQL settings", $this->getText( "//div[@id='DB_wrapper_mysql']/h3" ));
+		// 'Database settings' page
+		parent::clickContinueButton();
 
-        // Change 'Database name'
-        $defaultDbName = $this->getText( "mysql_wgDBname" );
-        $this->type( "mysql_wgDBname", " ");
-        $this->type( "mysql_wgDBname", $databaseName );
-        $this->assertNotEquals( $defaultDbName, $databaseName );
+		// 'Name' page
+		parent::clickContinueButton();
+		parent::completeNamePage();
 
-        // 'Database settings' page
-        parent::clickContinueButton();
+		// 'Options page
+		parent::clickContinueButton();
 
-        // 'Name' page
-        parent::clickContinueButton();
-        parent::completeNamePage();
+		// 'Install' page
+		parent::clickContinueButton();
 
-        // 'Options page
-        parent::clickContinueButton();
-
-        // 'Install' page
-        parent::clickContinueButton();
-
-        // 'Complete' page
-        parent::completePageSuccessfull();
-        parent::restartInstallation();
-    }
+		// 'Complete' page
+		parent::completePageSuccessfull();
+		parent::restartInstallation();
+	}
 }

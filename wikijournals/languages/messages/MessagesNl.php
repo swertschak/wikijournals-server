@@ -17,9 +17,12 @@
  * @author Extended by Hendrik Maryns <hendrik.maryns@uni-tuebingen.de>, March 2007.
  * @author Fryed-peach
  * @author Galwaygirl
+ * @author Geitost
  * @author GerardM
  * @author Hamaryns
+ * @author HanV
  * @author Jens Liebenau
+ * @author JurgenNL
  * @author Kaganer
  * @author Kippenvlees1
  * @author Krinkle
@@ -36,13 +39,18 @@
  * @author Saruman
  * @author Servien
  * @author Siebrand
+ * @author Sjoerddebruin
  * @author Slomox
+ * @author Southparkfan
  * @author TBloemink
  * @author Tedjuh10
  * @author Tjcool007
  * @author Trijnstel
  * @author Troefkaart
  * @author Tvdm
+ * @author Wiki13
+ * @author Wikiklaas
+ * @author Wolf Lambert
  * @author לערי ריינהארט
  */
 
@@ -102,7 +110,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__INHOUD_DWINGEN__', '__FORCEERINHOUD__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__INHOUD__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__NIETBEWERKBARESECTIE__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__GEENKOP__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'HUIDIGEMAAND', 'HUIDIGEMAAND2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'HUIDIGEMAAND1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'HUIDIGEMAANDNAAM', 'CURRENTMONTHNAME' ),
@@ -172,7 +179,7 @@ $magicWords = array(
 	'img_middle'                => array( '1', 'midden', 'middle' ),
 	'img_bottom'                => array( '1', 'beneden', 'bottom' ),
 	'img_text_bottom'           => array( '1', 'tekst-beneden', 'text-bottom' ),
-	'img_link'                  => array( '1', 'verwijzing=$1', 'link=$1' ),
+	'img_link'                  => array( '1', 'koppeling=$1', 'verwijzing=$1', 'link=$1' ),
 	'sitename'                  => array( '1', 'SITENAAM', 'SITENAME' ),
 	'ns'                        => array( '0', 'NR:', 'NS:' ),
 	'nse'                       => array( '0', 'NRE:', 'NSE:' ),
@@ -212,7 +219,7 @@ $magicWords = array(
 	'displaytitle'              => array( '1', 'WEERGEGEVENTITEL', 'TOONTITEL', 'DISPLAYTITLE' ),
 	'rawsuffix'                 => array( '1', 'V', 'R' ),
 	'newsectionlink'            => array( '1', '__NIEUWESECTIELINK__', '__NIEUWESECTIEKOPPELING__', '__NEWSECTIONLINK__' ),
-	'nonewsectionlink'          => array( '1', '__GEENNIEUWESECTIELINK__', '__GEENNIEUWKOPJEVERWIJZING__', '__NONEWSECTIONLINK__' ),
+	'nonewsectionlink'          => array( '1', '__GEENNIEUWKOPJEKOPPELING__', '__GEENNIEUWESECTIELINK__', '__GEENNIEUWKOPJEVERWIJZING__', '__NONEWSECTIONLINK__' ),
 	'currentversion'            => array( '1', 'HUIDIGEVERSIE', 'CURRENTVERSION' ),
 	'urlencode'                 => array( '0', 'URLCODEREN', 'CODEERURL', 'URLENCODE:' ),
 	'anchorencode'              => array( '0', 'ANKERCODEREN', 'CODEERANKER', 'ANCHORENCODE' ),
@@ -243,6 +250,10 @@ $magicWords = array(
 	'url_query'                 => array( '0', 'ZOEKOPDRACHT', 'QUERY' ),
 	'defaultsort_noerror'       => array( '0', 'geenfout', 'noerror' ),
 	'defaultsort_noreplace'     => array( '0', 'nietvervangen', 'noreplace' ),
+	'pagesincategory_all'       => array( '0', 'alle', 'all' ),
+	'pagesincategory_pages'     => array( '0', 'paginas', 'pages' ),
+	'pagesincategory_subcats'   => array( '0', 'ondercategorieen', 'subcats' ),
+	'pagesincategory_files'     => array( '0', 'bestanden', 'files' ),
 );
 
 $specialPageAliases = array(
@@ -315,7 +326,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'RecenteWijzigingen' ),
 	'Recentchangeslinked'       => array( 'RecenteWijzigingenGelinkt', 'VerwanteWijzigingen' ),
 	'Revisiondelete'            => array( 'VersieVerwijderen', 'HerzieningVerwijderen', 'RevisieVerwijderen' ),
-	'RevisionMove'              => array( 'VersieVerplaatsen' ),
 	'Search'                    => array( 'Zoeken' ),
 	'Shortpages'                => array( 'KortePaginas', 'KortePagina’s', 'KortePagina\'s' ),
 	'Specialpages'              => array( 'SpecialePaginas', 'SpecialePagina’s', 'SpecialePagina\'s' ),
@@ -357,12 +367,12 @@ $messages = array(
 'tog-hidepatrolled' => 'Gemarkeerde wijzigingen verbergen in recente wijzigingen',
 'tog-newpageshidepatrolled' => "Gemarkeerde pagina's verbergen in de lijst met nieuwe pagina's",
 'tog-extendwatchlist' => 'Uitgebreide volglijst gebruiken om alle wijzigingen te bekijken, en niet alleen de laatste',
-'tog-usenewrc' => 'Wijzigingen per pagina weergeven in recente wijzigingen en volglijst (vereist JavaScript)',
+'tog-usenewrc' => 'Wijzigingen per pagina weergeven in recente wijzigingen en volglijst',
 'tog-numberheadings' => 'Koppen automatisch nummeren',
-'tog-showtoolbar' => 'Bewerkingswerkbalk weergeven (vereist JavaScript)',
-'tog-editondblclick' => 'Dubbelklikken voor bewerken (vereist JavaScript)',
+'tog-showtoolbar' => 'Bewerkingswerkbalk weergeven',
+'tog-editondblclick' => 'Dubbelklikken voor bewerken',
 'tog-editsection' => 'Bewerken van deelpagina’s mogelijk maken via [bewerken]-koppelingen',
-'tog-editsectiononrightclick' => 'Bewerken van deelpagina’s mogelijk maken met een rechtermuisklik op een tussenkop (vereist JavaScript)',
+'tog-editsectiononrightclick' => 'Bewerken van deelpagina’s mogelijk maken met een rechtermuisklik op een tussenkop',
 'tog-showtoc' => 'Inhoudsopgave weergeven (voor pagina’s met minstens 3 tussenkoppen)',
 'tog-rememberpassword' => 'Aanmeldgegevens onthouden (maximaal $1 {{PLURAL:$1|dag|dagen}})',
 'tog-watchcreations' => "Pagina's die ik aanmaak en bestanden die ik upload automatisch volgen",
@@ -383,7 +393,7 @@ $messages = array(
 'tog-externaleditor' => 'Standaard een externe tekstbewerker gebruiken (alleen voor experts - voor deze functie zijn speciale instellingen nodig. [//www.mediawiki.org/wiki/Manual:External_editors Meer informatie]).',
 'tog-externaldiff' => 'Standaard een extern vergelijkingsprogramma gebruiken (alleen voor experts - voor deze functie zijn speciale instellingen nodig. [//www.mediawiki.org/wiki/Manual:External_editors Meer informatie]).',
 'tog-showjumplinks' => '"ga naar"-toegankelijkheidskoppelingen inschakelen',
-'tog-uselivepreview' => '"live voorvertoning" gebruiken (vereist JavaScript – experimenteel)',
+'tog-uselivepreview' => '"Live voorvertoning" gebruiken (experimenteel)',
 'tog-forceeditsummary' => 'Een melding geven bij een lege bewerkingssamenvatting',
 'tog-watchlisthideown' => 'Eigen bewerkingen op mijn volglijst verbergen',
 'tog-watchlisthidebots' => 'Botbewerkingen op mijn volglijst verbergen',
@@ -484,6 +494,7 @@ $messages = array(
 'newwindow' => '(opent in een nieuw venster)',
 'cancel' => 'Annuleren',
 'moredotdotdot' => 'Meer…',
+'morenotlisted' => 'Deze lijst is niet compleet.',
 'mypage' => 'Gebruikerspagina',
 'mytalk' => 'Overleg',
 'anontalk' => 'Overlegpagina voor dit IP-adres',
@@ -495,7 +506,6 @@ $messages = array(
 'qbbrowse' => 'Bladeren',
 'qbedit' => 'Bewerken',
 'qbpageoptions' => 'Deze pagina',
-'qbpageinfo' => 'Pagina-informatie',
 'qbmyoptions' => "Mijn pagina's",
 'qbspecialpages' => 'Speciale pagina’s',
 'faq' => 'Veel gestelde vragen',
@@ -518,6 +528,7 @@ $messages = array(
 'namespaces' => 'Naamruimten',
 'variants' => 'Varianten',
 
+'navigation-heading' => 'Navigatiemenu',
 'errorpagetitle' => 'Fout',
 'returnto' => 'Terug naar $1.',
 'tagline' => 'Uit {{SITENAME}}',
@@ -585,7 +596,7 @@ $1',
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'Over {{SITENAME}}',
 'aboutpage' => 'Project:Info',
-'copyright' => 'De inhoud is beschikbaar onder de $1.',
+'copyright' => 'De inhoud is beschikbaar onder de $1 tenzij anders aangegeven.',
 'copyrightpage' => '{{ns:project}}:Auteursrechten',
 'currentevents' => 'In het nieuws',
 'currentevents-url' => 'Project:In het nieuws',
@@ -763,10 +774,9 @@ De opgegeven reden is "\'\'$3\'\'".',
 # Login and logout pages
 'logouttext' => "'''U bent nu afgemeld.'''
 
-U kunt {{SITENAME}} nu anoniem gebruiken of weer [[Special:UserLogin|aanmelden]] als dezelfde of een andere gebruiker.
-Mogelijk worden nog een aantal pagina's weergegeven alsof u aangemeld bent totdat u de cache van uw browser leegt.",
-'welcomecreation' => '== Welkom, $1! ==
-Uw gebruiker is geregistreerd.
+Sommige pagina's kunnen blijven weergegeven alsof u nog aangemeld bent, totdat u uw browsercache leegt.",
+'welcomeuser' => 'Welkom, $1!',
+'welcomecreation-msg' => 'Uw gebruiker is aangemaakt.
 Vergeet niet uw [[Special:Preferences|voorkeuren voor {{SITENAME}}]] aan te passen.',
 'yourname' => 'Gebruikersnaam:',
 'yourpassword' => 'Wachtwoord:',
@@ -790,7 +800,7 @@ Vergeet niet uw [[Special:Preferences|voorkeuren voor {{SITENAME}}]] aan te pass
 'gotaccount' => 'Hebt u al een gebruikersnaam? $1.',
 'gotaccountlink' => 'Aanmelden',
 'userlogin-resetlink' => 'Bent u uw aanmeldgegevens vergeten?',
-'createaccountmail' => 'Per e-mail',
+'createaccountmail' => 'Gebruik een tijdelijk willekeurig wachtwoord en stuur het naar het opgegeven e-mailadres',
 'createaccountreason' => 'Reden:',
 'badretype' => 'De ingevoerde wachtwoorden verschillen van elkaar.',
 'userexists' => 'De gekozen gebruikersnaam is al in gebruik.
@@ -841,9 +851,9 @@ dan en blijf uw bestaande wachtwoord gebruiken.',
 Meld u aan nadat u het hebt ontvangen.',
 'blocked-mailpassword' => 'Uw IP-adres is geblokkeerd voor het maken van wijzigingen.
 Om misbruik te voorkomen is het niet mogelijk om een nieuw wachtwoord aan te vragen.',
-'eauthentsent' => 'Er is een bevestigingse-mail naar het opgegeven e-mailadres gezonden.
+'eauthentsent' => 'Er is ter bevestiging een e-mail naar het opgegeven e-mailadres gezonden.
 Volg de aanwijzingen in de e-mail om aan te geven dat het uw e-mailadres is.
-Tot die tijd kunnen er geen e-mails naar het e-mailadres gezonden worden.',
+Tot die tijd worden er geen e-mails naar het e-mailadres gezonden.',
 'throttled-mailpassword' => 'In {{PLURAL:$1|het laatste uur|de laatste $1 uur}} is al een wachtwoordherinnering verzonden.
 Om misbruik te voorkomen wordt er slechts één wachtwoordherinnering per {{PLURAL:$1|uur|$1 uur}} verzonden.',
 'mailerror' => 'Fout bij het verzenden van e-mail: $1',
@@ -859,7 +869,7 @@ Geef een geldig e-mailadres op of laat het veld leeg.',
 'cannotchangeemail' => 'Het e-mailadres voor een gebruiker kan op deze wiki niet gewijzigd worden.',
 'emaildisabled' => 'Deze site kan geen e-mails verzenden.',
 'accountcreated' => 'Gebruiker aangemaakt',
-'accountcreatedtext' => 'De gebruiker $1 is aangemaakt.',
+'accountcreatedtext' => 'De gebruiker [[{{ns:User}}:$1|$1]] ([[{{ns:User talk}}:$1|overleg]]) is aangemaakt.',
 'createaccount-title' => 'Gebruikers registreren voor {{SITENAME}}',
 'createaccount-text' => 'Iemand heeft een gebruiker op {{SITENAME}} ($4) aangemaakt met de naam "$2" en uw e-mailadres.
 Het wachtwoord voor "$2" is "$3".
@@ -876,6 +886,7 @@ Wacht even voordat u het opnieuw probeert.',
 # Email sending
 'php-mail-error-unknown' => 'Er is een onbekende fout opgetreden in de mail()-functie van PHP',
 'user-mail-no-addy' => 'Geprobeerd een e-mail te verzenden zonder een e-mailadres.',
+'user-mail-no-body' => 'Er is geprobeerd een e-mail te verzenden zonder inhoud of met een hele korte inhoud.',
 
 # Change password dialog
 'resetpass' => 'Wachtwoord wijzigen',
@@ -888,7 +899,7 @@ Voer een nieuw wachtwoord in om het aanmelden te voltooien:',
 'retypenew' => 'Herhaling nieuwe wachtwoord:',
 'resetpass_submit' => 'Wachtwoord instellen en aanmelden',
 'resetpass_success' => 'Uw wachtwoord is gewijzigd.
-Bezig met aanmelden…',
+U wordt nu aangemeld...',
 'resetpass_forbidden' => 'Wachtwoorden kunnen niet gewijzigd worden',
 'resetpass-no-info' => 'U dient aangemeld zijn voordat u deze pagina kunt gebruiken.',
 'resetpass-submit-loggedin' => 'Wachtwoord wijzigen',
@@ -896,6 +907,7 @@ Bezig met aanmelden…',
 'resetpass-wrong-oldpass' => 'Het huidige of tijdelijke wachtwoord is ongeldig.
 Mogelijk hebt u uw wachtwoord al gewijzigd of een nieuw tijdelijk wachtwoord aangevraagd.',
 'resetpass-temp-password' => 'Tijdelijk wachtwoord:',
+'resetpass-abort-generic' => 'De wachtwoordwijziging is afgebroken door een uitbreiding.',
 
 # Special:PasswordReset
 'passwordreset' => 'Wachtwoord opnieuw instellen',
@@ -924,7 +936,7 @@ Meld u aan en wijzig het wachtwoord nu. Als u dit verzoek niet zelf heeft gedaan
 Tijdelijk wachtwoord: $2',
 'passwordreset-emailsent' => 'Er is een e-mail voor het opnieuw instellen van een wachtwoord verzonden.',
 'passwordreset-emailsent-capture' => 'Er is een e-mail voor het opnieuw instellen van een wachtwoord verzonden. Deze wordt hieronder weergegeven.',
-'passwordreset-emailerror-capture' => 'Er is een e-mail voor het opnieuw instellen van een wachtwoord aangemaakt. Deze wordt hieronder weergegeven. Het verzenden naar de {{GENDER:$2|gebruiker}} is mislukt om de volgende reden: $1',
+'passwordreset-emailerror-capture' => 'Er is een e-mail voor het opnieuw instellen van een wachtwoord aangemaakt. Deze wordt hieronder weergegeven. Het verzenden naar de gebruiker is mislukt om de volgende reden: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'E-mailadres wijzigen',
@@ -934,6 +946,7 @@ Tijdelijk wachtwoord: $2',
 'changeemail-oldemail' => 'Huidig e-mailadres:',
 'changeemail-newemail' => 'Nieuw e-mailadres:',
 'changeemail-none' => '(geen)',
+'changeemail-password' => 'Uw wachtwoord voor {{SITENAME}}:',
 'changeemail-submit' => 'E-mailadres wijzigen',
 'changeemail-cancel' => 'Annuleren',
 
@@ -1018,9 +1031,7 @@ Wellicht is het verplaatst of verwijderd terwijl u de pagina aan het bekijken wa
 'loginreqlink' => 'aanmelden',
 'loginreqpagetext' => "U moet zich $1 om andere pagina's te kunnen bekijken.",
 'accmailtitle' => 'Wachtwoord verzonden.',
-'accmailtext' => "Een willekeurig wachtwoord voor [[User talk:$1|$1]] is naar $2 gestuurd.
-
-Het wachtwoord voor deze nieuwe gebruiker kan gewijzigd worden via de pagina ''[[Special:ChangePassword|Wachtwoord wijzigen]]'' na het aanmelden.",
+'accmailtext' => 'Een willekeurig gegenereerd wachtwoord voor [[User talk:$1|$1]] is verzonden naar $2. Het kan worden gewijzigd op de pagina "[[Special:ChangePassword|wachtwoord wijzigen]]" na het aanmelden.',
 'newarticle' => '(Nieuw)',
 'newarticletext' => "Deze pagina bestaat niet.
 Typ in het onderstaande veld om de pagina aan te maken (meer informatie staat op de [[{{MediaWiki:Helppage}}|hulppagina]]).
@@ -1038,7 +1049,7 @@ U kunt [[Special:Search/{{PAGENAME}}|naar deze term zoeken]] in andere pagina\'s
 'missing-revision' => 'De versie #$1 van de pagina "{{PAGENAME}} bestaat niet.
 
 Dit wordt meestal veroorzaakt door het volgen van een verouderde koppeling naar een pagina die is verwijderd.
-Meer gegevens zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderlogboek].',
+Meer gegevens zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].',
 'userpage-userdoesnotexist' => 'U bewerkt een gebruikerspagina van een gebruiker die niet bestaat (gebruiker "$1").
 Controleer of u deze pagina wel wilt aanmaken of bewerken.',
 'userpage-userdoesnotexist-view' => 'De gebruiker "$1" is niet geregistreerd.',
@@ -1067,15 +1078,15 @@ Uw eigen .css- en .js-pagina's beginnen met een kleine letter, bijvoorbeeld {{ns
 Uw tekst is niet opgeslagen!",
 'continue-editing' => 'Naar het bewerkingsvenster gaan',
 'previewconflict' => 'Deze voorvertoning geeft aan hoe de tekst in het bovenste veld eruit ziet als u deze opslaat.',
-'session_fail_preview' => "'''Uw bewerking is niet verwerkt, omdat de sessiegegevens verloren zijn gegaan.
+'session_fail_preview' => "'''Uw bewerking is helaas niet opgeslagen omdat de sessiegegevens verloren zijn gegaan.'''
 Probeer het opnieuw.
-Als het dan nog niet lukt, [[Special:UserLogout|meld u zich dan af]] en weer aan.'''",
+Als het dan nog niet lukt, [[Special:UserLogout|meld uzelf dan af]] en vervolgens weer aan.",
 'session_fail_preview_html' => "'''Uw bewerking is niet verwerkt, omdat de sessiegegevens verloren zijn gegaan.'''
 
 ''Omdat in {{SITENAME}} ruwe HTML is ingeschakeld, is een voorvertoning niet mogelijk als bescherming tegen aanvallen met JavaScript.''
 
 '''Als dit een legitieme bewerking is, probeer het dan opnieuw.'''
-Als het dan nog niet lukt, [[Special:UserLogout|meld u zich dan af]] en weer aan.",
+Als het dan nog niet lukt, [[Special:UserLogout|meld uzelf dan af]] en vervolgens weer aan.",
 'token_suffix_mismatch' => "'''Uw bewerking is geweigerd, omdat uw browser de leestekens in het bewerkingstoken onjuist heeft behandeld.'''
 De bewerking is geweigerd om verminking van de paginatekst te voorkomen.
 Dit gebeurt soms als er een webgebaseerde proxydienst wordt gebruikt die fouten bevat.",
@@ -1125,7 +1136,6 @@ De laatste logboekregel staat hieronder:",
 'template-semiprotected' => '(semibeveiligd)',
 'hiddencategories' => 'Deze pagina valt in de volgende verborgen {{PLURAL:$1|categorie|categorieën}}:',
 'edittools' => '<!-- Deze tekst wordt weergegeven onder bewerkings- en uploadformulieren. -->',
-'nocreatetitle' => "Het aanmaken van pagina's is beperkt",
 'nocreatetext' => "{{SITENAME}} heeft de mogelijkheid om nieuwe pagina's te maken beperkt.
 U kunt reeds bestaande pagina's wijzigen of u kunt [[Special:UserLogin|zich aanmelden of registreren]].",
 'nocreate-loggedin' => "U hebt geen rechten om nieuwe pagina's te maken.",
@@ -1150,6 +1160,15 @@ Deze lijkt verwijderd te zijn.',
 'edit-already-exists' => 'De pagina is niet aangemaakt.
 Deze bestaat al.',
 'defaultmessagetext' => 'Standaardinhoud',
+'content-failed-to-parse' => 'Het was niet mogelijk de inhoud van het MIME-type $2 voor het model $1 te verwerken: $3.',
+'invalid-content-data' => 'Ongeldige inhoudsgegevens',
+'content-not-allowed-here' => 'De inhoud "$1" is niet toegestaan op pagina [[$2]].',
+
+# Content models
+'content-model-wikitext' => 'wikitekst',
+'content-model-text' => 'tekst zonder opmaak',
+'content-model-javascript' => 'JavaScript',
+'content-model-css' => 'CSS',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => "'''Waarschuwing:''' deze pagina gebruikt te veel kostbare parserfuncties.
@@ -1206,8 +1225,8 @@ De door $3 opgegeven reden is ''$2''",
 Verklaring afkortingen: '''({{int:cur}})''' = verschil met huidige versie, '''({{int:last}})''' = verschil met voorgaande versie, '''{{int:minoreditletter}}''' = kleine wijziging",
 'history-fieldset-title' => 'Door geschiedenis bladeren',
 'history-show-deleted' => 'Alleen verwijderd',
-'histfirst' => 'Oudste',
-'histlast' => 'Nieuwste',
+'histfirst' => 'oudste',
+'histlast' => 'nieuwste',
 'historysize' => '({{PLURAL:$1|1 byte|$1 bytes}})',
 'historyempty' => '(leeg)',
 
@@ -1246,7 +1265,7 @@ Als u wilt kunt u [$1 de verschillen bekijken].",
 Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].
 Als u wilt kunt u [$1 deze versie bekijken].",
 'rev-deleted-diff-view' => "Een van de versies voor de verschillen die u hebt opgevraagd, is '''verwijderd'''.
-U kunt deze verschillen bekijken. Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderlogboek].",
+U kunt deze verschillen bekijken. Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].",
 'rev-suppressed-diff-view' => "Een van de bewerkingen voor de verschillen die u hebt opgevraagd, is '''onderdrukt'''.
 U kunt deze verschillen bekijken. Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].",
 'rev-delundel' => 'weergeven/verbergen',
@@ -1323,7 +1342,7 @@ In de [[Special:BlockList|blokkadelijst]] zijn de huidige blokkades te bekijken.
 # History merging
 'mergehistory' => "Geschiedenis van pagina's samenvoegen",
 'mergehistory-header' => 'Via deze pagina kunt u versies van de geschiedenis van een bronpagina naar een nieuwere pagina samenvoegen.
-Zorg dat deze wijziging de geschiedenisdoorlopendheid van de pagina behoudt.',
+Zorg dat deze wijziging de geschiedenis van de pagina behoudt.',
 'mergehistory-box' => "Versies van twee pagina's samenvoegen:",
 'mergehistory-from' => 'Bronpagina:',
 'mergehistory-into' => 'Bestemmingspagina:',
@@ -1365,7 +1384,7 @@ Let op dat het gebruiken van de navigatiekoppelingen deze kolom opnieuw instelt.
 'difference-missing-revision' => '{{PLURAL:$2|Eén versie|$2 versies}} van deze verschillen ($1) {{PLURAL:$2|is|zijn}} niet aangetroffen.
 
 Dit wordt meestal veroorzaakt door het volgen van een verouderde koppeling verschillen voor een pagina die is verwijderd.
-Meer gegevens zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderlogboek].',
+Meer gegevens zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].',
 
 # Search results
 'searchresults' => 'Zoekresultaten',
@@ -1410,7 +1429,7 @@ Probeer een andere zoekopdracht.',
 'search-interwiki-default' => '$1 resultaten:',
 'search-interwiki-more' => '(meer)',
 'search-relatedarticle' => 'Gerelateerd',
-'mwsuggest-disable' => 'Zoekuggesties uitschakelen',
+'mwsuggest-disable' => 'Zoeksuggesties uitschakelen',
 'searcheverything-enable' => 'In alle naamruimten zoeken',
 'searchrelated' => 'gerelateerd',
 'searchall' => 'alle',
@@ -1473,7 +1492,7 @@ De gegevens over {{SITENAME}} zijn mogelijk niet bijgewerkt.',
 'prefs-rendering' => 'Uiterlijk',
 'saveprefs' => 'Opslaan',
 'resetprefs' => 'Niet opgeslagen wijzigingen herstellen',
-'restoreprefs' => 'Voorkeuren herstellen',
+'restoreprefs' => 'Voorkeuren herstellen (voor alle instellingen)',
 'prefs-editing' => 'Bewerken',
 'prefs-edit-boxsize' => 'Afmetingen van het bewerkingsvenster.',
 'rows' => 'Regels:',
@@ -1521,9 +1540,9 @@ Deze handeling kan niet ongedaan gemaakt worden.',
 'prefs-emailconfirm-label' => 'E-mailbevestiging:',
 'prefs-textboxsize' => 'Afmetingen bewerkingsscherm',
 'youremail' => 'Uw e-mailadres:',
-'username' => 'Gebruikersnaam:',
-'uid' => 'Gebruikersnummer:',
-'prefs-memberingroups' => 'Lid van {{PLURAL:$1|groep|groepen}}:',
+'username' => '{{GENDER:$1|Gebruikersnaam}}:',
+'uid' => '{{GENDER:$1|Gebruikersnummer}}:',
+'prefs-memberingroups' => '{{GENDER:$2|Lid}} van {{PLURAL:$1|groep|groepen}}:',
 'prefs-registration' => 'Registratiedatum:',
 'yourrealname' => 'Uw echte naam:',
 'yourlanguage' => 'Taal:',
@@ -1535,12 +1554,15 @@ De tildes worden omgezet in uw ondertekening en een datum en tijd van de bewerki
 'badsig' => 'Ongeldige ondertekening; controleer de HTML-tags.',
 'badsiglength' => 'Uw ondertekening is te lang.
 Deze moet minder dan $1 {{PLURAL:$1|teken|tekens}} bevatten.',
-'yourgender' => 'Geslacht:',
-'gender-unknown' => 'Niet opgegeven',
-'gender-male' => 'Man',
-'gender-female' => 'Vrouw',
-'prefs-help-gender' => 'Optioneel: dit wordt gebruikt om gebruikers correct aan te spreken in de software.
-Deze informatie is zichtbaar voor andere gebruikers.',
+'yourgender' => 'Hoe wilt u beschreven worden?',
+'gender-unknown' => 'Ik wil dit niet opgeven',
+'gender-male' => "Hij bewerkt pagina's",
+'gender-female' => "Zij bewerkt pagina's",
+'prefs-help-gender' => 'Deze voorkeur instellen is optioneel.
+
+De software gebruikt deze waarde om u aan te spreken en u te vermelden aan andere gebruikers door middel van het juiste grammaticale geslacht.
+
+Deze informatie is openbaar en zichtbaar voor andere gebruikers.',
 'email' => 'E-mail',
 'prefs-help-realname' => 'Echte naam is optioneel.
 Als u deze opgeeft, kan deze naam gebruikt worden om u erkenning te geven voor uw werk.',
@@ -1552,7 +1574,7 @@ Als u deze opgeeft, kan deze naam gebruikt worden om u erkenning te geven voor u
 'prefs-signature' => 'Ondertekening',
 'prefs-dateformat' => 'Datumopmaak:',
 'prefs-timeoffset' => 'Tijdverschil',
-'prefs-advancedediting' => 'Gevorderde instellingen',
+'prefs-advancedediting' => 'Algemene opties',
 'prefs-advancedrc' => 'Gevorderde instellingen',
 'prefs-advancedrendering' => 'Gevorderde instellingen',
 'prefs-advancedsearchoptions' => 'Gevorderde instellingen',
@@ -1584,7 +1606,7 @@ Als u deze opgeeft, kan deze naam gebruikt worden om u erkenning te geven voor u
 'userrights-no-interwiki' => "U hebt geen rechten om gebruikersrechten op andere wiki's te wijzigen.",
 'userrights-nodatabase' => 'De database $1 bestaat niet of is geen lokale database.',
 'userrights-nologin' => 'U moet [[Special:UserLogin|aangemeld]] zijn met een gebruiker met de juiste rechten om gebruikersrechten toe te wijzen.',
-'userrights-notallowed' => 'U hebt geen rechten om gebruikersrechten toe te voegen of te verwijderen.',
+'userrights-notallowed' => 'U bent niet gemachtigd om gebruikersrechten toe te voegen of te verwijderen.',
 'userrights-changeable-col' => 'Groepen die u kunt beheren',
 'userrights-unchangeable-col' => 'Groepen die u niet kunt beheren',
 
@@ -1630,7 +1652,7 @@ Als u deze opgeeft, kan deze naam gebruikt worden om u erkenning te geven voor u
 'right-reupload-shared' => 'Media uit de gedeelde mediadatabank lokaal overschrijven',
 'right-upload_by_url' => 'Bestanden uploaden via een URL',
 'right-purge' => 'De cache voor een pagina legen',
-'right-autoconfirmed' => 'Behandeld worden als een geregistreerde gebruiker',
+'right-autoconfirmed' => 'Uitgezonderd van IP-adresgebaseerde tijdsafhankelijke beperkingen',
 'right-bot' => 'Behandeld worden als een geautomatiseerd proces',
 'right-nominornewtalk' => "Kleine bewerkingen aan een overlegpagina leiden niet tot een melding 'nieuwe berichten'",
 'right-apihighlimits' => 'Hogere limieten in API-zoekopdrachten gebruiken',
@@ -1674,12 +1696,13 @@ Als u deze opgeeft, kan deze naam gebruikt worden om u erkenning te geven voor u
 'right-sendemail' => 'E-mail versturen aan andere gebruikers',
 'right-passwordreset' => 'E-mails voor wachtwoord opnieuw instellen bekijken',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Logboek nieuwe gebruikers',
+'newuserlogpagetext' => 'Hieronder staan de nieuw ingeschreven gebruikers',
+
 # User rights log
 'rightslog' => 'Gebruikersrechtenlogboek',
 'rightslogtext' => 'Hieronder staan de wijzigingen in gebruikersrechten.',
-'rightslogentry' => 'heeft de gebruikersrechten voor $1 gewijzigd van $2 naar $3',
-'rightslogentry-autopromote' => 'is automatisch gepromoveerd van de groepen "$2" naar de groepen "$3"',
-'rightsnone' => '(geen)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'deze pagina te bekijken',
@@ -1707,8 +1730,8 @@ Als u deze opgeeft, kan deze naam gebruikt worden om u erkenning te geven voor u
 'action-block' => 'deze gebruiker een bewerkingsblokkade op te leggen',
 'action-protect' => 'het beveiligingsniveau van deze pagina aan te passen',
 'action-rollback' => 'bewerkingen van de laatste gebruiker die een pagina heeft bewerkt snel terugdraaien',
-'action-import' => 'deze pagina van een andere wiki te importeren',
-'action-importupload' => 'deze pagina van een bestandsupload te importeren',
+'action-import' => "pagina's te importeren van een andere wiki",
+'action-importupload' => "pagina's te importeren uit een bestandsupload",
 'action-patrol' => 'bewerkingen van anderen als gecontroleerd te markeren',
 'action-autopatrol' => 'eigen bewerkingen als gecontroleerd te laten markeren',
 'action-unwatchedpages' => "de lijst met pagina's die niet op een volglijst staan te bekijken",
@@ -1750,7 +1773,7 @@ Als u deze opgeeft, kan deze naam gebruikt worden om u erkenning te geven voor u
 'rc_categories_any' => 'Elke',
 'rc-change-size-new' => '$1 {{PLURAL:$1|byte|bytes}} na de wijziging',
 'newsectionsummary' => '/* $1 */ nieuwe subkop',
-'rc-enhanced-expand' => 'Details weergeven (JavaScript verplicht)',
+'rc-enhanced-expand' => 'Details weergeven',
 'rc-enhanced-hide' => 'Details verbergen',
 'rc-old-title' => 'oorspronkelijk aangemaakt als "$1"',
 
@@ -1777,7 +1800,7 @@ Pagina's die op [[Special:Watchlist|uw volglijst]] staan worden '''vet''' weerge
 'uploaderror' => 'Uploadfout',
 'upload-recreate-warning' => "'''Waarschuwing: er is een bestand met deze naam verwijderd of hernoemd.'''
 
-Hieronder worden het verwijderlogboek en het hernoemingslogboek voor deze pagina weergegeven:",
+Hieronder worden het verwijderingslogboek en het hernoemingslogboek voor deze pagina weergegeven:",
 'uploadtext' => "Gebruik het onderstaande formulier om bestanden te uploaden.
 Om eerder toegevoegde bestanden te bekijken of te zoeken kunt u naar de [[Special:FileList|bestandslijst]] gaan.
 Uploads en bestanden die na verwijdering opnieuw worden toegevoegd zijn na te zien in het [[Special:Log/upload|uploadlogboek]].
@@ -1857,7 +1880,7 @@ Upload uw bestand onder een andere naam.
 'fileexists-shared-forbidden' => 'Er bestaat al een bestand met deze naam bij de gedeelde bestanden.
 Als u het bestand alsnog wilt uploaden, ga dan terug en kies een andere naam.
 [[File:$1|thumb|center|$1]]',
-'file-exists-duplicate' => 'Dit bestand is indentiek aan {{PLURAL:$1|het volgende bestand|de volgende bestanden}}:',
+'file-exists-duplicate' => 'Dit bestand is identiek aan {{PLURAL:$1|het volgende bestand|de volgende bestanden}}:',
 'file-deleted-duplicate' => 'Een bestand dat identiek is aan dit bestand ([[:$1]]) is voorheen verwijderd.
 Raadpleeg het verwijderingslogboek voordat u verder gaat.',
 'uploadwarning' => 'Uploadwaarschuwing',
@@ -1915,11 +1938,11 @@ Ga terug naar het [[Special:Upload/stash/$1|uploadformulier]] om dit probleem te
 'upload-proto-error-text' => "Uploads via deze methode vereisen URL's die beginnen met <code>http://</code> of <code>ftp://</code>.",
 'upload-file-error' => 'Interne fout',
 'upload-file-error-text' => 'Er is een interne fout opgetreden tijdens het aanmaken van een tijdelijk bestaan op de server.
-Neem contact op met een [[Special:ListUsers/sysop|systeembeheerder]].',
+Neem contact op met een [[Special:ListUsers/sysop|moderator]].',
 'upload-misc-error' => 'Onbekende uploadfout',
 'upload-misc-error-text' => 'Er is tijdens het uploaden een onbekende fout opgetreden.
 Controleer of de URL correct en beschikbaar is en probeer het opnieuw.
-Als het probleem aanhoudt, neem dan contact op met een [[Special:ListUsers/sysop|systeembeheerder]].',
+Als het probleem aanhoudt, neem dan contact op met een [[Special:ListUsers/sysop|moderator]].',
 'upload-too-many-redirects' => 'De URL bevatte te veel doorverwijzingen',
 'upload-unknown-size' => 'Onbekende grootte',
 'upload-http-error' => 'Er is een HTTP-fout opgetreden: $1',
@@ -1933,6 +1956,7 @@ Als het probleem aanhoudt, neem dan contact op met een [[Special:ListUsers/sysop
 'backend-fail-notsame' => 'Er staat al een niet-identiek bestand op de plaats $1.',
 'backend-fail-invalidpath' => '$1 is geen geldig opslagpad.',
 'backend-fail-delete' => 'Het bestand $1 kon niet verwijderd worden.',
+'backend-fail-describe' => 'Het was niet mogelijk de metadata aan te passen voor het bestand "$1".',
 'backend-fail-alreadyexists' => 'Het bestand $1 bestaat al.',
 'backend-fail-store' => 'Het was niet mogelijk het bestand $1 op te slaan op locatie $2.',
 'backend-fail-copy' => 'Het was niet mogelijk het bestand $1 te kopiëren naar $2.',
@@ -2031,8 +2055,7 @@ U kunt het misschien proberen als het minder druk is.',
 'upload_source_file' => ' (een bestand op uw computer)',
 
 # Special:ListFiles
-'listfiles-summary' => 'Op deze speciale pagina zijn alle toegevoegde bestanden te bekijken.
-Als deze pagina wordt gefilterd op gebruiker, worden alleen bestanden waar de gebruiker de laatste versie van heeft geüpload weergegeven.',
+'listfiles-summary' => 'Op deze speciale pagina zijn alle toegevoegde bestanden te bekijken.',
 'listfiles_search_for' => 'Zoeken naar bestand:',
 'imgfile' => 'bestand',
 'listfiles' => 'Bestandslijst',
@@ -2134,7 +2157,7 @@ Invoer: inhoudstype/subtype, bijvoorbeeld <code>image/jpeg</code>.',
 # Unused templates
 'unusedtemplates' => 'Ongebruikte sjablonen',
 'unusedtemplatestext' => 'Deze pagina geeft alle pagina\'s weer in de naamruimte {{ns:template}} die op geen enkele pagina gebruikt worden.
-Vergeet niet de "Koppelingen naar deze pagina" te controleren alvorens deze sjabloon te verwijderen.',
+Vergeet niet de "Koppelingen naar deze pagina" te controleren alvorens dit sjabloon te verwijderen.',
 'unusedtemplateswlh' => 'andere koppelingen',
 
 # Random page
@@ -2172,6 +2195,12 @@ Vergeet niet de "Koppelingen naar deze pagina" te controleren alvorens deze sjab
 Deze horen waarschijnlijk direct naar een meer toepasselijke pagina te verwijzen.<br />
 Een pagina wordt gezien als doorverwijspagina als er een sjabloon op staat dat opgenomen is op [[MediaWiki:Disambiguationspage]].",
 
+'pageswithprop' => "Pagina's met een pagina-eigenschap",
+'pageswithprop-legend' => "Pagina's met een pagina-eigenschap",
+'pageswithprop-text' => "Op deze pagina worden pagina's weergegeven met een bepaalde pagina-eigenschap.",
+'pageswithprop-prop' => 'Naam van de eigenschap:',
+'pageswithprop-submit' => 'OK',
+
 'doubleredirects' => 'Dubbele doorverwijzingen',
 'doubleredirectstext' => "Deze lijst bevat pagina's die doorverwijzen naar andere doorverwijspagina's.
 Elke rij bevat koppelingen naar de eerste en de tweede doorverwijspagina en een koppeling naar de doelpagina van de tweede doorverwijspagina.
@@ -2182,7 +2211,7 @@ Meestal is de laatste pagina het eigenlijke doel, waar de eerste pagina naar zou
 'double-redirect-fixer' => 'Doorverwijzingen opschonen',
 
 'brokenredirects' => 'Defecte doorverwijzingen',
-'brokenredirectstext' => "De onderstaande doorverwijzigingen verwijzen naar niet-bestaande pagina's.",
+'brokenredirectstext' => "De onderstaande doorverwijzingen verwijzen naar niet-bestaande pagina's.",
 'brokenredirects-edit' => 'bewerken',
 'brokenredirects-delete' => 'verwijderen',
 
@@ -2241,7 +2270,7 @@ De pagina's zijn ook niet als sjabloon opgenomen.",
 'protectedpagesempty' => "Er zijn momenteel geen pagina's beveiligd die aan deze voorwaarden voldoen.",
 'protectedtitles' => 'Beveiligde paginanamen',
 'protectedtitlestext' => 'De volgende paginanamen zijn beveiligd en kunnen niet aangemaakt worden',
-'protectedtitlesempty' => 'Er zijn momenteel geen paginannamen beveiligd die aan deze voorwaarden voldoen.',
+'protectedtitlesempty' => 'Er zijn geen paginanamen beveiligd die aan deze voorwaarden voldoen.',
 'listusers' => 'Gebruikerslijst',
 'listusers-editsonly' => 'Alleen gebruikers met bewerkingen weergeven',
 'listusers-creationsort' => 'Sorteren op registratiedatum',
@@ -2329,7 +2358,7 @@ Zie ook [[Special:WantedCategories|niet-bestaande categorieën met koppelingen]]
 'linksearch-ok' => 'Zoeken',
 'linksearch-text' => 'Wildcards zoals "*.wikipedia.org" of "*.org" zijn toegestaan.
 Heeft tenminste een topleveldomein nodig, zoals bijvoorbeeld "*.org".<br />
-Ondersteunde protocollen: <code>$1</code> (wordt "http://"als er geen protocol wordt opgegeven).',
+{{PLURAL:$2|Ondersteund protocol|Ondersteunde protocollen}}: <code>$1</code> (wordt "http://"als er geen protocol wordt opgegeven).',
 'linksearch-line' => '$1 heeft een koppeling in $2',
 'linksearch-error' => 'Wildcards zijn alleen toegestaan aan het begin van een hostnaam.',
 
@@ -2340,7 +2369,7 @@ Ondersteunde protocollen: <code>$1</code> (wordt "http://"als er geen protocol w
 'listusers-blocked' => '(geblokkeerd)',
 
 # Special:ActiveUsers
-'activeusers' => 'Aanwezige gebruikers',
+'activeusers' => 'Actieve gebruikers',
 'activeusers-intro' => 'Dit is een lijst met gebruikers die enige activiteit hebben laten zien in de afgelopen {{PLURAL:$1|dag|$1 dagen}}.',
 'activeusers-count' => '$1 recente {{PLURAL:$1|handeling|handelingen}} in de {{PLURAL:$3|afgelopen dag|laatste $3 dagen}}',
 'activeusers-from' => 'Gebruikers worden weergegeven vanaf:',
@@ -2348,15 +2377,12 @@ Ondersteunde protocollen: <code>$1</code> (wordt "http://"als er geen protocol w
 'activeusers-hidesysops' => 'Beheerders verbergen',
 'activeusers-noresult' => 'Geen actieve gebruikers gevonden.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Logboek nieuwe gebruikers',
-'newuserlogpagetext' => 'Hieronder staan de nieuw ingeschreven gebruikers',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Rechten van gebruikersgroepen',
 'listgrouprights-summary' => 'Op deze pagina staan de gebruikersgroepen in deze wiki beschreven, met hun bijbehorende rechten.
 Er kan [[{{MediaWiki:Listgrouprights-helppage}}|extra informatie]] over individuele rechten aanwezig zijn.',
-'listgrouprights-key' => '* <span class="listgrouprights-granted">Toegewezen recht</span>
+'listgrouprights-key' => 'Leganda:
+* <span class="listgrouprights-granted">Toegewezen recht</span>
 * <span class="listgrouprights-revoked">Ingetrokken recht</span>',
 'listgrouprights-group' => 'Groep',
 'listgrouprights-rights' => 'Rechten',
@@ -2430,8 +2456,8 @@ Toekomstige bewerkingen van deze pagina en de bijbehorende overlegpagina worden 
 'notvisiblerev' => 'De laatste versie van een andere gebruiker is verwijderd',
 'watchnochange' => "Geen van de pagina's op uw volglijst is in deze periode bewerkt.",
 'watchlist-details' => "Er {{PLURAL:$1|staat één pagina|staan $1 pagina's}} op uw volglijst, exclusief overlegpagina's.",
-'wlheader-enotif' => '* U wordt per e-mail gewaarschuwd',
-'wlheader-showupdated' => "* Pagina's die zijn bewerkt sinds uw laatste bezoek worden '''vet''' weergegeven",
+'wlheader-enotif' => '* U wordt per e-mail gewaarschuwd.',
+'wlheader-showupdated' => "* Pagina's die zijn bewerkt sinds uw laatste bezoek worden '''vet''' weergegeven.",
 'watchmethod-recent' => "controleer recente wijzigingen op pagina's op volglijst",
 'watchmethod-list' => "controleer pagina's op volglijst op wijzigingen",
 'watchlistcontains' => "Er {{PLURAL:$1|staat één pagina|staan $1 pagina's}} op uw volglijst.",
@@ -2447,19 +2473,23 @@ Toekomstige bewerkingen van deze pagina en de bijbehorende overlegpagina worden 
 
 'enotif_mailer' => '{{SITENAME}}-berichtensysteem',
 'enotif_reset' => "Alle pagina's markeren als bezocht",
-'enotif_newpagetext' => 'Dit is een nieuwe pagina.',
 'enotif_impersonal_salutation' => 'gebruiker van {{SITENAME}}',
-'changed' => 'gewijzigd',
-'created' => 'aangemaakt',
-'enotif_subject' => 'Pagina $PAGETITLE op {{SITENAME}} is $CHANGEDORCREATED door $PAGEEDITOR',
+'enotif_subject_deleted' => '{{SITENAME}}: pagina $1 is verwijderd door {{GENDER:$2|$2}}',
+'enotif_subject_created' => '{{SITENAME}}: pagina $1 is aangemaakt door {{GENDER:$2|$2}}',
+'enotif_subject_moved' => '{{SITENAME}}: pagina $1 is hernoemd door {{GENDER:$2|$2}}',
+'enotif_subject_restored' => '{{SITENAME}}: pagina $1 is teruggeplaatst door {{GENDER:$2|$2}}',
+'enotif_subject_changed' => '{{SITENAME}}: pagina $1 is bewerkt door {{GENDER:$2|$2}}',
+'enotif_body_intro_deleted' => 'De pagina $1 op {{SITENAME}} is verwijderd door {{gender:$2|$2}} op $PAGEEDITDATE. Zie $3 voor de huidige versie.',
+'enotif_body_intro_created' => 'De pagina $1 op {{SITENAME}} is aangemaakt door {{GENDER:$2|$2}} op $PAGEEDITDATE. Zie $3 voor de huidige versie.',
+'enotif_body_intro_moved' => 'De pagina $1 op {{SITENAME}} is hernoemd door {{GENDER:$2|$2}} op $PAGEEDITDATE. Zie $3 voor de huidige versie.',
+'enotif_body_intro_restored' => 'De pagina $1 op {{SITENAME}} is teruggeplaatst door {{GENDER:$2|$2}} op $PAGEEDITDATE. Zie $3 voor de huidige versie.',
+'enotif_body_intro_changed' => 'De pagina $1 op {{SITENAME}} is bewerkt door {{GENDER:$2|$2}} op $PAGEEDITDATE. Zie $3 voor de huidige versie.',
 'enotif_lastvisited' => 'Zie $1 voor alle wijzigingen sinds uw laatste bezoek.',
 'enotif_lastdiff' => 'Ga naar $1 om deze wijziging te bekijken.',
 'enotif_anon_editor' => 'anonieme gebruiker $1',
 'enotif_body' => 'Beste $WATCHINGUSERNAME,
 
-De pagina $PAGETITLE op {{SITENAME}} is $CHANGEDORCREATED op $PAGEEDITDATE door $PAGEEDITOR. Zie $PAGETITLE_URL voor de huidige versie.
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 Samenvatting van de wijziging: $PAGESUMMARY $PAGEMINOREDIT
 
@@ -2483,6 +2513,8 @@ $UNWATCHURL
 
 Terugkoppeling en verdere assistentie:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'aangemaakt',
+'changed' => 'gewijzigd',
 
 # Delete
 'deletepage' => 'Pagina verwijderen',
@@ -2508,9 +2540,11 @@ Zie het $2 voor een overzicht van recente verwijderingen.',
 'deleteotherreason' => 'Andere reden:',
 'deletereasonotherlist' => 'Andere reden',
 'deletereason-dropdown' => '*Veel voorkomende verwijderredenen
-** Op aanvraag van auteur
+** Spam
+** Vandalisme
 ** Schending van auteursrechten
-** Vandalisme',
+** Op aanvraag van auteur
+** Kapotte doorverwijzing',
 'delete-edit-reasonlist' => 'Redenen voor verwijderen bewerken',
 'delete-toobig' => "Deze pagina heeft een lange bewerkingsgeschiedenis, meer dan $1 {{PLURAL:$1|versie|versies}}.
 Het verwijderen van dit soort pagina's is met rechten beperkt om het per ongeluk verstoren van de werking van {{SITENAME}} te voorkomen.",
@@ -2532,7 +2566,7 @@ Iemand anders heeft deze pagina al bewerkt of hersteld naar een eerdere versie.
 De meest recente bewerking is gemaakt door [[User:$3|$3]] ([[User talk:$3|overleg]]{{int:pipe-separator}}[[Special:Contributions/$3|bijdragen]]).',
 'editcomment' => "De bewerkingssamenvatting was: \"''\$1''\".",
 'revertpage' => 'Wijzigingen door [[Special:Contributions/$2|$2]] ([[User talk:$2|Overleg]]) hersteld tot de laatste versie door [[User:$1|$1]]',
-'revertpage-nouser' => 'Wijzigingen door (gebruikersnaam verwijderd) teruggedraaid naar de laatste versie door [[User:$1|$1]]',
+'revertpage-nouser' => 'Wijzigingen door een verborgen gebruiker teruggedraaid naar de laatste versie door {{GENDER:$1|[[User:$1|$1]]}}',
 'rollback-success' => 'De wijzigingen door $1 zijn teruggedraaid.
 De laatste versie van $2 is hersteld.',
 
@@ -2547,7 +2581,7 @@ Ga een pagina terug, laad die pagina opnieuw en probeer het nog eens.',
 'protectlogtext' => "Hieronder staan pagina's waarvan de beveiliging recentelijk gewijzigd is.
 Zie de [[Special:ProtectedPages|lijst met beveiligde pagina's]] voor alle beveiligde pagina's.",
 'protectedarticle' => 'heeft "[[$1]]" beveiligd',
-'modifiedarticleprotection' => 'heeft het beveiligingsniveau voor "[[$1]]" gewijzigd',
+'modifiedarticleprotection' => 'heeft het beveiligingsniveau gewijzigd voor "[[$1]]"',
 'unprotectedarticle' => 'heeft de beveiliging van "[[$1]]" opgeheven',
 'movedarticleprotection' => 'heeft beveiligingsinstellingen verplaatst van "[[$2]]" naar "[[$1]]"',
 'protect-title' => 'Beveiligingsniveau instellen voor "$1"',
@@ -2555,6 +2589,8 @@ Zie de [[Special:ProtectedPages|lijst met beveiligde pagina's]] voor alle beveil
 'prot_1movedto2' => '[[$1]] is hernoemd naar [[$2]]',
 'protect-badnamespace-title' => 'Niet te beveiligen naamruimte',
 'protect-badnamespace-text' => "Pagina's in deze naamruimte kunnen niet beveiligd worden.",
+'protect-norestrictiontypes-text' => 'Deze pagina kan niet beveiligd worden omdat er geen beperkingstypen beschikbaar zijn.',
+'protect-norestrictiontypes-title' => 'Niet te beveiligen pagina',
 'protect-legend' => 'Beveiliging bevestigen',
 'protectcomment' => 'Reden:',
 'protectexpiry' => 'Duur:',
@@ -2616,7 +2652,7 @@ Het beveiligingsniveau wijzigen heeft geen enkel effect.",
 'viewdeletedpage' => "Verwijderde pagina's bekijken",
 'undeletepagetext' => "Hieronder {{PLURAL:$1|staat de pagina die verwijderd is|staan pagina's die zijn verwijderd}} en vanuit het archief teruggeplaatst {{PLURAL:$1|kan|kunnen}} worden.",
 'undelete-fieldset-title' => 'Versies terugplaatsen',
-'undeleteextrahelp' => "Laat alle vakjess leeg en klik op '''''Terugplaatsen''''' om de hele pagina inclusief alle eerdere versies terug te plaatsen.
+'undeleteextrahelp' => "Laat alle vakjes leeg en klik op '''''Terugplaatsen''''' om de hele pagina inclusief alle eerdere versies terug te plaatsen.
 Vink de terug te plaatsen versies aan en klik op '''''Terugplaatsen''''' om bepaalde versies terug te plaatsen.",
 'undeleterevisions' => '$1 {{PLURAL:$1|versie|versies}} gearchiveerd',
 'undeletehistory' => 'Als u een pagina terugplaatst, worden alle versies hersteld.
@@ -2633,14 +2669,14 @@ Mogelijk hebt u een verkeerde koppeling of is de versie hersteld of verwijderd u
 'undeletebtn' => 'Terugplaatsen',
 'undeletelink' => 'bekijken/terugplaatsen',
 'undeleteviewlink' => 'bekijken',
-'undeletereset' => 'Fomulier wissen',
+'undeletereset' => 'Formulier wissen',
 'undeleteinvert' => 'Selectie omkeren',
 'undeletecomment' => 'Reden:',
 'undeletedrevisions' => '$1 {{PLURAL:$1|versie|versies}} teruggeplaatst',
 'undeletedrevisions-files' => '{{PLURAL:$1|1 versie|$1 versies}} en {{PLURAL:$2|1 bestand|$2 bestanden}} teruggeplaatst',
 'undeletedfiles' => '{{PLURAL:$1|1 bestand|$1 bestanden}} teruggeplaatst',
-'cannotundelete' => 'Het terugplaatsen is mislukt.
-Misschien heeft een andere gebruiker de pagina al teruggeplaatst.',
+'cannotundelete' => 'Het terugplaatsen is mislukt:
+$1',
 'undeletedpage' => "'''$1 is teruggeplaatst'''
 
 In het [[Special:Log/delete|verwijderingslogboek]] staan recente verwijderingen en herstelhandelingen.",
@@ -2672,7 +2708,7 @@ $1',
 'blanknamespace' => '(Hoofdnaamruimte)',
 
 # Contributions
-'contributions' => 'Gebruikersbijdragen',
+'contributions' => '{{GENDER:$1|Gebruikersbijdragen}}',
 'contributions-title' => 'Bijdragen van $1',
 'mycontris' => 'Bijdragen',
 'contribsub2' => 'Voor $1 ($2)',
@@ -2789,7 +2825,7 @@ Zie de [[Special:BlockList|blokkadelijst]] voor recente blokkades.',
 'ipblocklist-otherblocks' => 'Andere {{PLURAL:$1|blokkade|blokkades}}',
 'infiniteblock' => 'onbeperkt',
 'expiringblock' => 'vervalt op $1 om $2',
-'anononlyblock' => 'alleen anoniemen',
+'anononlyblock' => 'alleen anonieme',
 'noautoblockblock' => 'autoblokkeren uitgeschakeld',
 'createaccountblock' => 'registreren gebruikers uitgeschakeld',
 'emailblock' => 'e-mail uitgeschakeld',
@@ -2813,14 +2849,14 @@ Het verbergingslogboek wordt hieronder ter referentie weergegeven:',
 Automatische blokkeringen en deblokkeringen komen niet in het logboek.
 Zie ook de [[Special:BlockList|blokkadelijst]] voor de op dit moment actieve blokkades.',
 'unblocklogentry' => 'heeft de blokkade van $1 opgeheven',
-'block-log-flags-anononly' => 'alleen anoniemen',
+'block-log-flags-anononly' => 'alleen anonieme gebruikers',
 'block-log-flags-nocreate' => 'registreren gebruikers geblokkeerd',
 'block-log-flags-noautoblock' => 'autoblokkeren is uitgeschakeld',
 'block-log-flags-noemail' => 'e-mail uitgeschakeld',
 'block-log-flags-nousertalk' => 'kan eigen overlegpagina niet bewerken',
 'block-log-flags-angry-autoblock' => 'uitgebreide automatische blokkade ingeschakeld',
 'block-log-flags-hiddenname' => 'gebruiker verborgen',
-'range_block_disabled' => 'De mogelijkheid voor beheerders om een groep IP-addressen te blokkeren is uitgeschakeld.',
+'range_block_disabled' => 'De mogelijkheid voor beheerders om een groep IP-adressen te blokkeren is uitgeschakeld.',
 'ipb_expiry_invalid' => 'Ongeldige duur.',
 'ipb_expiry_temp' => 'Blokkades voor verborgen gebruikers moeten permanent zijn.',
 'ipb_hide_invalid' => 'Het is niet mogelijk deze gebruiker te verbergen; mogelijk heeft deze te veel bewerkingen gemaakt.',
@@ -2828,7 +2864,7 @@ Zie ook de [[Special:BlockList|blokkadelijst]] voor de op dit moment actieve blo
 'ipb-needreblock' => '$1 is al geblokkeerd.
 Wilt u de instellingen wijzigen?',
 'ipb-otherblocks-header' => 'Andere {{PLURAL:$1|blokkade|blokkades}}',
-'unblock-hideuser' => 'U kunt deze gebruiker niet deblokkeeren, omdat de gebruikersnaam is verborgen.',
+'unblock-hideuser' => 'U kunt deze gebruiker niet deblokkeren, omdat de gebruikersnaam is verborgen.',
 'ipb_cant_unblock' => 'Fout: blokkadenummer $1 is niet gevonden.
 Misschien is de blokkade al opgeheven.',
 'ipb_blocked_as_range' => 'Fout: het IP-adres $1 is niet direct geblokkeerd en de blokkade kan niet opgeheven worden.
@@ -2919,7 +2955,7 @@ In die gevallen moet u de pagina handmatig hernoemen of samenvoegen.",
 'movepage-moved-noredirect' => 'Er is geen doorverwijzing aangemaakt.',
 'articleexists' => 'De pagina bestaat al of de paginanaam is ongeldig.
 Kies een andere paginanaam.',
-'cantmove-titleprotected' => 'U kunt geen pagina naar deze paginanaam hernoemen, omdat deze paginaam beveiligd is tegen het aanmaken ervan.',
+'cantmove-titleprotected' => 'U kunt geen pagina naar deze naam hernoemen, omdat deze naam beveiligd is tegen het aanmaken ervan.',
 'talkexists' => "'''De pagina is hernoemd, maar de overlegpagina kon niet hernoemd worden omdat er al een pagina met de nieuwe naam bestaat.
 Combineer de overlegpagina's handmatig.'''",
 'movedto' => 'hernoemd naar',
@@ -2950,6 +2986,7 @@ Wilt u deze verwijderen om plaats te maken voor de te hernoemen pagina?',
 'immobile-target-namespace-iw' => 'Een interwikikoppeling is geen geldige bestemming voor het hernoemen van een pagina.',
 'immobile-source-page' => 'Deze pagina kan niet hernoemd worden.',
 'immobile-target-page' => 'Het is niet mogelijk te hernoemen naar die paginanaam.',
+'bad-target-model' => 'De gewenste bestemming gebruikt een ander inhoudsmodel. Het is niet mogelijk om te zetten van $1 naar $2.',
 'imagenocrossnamespace' => 'Een mediabestand kan niet naar een andere naamruimte verplaatst worden',
 'nonfile-cannot-move-to-file' => 'Het is niet mogelijk te hernoemen van en naar de bestandsnaamruimte',
 'imagetypemismatch' => 'De nieuwe bestandsextensie is niet gelijk aan het bestandstype',
@@ -3066,6 +3103,7 @@ Een tijdelijke map is niet aanwezig.',
 'import-error-interwiki' => 'De pagina "$1" is niet geïmporteerd omdat deze naam is gereserveerd voor externe koppelingen (interwiki).',
 'import-error-special' => 'Pagina "$1" is niet geïmporteerd omdat deze is geplaatst in een speciale naamruimte waar geen pagina\'s in geplaatst kunnen worden.',
 'import-error-invalid' => 'De pagina" "$1" is niet geïmporteerd omdat de naam ongeldig is.',
+'import-error-unserialize' => 'Versie $2 van de pagina "$1" kon niet verwerkt worden. De versie hoort contentmodel $3 te gebruiken met een serialisatie als $4.',
 'import-options-wrong' => 'Verkeerde {{PLURAL:$2|optie|opties}}: <nowiki>$1</nowiki>',
 'import-rootpage-invalid' => 'De opgegeven basispagina is ongeldig.',
 'import-rootpage-nosubpage' => 'In de naamruimte "$1" van de basispagina is het aanmaken van subpagina\'s niet mogelijk.',
@@ -3080,7 +3118,6 @@ Een tijdelijke map is niet aanwezig.',
 
 # JavaScriptTest
 'javascripttest' => 'JavaScript testen',
-'javascripttest-disabled' => 'Deze functie is uitgeschakeld in deze wiki.',
 'javascripttest-title' => 'Tests uitvoeren voor $1',
 'javascripttest-pagetext-noframework' => 'Deze pagina is gereserveerd voor het uitvoeren van JavaScripttesten.',
 'javascripttest-pagetext-unknownframework' => 'Onbekend testframework "$1".',
@@ -3230,12 +3267,14 @@ Meestal wordt dit door een externe koppeling op een zwarte lijst veroorzaakt.',
 'pageinfo-default-sort' => 'Standaard sorteerwijze',
 'pageinfo-length' => 'Paginalengte (in bytes)',
 'pageinfo-article-id' => 'Paginanummer',
-'pageinfo-robot-policy' => 'Status voor de zoekmachine',
-'pageinfo-robot-index' => 'Indexeerbaar',
-'pageinfo-robot-noindex' => 'Niet indexeerbaar',
+'pageinfo-language' => 'Taal voor de pagina',
+'pageinfo-robot-policy' => 'Indexering door robots',
+'pageinfo-robot-index' => 'Toegestaan',
+'pageinfo-robot-noindex' => 'Niet toegestaan',
 'pageinfo-views' => 'Aantal weergaven',
 'pageinfo-watchers' => 'Aantal paginavolgers',
-'pageinfo-redirects-name' => 'Doorverwijzingen naar deze pagina',
+'pageinfo-few-watchers' => 'Minder dan  {{PLURAL:$1|één volger|$1 volgers}}',
+'pageinfo-redirects-name' => 'Aantal doorverwijzingen naar deze pagina',
 'pageinfo-subpages-name' => "Subpagina's van deze pagina",
 'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|doorverwijzing|doorverwijzingen}}; $3 {{PLURAL:$3|niet-doorverwijzing|niet-doorverwijzingen}})',
 'pageinfo-firstuser' => 'Gebruiker die de pagina heeft aangemaakt',
@@ -3249,6 +3288,19 @@ Meestal wordt dit door een externe koppeling op een zwarte lijst veroorzaakt.',
 'pageinfo-magic-words' => '{{PLURAL:$1|Magisch woord|Magische woorden}} ($1)',
 'pageinfo-hidden-categories' => 'Verborgen {{PLURAL:$1|categorie|categorieën}} ($1)',
 'pageinfo-templates' => '{{PLURAL:$1|Gebruikt sjabloon|Gebruikte sjablonen}} ($1)',
+'pageinfo-transclusions' => "{{PLURAL:$1|Pagina|Pagina's}} getranscludeerd op ($1)",
+'pageinfo-toolboxlink' => 'Paginagegevens',
+'pageinfo-redirectsto' => 'Verwijst door naar',
+'pageinfo-redirectsto-info' => 'informatie',
+'pageinfo-contentpage' => 'Geteld als pagina met inhoud',
+'pageinfo-contentpage-yes' => 'Ja',
+'pageinfo-protect-cascading' => 'Beveiligingen werken vanaf hier door',
+'pageinfo-protect-cascading-yes' => 'Ja',
+'pageinfo-protect-cascading-from' => 'Pagina is beveiligd vanuit een andere pagina',
+'pageinfo-category-info' => 'Categoriegegevens',
+'pageinfo-category-pages' => "Aantal pagina's",
+'pageinfo-category-subcats' => 'Aantal subcategorieën',
+'pageinfo-category-files' => 'Aantal bestanden',
 
 # Skin names
 'skinname-standard' => 'Klassiek',
@@ -3271,6 +3323,8 @@ Meestal wordt dit door een externe koppeling op een zwarte lijst veroorzaakt.',
 'markedaspatrollederror' => 'Kan niet als gecontroleerd worden aangemerkt',
 'markedaspatrollederrortext' => 'Selecteer een versie om als gecontroleerd aan te merken.',
 'markedaspatrollederror-noautopatrol' => 'U kunt uw eigen wijzigingen niet als gecontroleerd markeren.',
+'markedaspatrollednotify' => 'Deze bewerking op $1 is gemarkeerd als gecontroleerd.',
+'markedaspatrollederrornotify' => 'Markeren als gecontroleerd mislukt.',
 
 # Patrol log
 'patrol-log-page' => 'Markeerlogboek',
@@ -3304,6 +3358,7 @@ $1',
 'file-nohires' => 'Geen hogere resolutie beschikbaar.',
 'svg-long-desc' => 'SVG-bestand, nominaal $1 × $2 pixels, bestandsgrootte: $3',
 'svg-long-desc-animated' => 'Bewegend SVG-bestand, nominaal $1 × $2 pixels, bestandsgrootte: $3',
+'svg-long-error' => 'Ongeldig SVG-bestand: $1',
 'show-big-image' => 'Volledige resolutie',
 'show-big-image-preview' => 'Grootte van deze voorvertoning: $1.',
 'show-big-image-other' => 'Andere {{PLURAL:$2|resolutie|resoluties}}: $1.',
@@ -3334,7 +3389,10 @@ $1',
 'minutes' => '{{PLURAL:$1|$1 minuut|$1 minuten}}',
 'hours' => '{{PLURAL:$1|$1 uur|$1 uur}}',
 'days' => '{{PLURAL:$1|$1 dag|$1 dagen}}',
+'months' => '{{PLURAL:$1|één maand|$1 maanden}}',
+'years' => '{{PLURAL:$1|één jaar|$1 jaar}}',
 'ago' => '$1 geleden',
+'just-now' => 'Daarnet',
 
 # Bad image list
 'bad_image_list' => "De opmaak is als volgt:
@@ -3550,7 +3608,7 @@ Andere velden worden verborgen.
 'exif-compression-4' => 'CCITT Groep 4 faxcodering',
 
 'exif-copyrighted-true' => 'Auteursrechtelijk beschermd',
-'exif-copyrighted-false' => 'Publiek domein',
+'exif-copyrighted-false' => 'Auteursrechtelijke status niet ingesteld',
 
 'exif-unknowndate' => 'Datum onbekend',
 
@@ -3816,11 +3874,11 @@ De bevestigingscode vervalt op $4.',
 'confirmemail_body_set' => 'Iemand, waarschijnlijk u, met het IP-adres $1,
 heeft het het e-mailadres voor gebruiker "$2" op {{SITENAME}} ingesteld op dit e-mailadres.
 
-Open de volgende koppeling in uw webbrowser om te bevestigen dat u deze gebruiker bent en om de e-mailmogelijkheden op {{SITENAME}} opnieuw te activeren:
+Klik op de volgende koppeling of open deze in uw webbrowser om te bevestigen dat u deze gebruiker bent en om de e-mailmogelijkheden op {{SITENAME}} opnieuw te activeren:
 
 $3
 
-Als u deze wijziging *niet* hebt gemaakt, volg dan de volgende koppeling om de bevestiging van uw e-mailadres te annuleren:
+Als deze gebruiker *niet* aan u toebehoort, klik dan op de volgende koppeling om de bevestiging van uw e-mailadres te annuleren:
 
 $5
 
@@ -3831,6 +3889,7 @@ De bevestigingscode vervalt op $4.',
 # Scary transclusion
 'scarytranscludedisabled' => '[Interwiki-invoeging van sjablonen is uitgeschakeld]',
 'scarytranscludefailed' => '[De sjabloon $1 kon niet opgehaald worden]',
+'scarytranscludefailed-httpstatus' => '[De sjabloon $1 kon niet opgehaald worden: HTTP $2]',
 'scarytranscludetoolong' => '[De URL is te lang]',
 
 # Delete conflict
@@ -3961,6 +4020,7 @@ U kunt ook [[Special:EditWatchlist|het standaard bewerkingsscherm gebruiken]].',
 'version-license' => 'Licentie',
 'version-poweredby-credits' => "Deze wiki wordt aangedreven door '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others' => 'anderen',
+'version-credits-summary' => 'We erkennen graag de volgende personen voor hun bijdrage aan [[Special:Version|MediaWiki]].',
 'version-license-info' => 'MediaWiki is vrije software; u kunt MediaWiki verspreiden en/of aanpassen onder de voorwaarden van de GNU General Public License zoals gepubliceerd door de Free Software Foundation; ofwel versie 2 van de Licentie, of - naar uw wens - enige latere versie.
 
 MediaWiki wordt verspreid in de hoop dat het nuttig is, maar ZONDER ENIGE GARANTIE; zonder zelfs de impliciete garantie van VERKOOPBAARHEID of GESCHIKTHEID VOOR ENIG DOEL IN HET BIJZONDER. Zie de GNU General Public License voor meer informatie.
@@ -4078,17 +4138,17 @@ Andere bestandstypen worden direct in het met het MIME-type verbonden programma 
 'sqlite-no-fts' => 'Versie $1 zonder ondersteuning voor "full-text" zoeken',
 
 # New logging system
-'logentry-delete-delete' => '$1 heeft de pagina $3 verwijderd',
-'logentry-delete-restore' => '$1 heeft de pagina $3 teruggeplaatst',
-'logentry-delete-event' => '$1 heeft de zichtbaarheid van {{PLURAL:$5|een logboekregel|$5 logboekregels}} van $3 gewijzigd: $4',
-'logentry-delete-revision' => '$1 heeft de zichtbaarheid van {{PLURAL:$5|een versie|$5 versies}} van de pagina $3 gewijzigd: $4',
-'logentry-delete-event-legacy' => '$1 heeft de zichtbaarheid van logboekregels van $3 gewijzigd',
-'logentry-delete-revision-legacy' => '$1 heeft de zichtbaarheid van versies van de pagina $3 gewijzigd',
-'logentry-suppress-delete' => '$1 heeft de pagina $3 onderdrukt',
-'logentry-suppress-event' => '$1 heeft heimelijk de zichtbaarheid van {{PLURAL:$5|een logboekregel|$5 logboekregels}} van $3 gewijzigd: $4',
-'logentry-suppress-revision' => '$1 heeft heimelijk de zichtbaarheid van {{PLURAL:$5|een versie|$5 versies}} van de pagina $3 gewijzigd: $4',
-'logentry-suppress-event-legacy' => '$1 heeft heimelijk de zichtbaarheid van logboekregels van $3 gewijzigd',
-'logentry-suppress-revision-legacy' => '$1 heeft heimelijk de zichtbaarheid van versies van de pagina $3 gewijzigd.',
+'logentry-delete-delete' => '$1 {{GENDER:$2|heeft}} de pagina $3 verwijderd',
+'logentry-delete-restore' => '$1 {{GENDER:$2|heeft}} de pagina $3 teruggeplaatst',
+'logentry-delete-event' => '$1 {{GENDER:$2|heeft}} de zichtbaarheid van {{PLURAL:$5|een logboekregel|$5 logboekregels}} van $3 gewijzigd: $4',
+'logentry-delete-revision' => '$1 {{GENDER:$2|heeft}} de zichtbaarheid van {{PLURAL:$5|een versie|$5 versies}} van de pagina $3 gewijzigd: $4',
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|heeft}} de zichtbaarheid van logboekregels van $3 gewijzigd',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|heeft}} de zichtbaarheid van versies van de pagina $3 gewijzigd',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|heeft}} de pagina $3 onderdrukt',
+'logentry-suppress-event' => '$1 {{GENDER:$2|heeft}} heimelijk de zichtbaarheid van {{PLURAL:$5|een logboekregel|$5 logboekregels}} van $3 gewijzigd: $4',
+'logentry-suppress-revision' => '$1 {{GENDER:$2|heeft}} heimelijk de zichtbaarheid van {{PLURAL:$5|een versie|$5 versies}} van de pagina $3 gewijzigd: $4',
+'logentry-suppress-event-legacy' => '$1 {{GENDER:$2|heeft}} heimelijk de zichtbaarheid van logboekregels van $3 gewijzigd',
+'logentry-suppress-revision-legacy' => '$1 {{GENDER:$2|heeft}} heimelijk de zichtbaarheid van versies van de pagina $3 gewijzigd.',
 'revdelete-content-hid' => 'inhoud verborgen',
 'revdelete-summary-hid' => 'bewerkingssamenvatting verborgen',
 'revdelete-uname-hid' => 'gebruikersnaam verborgen',
@@ -4097,17 +4157,21 @@ Andere bestandstypen worden direct in het met het MIME-type verbonden programma 
 'revdelete-uname-unhid' => 'gebruikersnaam zichtbaar gemaakt',
 'revdelete-restricted' => 'heeft beperkingen aan beheerders opgelegd',
 'revdelete-unrestricted' => 'heeft beperkingen voor beheerders opgeheven',
-'logentry-move-move' => '$1 heeft pagina $3 naar $4 hernoemd',
-'logentry-move-move-noredirect' => '$1 heeft de pagina $3 hernoemd naar $4 zonder een doorverwijzing achter te laten',
-'logentry-move-move_redir' => '$1 heeft pagina $3 hernoemd naar $4 over een doorverwijzing',
-'logentry-move-move_redir-noredirect' => '$1 heeft pagina $3 naar $4 hernoemd over een doorverwijzing zonder een doorverwijzing achter te laten',
-'logentry-patrol-patrol' => '$1 heeft versie $4 van pagina $3 als gecontroleerd gemarkeerd',
-'logentry-patrol-patrol-auto' => '$1 heeft versie $4 van pagina $3 automatisch als gecontroleerd gemarkeerd',
-'logentry-newusers-newusers' => 'Gebruiker $1 is aangemaakt',
-'logentry-newusers-create' => 'Gebruiker $1 is aangemaakt',
-'logentry-newusers-create2' => 'Gebruiker $3 is aangemaakt door $1',
-'logentry-newusers-autocreate' => 'De gebruiker $1 is automatisch aangemaakt',
-'newuserlog-byemail' => 'wachtwoord is verzonden per e-mail',
+'logentry-move-move' => '$1 {{GENDER:$2|heeft}} pagina $3 hernoemd naar $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|heeft}} de pagina $3 hernoemd naar $4 zonder een doorverwijzing achter te laten',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|heeft}} pagina $3 hernoemd naar $4 over een doorverwijzing',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|heeft}} pagina $3 naar $4 hernoemd over een doorverwijzing zonder een doorverwijzing achter te laten',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|heeft}} versie $4 van pagina $3 gemarkeerd als gecontroleerd',
+'logentry-patrol-patrol-auto' => '$1 {{GENDER:$2|heeft}} versie $4 van pagina $3 automatisch gemarkeerd als gecontroleerd',
+'logentry-newusers-newusers' => 'Gebruiker $1 {{GENDER:$2|is}} aangemaakt',
+'logentry-newusers-create' => 'Gebruiker $1 {{GENDER:$2|is}} aangemaakt',
+'logentry-newusers-create2' => 'Gebruiker $3 {{GENDER:$2|is}} aangemaakt door $1',
+'logentry-newusers-byemail' => 'Gebruiker $3 {{GENDER:$2|is}} aangemaakt door $1 en het wachtwoord is per e-mail verzonden',
+'logentry-newusers-autocreate' => 'De gebruiker $1 {{GENDER:$2|is}} automatisch aangemaakt',
+'logentry-rights-rights' => '$1 {{GENDER:$2|heeft}} groepslidmaatschap voor $3 gewijzigd van $4 naar $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$2|heeft}} het groepslidmaatschap gewijzigd voor $3',
+'logentry-rights-autopromote' => '$1 {{GENDER:$2|is}} automatisch gepromoveerd van $4 naar $5',
+'rightsnone' => '(geen)',
 
 # Feedback
 'feedback-bugornote' => 'Als u zover bent om een technisch probleem in detail te beschrijven, [$1 rapporteer dan een bug].
@@ -4161,6 +4225,7 @@ Anders kunt u ook het eenvoudige formulier hieronder gebruiken. Uw reactie wordt
 'api-error-ok-but-empty' => 'Interne fout: de server heeft geen gegevens teruggeleverd.',
 'api-error-overwrite' => 'Het overschrijven van een bestand bestand is niet toegestaan.',
 'api-error-stashfailed' => 'Interne fout: de server kon het tijdelijke bestand niet opslaan.',
+'api-error-publishfailed' => 'Interne fout: de server kon het tijdelijke bestand niet publiceren.',
 'api-error-timeout' => 'De server heeft niet binnen de verwachte tijd geantwoord.',
 'api-error-unclassified' => 'Er is een onbekende fout opgetreden',
 'api-error-unknown-code' => 'Interne fout: "$1"',
@@ -4180,5 +4245,8 @@ Anders kunt u ook het eenvoudige formulier hieronder gebruiken. Uw reactie wordt
 'duration-decades' => '$1 {{PLURAL:$1|decennium|decennia}}',
 'duration-centuries' => '$1 {{PLURAL:$1|eeuw|eeuwen}}',
 'duration-millennia' => '$1 {{PLURAL:$1|millennium|millennia}}',
+
+# Image rotation
+'rotate-comment' => 'Afbeelding gedraaid, $1 {{PLURAL:$1|graad|graden}} met de klok mee',
 
 );

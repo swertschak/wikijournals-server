@@ -464,6 +464,9 @@ Legend: '''({{int:cur}})''' = difference with latest revision, '''({{int:last}})
 'group-user' => 'Hadome',
 'group-all' => '(kulle)',
 
+# Special:Log/newusers
+'newuserlogpage' => 'User creation log',
+
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'Mşaḥlaf iFaṭaṭe',
 
@@ -584,9 +587,6 @@ The description on its [$2 file description page] there is shown below.',
 
 # Special:ListUsers
 'listusers-submit' => 'Maḥway',
-
-# Special:Log/newusers
-'newuserlogpage' => 'User creation log',
 
 # Special:ListGroupRights
 'listgrouprights-group' => 'Gudo',
@@ -854,8 +854,7 @@ Others will be hidden by default.
 'compare-page2' => 'Faṭo 2',
 
 # Database error messages
-'dberr-problems' => 'Şubqono!
-iFaṭaṭe u3do kitla Qaṫre.',
+'dberr-problems' => 'Şubqono! iFaṭaṭe u3do kitla Qaṫre.',
 
 # HTML forms
 'htmlform-submit' => 'Mqayad',

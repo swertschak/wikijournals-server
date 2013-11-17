@@ -9,6 +9,7 @@
  *
  * @author Freeyak
  * @author Jason (on bo.wikipedia.org)
+ * @author Shirayuki
  * @author YeshiTuhden
  */
 
@@ -144,7 +145,6 @@ $messages = array(
 'qbfind' => 'འཚོལ་བ།',
 'qbedit' => 'རྩོམ་སྒྲིག',
 'qbpageoptions' => 'ཤོག་ངོས་འདི།',
-'qbpageinfo' => 'འབྲེལ་ཆགས།',
 'qbmyoptions' => 'ངའི་ཤོག་ངོས།',
 'qbspecialpages' => 'དམིཊ་བསལ་གྱི་བཟོ་བཅོས།',
 'faq' => 'རྒྱུན་ལྡན་དྲི་བ།',
@@ -395,7 +395,7 @@ $messages = array(
 'editingsection' => ' $1 (སྡེ་ཚན) ལ་རྩོམ་སྒྲིག་བྱེད་བཞིན་པ།',
 'yourtext' => 'ཁྱོད་ཀྱི་ཡིག་འབྲུ།',
 'yourdiff' => 'མི་འདྲ་ས།',
-'templatesused' => 'ཤོག་ངོས་འདིར་སྤྱད་པའི་ {{PLURAL:$1|དཔེ་པང་།|དཔེ་པང་།}}',
+'templatesused' => 'ཤོག་ངོས་འདིར་སྤྱད་པའི་ {{PLURAL:$1|དཔེ་པང་།}}',
 'template-protected' => 'སྲུང་སྐྱོབ་འོག་ཡོད་པ།',
 'nocreate-loggedin' => 'ཤོག་ངོས་གསར་བཟོའི་ཆོག་མཆན་མི་འདུག',
 'recreate-moveddeleted-warn' => "'''ཉེན་བརྡ་:རང་གིས་སུབ་ཚར་བའི་ཤོག་ལེ་ཞིག་བསྐྱར་བཟོ་བྱེད་ཀྱི་འདུག་ '''
@@ -532,7 +532,6 @@ $messages = array(
 
 # User rights log
 'rightslog' => 'སྤྱོད་མིའི་ཐོབ་ཐང་།',
-'rightsnone' => '(སྟོང་པ།)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'ཤོག་ངོས་འདི་ཀློག་པ།',
@@ -652,14 +651,14 @@ $messages = array(
 'brokenredirects-delete' => 'གསུབ་པ།',
 
 # Miscellaneous special pages
-'nbytes' => '{{PLURAL:$1|ཡིག་ཚགས།|ཡིག་ཚགས།}} $1',
+'nbytes' => '{{PLURAL:$1|ཡིག་ཚགས།}} $1',
 'shortpages' => 'ཤོག་ངོས་ཐུང་ངུ་།',
 'newpages' => 'ཤོག་ངོས་གསར་བ།',
 'newpages-username' => 'དྲ་མིང་།:',
 'move' => 'སྤོར་བ།',
 'movethispage' => 'ཤོག་ངོས་འདི་སྤོར།',
-'pager-newer-n' => '{{PLURAL：$1|གསར་བ་1|གསར་བ་$1}}',
-'pager-older-n' => '{{PLURAL：$1|རྙིང་པ་1|རྙིང་པ་$1}}',
+'pager-newer-n' => '{{PLURAL:$1|གསར་བ་1|གསར་བ་$1}}',
+'pager-older-n' => '{{PLURAL:$1|རྙིང་པ་1|རྙིང་པ་$1}}',
 
 # Book sources
 'booksources' => 'དཔེ་ཆའི་ཁུངས།',
@@ -702,9 +701,8 @@ $messages = array(
 'unwatching' => 'ལྟ་ཐོ་ལས་འདོར་བཞིན་པ་་་',
 
 'enotif_reset' => 'ཤོག་ངོས་ཚང་མ་བལྟས་ཟིན་དུ་རྟགས་རྒྱོབ།',
-'enotif_newpagetext' => 'ཤོག་ངོས་འདི་གསར་བ་རེད།',
-'changed' => 'བསྒྱུར་ཟིན།',
 'created' => 'བཟོས་ཟིན།',
+'changed' => 'བསྒྱུར་ཟིན།',
 
 # Delete
 'deletepage' => 'ཤོག་ངོས་འདོར་བ།',
@@ -880,5 +878,8 @@ $messages = array(
 
 # Special:SpecialPages
 'specialpages' => 'དམིགས་གསལ་ཤོག་ངོས།',
+
+# New logging system
+'rightsnone' => '(སྟོང་པ།)',
 
 );

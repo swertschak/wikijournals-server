@@ -6,24 +6,16 @@
  */
 
 /** Tests for MediaWiki languages/classes/LanguageCy.php */
-class LanguageCyTest extends MediaWikiTestCase {
-	private $lang;
-
-	function setUp() {
-		$this->lang = Language::factory( 'cy' );
-	}
-	function tearDown() {
-		unset( $this->lang );
-	}
+class LanguageCyTest extends LanguageClassesTestCase {
 
 	/** @dataProvider providerPlural */
 	function testPlural( $result, $value ) {
-		$forms =  array( 'zero', 'one', 'two', 'few', 'many', 'other' );
-		$this->assertEquals( $result, $this->lang->convertPlural( $value, $forms ) );
+		$forms = array( 'zero', 'one', 'two', 'few', 'many', 'other' );
+		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
 	function providerPlural() {
-		return array (
+		return array(
 			array( 'zero', 0 ),
 			array( 'one', 1 ),
 			array( 'two', 2 ),

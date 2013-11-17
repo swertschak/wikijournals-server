@@ -62,10 +62,10 @@ $messages = array(
 'tog-extendwatchlist' => 'निगरानी सूचीलाई सबै परिवर्तनहरू देखाउने गरी बढाउने , हालैको  बाहेक',
 'tog-usenewrc' => 'पृष्ठका भर्खरका परिवर्तन र अवलोकन सूचीको आधारमा सामूहिक परिवर्तनहरु ( जाभास्क्रिप्ट चाहिन्छ)',
 'tog-numberheadings' => 'शीर्षकहरुलाई स्वत:अङ्कित गर्नुहोस्',
-'tog-showtoolbar' => 'सम्पादन औजारबट्टा देखाउने( जाभा स्क्रिप्ट चाहिन्छ)',
-'tog-editondblclick' => 'दोहोरो क्लिकमा पृष्ठ सम्पादन गर्ने (जाभा स्क्रिप्ट चाहिन्छ)',
+'tog-showtoolbar' => 'सम्पादन औजारबट्टा देखाउने',
+'tog-editondblclick' => 'दोहोरो क्लिकमा पृष्ठ सम्पादन गर्ने',
 'tog-editsection' => '[सम्पादन] सम्बन्ध मार्फत हुने खण्ड सम्पादनलाई सक्षम पार्ने',
-'tog-editsectiononrightclick' => 'शीर्षकमा दाहिने क्लिकद्वारा खण्ड सम्पादन सक्षम पार्ने ( जाभा स्क्रिप्ट चाहिने )',
+'tog-editsectiononrightclick' => 'शीर्षकमा दाहिने क्लिकद्वारा खण्ड सम्पादन सक्षम पार्ने',
 'tog-showtoc' => 'सामग्री तालिका हेर्ने (तीन भन्दा बढी शीर्षक भएमा)',
 'tog-rememberpassword' => 'यस ब्राउजरमा मेरो प्रवेशलाई सम्झनुहोस् (अधिकतम $1 {{PLURAL:$1|दिन|दिनहरु}} सम्म)',
 'tog-watchcreations' => 'मेरो निगरानी सूचीमा मैले सृजना गरेको पृष्ठ र अपलोड जोड्ने',
@@ -86,7 +86,7 @@ $messages = array(
 'tog-externaleditor' => 'पूर्वनिर्धारित रुपमा बाह्य सम्पादक प्रयोग गर्नुहोस् (विज्ञहरुको लागि मात्र, तपाईको कम्प्युटरमा विशेष अनुकुलता आवश्यक हुन्छ [//www.mediawiki.org/wiki/Manual:External_editors More information.])',
 'tog-externaldiff' => 'पूर्वनिर्धारित रुपमा बाह्य diff प्रयोग गर्नुहोस (विज्ञ प्रयोगकर्ताहरुको लागि मात्र, तपाईंको कम्प्युटरमा विशेष अनुकुलता आवश्यक हुन्छ [//www.mediawiki.org/wiki/Manual:External_editors More information.])',
 'tog-showjumplinks' => '"जाने" पहुँच सम्वन्ध सक्रिय पार्ने',
-'tog-uselivepreview' => 'प्रत्यक्ष पूर्वरुप प्रयोग गर्नुहोस् ( जाभा स्क्रिप्ट आवश्यक) (प्रयोगात्मक)',
+'tog-uselivepreview' => 'प्रत्यक्ष पूर्वरुप प्रयोग गर्नुहोस् (प्रयोगात्मक)',
 'tog-forceeditsummary' => 'खाली सम्पादन सार प्रविष्टि गरेमा मलाई सोध्ने',
 'tog-watchlisthideown' => 'मेरा सम्पादनहरू निगनारी सूचीबाट लुकाउने',
 'tog-watchlisthidebots' => 'बोट सम्पादनहरू निगरानी सूचीबाट लुकाउने',
@@ -189,6 +189,7 @@ $messages = array(
 'newwindow' => '(नयाँ विन्डोमा खुल्छ)',
 'cancel' => 'रद्द',
 'moredotdotdot' => 'थप...',
+'morenotlisted' => 'यो सूची पूर्ण हैन ।',
 'mypage' => 'पृष्ठ',
 'mytalk' => 'वार्ता',
 'anontalk' => 'यस IP को वारेमा वार्तालाप गर्नुहोस्',
@@ -200,7 +201,6 @@ $messages = array(
 'qbbrowse' => 'ब्राउज गर्ने',
 'qbedit' => 'सम्पादन गर्ने',
 'qbpageoptions' => 'यो पेज',
-'qbpageinfo' => 'सन्दर्भ',
 'qbmyoptions' => 'मेरो पेज',
 'qbspecialpages' => 'विशेष पृष्ठहरु',
 'faq' => 'धैरै सोधिएका प्रश्नहरु',
@@ -223,6 +223,7 @@ $messages = array(
 'namespaces' => 'नेमस्पेस',
 'variants' => 'बहुरुपहरु',
 
+'navigation-heading' => 'नेविगेशन मेनू',
 'errorpagetitle' => 'त्रुटि',
 'returnto' => '$1 मा फर्कनुहोस् ।',
 'tagline' => '{{SITENAME}}बाट',
@@ -290,7 +291,7 @@ $1',
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => '{{SITENAME}}को बारेमा',
 'aboutpage' => 'Project:बारेमा',
-'copyright' => 'लेखका सामाग्री $1 अनुसार उपलब्ध छ।',
+'copyright' => 'सामाग्री $1 अनुसार उपलब्ध छ, खुलाइएको अवस्था बाहेकको हकमा ।',
 'copyrightpage' => '{{ns:project}}:प्रतिलिपी अधिकारहरु',
 'currentevents' => 'हालैका घटनाहरु',
 'currentevents-url' => 'Project:हालैका घटनाहरु',
@@ -459,10 +460,9 @@ $2',
 
 # Login and logout pages
 'logouttext' => "'''तपाईं अहिले बाहिर निस्कनु भएको छ।'''
-तपाईंले नाम/खाताविनै पनि {{SITENAME}}मा प्रयोग गर्न सक्नुहुन्छ, अथवा अघिकै वा अर्कै कुनै नामको खाताबाट [[Special:UserLogin|फेरि प्रवेश गर्न]] पनि सक्नुहुन्छ।
+तपाईंले नाम/खाताविनै पनि {{SITENAME}}मा प्रयोग गर्न सक्नुहुन्छ, अथवा अघिकै वा अर्कै कुनै नामको खाताबाट <span class='plainlinks'>[$1 फेरि प्रवेश गर्न]</span> पनि सक्नुहुन्छ।
 याद राख्नुहोस् तपाईंले ब्राउजरको स्मरण भण्डार खालि नगर्दासम्म कुनै पृष्ठहरूमा तपाईं अझै प्रवेश गरिराखेको देखाउन सक्छ।",
-'welcomecreation' => '== स्वागतम् , $1! ==
-तपाँईको खाता खोलिएको छ। [[Special:Preferences|{{SITENAME}} preferences]]मा आफ्ना अभिरुचिहरू परिवर्तन गर्न नबिर्सिनुहोला।',
+'welcomeuser' => '$1जी स्वागत छ!',
 'yourname' => 'प्रयोगकर्ता नाम:',
 'yourpassword' => 'पासवर्ड',
 'yourpasswordagain' => 'पासवर्ड फेरि टाईप गर्नुहोस्',
@@ -711,7 +711,7 @@ $2
 वा [{{fullurl:{{FULLPAGENAME}}|action=edit}}  यसै पृष्ठलाई संपादन गर्ने]</span>.',
 'noarticletext-nopermission' => 'यस लेखमा अहिले केहि पनि पाठ छैन ।
 तपाईंले अन्य पृष्ठमा [[Special:Search/{{PAGENAME}}|यस पृष्ठको शीर्षकको लागि खोज]] गर्न सक्नुहुन्छ,
-अथवा <span class="plainlinks">[{{fullurl:{{#Special:Log}}|पृष्ठ={{FULLPAGENAMEE}}}} सम्बन्धित लगहरु खोज्न सक्नुहुनेछ ]</span>.',
+अथवा <span class="plainlinks">[{{fullurl:{{#Special:Log}}|पृष्ठ={{FULLPAGENAMEE}}}} सम्बन्धित लगहरु खोज्न सक्नुहुनेछ ]</span> तर तपाईंलाई नयाँ पृष्ठ बनाउने अधिकार छैन।',
 'userpage-userdoesnotexist' => 'प्रयोगकर्ताको खाता  "<nowiki>$1</nowiki>" दर्ता गरिएको छैन ।
 तपाईँले पृष्ठ निर्माण/सम्पादन गर्न चाहनु भएको भए जाँच गर्नुहोस् ।',
 'userpage-userdoesnotexist-view' => 'प्रयोगकर्ता खाता "$1" दर्ता गरिएको छैन।',
@@ -736,7 +736,7 @@ $2
 प्रचलित .css तथा .js पृष्ठहरुले lowercase शीर्षक प्रयोग गर्छन्, जस्तै {{ns:user}}:Foo/Vector.css को सट्टामा {{ns:user}}:Foo/vector.css",
 'updated' => 'नवीन',
 'note' => "'''सूचना:'''",
-'previewnote' => "'''यो केवल पूर्वालोकन मात्र हो; तपाईंका परिवर्तनहरू संग्रह भएका छैनन्!'''",
+'previewnote' => "'''याद राख्नुहोस् यो केवल पूर्वावलोकन मात्र हो; तपाईंका परिवर्तनहरू संग्रहित भएका छैनन्!'''",
 'previewconflict' => 'यस पूर्वावलोकनले संपादन क्षेत्र को माथिल्लो भागको पाठ परिवर्तन गर्ने ठाउँको पाठलाइ देखाउँछ अनि तपाइले यसलाइ सेभ गरेपछि देखापर्छ।',
 'session_fail_preview' => "'''माफ गर्नुहोस्! सत्र-आँकड़ा (session data) हराउनाले हामीले तपाईंको सम्पादन प्रक्रिया अघि बढाउन सकेनौं।.'''
 कृपया पुनः प्रयास गर्नुहोस्।
@@ -789,13 +789,12 @@ $2
 'hiddencategories' => 'यो पृष्ठ निम्न {{PLURAL:$1|1 लुकाइएको श्रेणी|$1 लुकाइएका श्रेणीहरु}}को सदस्य हो :',
 'edittools' => '<!-- Text here will be shown below edit and upload forms. -->',
 'edittools-upload' => '-',
-'nocreatetitle' => 'पृष्ठ सृजना सीमित गरिएको',
 'nocreatetext' => '{{SITENAME}} ले नयाँ पृष्ठ सृजना गर्न सक्ने क्षमतामा रोक लगाएको छ।
 तपाईँ पछाडि जानु भइ रहिआएको पृष्ठ सम्पादन गर्नसक्नुहुन्छ , अथवा [[Special:UserLogin|प्रवेश गर्नुहोस या नयाँ खाता सृजना गर्नुहोस् ]]।',
 'nocreate-loggedin' => 'नयाँ पृष्ठ सृजनागर्नको लागि तपाईँलाई अनुमति छैन ।',
 'sectioneditnotsupported-title' => 'खण्ड सम्पादन असमर्थित',
 'sectioneditnotsupported-text' => 'यस पृष्ठमा खण्ड सम्पादन असमर्थित',
-'permissionserrors' => 'अनुमति त्रुटीहरु',
+'permissionserrors' => 'अनुमति नभएको',
 'permissionserrorstext' => 'तपाईँलाई यसको लागि अनुमति छैन ,निम्न {{PLURAL:$1|कारण|कारणहरु}}ले गर्दा:',
 'permissionserrorstext-withaction' => '$2 को लागि तपाईँलाई अनुमति छैन , निम्न {{PLURAL:$1|कारणले|कारणहरुले}} गर्दा :',
 'recreate-moveddeleted-warn' => "'''चेतावनी: तपाईं अघिबाट मेटिएको पृष्ठ पुनर्निर्माण गर्नुहुँदैछ'''
@@ -1154,7 +1153,7 @@ $1",
 'prefs-emailconfirm-label' => 'इ-मेल एकिन प्रक्रिया :',
 'prefs-textboxsize' => 'सम्पादन विन्डोको आकार',
 'youremail' => 'ईमेल',
-'username' => 'प्रयोगकर्ता नाम:',
+'username' => '{{GENDER:$1|प्रयोगकर्ता नाम}}:',
 'uid' => 'प्रोगकर्ता आइडी:',
 'prefs-memberingroups' => 'निम्न {{PLURAL:$1|समूह | समूहहरू}}को सदस्य :',
 'prefs-memberingroups-type' => '$1',
@@ -1186,7 +1185,7 @@ HTML ट्यागहरु जाँच्नुहोस् ।',
 'prefs-signature' => 'हस्ताक्षर',
 'prefs-dateformat' => 'मिति ढाँचा',
 'prefs-timeoffset' => 'समय अफसेट',
-'prefs-advancedediting' => 'विशिष्ट विकल्प',
+'prefs-advancedediting' => 'सामान्य',
 'prefs-advancedrc' => 'उन्नत विकल्पहरू',
 'prefs-advancedrendering' => 'उन्नत विकल्पहरु',
 'prefs-advancedsearchoptions' => 'उन्नत विकल्पहरू',
@@ -1307,12 +1306,12 @@ HTML ट्यागहरु जाँच्नुहोस् ।',
 'right-sendemail' => 'अन्य प्रयोगकर्ताहरुलाई इमेल गर्ने',
 'right-passwordreset' => 'पासवर्ड परिवर्तन गर्ने ईमेलहरु हेर्नुहोस',
 
+# Special:Log/newusers
+'newuserlogpage' => 'प्रयोगकर्ता श्रृजना लग',
+
 # User rights log
 'rightslog' => 'प्रयोगकर्ता अधिकार लग',
 'rightslogtext' => 'यो प्रयोगकर्ता अधिकारहरुको परिवर्तन लग हो ।',
-'rightslogentry' => '$1 समूह सदस्याता $2 बाट $3 मा परिवर्तन गरिएको छ',
-'rightslogentry-autopromote' => ' $2 बाट $3 मा स्वत: बढुवा गरिएको छ',
-'rightsnone' => '(कुनैपनि होइन)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'यो पृष्ठ पढ्ने',
@@ -1733,7 +1732,7 @@ $1',
 'listusers-editsonly' => 'सम्पादन गरेका प्रयोगकर्तामात्र देखाउने',
 'listusers-creationsort' => 'सृजना मिति अनुसार क्रमवद्ध गर्ने',
 'usereditcount' => '$1 {{PLURAL:$1|सम्पादन|सम्पादनहरु}}',
-'usercreated' => ' $1को $2 मा सृजना गरिएको',
+'usercreated' => ' $1को $2 मा {{GENDER:$3|सृजना}} गरिएको',
 'newpages' => 'नयाँ पृष्ठहरू',
 'newpages-username' => 'प्रयोगकर्ता नाम:',
 'ancientpages' => 'सबैभन्दा पुराना पृष्ठहरु',
@@ -1814,9 +1813,6 @@ $1',
 'activeusers-hidesysops' => 'प्रबन्धकहरु लुकाउने',
 'activeusers-noresult' => 'प्रयोगकर्ताहरु भेटिएनन्।',
 
-# Special:Log/newusers
-'newuserlogpage' => 'प्रयोगकर्ता श्रृजना लग',
-
 # Special:ListGroupRights
 'listgrouprights' => 'प्रयोगकर्ता समूह अधिकार',
 'listgrouprights-summary' => 'निम्न सूची यस विकिमा परिभाषित समूहहरु र तिनीहरुले प्रयोगगर्न सक्ने संबद्ध  अधिकारहरुको हो।
@@ -1870,8 +1866,8 @@ $1',
 'usermessage-template' => 'MediaWiki:UserMessage',
 
 # Watchlist
-'watchlist' => 'मेरो अवलोकन',
-'mywatchlist' => 'मेरो अवलोकनसूची',
+'watchlist' => 'अवलोकन सूची',
+'mywatchlist' => 'अवलोकनसूची',
 'watchlistfor2' => '$1को $2',
 'nowatchlist' => 'तपाईको अवलोकन सूचीमा कुनै पनि सामाग्री छैन।',
 'watchlistanontext' => 'कृपया तपाईको निगरानी सुची हेर्न या सम्पादनगर्न $1 गर्नुहोस् ।',
@@ -1907,11 +1903,7 @@ $1',
 
 'enotif_mailer' => '{{SITENAME}} जानकारी प्रेषक',
 'enotif_reset' => 'सबै पृष्ठहरु भनी दाग दिने',
-'enotif_newpagetext' => 'यो नयाँ पृष्ठ हो।',
 'enotif_impersonal_salutation' => '{{SITENAME}} प्रयोगकर्ता',
-'changed' => 'परिवर्तन भइसकेको',
-'created' => 'बनाइएको',
-'enotif_subject' => '$PAGEEDITORद्वारा {{SITENAME}} पृष्ठ $PAGETITLE $CHANGEDORCREATED गरिएको',
 'enotif_lastvisited' => 'अघिल्लो हेराइपछिका सबै परिवर्तनहरुको निम्ति हेर्नुहोस्: $1',
 'enotif_lastdiff' => 'यस परिवर्तनको निम्ति यो $1 हेर्नुहोस्',
 'enotif_anon_editor' => 'अज्ञात  प्रयोगकर्ता  $1',
@@ -1945,6 +1937,8 @@ $UNWATCHURL
 
 प्रतिक्रिया र अन्य सहयोगको निम्ति:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'बनाइएको',
+'changed' => 'परिवर्तन भइसकेको',
 
 # Delete
 'deletepage' => 'पृष्ठ मेट्नुहोस्',
@@ -2109,12 +2103,12 @@ $3द्वारा $1को ($4को  समय $5 मा) मेटाइए
 'blanknamespace' => '(मुख्य)',
 
 # Contributions
-'contributions' => 'प्रयोगकर्ताका योगदानहरू',
+'contributions' => '{{GENDER:$1|प्रयोगकर्ता}}का योगदानहरू',
 'contributions-title' => '$1को प्रयोगकर्ता योगदानहरु',
-'mycontris' => 'मेरो योगदान',
+'mycontris' => 'योगदानहरु',
 'contribsub2' => ' $1 ($2)को लागि',
 'nocontribs' => 'यस मापदण्ड अनुसार परिवर्त पाइएन।',
-'uctop' => '(माथि)',
+'uctop' => '(वर्तमान)',
 'month' => 'महिना देखि (र पहिले):',
 'year' => 'वर्ष देखि( र पहिले):',
 
@@ -2152,7 +2146,7 @@ $3द्वारा $1को ($4को  समय $5 मा) मेटाइए
 'whatlinkshere-hideredirs' => '$1 रिडाइरेक्ट हुन्छ',
 'whatlinkshere-hidetrans' => '$1 पारदर्शन',
 'whatlinkshere-hidelinks' => '$1 लिङ्कहरु',
-'whatlinkshere-hideimages' => '$1 तस्विर लिंक',
+'whatlinkshere-hideimages' => '$1 तस्वीर लिंकहरु',
 'whatlinkshere-filters' => 'फिल्टरहरू',
 
 # Block/unblock
@@ -3409,8 +3403,7 @@ $5
 
 # Database error messages
 'dberr-header' => 'यो विकिमा समस्या छ',
-'dberr-problems' => 'क्षमा पाउँ!
-यो साइटमा तकनीकी गड़बड़ी आइपरेकोछ।',
+'dberr-problems' => 'क्षमा पाउँ! यो साइटमा तकनीकी गड़बड़ी आइपरेकोछ।',
 'dberr-again' => 'केही समय पर्खिएर पुन: लोड हुन दिनुहोस् ।',
 'dberr-info' => '(डेटाबेस सर्वर $1सित सम्पर्क साध्न सकिंदैन)',
 'dberr-usegoogle' => 'तपाईले अहिले गुगलबाट खोज गर्न प्रयास गर्न सक्नुहुन्छ।',
@@ -3439,7 +3432,7 @@ $5
 'revdelete-restricted' => 'प्रबन्धकहरुमाथि सीमितता लागू गरियो',
 'revdelete-unrestricted' => 'प्रवन्धककोलागि निषेधहरु हटाइयो ।',
 'logentry-move-move' => '$1 द्वारा $3 पृष्ठलाई $4 मा सारियो',
-'newuserlog-byemail' => 'इ मेलबाट पठाइएको प्रवेशशव्द',
+'rightsnone' => '(कुनैपनि होइन)',
 
 # Feedback
 'feedback-subject' => 'विषय:',

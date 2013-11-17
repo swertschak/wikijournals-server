@@ -7,46 +7,69 @@
  *
  * @file
  * @ingroup Extensions
- * @version 1.3
+ * @version 3.0
  * @author Stephanie Amanda Stevens <phroziac@gmail.com>
- * @author SPQRobin <robinp.1273@gmail.com>
+ * @author Robin Pepermans (SPQRobin) <robinp.1273@gmail.com>
  * @copyright Copyright © 2005-2007 Stephanie Amanda Stevens
- * @copyright Copyright © 2007 SPQRobin
+ * @copyright Copyright © 2007-2011 Robin Pepermans (SPQRobin)
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @link http://www.mediawiki.org/wiki/Extension:SpecialInterwiki Documentation
  * Formatting improvements Stephen Kennedy, 2006.
  */
 
-if( !defined( 'MEDIAWIKI' ) ){
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die( "This is not a valid entry point.\n" );
 }
+
+// Set this value to true in LocalSettings.php if you will not use this
+// extension to actually change any interwiki table entries. It will suppress
+// the addition of a log for interwiki link changes.
+$wgInterwikiViewOnly = false;
 
 // Extension credits for Special:Version
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
-	'name' => 'SpecialInterwiki',
-	'author' => array( 'Stephanie Amanda Stevens', 'SPQRobin', '...' ),
-	'version' => '1.4.1',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:SpecialInterwiki',
+	'name' => 'Interwiki',
+	'author' => array( 'Stephanie Amanda Stevens', 'Alexandre Emsenhuber', 'Robin Pepermans', 'Siebrand Mazeland', 'Platonides', 'Raimond Spekking', 'Sam Reed', '...' ),
+	'version' => '2.2 20120425',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Interwiki',
 	'descriptionmsg' => 'interwiki-desc',
+);
+
+$wgExtensionFunctions[] = 'setupInterwikiExtension';
+
+$wgResourceModules['ext.interwiki.specialpage'] = array(
+	'styles' => 'Interwiki.css',
+	'localBasePath' => dirname( __FILE__ ),
+	'remoteExtPath' => 'Interwiki',
+	'dependencies' => array(
+		'jquery.makeCollapsible',
+	),
 );
 
 // Set up the new special page
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Interwiki'] = $dir . 'Interwiki.i18n.php';
-$wgExtensionAliasesFiles['Interwiki'] = $dir . 'Interwiki.alias.php';
+$wgExtensionMessagesFiles['InterwikiAlias'] = $dir . 'Interwiki.alias.php';
 $wgAutoloadClasses['SpecialInterwiki'] = $dir . 'Interwiki_body.php';
+$wgAutoloadClasses['InterwikiLogFormatter'] = $dir . 'Interwiki_body.php';
 $wgSpecialPages['Interwiki'] = 'SpecialInterwiki';
 $wgSpecialPageGroups['Interwiki'] = 'wiki';
 
-// New user right, required to modify the interwiki table through Special:Interwiki
-$wgAvailableRights[] = 'interwiki';
+function setupInterwikiExtension() {
+	global $wgInterwikiViewOnly;
 
-// Set up the new log type - interwiki actions are logged to this new log
-$wgLogTypes[] = 'interwiki';
-$wgLogNames['interwiki'] = 'interwiki_logpagename';
-$wgLogHeaders['interwiki'] = 'interwiki_logpagetext';
-$wgLogActions['interwiki/interwiki'] = 'interwiki_logentry';
-$wgLogActions['interwiki/iw_add'] = 'interwiki_log_added';
-$wgLogActions['interwiki/iw_delete'] = 'interwiki_log_deleted';
-$wgLogActions['interwiki/iw_edit'] = 'interwiki_log_edited';
+	if ( $wgInterwikiViewOnly === false ) {
+		global $wgAvailableRights, $wgLogTypes, $wgLogActionsHandlers;
+
+		// New user right, required to modify the interwiki table through Special:Interwiki
+		$wgAvailableRights[] = 'interwiki';
+
+		// Set up the new log type - interwiki actions are logged to this new log
+		$wgLogTypes[] = 'interwiki';
+		# interwiki, iw_add, iw_delete, iw_edit
+		$wgLogActionsHandlers['interwiki/*']  = 'InterwikiLogFormatter';
+	}
+
+	return true;
+}

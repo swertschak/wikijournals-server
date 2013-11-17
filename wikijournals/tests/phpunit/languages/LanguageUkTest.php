@@ -7,24 +7,16 @@
  */
 
 /** Tests for MediaWiki languages/classes/LanguageUk.php */
-class LanguageUkTest extends MediaWikiTestCase {
-	private $lang;
-
-	function setUp() {
-		$this->lang = Language::factory( 'Uk' );
-	}
-	function tearDown() {
-		unset( $this->lang );
-	}
+class LanguageUkTest extends LanguageClassesTestCase {
 
 	/** @dataProvider providePluralFourForms */
 	function testPluralFourForms( $result, $value ) {
 		$forms = array( 'one', 'few', 'many', 'other' );
-		$this->assertEquals( $result, $this->lang->convertPlural( $value, $forms ) );
+		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
 	function providePluralFourForms() {
-		return array (
+		return array(
 			array( 'one', 1 ),
 			array( 'many', 11 ),
 			array( 'one', 91 ),
@@ -38,13 +30,15 @@ class LanguageUkTest extends MediaWikiTestCase {
 			array( 'many', 120 ),
 		);
 	}
+
 	/** @dataProvider providePluralTwoForms */
 	function testPluralTwoForms( $result, $value ) {
 		$forms = array( 'one', 'several' );
-		$this->assertEquals( $result, $this->lang->convertPlural( $value, $forms ) );
+		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
+
 	function providePluralTwoForms() {
-		return array (
+		return array(
 			array( 'one', 1 ),
 			array( 'several', 11 ),
 			array( 'several', 91 ),

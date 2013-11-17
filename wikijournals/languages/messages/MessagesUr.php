@@ -11,6 +11,7 @@
  * @author Istabani
  * @author Meno25
  * @author Muhammad Shuaib
+ * @author Noor2020
  * @author O.bangash
  * @author Rachitrali
  * @author Reedy
@@ -44,6 +45,115 @@ $namespaceNames = array(
 	NS_HELP_TALK        => 'تبادلۂ_خیال_معاونت',
 	NS_CATEGORY         => 'زمرہ',
 	NS_CATEGORY_TALK    => 'تبادلۂ_خیال_زمرہ',
+);
+
+$specialPageAliases = array(
+	'Activeusers'               => array( 'متحرک_صارفین' ),
+	'Allmessages'               => array( 'تمام_پیغامات' ),
+	'Allpages'                  => array( 'تمام_صفحات' ),
+	'Ancientpages'              => array( 'قدیم_صفحات' ),
+	'Badtitle'                  => array( 'خراب_عنوان' ),
+	'Blankpage'                 => array( 'خالی_صفحہ' ),
+	'Block'                     => array( 'پابندی،_دستور_شبکی_پابندی،_پابندی_بر_صارف' ),
+	'Blockme'                   => array( 'میری_پابندی' ),
+	'Booksources'               => array( 'کتابی_وسائل' ),
+	'BrokenRedirects'           => array( 'شکستہ_رجوع_مکررات' ),
+	'Categories'                => array( 'زمرہ_جات' ),
+	'ChangeEmail'               => array( 'ڈاک_تبدیل' ),
+	'ChangePassword'            => array( 'کلمہ_شناخت_تبدیل،_تنظیم_کلمہ_شناخت' ),
+	'ComparePages'              => array( 'موازنہ_صفحات' ),
+	'Confirmemail'              => array( 'تصدیق_ڈاک' ),
+	'Contributions'             => array( 'شراکتیں' ),
+	'CreateAccount'             => array( 'تخلیق_کھاتہ' ),
+	'Deadendpages'              => array( 'مردہ_صفحات' ),
+	'DeletedContributions'      => array( 'حذف_شدہ_شراکتیں' ),
+	'Disambiguations'           => array( 'ضد_ابہام_صفحات' ),
+	'DoubleRedirects'           => array( 'دوہرے_رجوع_مکررات' ),
+	'EditWatchlist'             => array( 'ترمیم_زیر_نظر' ),
+	'Emailuser'                 => array( 'صارف_ڈاک' ),
+	'Export'                    => array( 'برآمدگی' ),
+	'Fewestrevisions'           => array( 'کم_نظر_ثانی_شدہ' ),
+	'FileDuplicateSearch'       => array( 'دہری_ملف_تلاش' ),
+	'Filepath'                  => array( 'راہ_ملف' ),
+	'Import'                    => array( 'درآمدگی' ),
+	'Invalidateemail'           => array( 'ڈاک_تصدیق_منسوخ' ),
+	'JavaScriptTest'            => array( 'تجربہ_جاوا_اسکرپٹ' ),
+	'BlockList'                 => array( 'فہرست_ممنوع،_فہرست_دستور_شبکی_ممنوع' ),
+	'LinkSearch'                => array( 'تلاش_روابط' ),
+	'Listadmins'                => array( 'فہرست_منتظمین' ),
+	'Listbots'                  => array( 'فہرست_روبہ_جات' ),
+	'Listfiles'                 => array( 'فہرست_املاف،_فہرست_تصاویر' ),
+	'Listgrouprights'           => array( 'فہرست_اختیارات_گروہ،_صارفی_گروہ_اختیارات' ),
+	'Listredirects'             => array( 'فہرست_رجوع_مکررات' ),
+	'Listusers'                 => array( 'فہرست_صارفین،_صارف_فہرست' ),
+	'Log'                       => array( 'نوشتہ،_نوشتہ_جات' ),
+	'Lonelypages'               => array( 'یتیم_صفحات' ),
+	'Longpages'                 => array( 'طویل_صفحات' ),
+	'MergeHistory'              => array( 'ضم_تاریخچہ' ),
+	'Movepage'                  => array( 'منتقلی_صفحہ' ),
+	'Mycontributions'           => array( 'میرا_حصہ' ),
+	'Mypage'                    => array( 'میرا_صفحہ' ),
+	'Mytalk'                    => array( 'میری_گفتگو' ),
+	'Myuploads'                 => array( 'میرے_زبراثقالات' ),
+	'Newimages'                 => array( 'جدید_املاف،_جدید_تصاویر' ),
+	'Newpages'                  => array( 'جدید_صفحات' ),
+	'PermanentLink'             => array( 'مستقل_ربط' ),
+	'Popularpages'              => array( 'مقبول_صفحات' ),
+	'Preferences'               => array( 'ترجیحات' ),
+	'Prefixindex'               => array( 'اشاریہ_سابقہ' ),
+	'Protectedpages'            => array( 'محفوظ_صفحات' ),
+	'Protectedtitles'           => array( 'محفوظ_عناوین' ),
+	'Randompage'                => array( 'تصادف،_تصادفی_مقالہ' ),
+	'Randomredirect'            => array( 'تصادفی_رجوع_مکرر' ),
+	'Recentchanges'             => array( 'حالیہ_تبدیلیاں' ),
+	'Recentchangeslinked'       => array( 'متعلقہ_تبدیلیاں' ),
+	'Revisiondelete'            => array( 'حذف_اعادہ' ),
+	'Search'                    => array( 'تلاش' ),
+	'Shortpages'                => array( 'مختصر_صفحات' ),
+	'Specialpages'              => array( 'خصوصی_صفحات' ),
+	'Statistics'                => array( 'شماریات' ),
+	'Uncategorizedcategories'   => array( 'غیر_زمرہ_بند_زمرہ_جات' ),
+	'Uncategorizedimages'       => array( 'غیر_زمرہ_بند_املاف،_غیر_زمرہ_بند_تصاویر' ),
+	'Uncategorizedpages'        => array( 'غیر_زمرہ_بند_صفحات' ),
+	'Uncategorizedtemplates'    => array( 'غیر_زمرہ_بند_سانچے' ),
+	'Undelete'                  => array( 'بحال' ),
+	'Unusedcategories'          => array( 'غیر_مستعمل_زمرہ_جات' ),
+	'Unusedimages'              => array( 'غیر_مستعمل_املاف،_غیر_مستعمل_تصاویر' ),
+	'Unusedtemplates'           => array( 'غیر_مستعمل_سانچے' ),
+	'Unwatchedpages'            => array( 'نادیدہ_صفحات' ),
+	'Upload'                    => array( 'زبراثقال' ),
+	'Userlogin'                 => array( 'داخل_نوشتگی' ),
+	'Userlogout'                => array( 'خارج_نوشتگی' ),
+	'Userrights'                => array( 'صارفی_اختیارات' ),
+	'Version'                   => array( 'اخراجہ' ),
+	'Wantedcategories'          => array( 'مطلوب_زمرہ_جات' ),
+	'Wantedfiles'               => array( 'مطلوب_املاف' ),
+	'Wantedpages'               => array( 'مطلوب_صفحات،_شکستہ_روابط' ),
+	'Wantedtemplates'           => array( 'مطلوب_سانچے' ),
+	'Watchlist'                 => array( 'زیر_نظر_فہرست' ),
+	'Whatlinkshere'             => array( 'یہاں_کس_کا_رابطہ' ),
+	'Withoutinterwiki'          => array( 'بدون_بین_الویکی' ),
+);
+
+$magicWords = array(
+	'redirect'                  => array( '0', '#رجوع_مکرر', '#REDIRECT' ),
+	'notoc'                     => array( '0', '_فہرست_نہیں_', '__NOTOC__' ),
+	'toc'                       => array( '0', '__فہرست__', '__TOC__' ),
+	'noeditsection'             => array( '0', '__ناتحریرقسم__', '__NOEDITSECTION__' ),
+	'msg'                       => array( '0', 'پیغام:', 'MSG:' ),
+	'subst'                     => array( '0', 'نقل:', 'SUBST:' ),
+	'safesubst'                 => array( '0', 'محفوظ_نقل:', 'SAFESUBST:' ),
+	'img_thumbnail'             => array( '1', 'تصغیر', 'thumbnail', 'thumb' ),
+	'img_right'                 => array( '1', 'دائیں', 'right' ),
+	'img_left'                  => array( '1', 'بائیں', 'left' ),
+	'img_center'                => array( '1', 'درمیان', 'center', 'centre' ),
+	'sitename'                  => array( '1', 'نام_موقع', 'SITENAME' ),
+	'grammar'                   => array( '0', 'قواعد:', 'GRAMMAR:' ),
+	'gender'                    => array( '0', 'جنس:', 'GENDER:' ),
+	'special'                   => array( '0', 'خاص', 'special' ),
+	'speciale'                  => array( '0', 'خاص_عنوان', 'speciale' ),
+	'index'                     => array( '1', '__اشاریہ__', '__INDEX__' ),
+	'noindex'                   => array( '1', '__نااشاریہ__', '__NOINDEX__' ),
 );
 
 $messages = array(
@@ -159,7 +269,7 @@ $messages = array(
 # Categories related messages
 'pagecategories' => '{{PLURAL:$1|زمرہ|زمرہ جات}}',
 'category_header' => 'زمرہ "$1" میں مضامین',
-'subcategories' => 'ذیلی ذمرہ جات',
+'subcategories' => 'ذیلی زمرہ جات',
 'category-media-header' => 'زمرہ "$1" میں وسیط',
 'category-empty' => '‘‘اِس زمرہ میں ابھی کوئی صفحات یا وسیط موجود نہیں.’’',
 'hidden-categories' => '{{PLURAL:$1|پوشیدہ زمرہ|پوشیدہ زمرہ جات}}',
@@ -185,7 +295,6 @@ $messages = array(
 'qbbrowse' => 'تصفّح',
 'qbedit' => 'ترمیم',
 'qbpageoptions' => 'صفحۂ ہٰذا',
-'qbpageinfo' => 'مفہوم',
 'qbmyoptions' => 'میرے صفحات',
 'qbspecialpages' => 'خاص صفحات',
 'faq' => 'معلوماتِ عامہ',
@@ -201,7 +310,7 @@ $messages = array(
 'vector-view-create' => 'تخلیق',
 'vector-view-edit' => 'ترمیم',
 'vector-view-history' => 'تاریخ',
-'vector-view-view' => 'پڑھیں',
+'vector-view-view' => 'مطالعہ',
 'vector-view-viewsource' => 'مسودہ',
 'actions' => 'ایکشنز',
 'namespaces' => 'جائے نام',
@@ -269,7 +378,7 @@ $1',
 'pool-errorunknown' => 'نامعلوم خطا',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
-'aboutsite' => 'کا تعارف {{SITENAME}}',
+'aboutsite' => 'تعارف {{SITENAME}}',
 'aboutpage' => 'Project:تعارف',
 'copyright' => 'تمام مواد $1 کے تحت میسر ہے۔',
 'copyrightpage' => '{{ns:project}}:حقوق تصانیف',
@@ -428,9 +537,7 @@ Warning: Page may not contain recent updates.',
 # Login and logout pages
 'logouttext' => "'''اب آپ خارج ہوچکے ہیں'''
 
-آپ گمنام طور پر {{SITENAME}}  کا استعمال جاری رکھ سکتے ہیں، یا دوبارہ اسی نام یا مختلف نام سے [[Special:UserLogin|دوبارہ داخلِ نوشتہ]] بھی ہو سکتے ہیں۔  یہ یاد آوری کرلیجیۓ کہ کچھ صفحات ایسے نظر آتے رہیں گے کہ جیسے ابھی آپ خارج نہیں ہوئے ، جب تک آپ اپنے متصفح کا ابطن صاف نہ کردیں۔",
-'welcomecreation' => '== خوش آمدید، $1 ! ==
-آپ کا کھاتہ بنا دیا گیا ہے۔ اپنی [[Special:Preferences|{{SITENAME}} ترجیحات]] مرتب کرنا مت بھولئے گا.',
+آپ گمنام طور پر {{SITENAME}}  کا استعمال جاری رکھ سکتے ہیں، یا دوبارہ اسی نام یا مختلف نام سے <span class='plainlinks'>[$1 دوبارہ داخلِ نوشتہ]</span> بھی ہو سکتے ہیں۔  یہ یاد آوری کرلیجیۓ کہ کچھ صفحات ایسے نظر آتے رہیں گے کہ جیسے ابھی آپ خارج نہیں ہوئے ، جب تک آپ اپنے متصفح کا ابطن صاف نہ کردیں۔",
 'yourname' => 'اسمِ رکنیت',
 'yourpassword' => 'کلمۂ شناخت',
 'yourpasswordagain' => 'کلمۂ شناخت دوبارہ لکھیں',
@@ -658,7 +765,6 @@ $1 نے پابندی لگائی تھی.
 'template-protected' => '(محفوظ شدہ)',
 'template-semiprotected' => '(نیم محفوظ)',
 'hiddencategories' => 'یہ صفحہ {{PLURAL:$1|1 چُھپے زمرے|$1 چُھپے زمرہ جات}} میں شامل ہے:',
-'nocreatetitle' => 'تخلیقِ صفحہ محدود',
 'nocreate-loggedin' => 'آپ کو نئے صفحات تخلیق کرنے کی اجازت نہیں ہے.',
 'sectioneditnotsupported-title' => 'قطعہ کی تدوین حمایت شدہ نہیں ہے',
 'sectioneditnotsupported-text' => 'اِس صفحہ میں قطعہ کی تدوین حمایت شدہ نہیں ہے.',
@@ -678,6 +784,10 @@ $1 نے پابندی لگائی تھی.
 'edit-no-change' => 'آپ کی تدوین کو نظرانداز کردیا گیا، کیونکہ متن میں کوئی تبدیلی نہیں ہوئی تھی.',
 'edit-already-exists' => 'نیا صفحہ تخلیق نہیں کیا جاسکتا.
 یہ پہلے سے موجود ہے.',
+
+# Content models
+'content-model-text' => 'سادہ متن',
+'content-model-javascript' => 'جاوا اسکرپٹ',
 
 # History pages
 'viewpagelogs' => 'اس صفحہ کیلیے نوشتہ جات دیکھیے',
@@ -805,7 +915,7 @@ $1",
 'searchprofile-project-tooltip' => '$1 میں تلاش',
 'searchprofile-images-tooltip' => 'تلاش برائے ملفات',
 'searchprofile-everything-tooltip' => ' تلاش تمام مشمولات (بشمول تبادلۂ خیال صفحات) میں',
-'searchprofile-advanced-tooltip' => 'اپنی پسند کے فضائے نام میں تلاش',
+'searchprofile-advanced-tooltip' => 'اپنی پسند کے جائے نام میں تلاش',
 'search-result-size' => '$1 ({{PLURAL:$2|1 لفظ|$2 الفاظ}})',
 'search-result-category-size' => '{{PLURAL:$1|1 رُکن|$1 اراکین}} ({{PLURAL:$2|1 ذیلی زمرہ|$2 ذیلی زمرہ جات}}, {{PLURAL:$3|1 ملف|$3 ملفات}})',
 'search-result-score' => 'توافق: $1%',
@@ -979,11 +1089,13 @@ HTML tags جانچئے.',
 'right-delete' => 'صفحات حذف کریں',
 'right-sendemail' => 'دیگر صارفین کو برقی ڈاک بھیجیں',
 
+# Special:Log/newusers
+'newuserlogpage' => 'نوشتۂ آمد صارف',
+'newuserlogpagetext' => 'یہ نۓ صارفوں کی آمد کا نوشتہ ہے',
+
 # User rights log
 'rightslog' => 'نوشتہ صارفی اختیارات',
 'rightslogtext' => 'یہ صارفی اختیارات میں تبدیلیوں کا نوشتہ ہے۔',
-'rightslogentry' => 'گروہ رکنیت میں برائے $1 از $2 تا $3 تبدیلی ہوئی',
-'rightsnone' => '(کچھ نہیں)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'اس صفحہ میں ترمیم کریں',
@@ -1029,7 +1141,7 @@ HTML tags جانچئے.',
 'recentchangeslinked-page' => 'صفحۂ منصوبہ دیکھئے',
 
 # Upload
-'upload' => 'فائل بھیجیں',
+'upload' => 'فائل اثقال',
 'uploadbtn' => 'زبراثقال ملف (اپ لوڈ فائل)',
 'reuploaddesc' => 'زبراثقال ورقہ (فارم) کیجانب واپس۔',
 'uploadnologin' => 'آپ داخل شدہ حالت میں نہیں',
@@ -1182,10 +1294,6 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Special:LinkSearch
 'linksearch-line' => '$1 مربوط ہے $2 سے',
 
-# Special:Log/newusers
-'newuserlogpage' => 'نوشتۂ آمد صارف',
-'newuserlogpagetext' => 'یہ نۓ صارفوں کی آمد کا نوشتہ ہے',
-
 # Special:ListGroupRights
 'listgrouprights-members' => '(اراکین کی فہرست)',
 
@@ -1212,9 +1320,8 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'wlshowlast' => 'دکھائیں آخری $1 گھنٹے $2 دن $3',
 'watchlist-options' => 'اختیارات برائے زیرِنظرفہرست',
 
-'enotif_newpagetext' => 'یہ نیا صفحہ ہے.',
-'changed' => 'تبدیل کردیاگیا',
 'created' => 'بنا دیا گیا',
+'changed' => 'تبدیل کردیاگیا',
 
 # Delete
 'deletepage' => 'صفحہ ضائع کریں',
@@ -1283,7 +1390,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'sp-contributions-newbies' => 'صرف نئے کھاتوں کے مساہمات دکھاؤ',
 'sp-contributions-blocklog' => 'نوشتۂ پابندی',
-'sp-contributions-uploads' => 'آپلوڈ',
+'sp-contributions-uploads' => 'اثقالات',
 'sp-contributions-logs' => 'نوشتہ جات',
 'sp-contributions-talk' => 'گفتگو',
 'sp-contributions-userrights' => 'صارف کے حقوق کا انتظام',
@@ -1293,7 +1400,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'sp-contributions-submit' => 'تلاش',
 
 # What links here
-'whatlinkshere' => 'ادھر کس کا جوڑ ہے',
+'whatlinkshere' => 'ادھر کونسا ربط ہے',
 'whatlinkshere-title' => '"$1" سے مربوط صفحات',
 'whatlinkshere-page' => 'صفحہ:',
 'linkshere' => "'''[[:$1]]''' سے درج ذیل صفحات مربوط ہیں:",
@@ -1301,7 +1408,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'isredirect' => 'لوٹایا گیا صفحہ',
 'istemplate' => 'شامل شدہ',
 'isimage' => 'ربطِ ملف',
-'whatlinkshere-links' => 'روابط',
+'whatlinkshere-links' => 'روابط ←',
 'whatlinkshere-hideredirs' => 'رجوع مکررات $1',
 'whatlinkshere-hidetrans' => 'تضمینات',
 'whatlinkshere-hidelinks' => 'روابط $1',
@@ -1428,7 +1535,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'tooltip-ca-nstab-category' => 'زمرہ‌جاتی صفحہ دیکھئے',
 'tooltip-minoredit' => 'اِس تدوین کو بطورِ معمولی ترمیم نشانزد کیجئے',
 'tooltip-save' => 'تبدیلیاں محفوظ کیجئے',
-'tooltip-preview' => 'برائے مہربانی! محفوظ کرنے سے پہلے تبدیلیوں کا پیشمنظر دیکھئے',
+'tooltip-preview' => 'برائے مہربانی! محفوظ کرنے سے پہلے تبدیلیوں کا پیش منظر دیکھيے',
 'tooltip-diff' => 'دیکھئے کہ اپنے متن میں کیا تبدیلیاں کیں',
 'tooltip-compareselectedversions' => 'اِس صفحہ کی دو منتخب نظرثانیوں میں فرق دیکھئے',
 'tooltip-watch' => 'اِس صفحہ کو اپنی زیرِنظرفہرست میں شامل کریں',
@@ -1528,6 +1635,9 @@ $1 × $2 عکصر (پکسلز)، حجم ملف: $3، MIME قسم: $4',
 
 # Special:SpecialPages
 'specialpages' => 'خصوصی صفحات',
+
+# New logging system
+'rightsnone' => '(کچھ نہیں)',
 
 # Search suggestions
 'searchsuggest-search' => 'تلاش',

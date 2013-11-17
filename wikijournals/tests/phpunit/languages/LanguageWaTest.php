@@ -6,26 +6,18 @@
  */
 
 /** Tests for MediaWiki languages/classes/LanguageWa.php */
-class LanguageWaTest extends MediaWikiTestCase {
-	private $lang;
-
-	function setUp() {
-		$this->lang = Language::factory( 'Wa' );
-	}
-	function tearDown() {
-		unset( $this->lang );
-	}
+class LanguageWaTest extends LanguageClassesTestCase {
 
 	/** @dataProvider providerPlural */
 	function testPlural( $result, $value ) {
 		$forms = array( 'one', 'many' );
-		$this->assertEquals( $result, $this->lang->convertPlural( $value, $forms ) );
+		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
 	function providerPlural() {
-		return array (
-			array( 'one',  0 ),
-			array( 'one',  1 ),
+		return array(
+			array( 'one', 0 ),
+			array( 'one', 1 ),
 			array( 'many', 2 ),
 		);
 	}

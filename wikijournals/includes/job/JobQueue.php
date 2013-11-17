@@ -1,413 +1,435 @@
 <?php
 /**
- * Job queue base code
+ * Job queue base code.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
  *
  * @file
  * @defgroup JobQueue JobQueue
+ * @author Aaron Schulz
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( "This file is part of MediaWiki, it is not a valid entry point\n" );
-}
 
 /**
- * Class to both describe a background job and handle jobs.
+ * Class to handle enqueueing and running of background jobs
  *
  * @ingroup JobQueue
+ * @since 1.21
  */
-abstract class Job {
+abstract class JobQueue {
+	protected $wiki; // string; wiki ID
+	protected $type; // string; job type
+	protected $order; // string; job priority for pop()
+	protected $claimTTL; // integer; seconds
+	protected $maxTries; // integer; maximum number of times to try a job
+
+	const QoS_Atomic = 1; // integer; "all-or-nothing" job insertions
 
 	/**
-	 * @var Title
-	 */
-	var $title;
-
-	var $command,
-		$params,
-		$id,
-		$removeDuplicates,
-		$error;
-
-	/*-------------------------------------------------------------------------
-	 * Abstract functions
-	 *------------------------------------------------------------------------*/
-
-	/**
-	 * Run the job
-	 * @return boolean success
-	 */
-	abstract function run();
-
-	/*-------------------------------------------------------------------------
-	 * Static functions
-	 *------------------------------------------------------------------------*/
-
-	/**
-	 * Pop a job of a certain type.  This tries less hard than pop() to
-	 * actually find a job; it may be adversely affected by concurrent job
-	 * runners.
-	 *
-	 * @param $type string
-	 *
-	 * @return Job
-	 */
-	static function pop_type( $type ) {
-		wfProfilein( __METHOD__ );
-
-		$dbw = wfGetDB( DB_MASTER );
-
-		$dbw->begin();
-
-		$row = $dbw->selectRow(
-			'job',
-			'*',
-			array( 'job_cmd' => $type ),
-			__METHOD__,
-			array( 'LIMIT' => 1, 'FOR UPDATE' )
-		);
-
-		if ( $row === false ) {
-			$dbw->commit();
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		/* Ensure we "own" this row */
-		$dbw->delete( 'job', array( 'job_id' => $row->job_id ), __METHOD__ );
-		$affected = $dbw->affectedRows();
-		$dbw->commit();
-
-		if ( $affected == 0 ) {
-			wfProfileOut( __METHOD__ );
-			return false;
-		}
-
-		wfIncrStats( 'job-pop' );
-		$namespace = $row->job_namespace;
-		$dbkey = $row->job_title;
-		$title = Title::makeTitleSafe( $namespace, $dbkey );
-		$job = Job::factory( $row->job_cmd, $title, Job::extractBlob( $row->job_params ),
-			$row->job_id );
-
-		$job->removeDuplicates();
-
-		wfProfileOut( __METHOD__ );
-		return $job;
-	}
-
-	/**
-	 * Pop a job off the front of the queue
-	 *
-	 * @param $offset Integer: Number of jobs to skip
-	 * @return Job or false if there's no jobs
-	 */
-	static function pop( $offset = 0 ) {
-		global $wgJobTypesExcludedFromDefaultQueue;
-		wfProfileIn( __METHOD__ );
-
-		$dbr = wfGetDB( DB_SLAVE );
-
-		/* Get a job from the slave, start with an offset,
-			scan full set afterwards, avoid hitting purged rows
-
-			NB: If random fetch previously was used, offset
-				will always be ahead of few entries
-		*/
-		$conditions = array();
-		if ( count( $wgJobTypesExcludedFromDefaultQueue ) != 0 ) {
-			foreach ( $wgJobTypesExcludedFromDefaultQueue as $cmdType ) {
-				$conditions[] = "job_cmd != " . $dbr->addQuotes( $cmdType );
-			}
-		}
-		$offset = intval( $offset );
-		$options = array( 'ORDER BY' => 'job_id', 'USE INDEX' => 'PRIMARY' );
-
-		$row = $dbr->selectRow( 'job', '*',
-			array_merge( $conditions, array( "job_id >= $offset" ) ),
-			__METHOD__,
-			$options
-		);
-
-		// Refetching without offset is needed as some of job IDs could have had delayed commits
-		// and have lower IDs than jobs already executed, blame concurrency :)
-		//
-		if ( $row === false ) {
-			if ( $offset != 0 ) {
-				$row = $dbr->selectRow( 'job', '*', $conditions, __METHOD__, $options );
-			}
-
-			if ( $row === false ) {
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-		}
-
-		// Try to delete it from the master
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->delete( 'job', array( 'job_id' => $row->job_id ), __METHOD__ );
-		$affected = $dbw->affectedRows();
-		$dbw->commit();
-
-		if ( !$affected ) {
-			// Failed, someone else beat us to it
-			// Try getting a random row
-			$row = $dbw->selectRow( 'job', array( 'MIN(job_id) as minjob',
-				'MAX(job_id) as maxjob' ), '1=1', __METHOD__ );
-			if ( $row === false || is_null( $row->minjob ) || is_null( $row->maxjob ) ) {
-				// No jobs to get
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-			// Get the random row
-			$row = $dbw->selectRow( 'job', '*',
-				'job_id >= ' . mt_rand( $row->minjob, $row->maxjob ), __METHOD__ );
-			if ( $row === false ) {
-				// Random job gone before we got the chance to select it
-				// Give up
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-			// Delete the random row
-			$dbw->delete( 'job', array( 'job_id' => $row->job_id ), __METHOD__ );
-			$affected = $dbw->affectedRows();
-			$dbw->commit();
-
-			if ( !$affected ) {
-				// Random job gone before we exclusively deleted it
-				// Give up
-				wfProfileOut( __METHOD__ );
-				return false;
-			}
-		}
-
-		// If execution got to here, there's a row in $row that has been deleted from the database
-		// by this thread. Hence the concurrent pop was successful.
-		wfIncrStats( 'job-pop' );
-		$namespace = $row->job_namespace;
-		$dbkey = $row->job_title;
-		$title = Title::makeTitleSafe( $namespace, $dbkey );
-		$job = Job::factory( $row->job_cmd, $title, Job::extractBlob( $row->job_params ), $row->job_id );
-
-		// Remove any duplicates it may have later in the queue
-		$job->removeDuplicates();
-
-		wfProfileOut( __METHOD__ );
-		return $job;
-	}
-
-	/**
-	 * Create the appropriate object to handle a specific job
-	 *
-	 * @param $command String: Job command
-	 * @param $title Title: Associated title
-	 * @param $params Array: Job parameters
-	 * @param $id Int: Job identifier
-	 * @return Job
-	 */
-	static function factory( $command, $title, $params = false, $id = 0 ) {
-		global $wgJobClasses;
-		if( isset( $wgJobClasses[$command] ) ) {
-			$class = $wgJobClasses[$command];
-			return new $class( $title, $params, $id );
-		}
-		throw new MWException( "Invalid job command `{$command}`" );
-	}
-
-	/**
-	 * @param $params
-	 * @return string
-	 */
-	static function makeBlob( $params ) {
-		if ( $params !== false ) {
-			return serialize( $params );
-		} else {
-			return '';
-		}
-	}
-
-	/**
-	 * @param $blob
-	 * @return bool|mixed
-	 */
-	static function extractBlob( $blob ) {
-		if ( (string)$blob !== '' ) {
-			return unserialize( $blob );
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Batch-insert a group of jobs into the queue.
-	 * This will be wrapped in a transaction with a forced commit.
-	 *
-	 * This may add duplicate at insert time, but they will be
-	 * removed later on, when the first one is popped.
-	 *
-	 * @param $jobs array of Job objects
-	 */
-	static function batchInsert( $jobs ) {
-		if ( !count( $jobs ) ) {
-			return;
-		}
-		$dbw = wfGetDB( DB_MASTER );
-		$rows = array();
-
-		/**
-		 * @var $job Job
-		 */
-		foreach ( $jobs as $job ) {
-			$rows[] = $job->insertFields();
-			if ( count( $rows ) >= 50 ) {
-				# Do a small transaction to avoid slave lag
-				$dbw->begin();
-				$dbw->insert( 'job', $rows, __METHOD__, 'IGNORE' );
-				$dbw->commit();
-				$rows = array();
-			}
-		}
-		if ( $rows ) { // last chunk
-			$dbw->begin();
-			$dbw->insert( 'job', $rows, __METHOD__, 'IGNORE' );
-			$dbw->commit();
-		}
-		wfIncrStats( 'job-insert', count( $jobs ) );
-	}
-
-	/**
-	 * Insert a group of jobs into the queue.
-	 *
-	 * Same as batchInsert() but does not commit and can thus
-	 * be rolled-back as part of a larger transaction. However,
-	 * large batches of jobs can cause slave lag.
-	 *
-	 * @param $jobs array of Job objects
-	 */
-	static function safeBatchInsert( $jobs ) {
-		if ( !count( $jobs ) ) {
-			return;
-		}
-		$dbw = wfGetDB( DB_MASTER );
-		$rows = array();
-		foreach ( $jobs as $job ) {
-			$rows[] = $job->insertFields();
-			if ( count( $rows ) >= 500 ) {
-				$dbw->insert( 'job', $rows, __METHOD__, 'IGNORE' );
-				$rows = array();
-			}
-		}
-		if ( $rows ) { // last chunk
-			$dbw->insert( 'job', $rows, __METHOD__, 'IGNORE' );
-		}
-		wfIncrStats( 'job-insert', count( $jobs ) );
-	}
-
-	/*-------------------------------------------------------------------------
-	 * Non-static functions
-	 *------------------------------------------------------------------------*/
-
-	/**
-	 * @param $command
-	 * @param $title
 	 * @param $params array
-	 * @param int $id
 	 */
-	function __construct( $command, $title, $params = false, $id = 0 ) {
-		$this->command = $command;
-		$this->title = $title;
-		$this->params = $params;
-		$this->id = $id;
-
-		// A bit of premature generalisation
-		// Oh well, the whole class is premature generalisation really
-		$this->removeDuplicates = true;
-	}
-
-	/**
-	 * Insert a single job into the queue.
-	 * @return bool true on success
-	 */
-	function insert() {
-		$fields = $this->insertFields();
-
-		$dbw = wfGetDB( DB_MASTER );
-
-		if ( $this->removeDuplicates ) {
-			$res = $dbw->select( 'job', array( '1' ), $fields, __METHOD__ );
-			if ( $dbw->numRows( $res ) ) {
-				return true;
-			}
-		}
-		wfIncrStats( 'job-insert' );
-		return $dbw->insert( 'job', $fields, __METHOD__ );
-	}
-
-	/**
-	 * @return array
-	 */
-	protected function insertFields() {
-		$dbw = wfGetDB( DB_MASTER );
-		return array(
-			'job_id' => $dbw->nextSequenceValue( 'job_job_id_seq' ),
-			'job_cmd' => $this->command,
-			'job_namespace' => $this->title->getNamespace(),
-			'job_title' => $this->title->getDBkey(),
-			'job_timestamp' => $dbw->timestamp(),
-			'job_params' => Job::makeBlob( $this->params )
-		);
-	}
-
-	/**
-	 * Remove jobs in the job queue which are duplicates of this job.
-	 * This is deadlock-prone and so starts its own transaction.
-	 */
-	function removeDuplicates() {
-		if ( !$this->removeDuplicates ) {
-			return;
-		}
-
-		$fields = $this->insertFields();
-		unset( $fields['job_id'] );
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->begin();
-		$dbw->delete( 'job', $fields, __METHOD__ );
-		$affected = $dbw->affectedRows();
-		$dbw->commit();
-		if ( $affected ) {
-			wfIncrStats( 'job-dup-delete', $affected );
-		}
-	}
-
-	/**
-	 * @return string
-	 */
-	function toString() {
-		$paramString = '';
-		if ( $this->params ) {
-			foreach ( $this->params as $key => $value ) {
-				if ( $paramString != '' ) {
-					$paramString .= ' ';
-				}
-				$paramString .= "$key=$value";
-			}
-		}
-
-		if ( is_object( $this->title ) ) {
-			$s = "{$this->command} " . $this->title->getPrefixedDBkey();
-			if ( $paramString !== '' ) {
-				$s .= ' ' . $paramString;
-			}
-			return $s;
+	protected function __construct( array $params ) {
+		$this->wiki = $params['wiki'];
+		$this->type = $params['type'];
+		$this->claimTTL = isset( $params['claimTTL'] ) ? $params['claimTTL'] : 0;
+		$this->maxTries = isset( $params['maxTries'] ) ? $params['maxTries'] : 3;
+		if ( isset( $params['order'] ) && $params['order'] !== 'any' ) {
+			$this->order = $params['order'];
 		} else {
-			return "{$this->command} $paramString";
+			$this->order = $this->optimalOrder();
+		}
+		if ( !in_array( $this->order, $this->supportedOrders() ) ) {
+			throw new MWException( __CLASS__ . " does not support '{$this->order}' order." );
 		}
 	}
 
-	protected function setLastError( $error ) {
-		$this->error = $error;
+	/**
+	 * Get a job queue object of the specified type.
+	 * $params includes:
+	 *   - class    : What job class to use (determines job type)
+	 *   - wiki     : wiki ID of the wiki the jobs are for (defaults to current wiki)
+	 *   - type     : The name of the job types this queue handles
+	 *   - order    : Order that pop() selects jobs, one of "fifo", "timestamp" or "random".
+	 *                If "fifo" is used, the queue will effectively be FIFO. Note that
+	 *                job completion will not appear to be exactly FIFO if there are multiple
+	 *                job runners since jobs can take different times to finish once popped.
+	 *                If "timestamp" is used, the queue will at least be loosely ordered
+	 *                by timestamp, allowing for some jobs to be popped off out of order.
+	 *                If "random" is used, pop() will pick jobs in random order.
+	 *                Note that it may only be weakly random (e.g. a lottery of the oldest X).
+	 *                If "any" is choosen, the queue will use whatever order is the fastest.
+	 *                This might be useful for improving concurrency for job acquisition.
+	 *   - claimTTL : If supported, the queue will recycle jobs that have been popped
+	 *                but not acknowledged as completed after this many seconds. Recycling
+	 *                of jobs simple means re-inserting them into the queue. Jobs can be
+	 *                attempted up to three times before being discarded.
+	 *
+	 * Queue classes should throw an exception if they do not support the options given.
+	 *
+	 * @param $params array
+	 * @return JobQueue
+	 * @throws MWException
+	 */
+	final public static function factory( array $params ) {
+		$class = $params['class'];
+		if ( !MWInit::classExists( $class ) ) {
+			throw new MWException( "Invalid job queue class '$class'." );
+		}
+		$obj = new $class( $params );
+		if ( !( $obj instanceof self ) ) {
+			throw new MWException( "Class '$class' is not a " . __CLASS__ . " class." );
+		}
+		return $obj;
 	}
 
-	function getLastError() {
-		return $this->error;
+	/**
+	 * @return string Wiki ID
+	 */
+	final public function getWiki() {
+		return $this->wiki;
+	}
+
+	/**
+	 * @return string Job type that this queue handles
+	 */
+	final public function getType() {
+		return $this->type;
+	}
+
+	/**
+	 * @return string One of (random, timestamp, fifo)
+	 */
+	final public function getOrder() {
+		return $this->order;
+	}
+
+	/**
+	 * @return Array Subset of (random, timestamp, fifo)
+	 */
+	abstract protected function supportedOrders();
+
+	/**
+	 * @return string One of (random, timestamp, fifo)
+	 */
+	abstract protected function optimalOrder();
+
+	/**
+	 * Quickly check if the queue is empty (has no available jobs).
+	 * Queue classes should use caching if they are any slower without memcached.
+	 *
+	 * If caching is used, this might return false when there are actually no jobs.
+	 * If pop() is called and returns false then it should correct the cache. Also,
+	 * calling flushCaches() first prevents this. However, this affect is typically
+	 * not distinguishable from the race condition between isEmpty() and pop().
+	 *
+	 * @return bool
+	 * @throws MWException
+	 */
+	final public function isEmpty() {
+		wfProfileIn( __METHOD__ );
+		$res = $this->doIsEmpty();
+		wfProfileOut( __METHOD__ );
+		return $res;
+	}
+
+	/**
+	 * @see JobQueue::isEmpty()
+	 * @return bool
+	 */
+	abstract protected function doIsEmpty();
+
+	/**
+	 * Get the number of available (unacquired) jobs in the queue.
+	 * Queue classes should use caching if they are any slower without memcached.
+	 *
+	 * If caching is used, this number might be out of date for a minute.
+	 *
+	 * @return integer
+	 * @throws MWException
+	 */
+	final public function getSize() {
+		wfProfileIn( __METHOD__ );
+		$res = $this->doGetSize();
+		wfProfileOut( __METHOD__ );
+		return $res;
+	}
+
+	/**
+	 * @see JobQueue::getSize()
+	 * @return integer
+	 */
+	abstract protected function doGetSize();
+
+	/**
+	 * Get the number of acquired jobs (these are temporarily out of the queue).
+	 * Queue classes should use caching if they are any slower without memcached.
+	 *
+	 * If caching is used, this number might be out of date for a minute.
+	 *
+	 * @return integer
+	 * @throws MWException
+	 */
+	final public function getAcquiredCount() {
+		wfProfileIn( __METHOD__ );
+		$res = $this->doGetAcquiredCount();
+		wfProfileOut( __METHOD__ );
+		return $res;
+	}
+
+	/**
+	 * @see JobQueue::getAcquiredCount()
+	 * @return integer
+	 */
+	abstract protected function doGetAcquiredCount();
+
+	/**
+	 * Push a single jobs into the queue.
+	 * This does not require $wgJobClasses to be set for the given job type.
+	 * Outside callers should use JobQueueGroup::push() instead of this function.
+	 *
+	 * @param $jobs Job|Array
+	 * @param $flags integer Bitfield (supports JobQueue::QoS_Atomic)
+	 * @return bool Returns false on failure
+	 * @throws MWException
+	 */
+	final public function push( $jobs, $flags = 0 ) {
+		return $this->batchPush( is_array( $jobs ) ? $jobs : array( $jobs ), $flags );
+	}
+
+	/**
+	 * Push a batch of jobs into the queue.
+	 * This does not require $wgJobClasses to be set for the given job type.
+	 * Outside callers should use JobQueueGroup::push() instead of this function.
+	 *
+	 * @param array $jobs List of Jobs
+	 * @param $flags integer Bitfield (supports JobQueue::QoS_Atomic)
+	 * @return bool Returns false on failure
+	 * @throws MWException
+	 */
+	final public function batchPush( array $jobs, $flags = 0 ) {
+		if ( !count( $jobs ) ) {
+			return true; // nothing to do
+		}
+
+		foreach ( $jobs as $job ) {
+			if ( $job->getType() !== $this->type ) {
+				throw new MWException( "Got '{$job->getType()}' job; expected '{$this->type}'." );
+			}
+		}
+
+		wfProfileIn( __METHOD__ );
+		$ok = $this->doBatchPush( $jobs, $flags );
+		wfProfileOut( __METHOD__ );
+		return $ok;
+	}
+
+	/**
+	 * @see JobQueue::batchPush()
+	 * @return bool
+	 */
+	abstract protected function doBatchPush( array $jobs, $flags );
+
+	/**
+	 * Pop a job off of the queue.
+	 * This requires $wgJobClasses to be set for the given job type.
+	 * Outside callers should use JobQueueGroup::pop() instead of this function.
+	 *
+	 * @return Job|bool Returns false if there are no jobs
+	 * @throws MWException
+	 */
+	final public function pop() {
+		global $wgJobClasses;
+
+		if ( $this->wiki !== wfWikiID() ) {
+			throw new MWException( "Cannot pop '{$this->type}' job off foreign wiki queue." );
+		} elseif ( !isset( $wgJobClasses[$this->type] ) ) {
+			// Do not pop jobs if there is no class for the queue type
+			throw new MWException( "Unrecognized job type '{$this->type}'." );
+		}
+
+		wfProfileIn( __METHOD__ );
+		$job = $this->doPop();
+		wfProfileOut( __METHOD__ );
+		return $job;
+	}
+
+	/**
+	 * @see JobQueue::pop()
+	 * @return Job
+	 */
+	abstract protected function doPop();
+
+	/**
+	 * Acknowledge that a job was completed.
+	 *
+	 * This does nothing for certain queue classes or if "claimTTL" is not set.
+	 * Outside callers should use JobQueueGroup::ack() instead of this function.
+	 *
+	 * @param $job Job
+	 * @return bool
+	 * @throws MWException
+	 */
+	final public function ack( Job $job ) {
+		if ( $job->getType() !== $this->type ) {
+			throw new MWException( "Got '{$job->getType()}' job; expected '{$this->type}'." );
+		}
+		wfProfileIn( __METHOD__ );
+		$ok = $this->doAck( $job );
+		wfProfileOut( __METHOD__ );
+		return $ok;
+	}
+
+	/**
+	 * @see JobQueue::ack()
+	 * @return bool
+	 */
+	abstract protected function doAck( Job $job );
+
+	/**
+	 * Register the "root job" of a given job into the queue for de-duplication.
+	 * This should only be called right *after* all the new jobs have been inserted.
+	 * This is used to turn older, duplicate, job entries into no-ops. The root job
+	 * information will remain in the registry until it simply falls out of cache.
+	 *
+	 * This requires that $job has two special fields in the "params" array:
+	 *   - rootJobSignature : hash (e.g. SHA1) that identifies the task
+	 *   - rootJobTimestamp : TS_MW timestamp of this instance of the task
+	 *
+	 * A "root job" is a conceptual job that consist of potentially many smaller jobs
+	 * that are actually inserted into the queue. For example, "refreshLinks" jobs are
+	 * spawned when a template is edited. One can think of the task as "update links
+	 * of pages that use template X" and an instance of that task as a "root job".
+	 * However, what actually goes into the queue are potentially many refreshLinks2 jobs.
+	 * Since these jobs include things like page ID ranges and DB master positions, and morph
+	 * into smaller refreshLinks2 jobs recursively, simple duplicate detection (like job_sha1)
+	 * for individual jobs being identical is not useful.
+	 *
+	 * In the case of "refreshLinks", if these jobs are still in the queue when the template
+	 * is edited again, we want all of these old refreshLinks jobs for that template to become
+	 * no-ops. This can greatly reduce server load, since refreshLinks jobs involves parsing.
+	 * Essentially, the new batch of jobs belong to a new "root job" and the older ones to a
+	 * previous "root job" for the same task of "update links of pages that use template X".
+	 *
+	 * This does nothing for certain queue classes.
+	 *
+	 * @param $job Job
+	 * @return bool
+	 * @throws MWException
+	 */
+	final public function deduplicateRootJob( Job $job ) {
+		if ( $job->getType() !== $this->type ) {
+			throw new MWException( "Got '{$job->getType()}' job; expected '{$this->type}'." );
+		}
+		wfProfileIn( __METHOD__ );
+		$ok = $this->doDeduplicateRootJob( $job );
+		wfProfileOut( __METHOD__ );
+		return $ok;
+	}
+
+	/**
+	 * @see JobQueue::deduplicateRootJob()
+	 * @param $job Job
+	 * @return bool
+	 */
+	protected function doDeduplicateRootJob( Job $job ) {
+		return true;
+	}
+
+	/**
+	 * Wait for any slaves or backup servers to catch up.
+	 *
+	 * This does nothing for certain queue classes.
+	 *
+	 * @return void
+	 * @throws MWException
+	 */
+	final public function waitForBackups() {
+		wfProfileIn( __METHOD__ );
+		$this->doWaitForBackups();
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @see JobQueue::waitForBackups()
+	 * @return void
+	 */
+	protected function doWaitForBackups() {}
+
+	/**
+	 * Return a map of task names to task definition maps.
+	 * A "task" is a fast periodic queue maintenance action.
+	 * Mutually exclusive tasks must implement their own locking in the callback.
+	 *
+	 * Each task value is an associative array with:
+	 *   - name     : the name of the task
+	 *   - callback : a PHP callable that performs the task
+	 *   - period   : the period in seconds corresponding to the task frequency
+	 *
+	 * @return Array
+	 */
+	final public function getPeriodicTasks() {
+		$tasks = $this->doGetPeriodicTasks();
+		foreach ( $tasks as $name => &$def ) {
+			$def['name'] = $name;
+		}
+		return $tasks;
+	}
+
+	/**
+	 * @see JobQueue::getPeriodicTasks()
+	 * @return Array
+	 */
+	protected function doGetPeriodicTasks() {
+		return array();
+	}
+
+	/**
+	 * Clear any process and persistent caches
+	 *
+	 * @return void
+	 */
+	final public function flushCaches() {
+		wfProfileIn( __METHOD__ );
+		$this->doFlushCaches();
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @see JobQueue::flushCaches()
+	 * @return void
+	 */
+	protected function doFlushCaches() {}
+
+	/**
+	 * Get an iterator to traverse over all of the jobs in this queue.
+	 * This does not include jobs that are current acquired. In general,
+	 * this should only be called on a queue that is no longer being popped.
+	 *
+	 * @return Iterator|Traversable|Array
+	 * @throws MWException
+	 */
+	abstract public function getAllQueuedJobs();
+
+	/**
+	 * Namespace the queue with a key to isolate it for testing
+	 *
+	 * @param $key string
+	 * @return void
+	 * @throws MWException
+	 */
+	public function setTestingPrefix( $key ) {
+		throw new MWException( "Queue namespacing not supported for this queue type." );
 	}
 }

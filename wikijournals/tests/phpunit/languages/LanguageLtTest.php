@@ -6,30 +6,22 @@
  */
 
 /** Tests for MediaWiki languages/LanguageLt.php */
-class LanguageLtTest extends MediaWikiTestCase {
-	private $lang;
-
-	function setUp() {
-		$this->lang = Language::factory( 'Lt' );
-	}
-	function tearDown() {
-		unset( $this->lang );
-	}
+class LanguageLtTest extends LanguageClassesTestCase {
 
 	/** @dataProvider provideOneFewOtherCases */
 	function testOneFewOtherPlural( $result, $value ) {
-		$forms =  array( 'one', 'few', 'other' );
-		$this->assertEquals( $result, $this->lang->convertPlural( $value, $forms ) );
+		$forms = array( 'one', 'few', 'other' );
+		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
-	
+
 	/** @dataProvider provideOneFewCases */
 	function testOneFewPlural( $result, $value ) {
-		$forms =  array( 'one', 'few' );
-		$this->assertEquals( $result, $this->lang->convertPlural( $value, $forms ) );
+		$forms = array( 'one', 'few' );
+		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
 	function provideOneFewOtherCases() {
-		return array (
+		return array(
 			array( 'other', 0 ),
 			array( 'one', 1 ),
 			array( 'few', 2 ),
@@ -43,9 +35,9 @@ class LanguageLtTest extends MediaWikiTestCase {
 			array( 'one', 40001 ),
 		);
 	}
-	
+
 	function provideOneFewCases() {
-		return array (
+		return array(
 			array( 'one', 1 ),
 			array( 'few', 15 ),
 		);

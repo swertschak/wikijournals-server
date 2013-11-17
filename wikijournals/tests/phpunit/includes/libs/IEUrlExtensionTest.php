@@ -5,7 +5,7 @@
  */
 class IEUrlExtensionTest extends MediaWikiTestCase {
 	function testSimple() {
-		$this->assertEquals( 
+		$this->assertEquals(
 			'y',
 			IEUrlExtension::findIE6Extension( 'x.y' ),
 			'Simple extension'
@@ -113,6 +113,14 @@ class IEUrlExtensionTest extends MediaWikiTestCase {
 			'',
 			IEUrlExtension::findIE6Extension( '.' ),
 			'Dot at end of string'
+		);
+	}
+
+	function testTwoDots() {
+		$this->assertEquals(
+			'z',
+			IEUrlExtension::findIE6Extension( 'x.y.z' ),
+			'Two dots'
 		);
 	}
 }

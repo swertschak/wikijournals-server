@@ -11,17 +11,18 @@ class BlockTest extends MediaWikiLangTestCase {
 	/* variable used to save up the blockID we insert in this test suite */
 	private $blockId;
 
-	function setUp() {
-		global $wgContLang;
+	protected function setUp() {
 		parent::setUp();
-		$wgContLang = Language::factory( 'en' );
+		$this->setMwGlobals( array(
+			'wgLanguageCode' => 'en',
+			'wgContLang' => Language::factory( 'en' )
+		) );
 	}
 
 	function addDBData() {
-		//$this->dumpBlocks();
 
 		$user = User::newFromName( 'UTBlockee' );
-		if( $user->getID() == 0 ) {
+		if ( $user->getID() == 0 ) {
 			$user->addToDatabase();
 			$user->setPassword( 'UTBlockeePassword' );
 
@@ -45,7 +46,7 @@ class BlockTest extends MediaWikiLangTestCase {
 		// its value might change depending on the order the tests are run.
 		// ApiBlockTest insert its own blocks!
 		$newBlockId = $this->block->getId();
-		if ($newBlockId) {
+		if ( $newBlockId ) {
 			$this->blockId = $newBlockId;
 		} else {
 			throw new MWException( "Failed to insert block for BlockTest; old leftover block remaining?" );
@@ -58,7 +59,7 @@ class BlockTest extends MediaWikiLangTestCase {
 	function dumpBlocks() {
 		$v = $this->db->query( 'SELECT * FROM unittest_ipblocks' );
 		print "Got " . $v->numRows() . " rows. Full dump follow:\n";
-		foreach( $v as $row ) {
+		foreach ( $v as $row ) {
 			print_r( $row );
 		}
 	}
@@ -66,9 +67,9 @@ class BlockTest extends MediaWikiLangTestCase {
 	function testInitializerFunctionsReturnCorrectBlock() {
 		// $this->dumpBlocks();
 
-		$this->assertTrue( $this->block->equals( Block::newFromTarget('UTBlockee') ), "newFromTarget() returns the same block as the one that was made");
+		$this->assertTrue( $this->block->equals( Block::newFromTarget( 'UTBlockee' ) ), "newFromTarget() returns the same block as the one that was made" );
 
-		$this->assertTrue( $this->block->equals( Block::newFromID( $this->blockId ) ), "newFromID() returns the same block as the one that was made");
+		$this->assertTrue( $this->block->equals( Block::newFromID( $this->blockId ) ), "newFromID() returns the same block as the one that was made" );
 
 	}
 
@@ -78,7 +79,7 @@ class BlockTest extends MediaWikiLangTestCase {
 	function testBug26425BlockTimestampDefaultsToTime() {
 		// delta to stop one-off errors when things happen to go over a second mark.
 		$delta = abs( $this->madeAt - $this->block->mTimestamp );
-		$this->assertLessThan( 2, $delta, "If no timestamp is specified, the block is recorded as time()");
+		$this->assertLessThan( 2, $delta, "If no timestamp is specified, the block is recorded as time()" );
 
 	}
 
@@ -88,13 +89,13 @@ class BlockTest extends MediaWikiLangTestCase {
 	 *
 	 * This stopped working with r84475 and friends: regression being fixed for bug 29116.
 	 *
-	 * @dataProvider dataBug29116
+	 * @dataProvider provideBug29116Data
 	 */
 	function testBug29116LoadWithEmptyIp( $vagueTarget ) {
 		$this->hideDeprecated( 'Block::load' );
 
 		$uid = User::idFromName( 'UTBlockee' );
-		$this->assertTrue( ($uid > 0), 'Must be able to look up the target user during tests' );
+		$this->assertTrue( ( $uid > 0 ), 'Must be able to look up the target user during tests' );
 
 		$block = new Block();
 		$ok = $block->load( $vagueTarget, $uid );
@@ -108,14 +109,14 @@ class BlockTest extends MediaWikiLangTestCase {
 	 * because the new function didn't accept empty strings like Block::load()
 	 * had. Regression bug 29116.
 	 *
-	 * @dataProvider dataBug29116
+	 * @dataProvider provideBug29116Data
 	 */
 	function testBug29116NewFromTargetWithEmptyIp( $vagueTarget ) {
-		$block = Block::newFromTarget('UTBlockee', $vagueTarget);
+		$block = Block::newFromTarget( 'UTBlockee', $vagueTarget );
 		$this->assertTrue( $this->block->equals( $block ), "newFromTarget() returns the same block as the one that was made when given empty vagueTarget param " . var_export( $vagueTarget, true ) );
 	}
 
-	function dataBug29116() {
+	public static function provideBug29116Data() {
 		return array(
 			array( null ),
 			array( '' ),
@@ -166,7 +167,7 @@ class BlockTest extends MediaWikiLangTestCase {
 		// Reload block from DB
 		$userBlock = Block::newFromTarget( $username );
 		$this->assertTrue(
-			(bool) $block->prevents( 'createaccount' ),
+			(bool)$block->prevents( 'createaccount' ),
 			"Block object in DB should prevents 'createaccount'"
 		);
 
@@ -179,7 +180,7 @@ class BlockTest extends MediaWikiLangTestCase {
 		// Reload user
 		$u = User::newFromName( $username );
 		$this->assertTrue(
-			(bool) $u->isBlockedFromCreateAccount(),
+			(bool)$u->isBlockedFromCreateAccount(),
 			"Our sandbox user '$username' should NOT be able to create account"
 		);
 	}
@@ -222,7 +223,7 @@ class BlockTest extends MediaWikiLangTestCase {
 
 		$block = Block::newFromID( $res['id'] );
 		$this->assertEquals( 'UserOnForeignWiki', $block->getTarget()->getName(), 'Correct blockee name' );
-		$this->assertEquals( '14146',  $block->getTarget()->getId(), 'Correct blockee id' );
+		$this->assertEquals( '14146', $block->getTarget()->getId(), 'Correct blockee id' );
 		$this->assertEquals( 'MetaWikiUser', $block->getBlocker(), 'Correct blocker name' );
 		$this->assertEquals( 'MetaWikiUser', $block->getByName(), 'Correct blocker name' );
 		$this->assertEquals( 0, $block->getBy(), 'Correct blocker id' );

@@ -3,10 +3,11 @@
 /**
  * @group API
  * @group Database
+ * @group medium
  */
 class ApiBlockTest extends ApiTestCase {
 
-	function setUp() {
+	protected function setUp() {
 		parent::setUp();
 		$this->doLogin();
 	}
@@ -44,7 +45,7 @@ class ApiBlockTest extends ApiTestCase {
 			$this->markTestIncomplete( "The user UTApiBlockee does not exist" );
 		}
 
-		if( !isset( $data[0]['query']['pages'] ) ) {
+		if ( !isset( $data[0]['query']['pages'] ) ) {
 			$this->markTestIncomplete( "No block token found" );
 		}
 
@@ -58,7 +59,7 @@ class ApiBlockTest extends ApiTestCase {
 			'reason' => 'Some reason',
 			'token' => $pageinfo['blocktoken'] ), null, false, self::$users['sysop']->user );
 
-		$block = Block::newFromTarget('UTApiBlockee');
+		$block = Block::newFromTarget( 'UTApiBlockee' );
 
 		$this->assertTrue( !is_null( $block ), 'Block is valid' );
 
@@ -66,22 +67,6 @@ class ApiBlockTest extends ApiTestCase {
 		$this->assertEquals( 'Some reason', $block->mReason );
 		$this->assertEquals( 'infinity', $block->mExpiry );
 
-	}
-
-	/**
-	 * @dataProvider provideBlockUnblockAction
-	 */
-	function testGetTokenUsingABlockingAction( $action ) {
-		$data = $this->doApiRequest(
-			array(
-				'action' => $action,
-				'user' => 'UTApiBlockee',
-				'gettoken' => '' ),
-			null,
-			false,
-			self::$users['sysop']->user
-		);
-		$this->assertEquals( 34, strlen( $data[0][$action]["{$action}token"] ) );
 	}
 
 	/**
@@ -98,7 +83,7 @@ class ApiBlockTest extends ApiTestCase {
 				'action' => $action,
 				'user' => 'UTApiBlockee',
 				'reason' => 'Some reason',
-				),
+			),
 			null,
 			false,
 			self::$users['sysop']->user
@@ -110,7 +95,7 @@ class ApiBlockTest extends ApiTestCase {
 	 */
 	function provideBlockUnblockAction() {
 		return array(
-			array( 'block'   ),
+			array( 'block' ),
 			array( 'unblock' ),
 		);
 	}

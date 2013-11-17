@@ -8,6 +8,7 @@
  * @file
  *
  * @author Imdadb
+ * @author Southparkfan
  */
 
 $messages = array(
@@ -113,6 +114,7 @@ $messages = array(
 'delete' => 'Mesa',
 'protect' => 'Rakk',
 'protect_change' => 'badal kar',
+'protectthispage' => '',
 'newpage' => 'Púskuno panna',
 'talkpage' => 'Dá panna ná bárav aŧ ítgap kabo',
 'talkpagelinktext' => 'Ítgap',
@@ -331,6 +333,9 @@ Ná radbadal ák deskáne atíko matano.",
 
 'grouppage-sysop' => '{{ns:project}}:Amaldár ák',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Kárband joŕ kanning ná hisáb',
+
 # User rights log
 'rightslog' => 'Kárband hakk hisáb',
 
@@ -433,9 +438,6 @@ Ná radbadal ák deskáne atíko matano.",
 
 # Special:LinkSearch
 'linksearch' => 'Darí gańđ',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Kárband joŕ kanning ná hisáb',
 
 # Special:ListGroupRights
 'listgrouprights-members' => '(básk átá ridoband)',

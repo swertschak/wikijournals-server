@@ -301,9 +301,6 @@ Lista ida pájina espesiál nian [[Special:SpecialPages|iha ne'e]].",
 'ns-specialprotected' => 'La ema ida bele edita pájina espesiál sira.',
 
 # Login and logout pages
-'welcomecreation' => "== Loron di'ak, $1! ==
-Agora Ita iha konta iha ne'e.
-La haluha muda Ita-nia [[Special:Preferences|preferénsia]].",
 'yourname' => "Naran uza-na'in:",
 'login' => 'Log in',
 'nav-login-createaccount' => 'Log in / kriar konta ida',
@@ -491,11 +488,13 @@ Ita-nia mudansa la armazenadu seidauk!",
 'right-userrights' => "Edita priviléjiu uza-na'in hotu",
 'right-userrights-interwiki' => "Edita priviléjiu uza-na'in iha wiki seluk sira",
 
+# Special:Log/newusers
+'newuserlogpage' => "Lista kria uza-na'in",
+'newuserlogpagetext' => "Ne'e lista kria uza-na'in.",
+
 # User rights log
 'rightslog' => "Lista mudansa priviléjiu uza-na'in",
 'rightslogtext' => "Ne'e lista mudansa priviléjiu uza-na'in sira nian.",
-'rightslogentry' => 'muda grupu "$1" nian husi "$2" ba "$3"',
-'rightsnone' => '(mamuk)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => "lee pájina ne'e",
@@ -594,6 +593,7 @@ Ita-nia mudansa la armazenadu seidauk!",
 'shortpages' => 'Pájina badak',
 'longpages' => 'Pájina naruk',
 'listusers' => "Lista uza-na'in",
+'usercreated' => '{{GENDER:$3|registradu}} loron $1, oras $2',
 'newpages' => 'Pájina foun',
 'newpages-username' => "Naran uza-na'in:",
 'ancientpages' => 'Pájina tuan liu hotu sira',
@@ -637,10 +637,6 @@ Ita-nia mudansa la armazenadu seidauk!",
 'activeusers-hidebots' => 'Subar bot sira',
 'activeusers-hidesysops' => 'Subar administradór sira',
 
-# Special:Log/newusers
-'newuserlogpage' => "Lista kria uza-na'in",
-'newuserlogpagetext' => "Ne'e lista kria uza-na'in.",
-
 # Special:ListGroupRights
 'listgrouprights-group' => 'Grupu',
 'listgrouprights-rights' => 'Priviléjiu',
@@ -667,11 +663,9 @@ Ita-nia mudansa la armazenadu seidauk!",
 'watching' => 'Hateke...',
 'unwatching' => 'La hateke...',
 
-'enotif_newpagetext' => "Ne'e pájina foun.",
 'enotif_impersonal_salutation' => "Uza-na'in {{SITENAME}} nian",
-'changed' => 'muda ona',
 'created' => 'kria ona',
-'enotif_subject' => '$PAGEEDITOR $CHANGEDORCREATED pájina $PAGETITLE iha {{SITENAME}}',
+'changed' => 'muda ona',
 
 # Delete
 'deletepage' => 'Halakon pájina',
@@ -727,7 +721,7 @@ Ita-nia mudansa la armazenadu seidauk!",
 'blanknamespace' => '(Prinsipál)',
 
 # Contributions
-'contributions' => "Kontribuisaun uza-na'in",
+'contributions' => "{{GENDER:$1|Kontribuisaun uza-na'in}}",
 'contributions-title' => 'Kontribuisaun "$1" nian',
 'mycontris' => 'Kontribuisaun',
 'contribsub2' => 'Ba $1 ($2)',
@@ -776,6 +770,7 @@ Ita-nia mudansa la armazenadu seidauk!",
 'blocklink' => 'blokeiu',
 'unblocklink' => 'la blokeiu',
 'contribslink' => 'kontribuisaun',
+'blocklogentry' => 'blokeiu [[$1]] ba tempu $2 $3',
 'block-log-flags-nocreate' => 'la bele kria konta foun',
 'block-log-flags-noemail' => 'korreiu eletróniku blokeiu',
 'block-log-flags-nousertalk' => 'la bele edita pájina diskusaun rasik',
@@ -828,6 +823,7 @@ Ita-nia mudansa la armazenadu seidauk!",
 'tooltip-ca-addsection' => 'Tau tan seksaun foun ida.',
 'tooltip-ca-viewsource' => "Ema ruma proteje tiha pájina ne'e.
 Ó bele lee testu.",
+'tooltip-ca-history' => 'Versaun tuan pájina nian',
 'tooltip-ca-protect' => "Proteje pájina ne'e",
 'tooltip-ca-delete' => "Halakon pájina ne'e",
 'tooltip-ca-move' => "Book pájina ne'e",
@@ -997,5 +993,11 @@ Ligasaun seluk iha liña - ne'e pájina sira iha ne'ebé bele inklui imajen aat.
 
 # Database error messages
 'dberr-header' => "Wiki ne'e iha problema",
+
+# New logging system
+'rightsnone' => '(mamuk)',
+
+# Search suggestions
+'searchsuggest-search' => 'Buka',
 
 );

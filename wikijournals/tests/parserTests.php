@@ -24,10 +24,11 @@
  * @ingroup Testing
  */
 
-$otions = array( 'quick', 'color', 'quiet', 'help', 'show-output', 'record', 'run-disabled' );
+$otions = array( 'quick', 'color', 'quiet', 'help', 'show-output', 'record', 'run-disabled', 'run-parsoid' );
 $optionsWithArgs = array( 'regex', 'filter', 'seed', 'setversion' );
 
 require_once( __DIR__ . '/../maintenance/commandLine.inc' );
+require_once( __DIR__ . '/TestsAutoLoader.php' );
 
 if ( isset( $options['help'] ) ) {
 	echo <<<ENDS
@@ -52,6 +53,7 @@ Options:
   --seed <n>       Start the fuzz test from the specified seed
   --help           Show this help message
   --run-disabled   run disabled tests
+  --run-parsoid    run parsoid tests (normally disabled)
 
 ENDS;
 	exit( 0 );
@@ -71,7 +73,7 @@ if ( $wgDBtype == 'sqlite' ) {
 # refer to $wgTitle directly, but instead use the title
 # passed to it.
 $wgTitle = Title::newFromText( 'Parser test script do not use' );
-$tester = new ParserTest($options);
+$tester = new ParserTest( $options );
 
 if ( isset( $options['file'] ) ) {
 	$files = array( $options['file'] );

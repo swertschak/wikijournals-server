@@ -13,6 +13,7 @@
  * @author Joseph Mardy
  * @author Nipon087
  * @author Reedy
+ * @author Rillke
  * @author Salvator
  * @author Samar88
  * @author Srabony90
@@ -26,7 +27,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Joṛaoakanaḱko nãwã bodolaḱte danaṅkam',
 'tog-newpageshidepatrolled' => 'Biḍạakanaḱ sakamko nãwã sakamreaḱ talikare danȧkam',
 'tog-extendwatchlist' => 'Khạli nitoḱ bodolko do baṅ, joto bodolkodo ńeloḱ tạlikare phaylaomẽ.',
-'tog-usenewrc' => 'Cetan darja reaḱ nãwã bodolakanaḱko beoharme',
+'tog-usenewrc' => 'Nahaḱ bodolakanaḱko ar nojor reaḱ pahaṭare bodolaḱko mit́são ńelńam',
 'tog-numberheadings' => 'Mukhiạ kathako do actege piṛhipiṛhite sajaḱma',
 'tog-showtoolbar' => 'Joṛaoakanaḱ ṭulbar udugoḱma',
 'tog-editondblclick' => 'Bar dhao lin kate sakam torjomão reaḱ ạidari emogoḱma',
@@ -34,9 +35,9 @@ $messages = array(
 'tog-editsectiononrightclick' => 'Pahaṭa reaḱ pahaṭa guṭkathare jojom seć lin hotete <br /> pahaṭa sompadon lạgitte ektiạr em hoyoḱma (JavaScript)',
 'tog-showtoc' => 'Ṭibilre menaḱako ńel ( sakamkore 3 khon jạti hedlayenko)',
 'tog-rememberpassword' => 'Noa sendrare amaḱ boloḱ reaḱ katha (katha cạbi) disạimẽ (jạstite $1 {{PLURAL:$1din reaḱ din reaḱ}} lạgit)',
-'tog-watchcreations' => 'Sakamko songe  Ińaḱ ńelok tạlikare benao',
-'tog-watchdefault' => 'Sakam tońgey me Iń do ińaḱ ńeloḱ tạlikare joṛaokeda',
-'tog-watchmoves' => 'Sakamko tońgeyme Ińaḱ ńelok tạlikare kulme',
+'tog-watchcreations' => 'Ińaḱ tear sakam ar rakaṕ páelko ińaḱ ńelogoḱ tạlikare ńeloḱ ma',
+'tog-watchdefault' => 'Ińaḱ purạoakanaḱ sakam ar phayelko do ińaḱ ńeloḱ tạlikare joṛaoḱma',
+'tog-watchmoves' => 'Ińaḱ ocoḱ sakam ar phayelko inyaḱ nojor sakamre joṛaḱma',
 'tog-watchdeletion' => 'Sakamko tońgeyme Ińaḱ ńeloḱ tạlika khon get́ giḍikam',
 'tog-minordefault' => 'Etohoṕre sanam joṛao purạoanaḱko do bekor unuduḱ lekate cinhạkma',
 'tog-previewontop' => 'Joṛao bakso purạo lahare unuduḱ hoyoḱma',
@@ -163,7 +164,6 @@ $messages = array(
 'qbbrowse' => 'Sendra',
 'qbedit' => 'Tońge',
 'qbpageoptions' => 'Noa sakam',
-'qbpageinfo' => 'Sakam reaḱ thuti',
 'qbmyoptions' => 'In̕anḱ sakamko',
 'qbspecialpages' => 'Asokay teaḱ sakamko',
 'faq' => 'Baḍae kupuliko',
@@ -397,9 +397,8 @@ $2',
 'virus-unknownscanner' => 'Baṅ urum anṭvayras:',
 
 # Login and logout pages
-'welcomecreation' => '== Johar $1! ==
-Amaḱ ekaunṭ do tearena.
-Amaḱ [[Special:Preferance {{SITENAME}} pạsindko]] thir dohoe lạgit́te alom hiṛińa.',
+'welcomeuser' => 'Johar',
+'welcomecreation-msg' => 'Amaḱ ekaunṭ do̠ jhićena. Amaḱ pạsindko bodol alom hiṛińa.',
 'yourname' => 'Beoboharicaḱ ńutum',
 'yourpassword' => 'Uku namber',
 'yourpasswordagain' => 'Arhõ oku namber olme',
@@ -435,7 +434,7 @@ Amaḱ sendrare kukiko bondo hoeakana. Dayakate kukiko kạmi hoe ocoemẽ ar am
 Ale do baḍae ocolem amaḱ kuki doe kạmikana, sakam do arhõ rakaṕ lạgit́te kurumuṭuemẽ.',
 'noname' => 'Am do asol beoharićaḱ ńutum ṭhikte bam emakada.',
 'loginsuccesstitle' => 'Bhitri boloḱ do moctege puraoena',
-'loginsuccess' => '\'\'\'Am do nitge "$1" ńutumte {{SITENAME}} rem bolo akana.',
+'loginsuccess' => "'''Am do nitge \"\$1\" ńutumte {{SITENAME}} rem bolo akana.'''",
 'nosuchuser' => '"$1" ńutuman jahan beoharić bạnuea.
 Beoharićaḱ ńutum do bukṛogea.
 Amaḱ bananko ńelmẽ, se [[Special:Userlogin/signup nãwã mit́ṭen ekaunṭ tearmẽ]].',
@@ -601,7 +600,6 @@ Amaḱ bodolaḱ kodo nit habićte bań rukhíạakana!",
 'template-protected' => 'Rukhiạ',
 'template-semiprotected' => '(Kạṭic-rukhiyạ)',
 'hiddencategories' => 'Noa sakam do {{PLURAL:$1 1 ukuakan bhag $1 uku akan bhagkorenaḱ}} gaõtarenge:',
-'nocreatetitle' => 'Sakam tear do akoṭgea',
 'nocreate-loggedin' => 'Nãwã sakam tear lạgit́te am do ạidạri em baṅ hoeakana.',
 'sectioneditnotsupported-title' => 'Pahaṭa sompadona do bae hataoeda',
 'sectioneditnotsupported-text' => 'Noa sompadona sakamre pahaṭa sompadona do bae hataoeda',
@@ -800,6 +798,9 @@ Amaḱ e-mail ṭhikạna do bań cabaḱa tinre onko do ko beohara',
 'right-upload' => 'Rẽtko rakabmẽ',
 'right-delete' => 'Sakamko get giḍiymẽ',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Laṛcaṛićaḱ tear cạbi',
+
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'noa sakam joṛao',
 
@@ -938,9 +939,6 @@ Noa reaḱ pasnao katha [$2 rẽt pasnao sakam] latare emena',
 # Special:ListUsers
 'listusers-submit' => 'Udugmẽ',
 'listusers-blocked' => '(Esetgea)',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Laṛcaṛićaḱ tear cạbi',
 
 # Special:ListGroupRights
 'listgrouprights-group' => 'Gaõta',

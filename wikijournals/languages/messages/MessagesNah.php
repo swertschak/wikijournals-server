@@ -12,6 +12,7 @@
  * @author Reedy
  * @author Ricardo gs
  * @author Rob Church <robchur@gmail.com>
+ * @author Shirayuki
  * @author Teòtlalili
  */
 
@@ -88,7 +89,7 @@ $messages = array(
 'tog-showtoolbar' => 'Tiquittāz in tlein motequitiltia tlapatlaliztechcopa (JavaScript)',
 'tog-editondblclick' => 'Tiquimpatlāz zāzaniltin ōme clicca (JavaScript)',
 'tog-showtoc' => 'Tiquittāz in tlein cah zāzotlahcuilōlco',
-'tog-rememberpassword' => 'Ticpiyāz moMotlatequitiltilīltōca īhuān motlahtōlichtacāyo inīn chīuhpōhualhuazco (īxquich {{PLURAL:$1|tōnalli|tōnalli}})',
+'tog-rememberpassword' => 'Ticpiyāz moMotlatequitiltilīltōca īhuān motlahtōlichtacāyo inīn chīuhpōhualhuazco (īxquich {{PLURAL:$1|tōnalli}})',
 'tog-watchcreations' => 'Moaquiāz in āmatl mā niquinyōcoya īhuān in tlahcuilōlli mā niquinquetza īpan notlachiyaliz',
 'tog-watchdefault' => 'Moaquiāz āmatl īhuān tlahcuilōlli mā niquinpatla in notlachiyaliz',
 'tog-watchmoves' => 'Moaquiāz āmatl īhuān tlahcuilōlli mā niquinzaca in notlachiyaliz',
@@ -203,7 +204,6 @@ $messages = array(
 'qbbrowse' => 'Titlatēmōz',
 'qbedit' => 'Ticpatlāz',
 'qbpageoptions' => 'Inīn zāzanilli',
-'qbpageinfo' => 'Tlahcuilōltechcopa',
 'qbmyoptions' => 'Nozāzanil',
 'qbspecialpages' => 'Nònkuâkìskàtlaìxtlapaltìn',
 'faq' => 'Zan īc tētlatlanīliztli',
@@ -298,7 +298,7 @@ $messages = array(
 
 'badaccess' => 'Tlahuelītiliztechcopa ahcuallōtl',
 'badaccess-group0' => 'Tehhuātl ahmo tiquichīhua inōn tiquiēlēhuia.',
-'badaccess-groups' => 'Inōn tiquiēlēhuia zan quichīhuah tlatequitiltilīlli {{PLURAL:$2|oncān|oncān}}: $1.',
+'badaccess-groups' => 'Inōn tiquiēlēhuia zan quichīhuah tlatequitiltilīlli {{PLURAL:$2|oncān}}: $1.',
 
 'ok' => 'Nopan iti',
 'retrievedfrom' => 'Ōquīzqui ītech  "$1"',
@@ -377,15 +377,10 @@ Hueliz quimpiya tlahtōl tlein ahmo mohuelītih motequitiltia tōcāpan.',
 'virus-unknownscanner' => 'ahmatic antivirus:',
 
 # Login and logout pages
-'welcomecreation' => '== ¡Ximopanōlti, $1! ==
-
-Mocuentah ōmochīuh.
-
-Ye tihuelīti titēchihtoa [[Special:Preferences|motlaēlēhuiliz]].',
 'yourname' => 'Motlatequitiltilīltōca:',
 'yourpassword' => 'Motlahtōlichtacāyo',
 'yourpasswordagain' => 'Motlahtōlichtacāyo occeppa',
-'remembermypassword' => 'Ticpiyāz motlacalaquiliz inīn chīuhpōhualhuazco (īxquich {{PLURAL:$1|tōnalli|tōnalli}})',
+'remembermypassword' => 'Ticpiyāz motlacalaquiliz inīn chīuhpōhualhuazco (īxquich {{PLURAL:$1|tōnalli}})',
 'yourdomainname' => 'Moāxcāyō',
 'login' => 'Ximomachiyōmaca/Ximocalaqui',
 'nav-login-createaccount' => 'Ximocalaqui / ximomachiyōmaca',
@@ -400,7 +395,7 @@ Ye tihuelīti titēchihtoa [[Special:Preferences|motlaēlēhuiliz]].',
 'createaccount' => 'Ticchīhuāz cē cuentah',
 'gotaccount' => "¿Ye ticpiya cē cuentah? '''$1'''.",
 'gotaccountlink' => 'Ximocalaqui',
-'createaccountmail' => 'e-mailcopa',
+'createaccountmail' => 'Ticnemītīz ahmo cemihcac zāzoichtacātlahtōlli nō moēhualtīz in maltzinteyōtl netitlanizyeyāntli',
 'createaccountreason' => 'Tlèka:',
 'badretype' => 'Ahneneuhqui motlahtōlichtacāyo.',
 'userexists' => 'In tlatequitiltilīltōcāitl in ōquipehpen ye ia.
@@ -516,8 +511,8 @@ Tihuelīti [[Special:Search/{{PAGENAME}}|tictēmoa inīn zāzaniltōcācopa]] oc
 'nocreatetext' => 'Inīn huiqui ōquitzacuili tlahuelītiliztli ic tlachīhua yancuīc zāzaniltin. Tichuelīti ticcuepa auh ticpatla cē zāzanilli, [[Special:UserLogin|xicalaqui nozo xicchīhua cē cuentah]].',
 'nocreate-loggedin' => 'Ahmo tihuelīti tiquinchīhua yancuīc zāzaniltin.',
 'permissionserrors' => 'Huelītiliztechcopa ahcuallōtl',
-'permissionserrorstext' => 'Ahmo tihuelīti quichīhua inōn, inīn {{PLURAL:$1|īxtlamatilizpampa|īxtlamatilizpampa}}:',
-'permissionserrorstext-withaction' => 'Ahmo tiquihuelīti $2 inīn {{PLURAL:$1|īxtlamatilizpampa|īxtlamatilizpampa}}:',
+'permissionserrorstext' => 'Ahmo tihuelīti quichīhua inōn, inīn {{PLURAL:$1|īxtlamatilizpampa}}:',
+'permissionserrorstext-withaction' => 'Ahmo tiquihuelīti $2 inīn {{PLURAL:$1|īxtlamatilizpampa}}:',
 'moveddeleted-notice' => 'Inīn zāzanilli ōmopolo.
 In tlapololiztli īhuān in tlazacaliztli tlahcuilōlloh cah tlani.',
 'edit-gone-missing' => 'Ahmo huelīti yancuīya zāzanilli.
@@ -602,7 +597,7 @@ Hueliz ōmopolo huiqui nozo ōmozacac.
 'searchsubtitleinvalid' => "Ōtictēmo '''$1'''",
 'prevn' => '{{PLURAL:$1|$1}} achtopa',
 'nextn' => 'niman {{PLURAL:$1|$1}}',
-'shown-title' => 'Quinēxiltīz $1 {{PLURAL:$|mochīhualiztli}} cece āmac',
+'shown-title' => 'Quinēxiltīz $1 {{PLURAL:$1|mochīhualiztli}} cece āmac',
 'viewprevnext' => 'Xiquintta ($1 {{int:pipe-separator}} $2) ($3).',
 'searchmenu-exists' => "'''Ye ia zāzanilli ītōca \"[[\$1]]\" inīn huiquipan'''",
 'searchmenu-new' => "'''Tihuelīti ticchīhuāz zāzanilli ītōca \"[[:\$1]]\" inīn huiquipan'''",
@@ -677,14 +672,14 @@ Hueliz ōmopolo huiqui nozo ōmozacac.
 'default' => 'ic default',
 'prefs-files' => 'Tlahcuilōlli',
 'youremail' => 'Maltzinteyōtl netitlanizyeyāntli:',
-'username' => 'Tlatequitiltilīltōcāitl:',
-'uid' => 'Tlatequitiltilīlli ID:',
-'prefs-memberingroups' => 'Tlācatl {{PLURAL:$1|olōlco|olōlco}}:',
+'username' => '{{GENDER:$1|Tlatequitiltilīltōcāitl}}:',
+'uid' => '{{GENDER:$1|Tlatequitiltilīlli}} ID:',
+'prefs-memberingroups' => '{{GENDER:$2|Tlacotōncayōtl}} in {{PLURAL:$1|tēolōlolli|tēolōloltin}}',
 'yourrealname' => 'Melāhuac motōcā:',
 'yourlanguage' => 'Tlâtòlli:',
 'yournick' => 'Motōcātlaliz:',
 'badsiglength' => 'Motōcātlaliz cah ocachi huēyac.
-Ahmo quihuīquilia quimpiya achi $1 {{PLURAL:$1|machiyōtlahtōliztli|machiyōtlahtōliztli}}.',
+Ahmo quihuīquilia quimpiya achi $1 {{PLURAL:$1|machiyōtlahtōliztli}}.',
 'gender-male' => 'Oquichtli',
 'gender-female' => 'Cihuātl',
 'email' => 'E-mail',
@@ -745,7 +740,6 @@ Intlā ticnequi, tlācah quimatīzqueh motequi.',
 
 # User rights log
 'rightslog' => 'Tlatequitiltilīlli huelītiliztli tlahcuilōlloh',
-'rightsnone' => 'ahtlein',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'ticpōhuāz inīn zāzanilli',
@@ -767,7 +761,7 @@ Intlā ticnequi, tlācah quimatīzqueh motequi.',
 'action-userrights' => 'tiquimpatlāz mochi tlatequitiltilīlli huelītiliztli',
 
 # Recent changes
-'nchanges' => '$1 {{PLURAL:$1|tlapatlaliztli|tlapatlaliztli}}',
+'nchanges' => '$1 {{PLURAL:$1|tlapatlaliztli}}',
 'recentchanges' => 'Yancuīc tlapatlaliztli',
 'recentchanges-legend' => 'Yancuīc tlapatlaliztechcopa tlanequiliztli',
 'recentchanges-summary' => 'Xiquinttāz in achi yancuīc ahmo occequīntīn tlapatlaliztli huiquipan inīn zāzanilpan.',
@@ -897,7 +891,7 @@ Timitztlātlauhtiah, xitlahcuiloa occē tōcāitl.',
 
 # Random page
 'randompage' => 'Zāzozāzanilli',
-'randompage-nopages' => 'Ahmo oncah zāzanilli īpan inīn {{PLURAL:$2|tōcāitl|tōcāitl}}: $1.',
+'randompage-nopages' => 'Ahmo oncah zāzanilli īpan inīn {{PLURAL:$2|tōcāitl}}: $1.',
 
 # Random redirect
 'randomredirect' => 'Zāzotlacuepaliztli',
@@ -927,11 +921,11 @@ Timitztlātlauhtiah, xitlahcuiloa occē tōcāitl.',
 'withoutinterwiki-submit' => 'Tiquittāz',
 
 # Miscellaneous special pages
-'nbytes' => '$1 {{PLURAL:$1|byte|byte}}',
+'nbytes' => '$1 {{PLURAL:$1|byte}}',
 'ncategories' => '$1 {{PLURAL:$1|tlaìxmatkàtlàlilòtl|tlaìxmatkàtlàlilòmë}}',
 'nlinks' => '$1 {{PLURAL:$1|tzòwilistli|tzòwilistìn}}',
 'nmembers' => '$1 {{PLURAL:$1|tlâkuilòpilli|tlâkuilòpiltìn}}',
-'nrevisions' => '$1 {{PLURAL:$1|tlapiyaliztli|tlapiyaliztli}}',
+'nrevisions' => '$1 {{PLURAL:$1|tlapiyaliztli}}',
 'nimagelinks' => 'Motekìuhtia ìpan $1 {{PLURAL:$1|tlaìxtlapalli|tlaìxtlapaltìn}}',
 'ntransclusions' => 'motekìuhtia ìpan $1 {{PLURAL:$1|tlaìxtlapalli|tlaìxtlapaltìn}}',
 'uncategorizedpages' => 'Zāzaniltin ahmoneneuhcāyōtiah',
@@ -1035,38 +1029,36 @@ Nò mà mỏta in tlèn [[Special:WantedCategories|ìpan kineki tlaìxmatkàtlà
 'watching' => 'Tlachiyacah...',
 'unwatching' => 'Ahtlachiyacah...',
 
-'enotif_newpagetext' => 'Inīn cah yancuīc zāzanilli.',
 'enotif_impersonal_salutation' => 'tlatequitiltilīlli īpan {{SITENAME}}',
-'changed' => 'ōmotlacuep',
-'created' => 'ōmochīuh',
 'enotif_anon_editor' => 'ahtōcātlatequitiltilīlli $1',
-'enotif_body' => 'Māhuizzoh $WATCHINGUSERNAME,
+'enotif_body' => 'Māhuiztic $WATCHINGUSERNAME,
 
-In {{SITENAME}} āmatl "$PAGETITLE" $CHANGEDORCREATED in tlatequitiltilīlli $PAGEEDITOR īpan $PAGEEDITDATE.
-In āxcān tlachiyaliztli onca īpan $PAGETITLE_URL
+$PAGEINTRO $NEWPAGE
 
-$NEWPAGE
+Tlapatlani ītlahtōlpehuallo:  $PAGESUMMARY $PAGEMINOREDIT
 
-In tlapatlaliztli īxtlamatiliztli cah: $PAGESUMMARY $PAGEMINOREDIT
- 
 Xicnotzāz in tlapatlani:
-Correo electrónico: {{canonicalurl:Special:Emailuser|target=$PAGEEDITOR}}
-Huiqui: {{canonicalurl:User:$PAGEEDITOR}}
+īnetitlanizyeyān:$PAGEEDITOR_EMAIL
+īhuiqui:$PAGEEDITOR_WIKI
 
-Ahmo onyez occē tēmachitīliztli ītech occē tlapatlaliztli, zan mā tiquihitta inīn āmoxtli yancuīcān.
-Nō tihuelīti quitlahtlālīz, in tēmachitīliztli in mochi tlachixqui mozāzanilhuīc in motlachiyaliz āmatl.
+Ahmo occēppa mitztlamachiztīz intlā yancuīc tlapatlaliztli, zā mā tiquittaz inīn āmatl. Tihueliti ticcencahulīz in tēmachiztīlizpāmitl in mochintin motlachixāmatl in motlachiyaliz.
 
-	In {{SITENAME}} tēmachitīliztli sistema.
+In {{SITENAME}} icnīuhtīliztica motēmachiztīliztlacentetilīz.
 
---
-Ic ticpatlaz in tlachiyaliztli motlapōhualāma, xiquihitta:
+Intlā ticnequi ticpatlaz in maltzinteyōtl monetitlanizyeyān, xiquihitta:
+{{canonicalurl:{{#special:Preferences}}}}
+
+
+Intlā ticnequi ticpatlaz in motlachiyaliz tlaēlēhuiliztli, xiquihitta:
 {{canonicalurl:{{#special:EditWatchlist}}}}
 
-Ic ticpolōz in āmatl in tlachiyaliztli motlapōhualāma, xiquihitta:
+Intlā ticnequi ticpolōz in āmatl ītech motlachiyaliz, xiquihitta:
 $UNWATCHURL
 
-Tētlamachītīliztli īhuān oc yeh tēpalehuiliztli:
+Motlahtōlcaquiliztīlōni īhuān ocachi tēpalēhuiliztli, xiquihitta:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'ōmochīuh',
+'changed' => 'ōmotlacuep',
 
 # Delete
 'deletepage' => 'Ticpolōz inīn zāzanilli',
@@ -1129,7 +1121,7 @@ Xiquitta $2 ic yancuīc tlapololiztli.',
 'blanknamespace' => '(Tāchcāuh)',
 
 # Contributions
-'contributions' => 'Ītlahcuilōl',
+'contributions' => 'In {{GENDER:$1|tlatequitiltilīlli}} ītlahcuilōl',
 'contributions-title' => 'Tlatequitiltilīlli $1 ītlahcuilōl',
 'mycontris' => 'Notlahcuilōl',
 'contribsub2' => '$1 ($2)',
@@ -1254,7 +1246,7 @@ Hueliz cah inīn huēyi tlapatlaliztli. Timitztlātlauhtia ticmatīz cuallōtl a
 'import-interwiki-submit' => 'Tiquicōhuāz',
 'import-upload-filename' => 'Tlahcuilōltōcāitl:',
 'importstart' => 'Motlacōhua zāzaniltin...',
-'import-revision-count' => '$1 {{PLURAL:$1|tlachiyaliztli|tlachiyaliztli}}',
+'import-revision-count' => '$1 {{PLURAL:$1|tlachiyaliztli}}',
 'importbadinterwiki' => 'Ahcualli interhuiqui tzonhuiliztli',
 'importnotext' => 'Ahtlein ahnozo ahtlahtōl',
 'import-upload' => 'Tiquinquetzāz XML tlahcuilōlli',
@@ -1320,11 +1312,11 @@ Hueliz cah inīn huēyi tlapatlaliztli. Timitztlātlauhtia ticmatīz cuallōtl a
 'tooltip-summary' => 'Xicaquilia tepitōn tlahcuilōltōntli',
 
 # Attribution
-'anonymous' => 'Ahtōcāitl {{PLURAL:$1|tlatequitiltilīlli|tlatequitiltilīlli}} īpan {{SITENAME}}',
+'anonymous' => 'Ahtōcāitl {{PLURAL:$1|tlatequitiltilīlli}} īpan {{SITENAME}}',
 'siteuser' => '$1 tlatequitiltilīlli īpan {{SITENAME}}',
 'lastmodifiedatby' => 'Inīn zāzanilli ōtlapatlac catca īpan $2, $1 īpal $3.',
 'others' => 'occequīntīn',
-'siteusers' => '$1 {{PLURAL:$2|tlatequitiltilīlli|tlatequitiltilīlli}} īpan {{SITENAME}}',
+'siteusers' => '$1 {{PLURAL:$2|tlatequitiltilīlli}} īpan {{SITENAME}}',
 
 # Spam protection
 'spam_reverting' => 'Mocuepacah īhuīc xōcoyōc tlapatlaliztli ahmo tzonhuilizca īhuīc $1',
@@ -1511,6 +1503,9 @@ Niman tihuelīti [[Special:UserLogin|timocalaqui]] auh ticpactiāz huiquitica.',
 
 # HTML forms
 'htmlform-selectorother-other' => 'Occē',
+
+# New logging system
+'rightsnone' => 'ahtlein',
 
 # Search suggestions
 'searchsuggest-search' => 'Tlatēmoliztli',

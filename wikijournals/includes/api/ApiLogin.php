@@ -38,7 +38,7 @@ class ApiLogin extends ApiBase {
 
 	/**
 	 * Executes the log-in attempt using the parameters passed. If
-	 * the log-in succeeeds, it attaches a cookie to the session
+	 * the log-in succeeds, it attaches a cookie to the session
 	 * and outputs the user id, username, and session token. If a
 	 * log-in fails, as the result of a bad password, a nonexistent
 	 * user, or any other reason, the host is cached with an expiry
@@ -46,6 +46,15 @@ class ApiLogin extends ApiBase {
 	 * is reached. The expiry is $this->mLoginThrottle.
 	 */
 	public function execute() {
+		// If we're in JSON callback mode, no tokens can be obtained
+		if ( !is_null( $this->getMain()->getRequest()->getVal( 'callback' ) ) ) {
+			$this->getResult()->addValue( null, 'login', array(
+				'result' => 'Aborted',
+				'reason' => 'Cannot log in when using a callback',
+			) );
+			return;
+		}
+
 		$params = $this->extractRequestParams();
 
 		$result = array();
@@ -147,7 +156,7 @@ class ApiLogin extends ApiBase {
 
 			case LoginForm::ABORTED:
 				$result['result'] = 'Aborted';
-				$result['reason'] =  $loginForm->mAbortLoginErrorMsg;
+				$result['reason'] = $loginForm->mAbortLoginErrorMsg;
 				break;
 
 			default:
@@ -277,9 +286,5 @@ class ApiLogin extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Login';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

@@ -13,6 +13,7 @@
  * @author Haqmar
  * @author Himiq Dzyu
  * @author KhayR
+ * @author MF-Warburg
  * @author Marat Vildanov
  * @author Reedy
  * @author Rinatus
@@ -216,7 +217,7 @@ $messages = array(
 'tog-hidepatrolled' => 'Тикшерелгән үзгәртүләр яңа үзгәртүләр исемлегеннән яшерелсен.',
 'tog-newpageshidepatrolled' => 'Тикшерелгән битләр яңа битләр исемлегеннән яшерелсен',
 'tog-extendwatchlist' => 'Соңгыларын гына түгел, ә барлык үзгәртүләрне эченә алган, киңәйтелгән күзәтү исемлеге',
-'tog-usenewrc' => 'Яхшыртылган соңгы үзгәртүләр исемлеге кулланылсын (JavaScript кирәк)',
+'tog-usenewrc' => 'Соңгы үзгәртүләрдә һәм күзәтү исемлегендә үзгәрешләрне төркемләргә(JavaScript кирәк)',
 'tog-numberheadings' => 'Атамалар автомат рәвештә номерлансын',
 'tog-showtoolbar' => 'Үзгәртү вакытында коралларның өске панеле күрсәтелсен (JavaScript кирәк)',
 'tog-editondblclick' => 'Битләргә ике чирттерү белән үзгәртү бите ачылсын (JavaScript кирәк)',
@@ -344,7 +345,8 @@ $messages = array(
 'newwindow' => '(яңа тәрәзәдә ачыла)',
 'cancel' => 'Баш тарту',
 'moredotdotdot' => 'Дәвамы…',
-'mypage' => 'Шәхси битем',
+'morenotlisted' => 'Башка берни дә юк...',
+'mypage' => 'Бит',
 'mytalk' => 'Бәхәс',
 'anontalk' => 'Бу IP адресы өчен бәхәс бите',
 'navigation' => 'Күчү',
@@ -355,7 +357,6 @@ $messages = array(
 'qbbrowse' => 'Карау',
 'qbedit' => 'Үзгәртү',
 'qbpageoptions' => 'Бу бит',
-'qbpageinfo' => 'Бит турында мәгълүмат',
 'qbmyoptions' => 'Битләрем',
 'qbspecialpages' => 'Махсус битләр',
 'faq' => 'ЕБС',
@@ -368,7 +369,7 @@ $messages = array(
 'vector-action-protect' => 'Яклау',
 'vector-action-undelete' => 'Кайтару',
 'vector-action-unprotect' => 'Яклауны үзгәртү',
-'vector-simplesearch-preference' => 'Эзләү өчен киңәйтелгән ярдәм хәбәрләрен күрсәтү («Векторлы» бизәлеше өчен генә кулланылыа)',
+'vector-simplesearch-preference' => 'Җиңеләйтелгән эзләү юлын кушарга («Векторлы» бизәлеше өчен генә)',
 'vector-view-create' => 'Төзү',
 'vector-view-edit' => 'Үзгәртү',
 'vector-view-history' => 'Тарихын карау',
@@ -476,6 +477,10 @@ $1',
 'youhavenewmessages' => 'Сездә $1 бар ($2).',
 'newmessageslink' => 'яңа хәбәрләр',
 'newmessagesdifflink' => 'бәхәс битегезнең соңгы үзгәртүе',
+'youhavenewmessagesfromusers' => 'Сезгә {{PLURAL:$3|$3 кулланучыдан}} $1 килде ($2).',
+'youhavenewmessagesmanyusers' => 'Сез бик күп кулланучыдан $1 алдыгыз ($2).',
+'newmessageslinkplural' => '{{PLURAL:$1|яңа хәбәр}}',
+'newmessagesdifflinkplural' => '{{PLURAL:$1|соңгы үзгәртү|соңгы үзгәртүләр}}',
 'youhavenewmessagesmulti' => 'Сезгә монда яңа хәбәрләр бар: $1',
 'editsection' => 'үзгәртү',
 'editsection-brackets' => '[$1]',
@@ -530,7 +535,7 @@ $1',
 # General errors
 'error' => 'Хата',
 'databaseerror' => 'Мәгълүматлар базасында хата',
-'dberrortext' => 'Мәгълүматлар базасына җибәрелгән сорауда синтаксик хата табылды.
+'dberrortext' => 'Мәгълүматлар базасына җибәрелгән сорауда синтаксис хатасы табылды.
 Программада хата булырга мөмкин.
 Мәгълүматлар базасына җибәрелгән соңгы сорау:
 <blockquote><tt>$1</tt></blockquote>
@@ -571,6 +576,8 @@ $1',
 'badarticleerror' => 'Бу биттә мондый гамәл башкарып булмый.',
 'cannotdelete' => '«$1» исемле битне яки файлны бетереп булмый. Аны бүтән кулланучы бетергән булырга мөмкин.',
 'cannotdelete-title' => '«$1» битен бетереп булмый',
+'delete-hook-aborted' => 'Үзгәртү махсус процедура тарафыннан кире кагыла.
+Сәбәпләре китерелми.',
 'badtitle' => 'Яраксыз исем',
 'badtitletext' => 'Битнең соралган исеме дөрес түгел, буш яисә телъара яки интервики исеме дөрес күрсәтелмәгән. Исемдә тыелган символлар кулланылган булырга мөмкин.',
 'perfcached' => 'Бу мәгълүматлар кэштан алынган, аларда соңгы үзгәртүләр булмаска мөмкин. Кэшта иң күбе {{PLURAL:$1|язма}} саклана.',
@@ -583,11 +590,11 @@ $1',
 'viewsource-title' => '$1 битенең яхма текстын карау',
 'actionthrottled' => 'Тизлек киметелгән',
 'actionthrottledtext' => 'Спамга каршы көрәш өчен аз вакыт эчендә бу гамәлне еш куллану тыелган. Зинһар, соңарак кабатлагыз.',
-'protectedpagetext' => 'Бу бит үзгәртү өчен ябык.',
+'protectedpagetext' => 'Бу бит үзгәртүләрдән һәм башка төрле гамәлләрдән якланган.',
 'viewsourcetext' => 'Сез бу битнең башлангыч текстын карый һәм күчерә аласыз:',
 'viewyourtext' => "Сез '''үз төзәтмәләрегезне''' бу сәхифәдә карый һәм чыгарылма текстны күчермәли аласыз:",
-'protectedinterface' => 'Бу биттә программа интерфейсы хәбәрләре бар. Вандализмга каршы көрәш сәбәпле, бу битне үзгәртү тыела.',
-'editinginterface' => "'''Игътибар:''' Сез MediaWiki системасының интерфейс битен үзгәртәсез. Бу башка кулланучыларга да тәэсир итәчәк. Тәрҗемә өчен [//translatewiki.net/wiki/Main_Page?setlang=tt-cyrl translatewiki.net] локализацияләү проектын кулланыгыз.",
+'protectedinterface' => 'Бу биттә программа тәэминатының интерфейс хәбәрләре бар. Вандализмга каршы көрәш сәбәпле, бу битне үзгәртү тыела. Әлеге хәбәрнең тәрҗемәсен өстәү яки үзгәртү өчен, зинһар өчен, MediaWiki [//translatewiki.net/ translatewiki.net] тәрҗемәләү сайтын кулланыгыз.',
+'editinginterface' => "'''Игътибар:''' Сез программа тәэминатының интерфейс тексты булган битне үзгәртәсез. Бу башка кулланучыларга да тәэсир итәчәк. Тәрҗемә өчен [//translatewiki.net/wiki/Main_Page?setlang=tt-cyrl translatewiki.net] локализацияләү проектын кулланыгыз.",
 'sqlhidden' => '(SQL-сорау яшерелгән)',
 'cascadeprotected' => 'Бу бит үзгәртүләрдән сакланган, чөнки ул каскадлы саклау кабул ителгән {{PLURAL:$1|биткә|битләргә}} өстәлгән:
 $2',
@@ -606,17 +613,16 @@ $2',
 # Login and logout pages
 'logouttext' => "'''Сез хисап язмагыздан чыктыгыз.'''
 
-Сез {{SITENAME}} проектында аноним рәвештә кала яисә шул ук яки башка исем белән яңадан [[Special:UserLogin|керә]] аласыз.
+Сез {{SITENAME}} проектында аноним рәвештә кала яисә шул ук яки башка исем белән яңадан <span class='plainlinks'>[$1 керә]</span> аласыз.
 Кайбер битләр Сез кергән кебек күрсәтелергә мөмкин. Моны бетерү өчен браузер кэшын чистартыгыз.",
-'welcomecreation' => '== Рәхим итегез, $1! ==
-Сез теркәлдегез.
-Сайтның шәхси [[Special:Preferences|көйләнмәләрен]] карарга онытмагыз.',
+'welcomeuser' => 'Хуш килдегез, $1!',
 'yourname' => 'Кулланучы исеме:',
 'yourpassword' => 'Серсүз:',
 'yourpasswordagain' => 'Серсүзне кабат кертү:',
 'remembermypassword' => 'Хисап язмамны бу браузерда саклансын (иң күп $1 {{PLURAL:$1|көн|көн|көн}}гә кадәр)',
 'securelogin-stick-https' => 'Керүдән соң HTTPS буенча тоташтыру дәвам ителсен',
 'yourdomainname' => 'Сезнең доменыгыз:',
+'password-change-forbidden' => 'Сез бу викидә серсүзне үзгәртә алмыйсыз.',
 'externaldberror' => 'Тышкы мәгълүмат базасы ярдәмендә аутентификация үткәндә хата чыкты, яисә тышкы хисап язмагызга үзгәрешләр кертү хокукыгыз юк.',
 'login' => 'Керү',
 'nav-login-createaccount' => 'Керү / теркәлү',
@@ -758,6 +764,7 @@ $2
 'changeemail-oldemail' => 'Хәзерге электрон әрҗә адресы:',
 'changeemail-newemail' => 'Яңа электрон почта адресы:',
 'changeemail-none' => '(юк)',
+'changeemail-password' => '«{{SITENAME}}» проекты өчен серсүзегез:',
 'changeemail-submit' => 'E-mail адресын үзгәртү',
 'changeemail-cancel' => 'Баш тарту',
 
@@ -931,7 +938,6 @@ $2
 'template-protected' => '(якланган)',
 'template-semiprotected' => '(өлешчә якланган)',
 'hiddencategories' => 'Бу бит $1 {{PLURAL:$1|яшерен төркемгә}} керә:',
-'nocreatetitle' => 'Битләр төзү чикләнгән',
 'nocreatetext' => '{{SITENAME}}: сайтта яңа битләр төзү чикләнгән.
 Сез артка кайтып, төзелгән битне үзгәртә аласыз. [[Special:UserLogin|Керергә яисә теркәлергә]] тәгъдим ителә.',
 'nocreate-loggedin' => 'Сезгә яңа битләр төзү хокукы бирелмәгән.',
@@ -1005,8 +1011,8 @@ $3 күрсәткән сәбәп: ''$2''",
 'histlegend' => "Аңлатмалар: '''({{int:cur}})''' = хәзерге юрамадан аерымлыклар, '''({{int:last}})''' = баягы юрамадан аерымлыклар, '''{{int:minoreditletter}}''' = кече үзгәртүләр.",
 'history-fieldset-title' => 'Тарихын карау',
 'history-show-deleted' => 'Бары тик бетерү',
-'histfirst' => 'Элеккеге',
-'histlast' => 'Соңгы',
+'histfirst' => 'иң иске',
+'histlast' => 'иң яңа',
 'historysize' => '($1 {{PLURAL:$1|байт}})',
 'historyempty' => '(буш)',
 
@@ -1349,10 +1355,12 @@ $1",
 'right-delete' => 'битләрне бетерү',
 'right-editinterface' => 'Кулланучы интерфейсын үзгәртү',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Кулланучыларны теркәү көндәлеге',
+'newuserlogpagetext' => 'Яңа теркәлгән кулланучылар исемлеге',
+
 # User rights log
 'rightslog' => 'Кулланучының хокуклары көндәлеге',
-'rightslogentry' => '$1 кулланучысын $2 группасыннан $3 группасына күчерде',
-'rightsnone' => '(юк)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'бу битне укырга',
@@ -1710,10 +1718,6 @@ PICT # төрле
 'activeusers-hidesysops' => 'Идарәчеләрне яшер',
 'activeusers-noresult' => 'Кулланучылар табылмады.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Кулланучыларны теркәү көндәлеге',
-'newuserlogpagetext' => 'Яңа теркәлгән кулланучылар исемлеге',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Кулланучы төркемнәренең хокуклары',
 'listgrouprights-group' => 'Төркем',
@@ -1769,11 +1773,7 @@ PICT # төрле
 'watching' => 'Күзәтү исемлегемә өстәүе…',
 'unwatching' => 'Күзәтү исемлегемнән чыгаруы…',
 
-'enotif_newpagetext' => 'Бу яңа бит.',
 'enotif_impersonal_salutation' => '{{SITENAME}} кулланучы',
-'changed' => 'үзгәртелде',
-'created' => 'төзергән',
-'enotif_subject' => '{{SITENAME}} проектының $PAGETITLE бите $PAGEEDITOR тарафыннан $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Соңгы керүегездән соң булган барлык үзгәртүләрне күрер өчен, бу сылтама аша узыгыз: $1',
 'enotif_body' => 'Хөрмәтле $WATCHINGUSERNAME,
 
@@ -1803,6 +1803,8 @@ $UNWATCHURL
 
 Элемтә һәм ярдәм:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'төзергән',
+'changed' => 'үзгәртелде',
 
 # Delete
 'deletepage' => 'Битне бетерү',
@@ -1918,11 +1920,11 @@ $1',
 'blanknamespace' => '(Төп)',
 
 # Contributions
-'contributions' => 'Кулланучының кертеме',
+'contributions' => '{{GENDER:$1|Кулланучының}} кертеме',
 'contributions-title' => '$1 исемле кулланучының кертеме',
 'mycontris' => 'Кертем',
 'contribsub2' => '$1 ($2) өчен',
-'uctop' => '(ахыргы)',
+'uctop' => '(хәзерге)',
 'month' => 'Айдан башлап (һәм элегрәк):',
 'year' => 'Елдан башлап (һәм элегрәк):',
 
@@ -2167,6 +2169,9 @@ $1',
 
 # Spam protection
 'spamprotectiontitle' => 'Спам фильтры',
+
+# Info page
+'pageinfo-toolboxlink' => 'Бит турында мәгълүмат',
 
 # Skin names
 'skinname-standard' => 'Классик',
@@ -2545,7 +2550,7 @@ $1',
 'logentry-newusers-create' => '$1 хисап язмасы төзеде',
 'logentry-newusers-create2' => '$1 $3 кулланучы хисап язмасын төзеде',
 'logentry-newusers-autocreate' => 'Автоматик рәвештә $1 хисап язмасы төзелде.',
-'newuserlog-byemail' => 'серсүз электрон почта аша җибәрелде',
+'rightsnone' => '(юк)',
 
 # Feedback
 'feedback-bugornote' => 'Әгәр дә сез техник проблеманы җентекләп тасвирларга әзер икәнсез, зинһар өчен, [$1 хата турында хәбәр итегез].

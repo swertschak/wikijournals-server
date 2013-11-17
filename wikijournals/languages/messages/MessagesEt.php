@@ -297,12 +297,12 @@ $messages = array(
 'tog-hidepatrolled' => 'Peida kontrollitud redaktsioonid viimastes muudatustes',
 'tog-newpageshidepatrolled' => 'Peida uute lehtede loendis kontrollitud leheküljed',
 'tog-extendwatchlist' => 'Laienda jälgimisloendit, et näha kõiki muudatusi, mitte vaid kõige värskemaid',
-'tog-usenewrc' => 'Rühmita viimased muudatused ja muudatused jälgimisloendis lehekülje järgi (vaja JavaScripti)',
+'tog-usenewrc' => 'Rühmita viimased muudatused ja muudatused jälgimisloendis lehekülje järgi',
 'tog-numberheadings' => 'Pealkirjade automaatnummerdus',
-'tog-showtoolbar' => 'Näita redigeerimise tööriistariba (vaja JavaScripti)',
-'tog-editondblclick' => 'Redigeeri lehekülgi topeltklõpsu peale (vaja JavaScripti)',
+'tog-showtoolbar' => 'Näita redigeerimise tööriistariba',
+'tog-editondblclick' => 'Redigeeri lehekülgi topeltklõpsu peale',
 'tog-editsection' => 'Näita alaosade redigeerimise linke',
-'tog-editsectiononrightclick' => 'Alusta alaosa redigeerimist paremklõpsuga alaosa pealkirjal (vaja JavaScripti)',
+'tog-editsectiononrightclick' => 'Alusta alaosa redigeerimist paremklõpsuga alaosa pealkirjal',
 'tog-showtoc' => 'Näita sisukorda (lehtedel, millel on rohkem kui 3 pealkirja)',
 'tog-rememberpassword' => 'Parooli meeldejätmine tulevasteks seanssideks (kuni $1 {{PLURAL:$1|päevaks|päevaks}})',
 'tog-watchcreations' => 'Lisa jälgimisloendisse minu alustatud leheküljed ja minu üles laaditud failid',
@@ -323,7 +323,7 @@ $messages = array(
 'tog-externaleditor' => 'Kasuta vaikimisi välist redaktorit (ainult asjatundjatele, tarvis arvuti eriseadistust – [//www.mediawiki.org/wiki/Manual:External_editors lisateave])',
 'tog-externaldiff' => 'Kasuta vaikimisi välist võrdlusvahendit (ainult asjatundjatele, tarvis arvuti eriseadistust – [//www.mediawiki.org/wiki/Manual:External_editors lisateave])',
 'tog-showjumplinks' => 'Kuva lehekülje ülaservas "mine"-lingid',
-'tog-uselivepreview' => 'Kasuta elavat eelvaadet (vaja JavaScripti) (katseline)',
+'tog-uselivepreview' => 'Kasuta elavat eelvaadet (katseline)',
 'tog-forceeditsummary' => 'Nõua redigeerimisel resümee välja täitmist',
 'tog-watchlisthideown' => 'Peida minu redaktsioonid jälgimisloendist',
 'tog-watchlisthidebots' => 'Peida robotid jälgimisloendist',
@@ -423,6 +423,7 @@ $messages = array(
 'newwindow' => '(avaneb uues aknas)',
 'cancel' => 'Loobu',
 'moredotdotdot' => 'Veel...',
+'morenotlisted' => 'See loend pole täielik.',
 'mypage' => 'Minu lehekülg',
 'mytalk' => 'Arutelu',
 'anontalk' => 'Selle IP-aadressi artuelu',
@@ -434,7 +435,6 @@ $messages = array(
 'qbbrowse' => 'Sirvi',
 'qbedit' => 'Redigeeri',
 'qbpageoptions' => 'Lehekülje suvandid',
-'qbpageinfo' => 'Lehekülje andmed',
 'qbmyoptions' => 'Minu leheküljed',
 'qbspecialpages' => 'Erileheküljed',
 'faq' => 'KKK',
@@ -457,6 +457,7 @@ $messages = array(
 'namespaces' => 'Nimeruumid',
 'variants' => 'Variandid',
 
+'navigation-heading' => 'Navigeerimismenüü',
 'errorpagetitle' => 'Viga',
 'returnto' => 'Naase lehele $1',
 'tagline' => 'Allikas: {{SITENAME}}',
@@ -522,7 +523,7 @@ $1',
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => '{{GRAMMAR:genitive|{{SITENAME}}}} tiitelandmed',
 'aboutpage' => 'Project:Tiitelandmed',
-'copyright' => 'Kogu tekst on kasutatav litsentsi $1 tingimustel.',
+'copyright' => 'Sisu on kasutatav litsentsi $1 tingimustel, kui pole öeldud teisiti.',
 'copyrightpage' => '{{ns:project}}:Autoriõigus',
 'currentevents' => 'Sündmused',
 'currentevents-url' => 'Project:Sündmused',
@@ -581,8 +582,8 @@ Vaata [[Special:Version|versiooni lehekülge]].',
 'page-rss-feed' => '"$1" RSS-toide',
 'page-atom-feed' => '"$1" Atom-toide',
 'red-link-title' => '$1 (pole veel kirjutatud)',
-'sort-descending' => 'Järjesta kahanevalt',
-'sort-ascending' => 'Järjesta kasvavalt',
+'sort-descending' => 'Järjesta laskuvalt',
+'sort-ascending' => 'Järjesta tõusvalt',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
 'nstab-main' => 'Artikkel',
@@ -697,12 +698,10 @@ Administraator lukustas selle järgmisel põhjusel: "$3".',
 # Login and logout pages
 'logouttext' => "'''Oled nüüd välja loginud.'''
 
-Võid jätkata {{GRAMMAR:genitive|{{SITENAME}}}} kasutamist anonüümselt, aga ka sama või mõne teise kasutajana uuesti [[Special:UserLogin|sisse logida]].
-Pane tähele, et seni kuni sa pole oma võrgulehitseja puhvrit tühjendanud, võidakse mõni lehekülg endiselt nii kuvada nagu oleksid ikka sisse logitud.",
-'welcomecreation' => '== Tere tulemast, $1! ==
-
-Sinu konto on loodud.
-Ära unusta oma {{GRAMMAR:genitive|{{SITENAME}}}} [[Special:Preferences|eelistusi]] seada.',
+Pane tähele, et seni kuni sa pole oma võrgulehitseja puhvrit tühjendanud, võidakse mõni lehekülg endiselt kuvada nii nagu oleksid ikka sisse logitud.",
+'welcomeuser' => 'Tere tulemast, $1!',
+'welcomecreation-msg' => 'Sinu konto on loodud.
+Ära unusta seada oma {{GRAMMAR:genitive|{{SITENAME}}}} [[Special:Preferences|eelistusi]].',
 'yourname' => 'Kasutajanimi:',
 'yourpassword' => 'Parool:',
 'yourpasswordagain' => 'Sisesta parool uuesti:',
@@ -719,13 +718,13 @@ Sinu konto on loodud.
 'logout' => 'Logi välja',
 'userlogout' => 'Logi välja',
 'notloggedin' => 'Sisse logimata',
-'nologin' => "Sul pole kontot? '''$1'''.",
+'nologin' => 'Kas sul pole kontot? $1.',
 'nologinlink' => 'Registreeru siin',
 'createaccount' => 'Loo uus konto',
 'gotaccount' => "Kui sul on juba konto, '''$1'''.",
 'gotaccountlink' => 'logi sisse',
 'userlogin-resetlink' => 'Kas oled unustanud oma sisselogimisandmed?',
-'createaccountmail' => 'E-posti teel',
+'createaccountmail' => 'Kasuta juhuslikku parooli ja saada see määratud e-posti aadressile',
 'createaccountreason' => 'Põhjus:',
 'badretype' => 'Sisestatud paroolid ei lange kokku.',
 'userexists' => 'Sisestatud kasutajanimi on juba kasutusel.
@@ -776,7 +775,7 @@ Ole hea ja sisesta õige e-posti aadress või jäta väli tühjaks.',
 'cannotchangeemail' => 'Selles vikis ei saa konto e-posti aadressi muuta.',
 'emaildisabled' => 'Selle võrgukoha kaudu ei saa e-kirju saata.',
 'accountcreated' => 'Konto loodud',
-'accountcreatedtext' => 'Kasutajakonto kasutajatunnusele $1 loodud.',
+'accountcreatedtext' => 'Kasutaja [[{{ns:User}}:$1|$1]] ([[{{ns:User talk}}:$1|talk]]) konto on loodud.',
 'createaccount-title' => '{{GRAMMAR:illative|{{SITENAME}}}} konto loomine',
 'createaccount-text' => 'Keegi on loonud {{GRAMMAR:illative|{{SITENAME}}}} ($4) sinu e-posti aadressile vastava kasutajatunnuse "$2". Parooliks seati "$3". Logi sisse ja muuda oma parool.
 
@@ -790,7 +789,8 @@ Palun pea nüüd pisut vahet.',
 
 # Email sending
 'php-mail-error-unknown' => 'Tundmatu tõrge PHP funktsioonis mail().',
-'user-mail-no-addy' => 'Püüdsid saata e-kirja ilma meiliaadressita.',
+'user-mail-no-addy' => 'Püüdsid saata e-kirja ilma e-posti aadressita.',
+'user-mail-no-body' => 'Püüti saata tühja või ebamõistlikult lühikese sisuosaga e-kirja.',
 
 # Change password dialog
 'resetpass' => 'Parooli muutmine',
@@ -811,6 +811,7 @@ Sisselogimine...',
 'resetpass-wrong-oldpass' => 'Vigane ajutine või praegune salasõna.
 Võib-olla oled juba edukalt muudnud oma salasõna või taotlenud uut ajutist salasõna.',
 'resetpass-temp-password' => 'Ajutine parool:',
+'resetpass-abort-generic' => 'Tarkvaralisa on paroolimuudatuse abortinud.',
 
 # Special:PasswordReset
 'passwordreset' => 'Parooli lähtestamine',
@@ -850,6 +851,7 @@ Ajutine parool: $2',
 'changeemail-oldemail' => 'Praegune e-posti aadress:',
 'changeemail-newemail' => 'Uus e-posti aadress:',
 'changeemail-none' => '(puudub)',
+'changeemail-password' => 'Sinu parool {{GRAMMAR:inessive|{{SITENAME}}}}:',
 'changeemail-submit' => 'Muuda e-posti aadress',
 'changeemail-cancel' => 'Loobu',
 
@@ -933,9 +935,9 @@ Võimalik, et see teisaldati või kustutati, sellal kui lehekülge vaatasid.',
 'loginreqlink' => 'sisse logima',
 'loginreqpagetext' => 'Lehekülgede vaatamiseks pead $1.',
 'accmailtitle' => 'Parool saadetud',
-'accmailtext' => "Kasutajale '$1' genereeritud juhuslik parool saadeti aadressile $2.
+'accmailtext' => "Kasutajale [[User talk:$1|$1]] genereeritud juhuslik parool saadeti aadressile $2.
 
-Seda parooli on võimalik muuta ''[[Special:ChangePassword|parooli muutmise lehel]]'' peale uuele kontole sisse logimist.",
+Seda saab pärast sisselogimist muuta ''[[Special:ChangePassword|parooli muutmise]]'' leheküljel.",
 'newarticle' => '(Uus)',
 'newarticletext' => "Lehekülge, kuhu link sind suunas, pole veel.
 Lehekülje loomiseks alusta allolevasse kasti kirjutamist (lisateave [[{{MediaWiki:Helppage}}|juhendist]]).
@@ -1030,13 +1032,12 @@ Allpool on toodud uusim logisissekanne:",
 'template-protected' => '(kaitstud)',
 'template-semiprotected' => '(osaliselt kaitstud)',
 'hiddencategories' => 'See lehekülg kuulub {{PLURAL:$1|1 peidetud kategooriasse|$1 peidetud kategooriasse}}:',
-'nocreatetitle' => 'Lehekülje loomine piiratud',
 'nocreatetext' => 'Lehekülje loomise õigus on {{GRAMMAR:inessive|{{SITENAME}}}} piiratud.
 Võid pöörduda tagasi ja toimetada olemasolevat lehekülge või [[Special:UserLogin|sisse logida või uue konto luua]].',
 'nocreate-loggedin' => 'Sul ei ole luba luua uusi lehekülgi.',
 'sectioneditnotsupported-title' => 'Alaosa redigeerimine pole lubatud.',
 'sectioneditnotsupported-text' => 'Sellel leheküljel pole alaosa redigeerimine lubatud.',
-'permissionserrors' => 'Viga õigustes',
+'permissionserrors' => 'Loatõrge',
 'permissionserrorstext' => 'Sul pole õigust seda teha {{PLURAL:$1|järgmisel põhjusel|järgmistel põhjustel}}:',
 'permissionserrorstext-withaction' => 'Sul pole lubatud {{lcfirst:$2}} {{PLURAL:$1|järgneval põhjusel|järgnevatel põhjustel}}:',
 'recreate-moveddeleted-warn' => "'''Hoiatus: Lood uuesti lehekülge, mis on varem kustutatud.'''
@@ -1054,6 +1055,14 @@ Tundub, et see on kustutatud.',
 'edit-already-exists' => 'Ei saanud alustada uut lehekülge.
 See on juba olemas.',
 'defaultmessagetext' => 'Sõnumi vaiketekst',
+'invalid-content-data' => 'Vigased sisuandmed',
+'content-not-allowed-here' => 'Lehekülg [[$2]] ei või sisaldada $1.',
+
+# Content models
+'content-model-wikitext' => 'vikiteksti',
+'content-model-text' => 'lihtteksti',
+'content-model-javascript' => 'JavaScripti',
+'content-model-css' => 'CSSi',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => "'''Hoiatus:''' See lehekülg kasutab liialt palju aeglustavaid laiendusfunktsioone. Neid võiks kasutada vähem kui {{PLURAL:$2|ühel|$2}} korral, praegu on kasutatud {{PLURAL:$1|ühel|$1}} korral.",
@@ -1067,12 +1076,16 @@ Need argumendid on välja jäetud.",
 'parser-template-loop-warning' => 'Mallid moodustavad tsükli: [[$1]]',
 'parser-template-recursion-depth-warning' => 'Malli rekursiivse kasutamise limiit on ületatud ($1)',
 'language-converter-depth-warning' => 'Keeleteisendaja sügavuspiir ületatud ($1)',
+'node-count-exceeded-category' => 'Ületatud sõlmemääraga leheküljed',
+'node-count-exceeded-warning' => 'Lehekülg ületas sõlmemäära.',
+'expansion-depth-exceeded-category' => 'Ületatud hõrendussügavusega leheküljed',
+'expansion-depth-exceeded-warning' => 'Lehekülg ületas hõrendussügavuse.',
 
 # "Undo" feature
 'undo-success' => 'Selle redaktsiooni käigus tehtud muudatusi saab eemaldada. Palun kontrolli allolevat võrdlust veendumaks, et tahad need muudatused tõepoolest eemaldada. Seejärel saad lehekülje salvestada.',
 'undo-failure' => 'Muudatust ei saa vahapeal tehtud redigeerimiste tõttu tühistada.',
 'undo-norev' => 'Muudatust ei saanud tühistada, kuna seda ei ole või see kustutati.',
-'undo-summary' => 'Tühistati muudatus $1, mille tegi [[Special:Contributions/$2|$2]] ([[User talk:$2|arutelu]])',
+'undo-summary' => 'Eemaldatud muudatus $1, mille tegi [[Special:Contributions/$2|$2]] ([[User talk:$2|arutelu]])',
 
 # Account creation failure
 'cantcreateaccounttitle' => 'Ei saa kontot luua',
@@ -1099,8 +1112,8 @@ Legend: (viim) = erinevused võrreldes viimase redaktsiooniga,
 (eel) = erinevused võrreldes eelmise redaktsiooniga, P = pisimuudatus',
 'history-fieldset-title' => 'Ajaloo sirvimine',
 'history-show-deleted' => 'Üksnes kustutatud',
-'histfirst' => 'Esimesed',
-'histlast' => 'Viimased',
+'histfirst' => 'vanimad',
+'histlast' => 'uusimad',
 'historysize' => '({{PLURAL:$1|1 bait|$1 baiti}})',
 'historyempty' => '(tühi)',
 
@@ -1142,7 +1155,7 @@ Saad soovi korral siiski [$1 seda muudatust vaadata].",
 Saad seda muudatust vaadata. [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} Kustutamislogis] võib leiduda üksikasju.",
 'rev-suppressed-diff-view' => "Üks selle lehekülje muudatustest on '''varjatud'''.
 Saad seda muudatust vaadata. [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} Varjamislogis] võib üksikasju olla.",
-'rev-delundel' => 'näita/peida',
+'rev-delundel' => 'muuda nähtavust',
 'rev-showdeleted' => 'näita',
 'revisiondelete' => 'Redaktsioonide kustutamine või taastamine',
 'revdelete-nooldid-title' => 'Sellist redaktsiooni pole.',
@@ -1249,9 +1262,9 @@ Pane tähele, et navigeerimislinkide kasutamine lähtestab redaktsioonide valiku
 'difference-title' => 'Erinevus lehekülje "$1" redaktsioonide vahel',
 'difference-title-multipage' => 'Erinevus lehekülgede "$1" ja "$2" vahel',
 'difference-multipage' => '(Lehekülgede erinevus)',
-'lineno' => 'Rida $1:',
+'lineno' => '$1. rida:',
 'compareselectedversions' => 'Võrdle valitud redaktsioone',
-'showhideselectedversions' => 'Näita/peida valitud versioonid',
+'showhideselectedversions' => 'Muuda valitud redaktsioonide nähtavust',
 'editundo' => 'eemalda',
 'diff-multi' => '({{PLURAL:$1|Ühte|$1}} vahepealset {{PLURAL:$2|ühe|$2}} kasutaja redaktsiooni ei näidata.)',
 'diff-multi-manyusers' => '({{PLURAL:$1|Ühte|$1}} vahepealset rohkem kui {{PLURAL:$2|ühe|$2}} kasutaja redaktsiooni ei näidata.)',
@@ -1276,7 +1289,7 @@ Harilikult tähendab see seda, et sind siia juhatanud link on vananenud ja siin 
 'prevn-title' => '{{PLURAL:$1|Eelmine tulemus|Eelmised $1 tulemust}}',
 'nextn-title' => '{{PLURAL:$1|Järgmine tulemus|Järgmised $1 tulemust}}',
 'shown-title' => 'Näita lehekülje kohta $1 {{PLURAL:$1|tulemus|tulemust}}',
-'viewprevnext' => 'Näita ($1 {{int:pipe-separator}} $2) ($3).',
+'viewprevnext' => 'Näita ($1 {{int:pipe-separator}} $2) ($3)',
 'searchmenu-legend' => 'Otsingu sätted',
 'searchmenu-exists' => "'''Lehekülg pealkirjaga \"[[:\$1]]\" on olemas.'''",
 'searchmenu-new' => "'''Loo lehekülg pealkirjaga \"[[:\$1]]\".'''",
@@ -1356,7 +1369,7 @@ Pane tähele, et Google'is talletatud {{GRAMMAR:genitive|{{SITENAME}}}} sisu võ
 'prefs-watchlist-days-max' => 'Ülemmäär $1 {{PLURAL:$1|päev|päeva}}',
 'prefs-watchlist-edits' => 'Mitu muudatust näidatakse laiendatud jälgimisloendis:',
 'prefs-watchlist-edits-max' => 'Ülemmäär: 1000',
-'prefs-watchlist-token' => 'Jälgimisloendi tunnus:',
+'prefs-watchlist-token' => 'Jälgimisloendi luba:',
 'prefs-misc' => 'Muu',
 'prefs-resetpass' => 'Muuda parooli',
 'prefs-changeemail' => 'Muuda e-posti aadressi',
@@ -1365,7 +1378,7 @@ Pane tähele, et Google'is talletatud {{GRAMMAR:genitive|{{SITENAME}}}} sisu võ
 'prefs-rendering' => 'Ilme',
 'saveprefs' => 'Salvesta eelistused',
 'resetprefs' => 'Lähtesta eelistused',
-'restoreprefs' => 'Taasta kõikjal vaikesätted',
+'restoreprefs' => 'Taasta kõik vaike-eelistused (kõigil kaartidel)',
 'prefs-editing' => 'Toimetamine',
 'prefs-edit-boxsize' => 'Toimetamise akna suurus.',
 'rows' => 'Ridu:',
@@ -1413,9 +1426,9 @@ Toimingut ei saa hiljem tühistada.',
 'prefs-emailconfirm-label' => 'E-posti kinnitus:',
 'prefs-textboxsize' => 'Toimetamisakna suurus',
 'youremail' => 'E-posti aadress:',
-'username' => 'Kasutajanimi:',
-'uid' => 'Kasutaja ID:',
-'prefs-memberingroups' => 'Kuulub {{PLURAL:$1|rühma|rühmadesse}}:',
+'username' => '{{GENDER:$1|Kasutajanimi}}:',
+'uid' => '{{GENDER:$1|Kasutaja}} ID:',
+'prefs-memberingroups' => '{{PLURAL:$1|Järgmise rühma|Järgmiste rühmade}} {{GENDER:$2|liige}}:',
 'prefs-registration' => 'Registreerumise aeg:',
 'yourrealname' => 'Tegelik nimi:',
 'yourlanguage' => 'Keel:',
@@ -1428,10 +1441,12 @@ Palun kontrolli HTML koodi.',
 'badsiglength' => 'Sinu allkiri on liiga pikk.
 See ei tohi olla pikem kui {{PLURAL:$1|üks märk|$1 märki}}.',
 'yourgender' => 'Sugu:',
-'gender-unknown' => 'Määramata',
+'gender-unknown' => 'Jätan täpsustamata',
 'gender-male' => 'Mees',
 'gender-female' => 'Naine',
-'prefs-help-gender' => 'Vabatahtlik: kasutatakse mõnedes keeltes sooliselt korrektse väljendumise otstarbel. Info on avalik.',
+'prefs-help-gender' => 'Selle eelistuse määramine on valikuline.
+Tarkvara kasutab valitud väärtust mõnes keeles, et pöörduda sinu poole ja mainida sind teistele, kasutades soole vastavat sõna või sõnavormi.
+See teave on avalik.',
 'email' => 'E-post',
 'prefs-help-realname' => 'Vabatahtlik. Kui otsustad päris nime avaldada, kasutatakse seda sinu kaastöö seostamiseks sinuga.',
 'prefs-help-email' => 'E-posti aadressi sisestamine pole kohustuslik, kuid võimaldab sul tellida parooli meeldetuletuse, kui peaksid oma parooli unustama.',
@@ -1442,7 +1457,7 @@ See ei tohi olla pikem kui {{PLURAL:$1|üks märk|$1 märki}}.',
 'prefs-signature' => 'Allkiri',
 'prefs-dateformat' => 'Kuupäeva vorming',
 'prefs-timeoffset' => 'Ajavahe',
-'prefs-advancedediting' => 'Täpsemad eelistused',
+'prefs-advancedediting' => 'Üldsuvandid',
 'prefs-advancedrc' => 'Täpsemad eelistused',
 'prefs-advancedrendering' => 'Täpsemad eelistused',
 'prefs-advancedsearchoptions' => 'Täpsemad eelistused',
@@ -1457,7 +1472,7 @@ See ei tohi olla pikem kui {{PLURAL:$1|üks märk|$1 märki}}.',
 'email-address-validity-invalid' => 'Sisesta sobiv e-posti aadress.',
 
 # User rights
-'userrights' => 'Kasutaja õiguste muutmine',
+'userrights' => 'Kasutajaõiguste haldus',
 'userrights-lookup-user' => 'Kasutajarühma muutmine',
 'userrights-user-editname' => 'Sisesta kasutajanimi:',
 'editusergroup' => 'Muuda kasutajarühma',
@@ -1473,8 +1488,8 @@ See ei tohi olla pikem kui {{PLURAL:$1|üks märk|$1 märki}}.',
 'userrights-reason' => 'Põhjus:',
 'userrights-no-interwiki' => 'Sul ei ole luba muuta kasutajaõigusi teistes vikides.',
 'userrights-nodatabase' => 'Andmebaasi $1 ei ole olemas või pole see kohalik.',
-'userrights-nologin' => 'Kasutaja õiguste muutmiseks, pead sa administraatori õigustega kontoga [[Special:UserLogin|sisse logima]].',
-'userrights-notallowed' => 'Sinu kontole pole antud luba lisada või eemaldada kasutajaõigusi.',
+'userrights-nologin' => 'Et kasutajaõigusi jagada, pead administraatori kontoga [[Special:UserLogin|sisse logima]].',
+'userrights-notallowed' => 'Sul pole õigust kasutajaõigusi lisada ega eemaldada.',
 'userrights-changeable-col' => 'Rühmad, mida sa saad muuta',
 'userrights-unchangeable-col' => 'Rühmad, mida sa ei saa muuta',
 
@@ -1520,7 +1535,7 @@ See ei tohi olla pikem kui {{PLURAL:$1|üks märk|$1 märki}}.',
 'right-reupload-shared' => 'Asendada kohalikus vikis jagatud failivaramu faile',
 'right-upload_by_url' => 'Faile internetiaadressilt üles laadida',
 'right-purge' => 'Tühjendada lehekülje vahemälu kinnituseta',
-'right-autoconfirmed' => 'Redigeerida poolkaitstud lehekülgi',
+'right-autoconfirmed' => 'Hoiduda IP-põhistest piirangumääradest',
 'right-bot' => 'Olla koheldud kui automaadistatud toimimisviis',
 'right-nominornewtalk' => 'Teha arutelulehekülgedel pisimuudatusi, ilma et lehekülg märgitaks uuena',
 'right-apihighlimits' => 'Kasutada API-päringutes kõrgemaid limiite',
@@ -1540,8 +1555,8 @@ See ei tohi olla pikem kui {{PLURAL:$1|üks märk|$1 märki}}.',
 'right-hideuser' => 'Blokeerida kasutajanimi, peites selle avalikkuse eest',
 'right-ipblock-exempt' => 'Mööduda automaatsetest blokeeringutest ning aadressivahemiku- ja IP-blokeeringutest',
 'right-proxyunbannable' => 'Mööduda automaatsetest puhverserveri blokeeringutest',
-'right-unblockself' => 'Enda blokeeringut eemaldada',
-'right-protect' => 'Muuta kaitsetasemeid ja redigeerida kaitstud lehekülgi',
+'right-unblockself' => 'Eemaldada enda blokeeringut',
+'right-protect' => 'Muuta kaitsetasemeid ja redigeerida kaskaadkaitsega lehekülgi',
 'right-editprotected' => 'Muuta kaitstud lehekülgi, millel ei ole kaskaadkaitset',
 'right-editinterface' => 'Muuta kasutajaliidest',
 'right-editusercssjs' => 'Redigeerida teiste kasutajate CSS- ja JS-faile',
@@ -1549,7 +1564,7 @@ See ei tohi olla pikem kui {{PLURAL:$1|üks märk|$1 märki}}.',
 'right-edituserjs' => 'Redigeerida teiste kasutajate JS-faile',
 'right-rollback' => 'Tühistada otsekohe lehekülje viimase redigeerija muudatused',
 'right-markbotedits' => 'Märkida muudatuse tühistamine robotimuudatusena',
-'right-noratelimit' => 'Mööduda toimingumäära limiitidest',
+'right-noratelimit' => 'Hoiduda piirangumääradest',
 'right-import' => 'Importida lehekülgi teistest vikidest',
 'right-importupload' => 'Importida XML-dokumendi lehekülgi',
 'right-patrol' => 'Märkida teiste redigeerimised kontrollituks',
@@ -1564,12 +1579,13 @@ See ei tohi olla pikem kui {{PLURAL:$1|üks märk|$1 märki}}.',
 'right-sendemail' => 'Saata teistele kasutajatele e-kirju',
 'right-passwordreset' => 'Vaadata parooli lähtestamise e-kirju',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Kasutaja loomise logi',
+'newuserlogpagetext' => 'See logi sisaldab infot äsja loodud uute kasutajate kohta.',
+
 # User rights log
-'rightslog' => 'Kasutaja õiguste logi',
+'rightslog' => 'Kasutajaõiguste logi',
 'rightslogtext' => 'See on logi kasutajate õiguste muutuste kohta.',
-'rightslogentry' => 'andis kasutajale $1 järgmised õigused: $3; seni oli ta $2',
-'rightslogentry-autopromote' => 'sai automaatselt järgmised õigused: $3; seni oli ta $2',
-'rightsnone' => '(puudub)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'seda lehekülge lugeda',
@@ -1597,8 +1613,8 @@ See ei tohi olla pikem kui {{PLURAL:$1|üks märk|$1 märki}}.',
 'action-block' => 'selle kasutaja redigeerimisõigust blokeerida',
 'action-protect' => 'selle lehekülje kaitsetasemeid muuta',
 'action-rollback' => 'tühistada otsekohe lehekülge viimati redigeerinud kasutaja muudatusi',
-'action-import' => 'seda lehekülge teisest vikist importida',
-'action-importupload' => 'seda lehekülge faili üleslaadimise abil importida',
+'action-import' => 'lehekülgi teisest vikist importida',
+'action-importupload' => 'lehekülgi faili üleslaadimise teel importida',
 'action-patrol' => 'teiste muudatusi kontrollituks märkida',
 'action-autopatrol' => 'oma muudatusi kontrollituks märkida',
 'action-unwatchedpages' => 'jälgimata lehekülgede loendit vaadata',
@@ -1640,7 +1656,7 @@ See ei tohi olla pikem kui {{PLURAL:$1|üks märk|$1 märki}}.',
 'rc_categories_any' => 'Mistahes',
 'rc-change-size-new' => '$1 {{PLURAL:$1|bait|baiti}} pärast muudatust',
 'newsectionsummary' => '/* $1 */ uus alaosa',
-'rc-enhanced-expand' => 'Näita üksikasju (nõuab JavaScripti)',
+'rc-enhanced-expand' => 'Näita üksikasju',
 'rc-enhanced-hide' => 'Peida üksikasjad',
 'rc-old-title' => 'alustatud pealkirja "$1" all',
 
@@ -1801,6 +1817,7 @@ Kui probleem ei kao, võta ühendust [[Special:ListUsers/sysop|administraatoriga
 'backend-fail-notsame' => 'Asukohas $1 on juba olemas mitteidentne fail.',
 'backend-fail-invalidpath' => '$1 pole sobiv talletustee.',
 'backend-fail-delete' => 'Faili $1 ei saa kustutada.',
+'backend-fail-describe' => 'Faili "$1" metaandmeid ei saa muuta.',
 'backend-fail-alreadyexists' => 'Fail $1 on juba olemas.',
 'backend-fail-store' => 'Faili $1 ei saa talletada asukohas $2.',
 'backend-fail-copy' => 'Faili $1 ei saa kopeerida asukohta $2.',
@@ -1883,8 +1900,7 @@ Samuti võid proovida siis, kui võrgukoht on vähem hõivatud.',
 'upload_source_file' => '(fail sinu arvutis)',
 
 # Special:ListFiles
-'listfiles-summary' => 'See erileht kuvab kõik üleslaaditud failid.
-Kui kasutaja järgi filtrida, kuvatakse ainult need failid, mille viimase versiooni antud kasutaja on üles laadinud.',
+'listfiles-summary' => 'Sellel erileheküljel näidatakse kõiki üles laaditud faile.',
 'listfiles_search_for' => 'Nimeotsing:',
 'imgfile' => 'fail',
 'listfiles' => 'Piltide loend',
@@ -1906,7 +1922,7 @@ Kui kasutaja järgi filtrida, kuvatakse ainult need failid, mille viimase versio
 'filehist-current' => 'viimane',
 'filehist-datetime' => 'Kuupäev/kellaaeg',
 'filehist-thumb' => 'Pisipilt',
-'filehist-thumbtext' => 'Pisipilt $1 versioonile',
+'filehist-thumbtext' => 'Pisipilt versioonist seisuga $1',
 'filehist-nothumb' => 'Pisipilti ei ole',
 'filehist-user' => 'Kasutaja',
 'filehist-dimensions' => 'Mõõtmed',
@@ -2019,6 +2035,12 @@ Sisesta kujul tüüp/alamtüüp, näiteks <code>image/jpeg</code>.',
 Võimalik, et sellised lingid peaks viitama sobivamatele lehekülgedele.
 Lehekülg loetakse täpsustusleheküljeks, kui see kasutab malli, millele viitab sõnum [[MediaWiki:Disambiguationspage]].",
 
+'pageswithprop' => 'Leheatribuudiga leheküljed',
+'pageswithprop-legend' => 'Leheatribuudiga leheküljed',
+'pageswithprop-text' => 'Sellel leheküljel on loetletud mõnd leheatribuuti kasutavad leheküljed.',
+'pageswithprop-prop' => 'Atribuudi nimi:',
+'pageswithprop-submit' => 'Mine',
+
 'doubleredirects' => 'Kahekordsed ümbersuunamised',
 'doubleredirectstext' => 'Käesolev leht esitab loendi lehtedest, mis sisaldavad ümbersuunamisi teistele ümbersuunamislehtedele.
 Igal real on ära toodud esimene ja teine ümbersuunamisleht ning samuti teise ümbersuunamislehe sihtmärk, mis tavaliselt on esialgse ümbersuunamise tegelik siht, millele see otse osutama peakski.
@@ -2078,7 +2100,7 @@ Igal real on ära toodud esimene ja teine ümbersuunamisleht ning samuti teise �
 'shortpages' => 'Lühikesed leheküljed',
 'longpages' => 'Pikad leheküljed',
 'deadendpages' => 'Edasipääsuta leheküljed',
-'deadendpagestext' => 'Järgmised leheküljed ei viita ühelegi teisele viki leheküljele.',
+'deadendpagestext' => 'Järgmised leheküljed ei viita ühelegi teisele {{GRAMMAR:genitive|{{SITENAME}}}} leheküljele.',
 'protectedpages' => 'Kaitstud leheküljed',
 'protectedpages-indef' => 'Ainult määramata ajani kaitstud',
 'protectedpages-cascade' => 'Ainult kaskaadkaitsega',
@@ -2125,7 +2147,7 @@ Pane tähele, et teised võrgukohad võivad viidata failile otselingiga ja seega
 Valiku kitsendamiseks vali logitüüp, sisesta kasutajanimi (tõstutundlik) või huvipakkuva lehekülje pealkiri (samuti tõstutundlik).',
 'logempty' => 'Logis puuduvad vastavad kirjed.',
 'log-title-wildcard' => 'Selle tekstiga algavad pealkirjad',
-'showhideselectedlogentries' => 'Näita valitud logisissekandeid või peida need',
+'showhideselectedlogentries' => 'Muuda valitud logisissekannete nähtavust',
 
 # Special:AllPages
 'allpages' => 'Kõik leheküljed',
@@ -2172,7 +2194,7 @@ Vaata ka [[Special:WantedCategories|puuduvaid kategooriaid]].',
 'linksearch-ok' => 'Otsi',
 'linksearch-text' => 'Metamärgina võib kasutada tärni, näiteks "*.wikipedia.org".
 Otsingus peab olema vähemalt tipptaseme domeen, näiteks "*.org".<br />
-Toetatud protokollid: <code>$1</code> (otsingus ära neid kasuta).',
+Toetatud {{PLURAL:$2|protokoll|protokollid}}: <code>$1</code> (määramata protokolli korral vaikimisi http://).',
 'linksearch-line' => '$1 on lingitud leheküljelt $2',
 'linksearch-error' => 'Metamärk võib olla ainult internetiaadressi alguses.',
 
@@ -2191,15 +2213,12 @@ Toetatud protokollid: <code>$1</code> (otsingus ära neid kasuta).',
 'activeusers-hidesysops' => 'Peida administraatorid',
 'activeusers-noresult' => 'Kasutajaid ei leidunud.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Kasutaja loomise logi',
-'newuserlogpagetext' => 'See logi sisaldab infot äsja loodud uute kasutajate kohta.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Kasutajarühma õigused',
 'listgrouprights-summary' => 'Siin on loetletud selle viki kasutajarühmad ja rühmaga seotud õigused.
 Üksikute õiguste kohta võib olla [[{{MediaWiki:Listgrouprights-helppage}}|täiendavat teavet]].',
-'listgrouprights-key' => '* <span class="listgrouprights-granted">Väljaantud õigus</span>
+'listgrouprights-key' => 'Legend:
+* <span class="listgrouprights-granted">Väljaantud õigus</span>
 * <span class="listgrouprights-revoked">Äravõetud õigus</span>',
 'listgrouprights-group' => 'Rühm',
 'listgrouprights-rights' => 'Õigused',
@@ -2288,19 +2307,23 @@ Edasised muudatused sellel leheküljel ja seotud aruteluleheküljel tuuakse ära
 
 'enotif_mailer' => '{{GRAMMAR:genitive|{{SITENAME}}}} lehekülje muutmise teavitaja',
 'enotif_reset' => 'Märgi kõik lehed loetuks',
-'enotif_newpagetext' => 'See on uus lehekülg.',
 'enotif_impersonal_salutation' => '{{GRAMMAR:genitive|{{SITENAME}}}} kasutaja',
-'changed' => 'muutnud lehekülge',
-'created' => 'loonud lehekülje',
-'enotif_subject' => '$PAGEEDITOR on {{GRAMMAR:inessive|{{SITENAME}}}} $CHANGEDORCREATED $PAGETITLE',
+'enotif_subject_deleted' => '{{GENDER:$2|$2}} kustutas {{GRAMMAR:genitive|{{SITENAME}}}} lehekülje $1',
+'enotif_subject_created' => '{{GENDER:$2|$2}} alustas {{GRAMMAR:genitive|{{SITENAME}}}} lehekülge $1',
+'enotif_subject_moved' => '{{GENDER:$2|$2}} teisaldas {{GRAMMAR:genitive|{{SITENAME}}}} lehekülje $1',
+'enotif_subject_restored' => '{{GENDER:$2|$2}} taastas {{GRAMMAR:genitive|{{SITENAME}}}} lehekülje $1',
+'enotif_subject_changed' => '{{GENDER:$2|$2}} muutis {{GRAMMAR:genitive|{{SITENAME}}}} lehekülge $1',
+'enotif_body_intro_deleted' => '$2 kustutas {{GRAMMAR:genitive|{{SITENAME}}}} lehekülje $1 kuupäeval $PAGEEDITDATE. Vaata lehekülge aadressil $3.',
+'enotif_body_intro_created' => '$2 alustas {{GRAMMAR:genitive|{{SITENAME}}}} lehekülge $1 kuupäeval $PAGEEDITDATE. Vaata lehekülje praegust redaktsiooni aadressil $3.',
+'enotif_body_intro_moved' => '$2 teisaldas {{GRAMMAR:genitive|{{SITENAME}}}} lehekülje $1 kuupäeval $PAGEEDITDATE. Vaata lehekülje praegust redaktsiooni aadressil $3.',
+'enotif_body_intro_restored' => '$2 taastas {{GRAMMAR:genitive|{{SITENAME}}}} lehekülje $1 kuupäeval $PAGEEDITDATE. Vaata lehekülje praegust redaktsiooni aadressil $3.',
+'enotif_body_intro_changed' => '$2 muutis {{GRAMMAR:genitive|{{SITENAME}}}} lehekülge $1 kuupäeval $PAGEEDITDATE. Vaata lehekülje praegust redaktsiooni aadressil $3.',
 'enotif_lastvisited' => 'Kõigi sinu viimase külastuse järel tehtud muudatuste nägemiseks vaata: $1.',
 'enotif_lastdiff' => 'Muudatus on leheküljel $1.',
 'enotif_anon_editor' => 'anonüümne kasutaja $1',
 'enotif_body' => 'Lugupeetud $WATCHINGUSERNAME
 
-{{GRAMMAR:genitive|{{SITENAME}}}} kasutaja $PAGEEDITOR on kuupäeval $PAGEEDITDATE $CHANGEDORCREATED $PAGETITLE. Lehe praegune redaktsioon on asukohas $PAGETITLE_URL.
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 Redigeerija resümee: $PAGESUMMARY $PAGEMINOREDIT
 
@@ -2308,7 +2331,7 @@ Redigeerijaga ühenduse võtmine:
 e-post: $PAGEEDITOR_EMAIL
 viki: $PAGEEDITOR_WIKI
 
-Seni kuni sa seda lehte ei külasta, selle lehe uute muudatuste kohta sulle uusi teavitus-e-kirju ei saadeta.
+Seni kuni sa seda lehte ei külasta, selle lehega seotud toimingute kohta sulle uusi teavitus-e-kirju ei saadeta. Jälgimisloendis saaksid kõigi jälgitavate lehekülgedega seotud teavitussätted ka lähtestada.
 
 Abivalmilt
 {{GRAMMAR:genitive|{{SITENAME}}}} teavitussüsteem
@@ -2324,6 +2347,8 @@ Lehekülje kustutamiseks jälgimisloendist mine leheküljele $UNWATCHURL.
 
 Tagasiside ja abi:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'loonud lehekülje',
+'changed' => 'muutnud lehekülge',
 
 # Delete
 'deletepage' => 'Kustuta lehekülg',
@@ -2347,10 +2372,12 @@ Palun kinnita, et tahad seda tõepoolest teha, et sa mõistad tagajärgi ja et s
 'deletecomment' => 'Põhjus:',
 'deleteotherreason' => 'Muu või täiendav põhjus:',
 'deletereasonotherlist' => 'Muu põhjus',
-'deletereason-dropdown' => '*Harilikud kustutamise põhjused
-** Autori palve
+'deletereason-dropdown' => '* Harilikud kustutamise põhjused
+** Rämpspostitus
+** Vandalism
 ** Autoriõiguse rikkumine
-** Vandalism',
+** Autori palve
+** Katkine ümbersuunamine',
 'delete-edit-reasonlist' => 'Redigeeri kustutamise põhjuseid',
 'delete-toobig' => 'See lehekülg on pika redigeerimisajalooga – üle {{PLURAL:$1|ühe muudatuse|$1 muudatuse}}.
 Selle kustutamine on keelatud, et ära hoida ekslikku {{GRAMMAR:genitive|{{SITENAME}}}} töö häirimist.',
@@ -2370,8 +2397,8 @@ Ettevaatust, selle kustutamine võib esile kutsuda häireid {{GRAMMAR:genitive|{
 Lehte muutis viimasena [[User:$3|$3]] ([[User talk:$3|arutelu]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
 'editcomment' => "Redaktsiooni resümee oli: \"''\$1''\".",
 'revertpage' => 'Tühistati kasutaja [[Special:Contributions/$2|$2]] ([[User talk:$2|arutelu]]) tehtud muudatused ja pöörduti tagasi viimasele muudatusele, mille tegi [[User:$1|$1]].',
-'revertpage-nouser' => 'Tühistati eemaldatud nimega kasutaja tehtud muudatused ja pöörduti tagasi viimasele muudatusele, mille tegi [[User:$1|$1]].',
-'rollback-success' => 'Tühistati $1 muudatus;
+'revertpage-nouser' => 'Tühistati peidetud kasutaja muudatused ja pöörduti tagasi viimasele muudatusele, mille tegi [[User:$1|$1]].',
+'rollback-success' => 'Tühistati muudatused, mille tegi $1;
 pöörduti tagasi viimasele muudatusele, mille tegi $2.',
 
 # Edit tokens
@@ -2392,6 +2419,8 @@ Mine tagasi eelmisele leheküljele ja taaslaadi see, seejärel proovi uuesti.',
 'prot_1movedto2' => 'Lehekülg "[[$1]]" teisaldatud pealkirja "[[$2]]" alla',
 'protect-badnamespace-title' => 'Kaitstamatu nimeruum',
 'protect-badnamespace-text' => 'Selles nimeruumis olevaid lehekülgi ei saa kaitsta.',
+'protect-norestrictiontypes-text' => 'Seda lehekülge ei saa kaitsta, sest ühtki piirangutüüpi pole saadaval.',
+'protect-norestrictiontypes-title' => 'Kaitstamatu lehekülg',
 'protect-legend' => 'Kaitse kinnitamine',
 'protectcomment' => 'Põhjus:',
 'protectexpiry' => 'Aegub:',
@@ -2476,7 +2505,8 @@ Link võib olla kõlbmatu või redaktsioon võib olla taastatud või arhiivist e
 'undeletedrevisions' => '$1 {{PLURAL:$1|redaktsioon|redaktsiooni}} taastatud',
 'undeletedrevisions-files' => '{{PLURAL:$1|1 redaktsioon|$1 redaktsiooni}} ja {{PLURAL:$2|1 fail|$2 faili}} taastatud',
 'undeletedfiles' => '{{PLURAL:$1|1 fail|$1 faili}} taastatud',
-'cannotundelete' => 'Taastamine ebaõnnestus; keegi teine võis lehe juba taastada.',
+'cannotundelete' => 'Taastamine ebaõnnestus:
+$1',
 'undeletedpage' => "'''$1 on taastatud'''
 
 [[Special:Log/delete|Kustutamise logist]] võib leida loendi viimastest kustutamistest ja taastamistest.",
@@ -2508,12 +2538,12 @@ $1',
 'blanknamespace' => '(Artiklid)',
 
 # Contributions
-'contributions' => 'Kasutaja kaastöö',
+'contributions' => '{{GENDER:$1|Kasutaja}} kaastöö',
 'contributions-title' => 'Kasutaja $1 kaastöö',
 'mycontris' => 'Kaastöö',
 'contribsub2' => 'Kasutaja $1 ($2) jaoks',
 'nocontribs' => 'Antud kriteeriumitele vastavaid muudatusi ei leitud.',
-'uctop' => ' (uusim)',
+'uctop' => '(praegune)',
 'month' => 'Alates kuust (ja varasemad):',
 'year' => 'Alates aastast (ja varasemad):',
 
@@ -2525,7 +2555,7 @@ $1',
 'sp-contributions-uploads' => 'üleslaadimised',
 'sp-contributions-logs' => 'logid',
 'sp-contributions-talk' => 'arutelu',
-'sp-contributions-userrights' => 'kasutaja õiguste muutmine',
+'sp-contributions-userrights' => 'kasutajaõiguste muutmine',
 'sp-contributions-blocked-notice' => 'See kasutaja on parajasti blokeeritud. Allpool on toodud kõige hilisem blokeerimislogi sissekanne:',
 'sp-contributions-blocked-notice-anon' => 'See IP-aadress on parajasti blokeeritud.
 Allpool on toodud viimane blokeerimislogi sissekanne:',
@@ -2547,10 +2577,10 @@ Allpool on toodud viimane blokeerimislogi sissekanne:',
 'whatlinkshere-prev' => '{{PLURAL:$1|eelmine|eelmised $1}}',
 'whatlinkshere-next' => '{{PLURAL:$1|järgmine|järgmised $1}}',
 'whatlinkshere-links' => '← lingid',
-'whatlinkshere-hideredirs' => '$1 ümbersuunamised',
-'whatlinkshere-hidetrans' => '$1 mallina kasutamised',
-'whatlinkshere-hidelinks' => '$1 lingid',
-'whatlinkshere-hideimages' => '$1 faililingid',
+'whatlinkshere-hideredirs' => 'Ümbersuunamised ($1)',
+'whatlinkshere-hidetrans' => 'Mallina kasutamised ($1)',
+'whatlinkshere-hidelinks' => 'Lingid ($1)',
+'whatlinkshere-hideimages' => 'Faililingid ($1)',
 'whatlinkshere-filters' => 'Filtrid',
 
 # Block/unblock
@@ -2647,7 +2677,7 @@ Automaatselt blokeeritud IP-aadresse siin ei näidata.
 Praegu jõus olevad blokeeringud ja redigeerimiskeelud leiad [[Special:BlockList|blokeerimisnimekirjast]].',
 'unblocklogentry' => 'eemaldas kasutaja $1 blokeeringu',
 'block-log-flags-anononly' => 'ainult anonüümsed kasutajad',
-'block-log-flags-nocreate' => 'kontode loomine on blokeeritud',
+'block-log-flags-nocreate' => 'kontode loomine keelatud',
 'block-log-flags-noautoblock' => 'ei blokeerita automaatselt',
 'block-log-flags-noemail' => 'e-kirjade saatmine keelatud',
 'block-log-flags-nousertalk' => 'ei saa muuta enda arutelulehte',
@@ -2909,7 +2939,6 @@ Palun ürita uuesti.',
 
 # JavaScriptTest
 'javascripttest' => 'JavaScripti katsetamine',
-'javascripttest-disabled' => 'See funktsioon pole selles vikis lubatud.',
 'javascripttest-title' => '$1-katse käitus',
 'javascripttest-pagetext-noframework' => 'Seda lehekülge hoitakse JavaScripti katsete jaoks.',
 'javascripttest-pagetext-unknownframework' => 'Tundmatu katseraamistik "$1".',
@@ -3032,12 +3061,14 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 'pageinfo-default-sort' => 'Vaikejärjestusvõti',
 'pageinfo-length' => 'Lehekülje pikkus (baitides)',
 'pageinfo-article-id' => 'Lehekülje identifikaator',
-'pageinfo-robot-policy' => 'Otsimootori olek',
-'pageinfo-robot-index' => 'Indekseeritav',
-'pageinfo-robot-noindex' => 'Indekseerimatu',
+'pageinfo-language' => 'Lehekülje sisu keel',
+'pageinfo-robot-policy' => 'Robotindekseering',
+'pageinfo-robot-index' => 'Lubatud',
+'pageinfo-robot-noindex' => 'Keelatud',
 'pageinfo-views' => 'Vaatamiste arv',
 'pageinfo-watchers' => 'Lehekülje jälgijate arv',
-'pageinfo-redirects-name' => 'Ümbersuunamisi sellele leheküljele',
+'pageinfo-few-watchers' => 'Alla {{PLURAL:$1|ühe jälgija|$1 jälgija}}',
+'pageinfo-redirects-name' => 'Sellele leheküljele suunavate lehekülgede arv',
 'pageinfo-subpages-name' => 'Selle lehekülje alamlehekülgi',
 'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|ümbersuunamine|ümbersuunamist}}; $3 {{PLURAL:$3|mitteümbersuunamine|mitteümbersuunamist}})',
 'pageinfo-firstuser' => 'Lehekülje alustaja',
@@ -3051,6 +3082,19 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 'pageinfo-magic-words' => '{{PLURAL:$1|Võlusõna|Võlusõnad}} ($1)',
 'pageinfo-hidden-categories' => 'Peidetud {{PLURAL:$1|kategooria|kategooriad}} ($1)',
 'pageinfo-templates' => 'Kasutatud {{PLURAL:$1|mall|mallid}} ($1)',
+'pageinfo-transclusions' => 'Kasutuses {{PLURAL:$1|leheküljel|lehekülgedel}} ($1)',
+'pageinfo-toolboxlink' => 'Lehekülje andmed',
+'pageinfo-redirectsto' => 'Ümber suunatud leheküljele',
+'pageinfo-redirectsto-info' => 'teave',
+'pageinfo-contentpage' => 'Arvestatakse sisuleheküljena',
+'pageinfo-contentpage-yes' => 'Jah',
+'pageinfo-protect-cascading' => 'Siit lähtub kaskaadkaitse',
+'pageinfo-protect-cascading-yes' => 'Jah',
+'pageinfo-protect-cascading-from' => 'Kaskaadkaitse lähtub lehekülgedelt',
+'pageinfo-category-info' => 'Kategooria teave',
+'pageinfo-category-pages' => 'Lehekülgede arv',
+'pageinfo-category-subcats' => 'Alamkategooriate arv',
+'pageinfo-category-files' => 'Failide arv',
 
 # Skin names
 'skinname-standard' => 'Algeline',
@@ -3073,6 +3117,8 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 'markedaspatrollederror' => 'Ei saa kontrollituks märkida',
 'markedaspatrollederrortext' => 'Vajalik on määrata, milline versioon märkida kontrollituks.',
 'markedaspatrollederror-noautopatrol' => 'Enda muudatusi ei saa kontrollituks märkida.',
+'markedaspatrollednotify' => 'See muudatus leheküljel $1 on märgitud kontrollituks.',
+'markedaspatrollederrornotify' => 'Kontrollituks märkimine ebaõnnestus.',
 
 # Patrol log
 'patrol-log-page' => 'Kontrollimislogi',
@@ -3106,6 +3152,7 @@ Selle avamine võib su arvutit kahjustada.",
 'file-nohires' => 'Sellest suuremat pilti pole.',
 'svg-long-desc' => 'SVG-fail, algsuurus $1 × $2 pikslit, faili suurus: $3',
 'svg-long-desc-animated' => 'Animeeritud SVG-fail,  algsuurus $1 × $2 pikslit, faili suurus: $3',
+'svg-long-error' => 'Vigane SVG-fail: $1',
 'show-big-image' => 'Originaalsuurus',
 'show-big-image-preview' => 'Selle eelvaate suurus: $1.',
 'show-big-image-other' => '{{PLURAL:$2|Teine eraldusvõime|Teised eraldusvõimed}}: $1.',
@@ -3136,7 +3183,10 @@ Järgnevas loendis, mis on sorteeritud $2, on '''$1''' {{PLURAL:$1|fail|faili}}.
 'minutes' => '{{PLURAL:$1|üks minut|$1 minutit}}',
 'hours' => '{{PLURAL:$1|üks tund|$1 tundi}}',
 'days' => '{{PLURAL:$1|üks päev|$1 päeva}}',
+'months' => '{{PLURAL:$1|Üks kuu|$1 kuud}}',
+'years' => '{{PLURAL:$1|Üks aasta|$1 aastat}}',
 'ago' => '$1 tagasi',
+'just-now' => 'just nüüd',
 
 # Bad image list
 'bad_image_list' => 'Arvesse võetakse ainult nimekirja ühikud (read, mis algavad sümboliga *).
@@ -3335,7 +3385,7 @@ Kui faili on rakendustarkvaraga töödeldud, võib osa andmeid olla muudetud võ
 'exif-compression-1' => 'Pakkimata',
 
 'exif-copyrighted-true' => 'Kaitstud',
-'exif-copyrighted-false' => 'Avalikus omandis',
+'exif-copyrighted-false' => 'Autoriõiguslik seisund määramata',
 
 'exif-unknowndate' => 'Kuupäev teadmata',
 
@@ -3586,7 +3636,7 @@ $5
 Kinnituskood aegub kuupäeval $4.',
 'confirmemail_body_set' => 'Keegi, arvatavasti sina ise, IP-aadressilt $1 on {{GRAMMAR:genitive|{{SITENAME}}}} konto "$2" e-posti aadressiks määranud selle aadressi.
 
-Kinnitamaks, et see konto kuulub tõesti sulle ja {{GRAMMAR:genitive|{{SITENAME}}}} e-posti funktsioonide taasaktiveerimiseks ava oma võrgulehitsejas järgmine link:
+Kinnitamaks, et see konto kuulub tõesti sulle ja {{GRAMMAR:genitive|{{SITENAME}}}} e-posti funktsioonide aktiveerimiseks ava võrgulehitsejas järgmine link:
 
 $3
 
@@ -3599,6 +3649,7 @@ Selle kinnituskoodi aegumistähtaeg on $4.',
 'invalidateemail' => 'E-posti aadressi kinnituse tühistamine',
 
 # Scary transclusion
+'scarytranscludedisabled' => '[Vikidevaheline mallina kasutamine on keelatud]',
 'scarytranscludetoolong' => '[URL on liiga pikk]',
 
 # Delete conflict
@@ -3708,6 +3759,7 @@ Sa võid [[Special:EditWatchlist|kasutada ka harilikku tekstiredaktorit]].',
 'version-license' => 'Litsents',
 'version-poweredby-credits' => "See viki kasutab '''[//www.mediawiki.org/ MediaWiki]''' tarkvara. Autoriõigus © 2001–$1 $2.",
 'version-poweredby-others' => 'teised',
+'version-credits-summary' => 'Tahame tunnustada järgmisi inimesi [[Special:Version|MediaWikile]] tehtud kaastöö eest.',
 'version-license-info' => "MediaWiki on vaba tarkvara; tohid seda taaslevitada ja/või selle põhjal teisendeid luua vastavalt Vaba Tarkvara Fondi avaldatud GNU Üldise Avaliku Litsentsi versioonis 2 või hilisemas seatud tingimustele.
 
 MediaWiki tarkvara levitatakse lootuses, et see on kasulik, aga '''igasuguse tagatiseta''', ka kaudse tagatiseta teose '''turustatavuse''' või '''müügikõlblikkuse''' kohta. Üksikasjad leiad GNU Üldisest Avalikust Litsentsist.
@@ -3822,17 +3874,17 @@ Pilt kuvatakse algupärases suuruses, muu fail avatakse koheselt seostuva progra
 'sqlite-no-fts' => '$1 ilma täistekstiotsingu toeta',
 
 # New logging system
-'logentry-delete-delete' => '$1 kustutas lehekülje $3',
-'logentry-delete-restore' => '$1 taastas lehekülje $3',
-'logentry-delete-event' => '$1 muutis leheküljel $3 {{PLURAL:$5|ühe|$5}} logisündmuse nähtavust: $4',
-'logentry-delete-revision' => '$1 muutis leheküljel $3 {{PLURAL:$5|ühe|$5}} redaktsiooni nähtavust: $4',
-'logentry-delete-event-legacy' => '$1 muutis leheküljel $3 logisündmuste nähtavust',
-'logentry-delete-revision-legacy' => '$1 muutis leheküljel $3 redaktsioonide nähtavust',
-'logentry-suppress-delete' => '$1 varjas lehekülje $3',
-'logentry-suppress-event' => '$1 muutis salaja leheküljel $3 {{PLURAL:$5|ühe|$5}} logisündmuse nähtavust: $4',
-'logentry-suppress-revision' => '$1 muutis salaja leheküljel $3 {{PLURAL:$5|ühe|$5}} redaktsiooni nähtavust: $4',
-'logentry-suppress-event-legacy' => '$1 muutis salaja leheküljel $3 logisündmuste nähtavust',
-'logentry-suppress-revision-legacy' => '$1 muutis salaja leheküljel $3 redaktsioonide nähtavust',
+'logentry-delete-delete' => '$1 {{GENDER:$2|kustutas}} lehekülje $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|taastas}} lehekülje $3',
+'logentry-delete-event' => '$1 {{GENDER:$2|muutis}} leheküljel $3 {{PLURAL:$5|ühe|$5}} logisündmuse nähtavust: $4',
+'logentry-delete-revision' => '$1 {{GENDER:$2|muutis}} leheküljel $3 {{PLURAL:$5|ühe|$5}} redaktsiooni nähtavust: $4',
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|muutis}} leheküljel $3 logisündmuste nähtavust',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|muutis}} leheküljel $3 redaktsioonide nähtavust',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|varjas}} lehekülje $3',
+'logentry-suppress-event' => '$1 {{GENDER:$2|muutis}} salaja leheküljel $3 {{PLURAL:$5|ühe|$5}} logisündmuse nähtavust: $4',
+'logentry-suppress-revision' => '$1 {{GENDER:$2|muutis}} salaja leheküljel $3 {{PLURAL:$5|ühe|$5}} redaktsiooni nähtavust: $4',
+'logentry-suppress-event-legacy' => '$1 {{GENDER:$2|muutis}} salaja leheküljel $3 logisündmuste nähtavust',
+'logentry-suppress-revision-legacy' => '$1 {{GENDER:$2|muutis}} salaja leheküljel $3 redaktsioonide nähtavust',
 'revdelete-content-hid' => 'peideti sisu',
 'revdelete-summary-hid' => 'peideti resümee',
 'revdelete-uname-hid' => 'peideti kasutajanimi',
@@ -3841,17 +3893,21 @@ Pilt kuvatakse algupärases suuruses, muu fail avatakse koheselt seostuva progra
 'revdelete-uname-unhid' => 'nähtavaks tehti kasutajanimi',
 'revdelete-restricted' => 'kehtestati piirangud administraatoritele',
 'revdelete-unrestricted' => 'eemaldati administraatoritelt piirangud',
-'logentry-move-move' => '$1 teisaldas lehekülje $3 pealkirja $4 alla',
-'logentry-move-move-noredirect' => '$1 teisaldas lehekülje $3 pealkirja $4 alla ümbersuunamist maha jätmata',
-'logentry-move-move_redir' => '$1 teisaldas lehekülje $3 ümbersuunamise $4 asemele',
-'logentry-move-move_redir-noredirect' => '$1 teisaldas lehekülje $3 ümbersuunamise $4 asemele ümbersuunamist maha jätmata',
-'logentry-patrol-patrol' => '$1 märkis lehekülje $3 redaktsiooni $4 kontrollituks',
-'logentry-patrol-patrol-auto' => '$1 märkis automaatselt lehekülje $3 redaktsiooni $4 kontrollituks',
-'logentry-newusers-newusers' => 'Loodud kasutajakonto $1',
-'logentry-newusers-create' => 'Loodud kasutajakonto $1',
-'logentry-newusers-create2' => '$1 lõi kasutajakonto $3',
-'logentry-newusers-autocreate' => 'Konto $1 loodi automaatselt',
-'newuserlog-byemail' => 'parool saadetud e-postiga',
+'logentry-move-move' => '$1 {{GENDER:$2|teisaldas}} lehekülje $3 pealkirja $4 alla',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|teisaldas}} lehekülje $3 pealkirja $4 alla ümbersuunamist maha jätmata',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|teisaldas}} lehekülje $3 ümbersuunamise $4 asemele',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|teisaldas}} lehekülje $3 ümbersuunamise $4 asemele ümbersuunamist maha jätmata',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|märkis}} lehekülje $3 redaktsiooni $4 kontrollituks',
+'logentry-patrol-patrol-auto' => '$1 {{GENDER:$2|märkis}} automaatselt lehekülje $3 redaktsiooni $4 kontrollituks',
+'logentry-newusers-newusers' => '{{GENDER:$2|Loodud}} kasutajakonto $1',
+'logentry-newusers-create' => '{{GENDER:$2|Loodud}} kasutajakonto $1',
+'logentry-newusers-create2' => '$1 {{GENDER:$2|lõi}} kasutajakonto $3',
+'logentry-newusers-byemail' => '$1 {{GENDER:$2|lõi}} kasutajakonto $3 ja parool saadeti e-kirjatsi',
+'logentry-newusers-autocreate' => 'Konto $1 {{GENDER:$2|loodi}} automaatselt',
+'logentry-rights-rights' => '$1 {{GENDER:$2|muutis}} kasutaja $3 rühmaliikmesust; enne oli $4, nüüd on $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$2|muutis}} kasutaja $3 rühmaliikmesust',
+'logentry-rights-autopromote' => '$1 {{GENDER:$2|viidi}} automaatselt üle teise rühma; enne oli $4, nüüd on $5',
+'rightsnone' => '(puudub)',
 
 # Feedback
 'feedback-bugornote' => 'Kui arvad, et oskad tehnilist probleemi üksikasjalikult kirjeldada, [$1 teata veast].
@@ -3905,6 +3961,7 @@ Kui ei, kasuta allolevat lihtsat vormi. Sinu kommentaar lisatakse koos kasutajan
 'api-error-ok-but-empty' => 'Sisetõrge: Server ei vasta.',
 'api-error-overwrite' => 'Olemasolevate failide ülekirjutamine pole lubatud.',
 'api-error-stashfailed' => 'Sisetõrge: Serveril ei õnnestunud ajutist faili talletada.',
+'api-error-publishfailed' => 'Sisetõrge: Serveril ebaõnnestus ajutise faili avaldamine.',
 'api-error-timeout' => 'Server ei vastanud oodatud aja sees.',
 'api-error-unclassified' => 'Ilmnes teadmata tõrge.',
 'api-error-unknown-code' => 'Teadmata tõrge: "$1"',
@@ -3924,5 +3981,8 @@ Kui ei, kasuta allolevat lihtsat vormi. Sinu kommentaar lisatakse koos kasutajan
 'duration-decades' => '$1 {{PLURAL:$1|kümnend|kümnendit}}',
 'duration-centuries' => '$1 {{PLURAL:$1|sajand|sajandit}}',
 'duration-millennia' => '$1 {{PLURAL:$1|aastatuhat|aastatuhandet}}',
+
+# Image rotation
+'rotate-comment' => 'Pilti pööratud $1 {{PLURAL:$1|kraad|kraadi}} päripäeva',
 
 );

@@ -1,12 +1,11 @@
 <?php
-
 /**
  * Selenium server manager
  *
  * @file
  * @ingroup Testing
  * Copyright (C) 2010 Nadeesha Weerasinghe <nadeesha@calcey.com>
- * http://www.calcey.com/ 
+ * http://www.calcey.com/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,36 +21,31 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * http://www.gnu.org/copyleft/gpl.html
- *
- * @addtogroup Testing
- *
  */
 
 require_once dirname( __DIR__ ) . '/SeleniumTestConstants.php';
 
 class MyWatchListTestCase extends SeleniumTestCase {
+	// Verify user watchlist
+	public function testMyWatchlist() {
+		$pageName = $this->createNewTestPage( "MyWatchListTest", true );
+		// Verify link 'My Watchlist' available
+		$this->assertTrue( $this->isElementPresent( SeleniumTestConstants::LINK_START . "Watchlist" ) );
 
-    // Verify user watchlist
-    public function testMyWatchlist() {
+		$this->click( SeleniumTestConstants::LINK_START . "Watchlist" );
+		$this->waitForPageToLoad( SeleniumTestConstants::WIKI_TEST_WAIT_TIME );
 
-        $pageName = $this->createNewTestPage( "MyWatchListTest", true );
-        // Verify link 'My Watchlist' available
-        $this->assertTrue( $this->isElementPresent( SeleniumTestConstants::LINK_START."Watchlist" ) );
+		// Verify newly added page to the watchlist is available
+		$this->assertEquals( $pageName, $this->getText( SeleniumTestConstants::LINK_START . $pageName ) );
 
-        $this->click( SeleniumTestConstants::LINK_START."Watchlist" );
-        $this->waitForPageToLoad( SeleniumTestConstants::WIKI_TEST_WAIT_TIME );
-
-        // Verify newly added page to the watchlist is available
-        $this->assertEquals( $pageName, $this->getText( SeleniumTestConstants::LINK_START.$pageName ));
-
-        $this->click( SeleniumTestConstants::LINK_START.$pageName );
-        $this->waitForPageToLoad( SeleniumTestConstants::WIKI_TEST_WAIT_TIME );
-        $this->click( SeleniumTestConstants::LINK_EDIT );
-        $this->waitForPageToLoad( SeleniumTestConstants::WIKI_TEST_WAIT_TIME );
-        $this->click( "wpWatchthis" );
-        $this->click( SeleniumTestConstants::BUTTON_SAVE );
-        $this->assertFalse( $this->isElementPresent( SeleniumTestConstants::LINK_START.$pageName ) );
-        //todo watch using the dropdown menu
-    }
+		$this->click( SeleniumTestConstants::LINK_START . $pageName );
+		$this->waitForPageToLoad( SeleniumTestConstants::WIKI_TEST_WAIT_TIME );
+		$this->click( SeleniumTestConstants::LINK_EDIT );
+		$this->waitForPageToLoad( SeleniumTestConstants::WIKI_TEST_WAIT_TIME );
+		$this->click( "wpWatchthis" );
+		$this->click( SeleniumTestConstants::BUTTON_SAVE );
+		$this->assertFalse( $this->isElementPresent( SeleniumTestConstants::LINK_START . $pageName ) );
+		//todo watch using the dropdown menu
+	}
 }
 

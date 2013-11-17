@@ -13,6 +13,7 @@
  * @author DracoRoboter
  * @author Flavio05
  * @author GatoSelvadego
+ * @author Geitost
  * @author Insübrich
  * @author Kemmótar
  * @author Malafaya
@@ -235,7 +236,6 @@ süi titul dai sezziún (JavaScript)',
 'qbbrowse' => 'Sföja',
 'qbedit' => 'Mudifega',
 'qbpageoptions' => 'Opzión de la pagina',
-'qbpageinfo' => 'Infurmazión revard a la pagina',
 'qbmyoptions' => 'I mè paginn',
 'qbspecialpages' => 'Paginn special',
 'faq' => 'FAQ',
@@ -420,10 +420,8 @@ Per piasè, fa raport a 'n'[[Special:ListUsers/sysop|aministradur]], cun la nota
 # Login and logout pages
 'logouttext' => "'''Adess a sii descuness.'''
 
-A pudé andà inanz a druvà la {{SITENAME}} in manera anònima, o a pudé [[Special:UserLogin|cunètev anmò]] cun l'istess suranomm o cun un suranomm diferent.
+A pudé andà inanz a druvà la {{SITENAME}} in manera anònima, o a pudé <span class='plainlinks'>[$1 cunètev anmò]</span> cun l'istess suranomm o cun un suranomm diferent.
 Tegné cünt che certi paginn pödass che i seguiten a vedess tant 'me se a füdìssuv anmò cuness, fin quand che hii nò vudaa 'l ''cache'' del voster browser.",
-'welcomecreation' => "== Benvegnüü, $1! ==
-'L to cünt l'è staa pruntaa. Desmenteghet mía de mudifegà i to [[Special:Preferences|preferenz de {{SITENAME}}]].",
 'yourname' => 'El to suranóm:',
 'yourpassword' => "Parola d'urdin",
 'yourpasswordagain' => "Mett dent ammò la parola d'urdin",
@@ -436,7 +434,7 @@ Tegné cünt che certi paginn pödass che i seguiten a vedess tant 'me se a füd
 'logout' => 'Va fö',
 'userlogout' => 'Và fö',
 'notloggedin' => 'Te seet minga dent in del sistema',
-'nologin' => "Gh'avii anmò da registrav? '''$1'''.",
+'nologin' => "Gh'avii anmò da registrav? $1.",
 'nologinlink' => 'Creé un cünt!',
 'createaccount' => 'Creá un cünt',
 'gotaccount' => "Gh'hee-t giamò un cünt? '''$1'''.",
@@ -726,9 +724,11 @@ Pröa a giuntagh denanz a la tò ricerca ''all:'' per cercà in tücc i namespac
 'right-edit' => 'Edita pàgini',
 'right-createaccount' => 'Crea cünt de dovratt bej-e növ',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Rrgister di druvat növ',
+
 # User rights log
 'rightslog' => 'Dirit di druvat',
-'rightslogentry' => "l'ha mudifegaa $1 dal grüp $2 al grüp $3",
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'mudifega quela pagina chì',
@@ -942,9 +942,6 @@ La descrizión sura la sua [$2 pagina de descrizión del file] l'è mustrada ch�
 # Special:ActiveUsers
 'activeusers-from' => 'Fàm vedè i dupradur a partì da:',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Rrgister di druvat növ',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Dirit del grüp di druvat',
 'listgrouprights-members' => '(Lista di member)',
@@ -975,9 +972,6 @@ i vegnarann segnalaa chichinscì e la pagina la se vedarà cun caràter '''grev'
 'watching' => "Giuntà ai pagin da ten d'ögg...",
 'unwatching' => "Eliminà dai pagin da ten d'ögg...",
 
-'enotif_newpagetext' => "Chesta-chí l'è una pàgina növa.",
-'changed' => 'cambiaa',
-'enotif_subject' => 'La pagina $PAGETITLE de {{SITENAME}} l\'è stada $CHANGEDORCREATED da $PAGEEDITOR',
 'enotif_lastvisited' => 'Varda $1 per vedè tüt i mudifegh da la tua ültema vìsita.',
 'enotif_body' => 'Cara $WATCHINGUSERNAME,
 
@@ -1002,6 +996,7 @@ Per mudifegà l\'impustazión de la lista di paginn che te tegn d\'ögg, varda
 
 Per fà di cumünicazion de servizzi e per cercà jüt:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'changed' => 'cambiaa',
 
 # Delete
 'deletepage' => 'Scancela la pagina',

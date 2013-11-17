@@ -1,5 +1,4 @@
 <?php
-
 /**
  * MediaWikiInstallerTestSuite
  *
@@ -22,12 +21,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * http://www.gnu.org/copyleft/gpl.html
- *
- * @addtogroup Maintenance
- *
  */
 
-require_once 'PHPUnit/Framework.php';
+if ( PHP_SAPI != 'cli' ) {
+	die( "Run me from the command line please.\n" );
+}
+
 require_once 'PHPUnit/Framework/TestSuite.php';
 
 require_once ( __DIR__ . '/MediaWikiUserInterfaceTestCase.php' );
@@ -44,10 +43,7 @@ require_once ( __DIR__ . '/MediaWikiDifferntDatabasePrefixTestCase.php' );
 require_once ( __DIR__ . '/MediaWikiDifferentDatabaseAccountTestCase.php' );
 require_once ( __DIR__ . '/MediaWikiOnAlreadyInstalledTestCase.php' );
 
-
-
-
-$suite = new PHPUnit_Framework_TestSuite('ArrayTest');
+$suite = new PHPUnit_Framework_TestSuite( 'ArrayTest' );
 $result = new PHPUnit_Framework_TestResult;
 
-$suite->run($result);
+$suite->run( $result );

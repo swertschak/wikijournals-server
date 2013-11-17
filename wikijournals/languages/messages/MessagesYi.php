@@ -146,10 +146,13 @@ $magicWords = array(
 	'nogallery'                 => array( '0', '__קיין_גאלעריע__', '__ללא_גלריה__', '__NOGALLERY__' ),
 	'toc'                       => array( '0', '__אינהאלט__', '__תוכן_עניינים__', '__תוכן__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__נישט_רעדאקטירן__', '__ללא_עריכה__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__קיינקעפל__', '__ללא_כותרת__', '__NOHEADER__' ),
 	'currentday'                => array( '1', 'לויפיקער_טאג', 'יום נוכחי', 'CURRENTDAY' ),
+	'currentyear'               => array( '1', 'לויפֿיקע_יאָר', 'שנה נוכחית', 'CURRENTYEAR' ),
+	'currenttime'               => array( '1', 'לויפֿיקע_צײַט', 'שעה נוכחית', 'CURRENTTIME' ),
 	'numberofpages'             => array( '1', 'צאל_בלעטער', 'מספר דפים כולל', 'מספר דפים', 'NUMBEROFPAGES' ),
 	'numberofarticles'          => array( '1', 'צאל_ארטיקלען', 'מספר ערכים', 'NUMBEROFARTICLES' ),
+	'numberoffiles'             => array( '1', 'צאל_טעקעס', 'מספר קבצים', 'NUMBEROFFILES' ),
+	'numberofusers'             => array( '1', 'צאל_באניצער', 'מספר משתמשים', 'NUMBEROFUSERS' ),
 	'pagename'                  => array( '1', 'בלאטנאמען', 'שם הדף', 'PAGENAME' ),
 	'namespace'                 => array( '1', 'נאמענטייל', 'מרחב השם', 'NAMESPACE' ),
 	'fullpagename'              => array( '1', 'פולבלאטנאמען', 'שם הדף המלא', 'FULLPAGENAME' ),
@@ -161,8 +164,10 @@ $magicWords = array(
 	'img_right'                 => array( '1', 'רעכטס', 'ימין', 'right' ),
 	'img_left'                  => array( '1', 'לינקס', 'שמאל', 'left' ),
 	'img_none'                  => array( '1', 'אן', 'ללא', 'none' ),
+	'img_width'                 => array( '1', '$1פיקס', '$1 פיקסלים', '$1px' ),
 	'img_center'                => array( '1', 'צענטער', 'מרכז', 'center', 'centre' ),
 	'img_sub'                   => array( '1', 'אונטער', 'תחתי', 'sub' ),
+	'img_super'                 => array( '1', 'איבער', 'עילי', 'super', 'sup' ),
 	'img_top'                   => array( '1', 'אויבן', 'למעלה', 'top' ),
 	'img_bottom'                => array( '1', 'אונטן', 'למטה', 'bottom' ),
 	'img_link'                  => array( '1', 'לינק=$1', 'קישור=$1', 'link=$1' ),
@@ -188,12 +193,12 @@ $messages = array(
 'tog-hidepatrolled' => 'באַהאַלטן פאַטראלירטע רעדאַקטירונגען אין לעצטע ענדערונגען',
 'tog-newpageshidepatrolled' => 'באַהאַלטן פאַטראלירטע בלעטער פון דער ליסטע פון נײַע בלעטער',
 'tog-extendwatchlist' => 'פארברייטערן די אויפפאסן ליסטע צו צייגן אלע פאסנדע ענדערונגען (אנדערשט: בלויז די לעצטע ענדערונג פון יעדן בלאט)',
-'tog-usenewrc' => 'ניצן פֿאַרבעסערטע לעצטע ענדערונגען (פֿאדערט JavaScript)',
+'tog-usenewrc' => 'גרופירן ענדערונגען לויטן בלאט אין "לעצטע ענדערונגען" און אויפֿפאסן ליסטע',
 'tog-numberheadings' => 'נומערירן קעפלעך אויטאמאטיש',
-'tog-showtoolbar' => 'ווײַזן דעם געצייג-שטאנג',
-'tog-editondblclick' => 'ענדערן בלעטער דורך טאפל קליק (JavaScript)',
+'tog-showtoolbar' => 'ווײַזן רעדאקטירן געצייג-שטאנג',
+'tog-editondblclick' => 'רעדאקטירן בלעטער דורך טאפל קליק',
 'tog-editsection' => 'ערמעגליכט אפטייל ענדערן דורך [ענדערן] לינקס',
-'tog-editsectiononrightclick' => 'באמעגליך פאראגראף ענדערונגען דורכן קוועטשן אויפן רעכטן<br />אויף אפטייל קעפל (JavaScript)',
+'tog-editsectiononrightclick' => 'באמעגלעכן אפטייל רעדאקטירן דורכן רעכטס־קליקן אויף אפטייל קעפלעך',
 'tog-showtoc' => 'ווייז דאס אינהאלט קעסטל<br />(פאר בלעטער מיט מער ווי 3 קעפלעך)',
 'tog-rememberpassword' => 'געדענק מיין אריינלאגירן אין דעם בלעטערער (ביז $1 {{PLURAL:$1|טאָג|טעג}})',
 'tog-watchcreations' => 'צולייגן בלעטער וואס איך באשאף און טעקעס וואס איך לאד ארויף צו מיין אכטונג ליסטע',
@@ -216,7 +221,7 @@ $messages = array(
 'tog-externaldiff' => 'ניצן א דרויסנדיגן פֿאַרגלײַכער גרונטלעך (נאר פֿאר מומחים, דאס פֿאדערט באזונדערע קאמפיוטער שטעלונגען)
 [//www.mediawiki.org/wiki/Manual:External_editors ווײַטערע אינפֿארמאַציע.]',
 'tog-showjumplinks' => 'באמעגלעך צוטריט לינקס פון "שפרינג צו"',
-'tog-uselivepreview' => 'באנוצט זיך מיט לייוו פאראויסדיגע ווייזונג (JavaScript) (עקספירענמעטל)',
+'tog-uselivepreview' => 'באניצן זיך מיט גיכער פאראויסדיגער ווייזונג (עקספערימענטאל)',
 'tog-forceeditsummary' => 'ווארן מיך ווען איך לייג א ליידיג קורץ ווארט ענדערונג',
 'tog-watchlisthideown' => 'באהאלט מיינע ענדערונגען פון דער אויפפאסן ליסטע',
 'tog-watchlisthidebots' => 'באהאלט באט עדיטס פון אויפפאסן ליסטע',
@@ -317,6 +322,7 @@ $messages = array(
 'newwindow' => '(עפֿנט זיך אין א נײַעם פענסטער)',
 'cancel' => 'אַנולירן',
 'moredotdotdot' => 'נאך…',
+'morenotlisted' => 'די ליסטע איז נישט פֿולשטענדיק.',
 'mypage' => 'מײַן בלאט',
 'mytalk' => 'שמועס',
 'anontalk' => 'דאס רעדן פון דעם IP',
@@ -325,10 +331,9 @@ $messages = array(
 
 # Cologne Blue skin
 'qbfind' => 'טרעף',
-'qbbrowse' => 'בלעטערט',
+'qbbrowse' => 'בלעטערן',
 'qbedit' => 'ענדערן',
 'qbpageoptions' => 'דער בלאט',
-'qbpageinfo' => 'קאנטעקסט',
 'qbmyoptions' => 'מיינע בלעטער',
 'qbspecialpages' => 'ספעציעלע בלעטער',
 'faq' => 'מערסטע געפרעגטע פראגעס',
@@ -351,6 +356,7 @@ $messages = array(
 'namespaces' => 'נאָמענטיילן',
 'variants' => 'װאַריאַנטן',
 
+'navigation-heading' => 'נאוויגאציע מעניו',
 'errorpagetitle' => 'פֿעלער',
 'returnto' => 'צוריקקערן צו $1.',
 'tagline' => 'פֿון {{SITENAME}}',
@@ -388,7 +394,7 @@ $messages = array(
 'articlepage' => 'זען אינהאַלט בלאַט',
 'talk' => 'שמועס',
 'views' => 'קוקן',
-'toolbox' => 'געצייג קאסטן',
+'toolbox' => 'געצייג',
 'userpage' => 'זען באַניצער בלאַט',
 'projectpage' => 'זען פראיעקט בלאַט',
 'imagepage' => 'זען טעקע בלאט',
@@ -411,14 +417,14 @@ $messages = array(
 ביטע ווארטן א ביסל צייט בעפאר איר פרובירט ווידער אריינגיין אינעם בלאט.
 
 $1',
-'pool-timeout' => 'אַריבער די צײַט וואַרטן פֿאר דער שליסונג',
+'pool-timeout' => 'אַריבער דער צײַט וואַרטן פֿאר דער שליסונג',
 'pool-queuefull' => 'ריי איז פֿול',
 'pool-errorunknown' => 'אומבאַקאַנטער פֿעלער',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => 'וועגן {{SITENAME}}',
 'aboutpage' => 'Project:וועגן',
-'copyright' => 'דער אינהאַלט איז בארעכטיגט אונטער $1.',
+'copyright' => 'דער אינהאַלט איז פֿאַראַן אונטער $1 ווען נישט באוויזן אנדערש.',
 'copyrightpage' => '{{ns:project}}:קאפירעכטן',
 'currentevents' => 'אקטועלע געשעענישן',
 'currentevents-url' => 'Project:אקטועלע געשענישען',
@@ -595,9 +601,10 @@ $2',
 # Login and logout pages
 'logouttext' => "'''איר האָט זיך ארויסלאָגירט.'''
 
-איר קענט ממשיך זיין ניצן {{SITENAME}} אַנאנים, אדער איר קענט  [[Special:UserLogin|צוריק אריינלאגירן]] מיט דעם זעלבן אדער אן אנדער באַניצער נאָמען. באמערקט אז געוויסע בלעטער קענען זיך ווייטער ארויסשטעלן אזוי ווי ווען איר זענט אריינלאגירט, ביז איר וועט אויסליידיגן דעם בלעטערער זאפאס.",
-'welcomecreation' => '== ברוך הבא, $1! ==
-אייער קאנטע איז באשאפן געווארן. נישט פארגעסן צו ענדערן אייערע [[Special:Preferences|{{SITENAME}} פרעפֿערענצן]].',
+באמערקט אז געוויסע בלעטער קענען זיך ווייטער ארויסשטעלן אזוי ווי ווען איר זענט אריינלאגירט, ביז איר וועט אויסליידיגן דעם בלעטערער זאפאס.",
+'welcomeuser' => 'ברוך הבא, $1!',
+'welcomecreation-msg' => "מ'האט געשאפן אייער קאנטע.
+פארגעסט נישט צו ענדערן אייערע [[Special:Preferences|{{SITENAME}} פרעפערענצן]].",
 'yourname' => 'באַניצער נאָמען:',
 'yourpassword' => 'פאסווארט',
 'yourpasswordagain' => 'ווידער אריינקלאפן פאסווארט',
@@ -620,7 +627,7 @@ $2',
 'gotaccount' => "האסטו שוין א קאנטע? '''$1'''.",
 'gotaccountlink' => 'אַרײַנלאגירן',
 'userlogin-resetlink' => 'פארגעסן אײַערע אַרײַנלאָגירן פרטים?',
-'createaccountmail' => 'דורך ע-פאסט',
+'createaccountmail' => 'ניצן א פראוויזאריש פאסווארט און שיקן צום געצייכנטן ע-פאסט אדרעס',
 'createaccountreason' => 'אורזאַך:',
 'badretype' => 'די פאסווערטער וואס איר האט אריינגעלייגט זענען נישט אייניג.',
 'userexists' => 'דער באַניצער נאָמען איז שוין געניצט.
@@ -682,7 +689,8 @@ $2',
 'cannotchangeemail' => "מ'קען נישט ענדערן קאנטע ע־פאסט אדרעסן אין דער וויקי.",
 'emaildisabled' => 'דאס וועבזייטל קען נישט שיקן ע־בריוון.',
 'accountcreated' => 'די קאָנטע איז באַשאַפֿן',
-'accountcreatedtext' => 'די באניצער קאנטע פאר $1 איז באַשאַפֿן געווארן.',
+'accountcreatedtext' => 'די באניצער קאנטע פאר [[{{ns:User}}:$1|$1]] 
+([[{{ns:User talk}}:$1|שמועס]])  איז באַשאַפֿן געווארן.',
 'createaccount-title' => 'קאנטע באשאפֿן אין {{SITENAME}}',
 'createaccount-text' => 'עמעצער האט באשאפֿן א קאנטע פֿאר אייער ע-פאסט אדרעס אין {{SITENAME}} ($4) מיטן נאמען "$2" און  פאסווארט "$3". איר דארפט אצינד איינלאגירן און ענדערן דאס פאסווארט.
 
@@ -697,6 +705,7 @@ $2',
 # Email sending
 'php-mail-error-unknown' => 'אומבאַקאַנט טעות אין()mail פֿונקציע פֿון PHP.',
 'user-mail-no-addy' => 'געפרוווט צו שיקן ע-פּאָסט אָן אַן ע-פּאָסט אַדרעס.',
+'user-mail-no-body' => 'האט פרובירט צו שיקן א בליצבריוו וואס זיין אינהאלט איז ליידיק אדער גאר קורץ.',
 
 # Change password dialog
 'resetpass' => 'ענדערן קאנטע פאסווארט',
@@ -715,6 +724,7 @@ $2',
 'resetpass-wrong-oldpass' => 'אומגילטיג צײַטווײַליק אדער לויפֿיק פאַסווארט.
 איר האט מעגלעך שוין געטוישט אייער פאַסווארט מיט הצלחה אדער געבעטן א נײַ  צײַטווײַליק פאַסווארט.',
 'resetpass-temp-password' => 'צײַטווייליק פאַסווארט:',
+'resetpass-abort-generic' => 'פאסווארט ענדערונג איז מבוטל געווארן דורך א פארברייטערונג.',
 
 # Special:PasswordReset
 'passwordreset' => 'צוריקשטעלן פאַסווארט',
@@ -750,7 +760,7 @@ $2
 פראוויזארישער פּאַראָל: $2',
 'passwordreset-emailsent' => "מ'האט געשיקט א פאסווארט צוריקשטעלן ע-פּאָסט.",
 'passwordreset-emailsent-capture' => 'מען האט געשיקט א פאסווארט צוריקשטעלן בליצבריוו, וואס ווערט געוויזן אונטן.',
-'passwordreset-emailerror-capture' => 'מען האט געשאפן א דערמאנונג בליצבריוו, וואס ווערט געוויזן אונטן, אבער שיקן צום באניצער איז דורכגעפאלן: $1',
+'passwordreset-emailerror-capture' => 'מען האט געשאפן א פאסווארט צוריקשטעלן בליצבריוו, וואס ווערט געוויזן אונטן, אבער שיקן צום באניצער איז דורכגעפאלן: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'ענדערן ע-פּאָסט אַדרעס',
@@ -760,6 +770,7 @@ $2
 'changeemail-oldemail' => 'קראַנטער ע-פּאָסט אַדרעס:',
 'changeemail-newemail' => 'נײַער בליצפּאָסט אַדרעס:',
 'changeemail-none' => '(קיין)',
+'changeemail-password' => 'אייער {{SITENAME}} פאסווארט:',
 'changeemail-submit' => 'ענדערן ע־פאסט אדרעס',
 'changeemail-cancel' => 'אַנולירן',
 
@@ -800,7 +811,7 @@ $2
 'missingcommentheader' => "'''דערמאַנונג:''' איר האט נישט אַרײַנגעשטעלט א טעמע/קעפל פאר דער אנמערקונג. אויב וועט איר דרוקן נאכאמאל אויפן \"{{int:savearticle}}\", וועט אייער ענדערונג ווערן אפגעהיטן אן דעם.",
 'summary-preview' => 'סך-הכל פאראויסדיגע ווייזונג:',
 'subject-preview' => 'טעמע/קעפל פאראויסדיגע ווייזונג:',
-'blockedtitle' => 'באנוצער איז בלאקירט',
+'blockedtitle' => 'באַניצער איז בלאקירט',
 'blockedtext' => '\'\'\'אייער באניצער נאמען אדער IP אדרעס איז געווארן בלאקירט.\'\'\'
 
 דעם בלאק האט $1 געמאכט פון וועגן \'\'$2\'\'.
@@ -842,7 +853,7 @@ $2
 'accmailtitle' => 'פאסווארט געשיקט',
 'accmailtext' => 'א צופֿעליק פאַסווארט פֿאַר [[User talk:$1|$1]] איז געשיקט געוואָרן צו $2.
 
-דאָס פאַסווארט פאר דער נײַער קאנטע קען מען טוישן אויפֿן [[Special:ChangePassword|טוישן פאַסווארט]] בלאַט נאָכן ארײַנלאגירן.',
+מען קען עס טוישן אויפֿן [[Special:ChangePassword|טוישן פאַסווארט]] בלאַט נאָכן ארײַנלאגירן.',
 'newarticle' => '(ניי)',
 'newarticletext' => "איר זענט געקומען צו אַ בלאַט וואָס עקזיסטירט נאָך נישט!
 כדי שאַפֿן דעם בלאַט, קלאַפט אַרײַן טעקסט אין דעם קעסטל אונטן (זעט דעם [[{{MediaWiki:Helppage}}|הילף בלאַט]] פֿאַר מער אינפֿארמאַציע).
@@ -943,13 +954,12 @@ $2
 'template-semiprotected' => '(טיילווייז באשיצט)',
 'hiddencategories' => 'דער דאזיגער בלאט געהערט צו {{PLURAL:$1|איין באהאלטענער קאטעגאריע|$1 באהאלטענע קאטעגאריעס}}:',
 'edittools' => '<!-- טעקסט דא וועט געוויזן ווערן אונטער ענדערן און ארויפלאדירן פארעמס. -->',
-'nocreatetitle' => 'בלאט באשאפן באגרעניצט',
 'nocreatetext' => 'די סייט האט באגרעניצט די מעגליכקייט צו שאפן נייע בלעטער.
 איר קענט צוריקגיין און ענדערן דעם עקזיסטירנדן בלאט, אדער [[Special:UserLogin|לאגירט זיך אריין אדער שאפט א קאנטע]].',
 'nocreate-loggedin' => 'איר זענט נישט ערלויבט צו שאַפֿן נײַע בלעטער.',
 'sectioneditnotsupported-title' => 'רעדאקטירן אפטיילונגען נישט געשטיצט.',
 'sectioneditnotsupported-text' => 'רעדאַקטירן אָפטיילונגען נישט געשטיצט אויף דעם בלאַט',
-'permissionserrors' => 'ערלויבענישן פעלערס',
+'permissionserrors' => 'דערלויבענישן פֿעלער',
 'permissionserrorstext' => 'איר זענט נישט ערלויבט צו טון דאס, פֿאַר {{PLURAL:$1|דער פֿאלגנדער סיבה|די פֿאלגנדע סיבות}}:',
 'permissionserrorstext-withaction' => 'איר זענט נישט ערלויבט צו $2, וועגן {{PLURAL:$1|דער פֿאלגנדער סיבה| די פֿאלגנדע סיבות}}:',
 'recreate-moveddeleted-warn' => "'''ווארענונג: איר שאפט א נייעם בלאט וואס איז שוין איינמאל  געווארן אויסגעמעקט.'''
@@ -965,9 +975,18 @@ $2
 ס'ווייזט אויס אז ער איז אויסגעמעקט.",
 'edit-conflict' => 'רעדאקטירן קאנפֿליקט.',
 'edit-no-change' => "מ'האט איגנארירט אײַער רעדאַקטירונג, ווײַל קיין שום ענדערונג איז נישט געמאַכט צום טעקסט.",
-'edit-already-exists' => 'נישט מעגליך צו שאַפֿן נייע בלאט.
+'edit-already-exists' => 'נישט מעגליך צו שאַפֿן נייעם בלאט.
 ער עקזיסטירט שוין.',
 'defaultmessagetext' => 'גרונטלעכער מעלדונג טעקסט',
+'content-failed-to-parse' => 'פארזן $2 אינהאלט פאר $1 מאדעל דורכגעפאלן: $3',
+'invalid-content-data' => 'אומגילטיקע אינהאלט דאטן',
+'content-not-allowed-here' => '"$1" אינהאלט נישט דערלויבט אויף בלאט [[$2]]',
+
+# Content models
+'content-model-wikitext' => 'וויקיטעקסט',
+'content-model-text' => 'פשוטער טעקסט',
+'content-model-javascript' => 'JavaScript',
+'content-model-css' => 'CSS',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => "'''אזהרה:''' דער בלאט אנטהאלט צופיל טייערע פארזירער רופן.
@@ -986,6 +1005,7 @@ $2
 'node-count-exceeded-warning' => 'קנופנצאל אויפן בלאט צו הויך',
 'expansion-depth-exceeded-category' => "בלעטער וואו מ'האט אריבערגעשטיגן די פארברייטערונג טיף",
 'expansion-depth-exceeded-warning' => 'בלאט גייט אריבער דער פארברייטערונג טיף',
+'parser-unstrip-loop-warning' => 'פעטליע געטראפֿן',
 'converter-manual-rule-error' => 'געטראפן א גרײַז אין האנטלעכן שפראך־קאנווערטירן כלל',
 
 # "Undo" feature
@@ -1017,8 +1037,8 @@ $2
 שליסל: '''({{int:cur}})''' = אונטערשייד פֿון לויפֿיגער ווערסיע, '''({{int:last}})''' = אונטערשייד פֿון פֿריערדיגער ווערסיע, '''({{int:last}})''' = מינערדיקע רעדאקטירונג",
 'history-fieldset-title' => 'בלעטערט די היסטאריע',
 'history-show-deleted' => 'נאר אויסגעמעקט',
-'histfirst' => 'ערשטע',
-'histlast' => 'לעצטיגע',
+'histfirst' => 'עלטסטע',
+'histlast' => 'נײַעסטע',
 'historysize' => '({{PLURAL:$1|1 בייט|$1 בייטן}})',
 'historyempty' => '(ליידיג)',
 
@@ -1132,6 +1152,8 @@ $1",
 
 # Suppression log
 'suppressionlog' => 'באהאלטונגען לאג',
+'suppressionlogtext' => 'אונטן געפינט זיך א ליסטע פון אויסמעקונגען און בלאקן וואס באהאנדלען אינהאלט באהאלטן פון אדמיניסטראטארן.
+זעט די [[Special:BlockList|בלאקן ליסטע]] פאר דער ליסטע פון אקטועלע בלאקן.',
 
 # History merging
 'mergehistory' => 'צונויפֿגיסן בלאט היסטאריעס',
@@ -1267,7 +1289,7 @@ $1",
 'prefs-datetime' => 'דאטום און צייט',
 'prefs-labs' => 'לאַבאראַטאריע מעגלעכקייטן',
 'prefs-user-pages' => 'באניצער בלעטער',
-'prefs-personal' => 'באַנוצער פראָפֿיל',
+'prefs-personal' => 'באַניצער פראָפֿיל',
 'prefs-rc' => 'לעצטע ענדערונגען',
 'prefs-watchlist' => 'אויפפאסונג ליסטע',
 'prefs-watchlist-days' => 'טעג צו ווייזן אין דער אויפפאסונג ליסטע:',
@@ -1283,7 +1305,7 @@ $1",
 'prefs-rendering' => 'אויסזען',
 'saveprefs' => 'אויפֿהיטן',
 'resetprefs' => 'אוועקנעמען נישט-אויפגעהיטענע ענדערונגען',
-'restoreprefs' => 'צוריקשטעלן אלע גרונטלעכע שטעלונגען',
+'restoreprefs' => 'צוריקשטעלן אלע גרונטלעכע שטעלונגען (אין אלע אפטיילן)',
 'prefs-editing' => 'באַאַרבעטן',
 'prefs-edit-boxsize' => 'גרויס פונעם רעדאקטירונג פענסטער.',
 'rows' => 'שורות:',
@@ -1328,9 +1350,9 @@ $1",
 'prefs-emailconfirm-label' => 'ע-פאסט באַשטעטיקונג:',
 'prefs-textboxsize' => 'גרייס פֿון רעדאַקטירונג פֿענסטער',
 'youremail' => 'ע-פאסט:',
-'username' => 'באַניצער־נאָמען:',
-'uid' => 'באַנוצער־נומער:',
-'prefs-memberingroups' => 'מיטגליד אין {{PLURAL:$1|גרופע|גרופעס}}:',
+'username' => '{{GENDER:$1|באַניצער־נאָמען}}:',
+'uid' => '{{GENDER:$1|באַנוצער־נומער}}:',
+'prefs-memberingroups' => '{{GENDER:$2|מיטגליד}} אין {{PLURAL:$1|גרופע|גרופעס}}:',
 'prefs-registration' => 'אײַנשרײַבן צײַט:',
 'yourrealname' => 'עכטער נאמען *:',
 'yourlanguage' => 'שפּראַך:',
@@ -1340,11 +1362,13 @@ $1",
 'prefs-help-signature' => 'באַמערקונגען אויף רעדן בלעטער זאָלן זיין אונטערגעשריבן מיט "<nowiki> ~ ~ ~ ~ </nowiki>" וואָס וועט ווערן פֿאַרוואַנדלט אין אײַער חתימה מיט א צײַטשטעמפל.',
 'badsig' => 'נישט גילטיקער רויער אונטערשריפט. ביטע קאנטראלירט די HTML טאַגן.',
 'badsiglength' => 'אונטערשריפט צו לאנג; מוז זיין ווינציגער פון {{PLURAL:$1|איין אות|$1 אותיות}}.',
-'yourgender' => 'מין:',
-'gender-unknown' => 'נישט ספעציפֿיצירט',
-'gender-male' => 'זכר',
-'gender-female' => 'נקבה',
-'prefs-help-gender' => 'אפציאנאַל: באניצט בכדי דאס ווייכוואַרג זאל אײַך אַדרעסירן מיטן געהעריגן מין פֿארעם. די אינפֿארמאַציע ווערט ידוע צו אַלעמען.',
+'yourgender' => 'וויאזוי ווילסטו זיך באשרײַבן?',
+'gender-unknown' => "כ'וויל זיך נישט באשרײַבן",
+'gender-male' => 'ער רעדאקטירט וויקי בלעטער',
+'gender-female' => 'זי רעדאקטירט וויקי בלעטער',
+'prefs-help-gender' => 'שטעלן דעם פרעפֿערענץ איז אפציאנאַל.
+דאס ווייכוואַרג באניצט זיין ווערט אײַך צו אַדרעסירן און דערמאנען צו אנדערע מיטן געהעריגן מין פֿארעם. 
+די אינפֿארמאַציע ווערט ידוע צו אַלעמען.',
 'email' => 'ע-פאסט',
 'prefs-help-realname' => '* עכטער נאמען (אפציאנאל): אויב וועט איר אויסוועלן צוצישטעלן דאס, וועט גענוצט ווערן צו געבן אטריביאציע צו אייער ארבייט.',
 'prefs-help-email' => 'ע-פאסט אַדרעס איז ברירהדיק, אבער עס דערמעגליכט אז מען קען אייך שיקן א ניי פאסווארט טאמער איר פֿארגעסט דאָס אַלטע.',
@@ -1356,7 +1380,7 @@ $1",
 'prefs-signature' => 'אונטערשריפֿט',
 'prefs-dateformat' => 'דאַטע פֿארמאַט',
 'prefs-timeoffset' => 'צײַט אונטערשייד',
-'prefs-advancedediting' => 'פֿארגעשריטענע אפציעס',
+'prefs-advancedediting' => 'אַלגעמיינע ברירות',
 'prefs-advancedrc' => 'פֿארגעשריטענע אפציעס',
 'prefs-advancedrendering' => 'פֿארגעשריטענע אפציעס',
 'prefs-advancedsearchoptions' => 'פֿארגעשריטענע אפציעס',
@@ -1371,9 +1395,9 @@ $1",
 'email-address-validity-invalid' => 'לייגט אַרײַן א גילטיקן ע־פאסט אַדרעס',
 
 # User rights
-'userrights' => 'באנוצער רעכטן פארוואלטערשאפט',
+'userrights' => 'באַניצער רעכטן פֿאַרוואַלטערשאפט',
 'userrights-lookup-user' => 'פֿאַרוואַלטן באניצער גרופעס',
-'userrights-user-editname' => 'לייגט אריין א באנוצער-נאמען:',
+'userrights-user-editname' => 'לייגט אריין א באַניצער-נאמען:',
 'editusergroup' => 'רעדאַגירן באַניצער גרופּעס',
 'editinguser' => "ענדערן באַניצער רעכטן פון באַניצער '''[[User:$1|$1]]'''   $2",
 'userrights-editusergroup' => 'רעדאַקטירן באַניצער גרופעס',
@@ -1388,7 +1412,7 @@ $1",
 'userrights-no-interwiki' => 'איר האט נישט קיין ערלויבניש צו רעדאַקטירן באַניצער רעכטן אויף אַנדערע וויקיס.',
 'userrights-nodatabase' => 'דאַטנבאַזע $1 אדער עקזיסטירט נישט אדער איז נישט ארטיק.',
 'userrights-nologin' => 'איר דאַרפֿט [[Special:UserLogin| אַרײַנלאגירן]] מיט א סיסאפ קאנטע צו באַשטימען באַניצער רעכטן.',
-'userrights-notallowed' => 'אײַער קאנטע האט נישט קיין ערלויבניש צוצולייגן אדער אוועקנעמען באַניצער רעכטן.',
+'userrights-notallowed' => 'איר האט נישט קיין ערלויבניש צוצולייגן אדער אוועקנעמען באַניצער רעכטן.',
 'userrights-changeable-col' => 'גרופעס איר קענט ענדערן',
 'userrights-unchangeable-col' => 'גרופעס איר קענט נישט ענדערן',
 
@@ -1452,8 +1476,9 @@ $1",
 'right-block' => 'בלאקירן אַנדערע באַניצער פֿון רעדאַקטירן',
 'right-blockemail' => 'בלאקירן א באַניצער פֿון שיקן ע־פאסט',
 'right-hideuser' => 'בלאקירן באַניצער־נאָמען און פֿאַרבארגן אים',
+'right-ipblock-exempt' => 'ארומגיין IP בלאקן, אויטאבלאקן און גרייך־בלאקן',
 'right-unblockself' => 'זיך אליין אויפֿשפאַרן',
-'right-protect' => 'ענדערן שוץ ניוואען און רעדאַגירן געשיצטע בלעטער',
+'right-protect' => 'ענדערן שוץ ניוואען און רעדאַגירן קאסקאד־געשיצטע בלעטער',
 'right-editprotected' => 'רעדאַגירן געשיצטע בלעטער (אָן קאַסקאַדן שוץ)',
 'right-editinterface' => 'רעדאַקטירן די באַניצער אייבערפֿלאַך',
 'right-editusercssjs' => 'רעדאַקטירן אַנדערע באַניצערס CSS און JS טעקעס',
@@ -1476,12 +1501,13 @@ $1",
 'right-sendemail' => 'שיקן ע-פאסט צו אנדערע באניצער',
 'right-passwordreset' => 'באַקוקן פאַסווארט צוריקשטעלן ע־בריוו',
 
+# Special:Log/newusers
+'newuserlogpage' => 'נייע באַניצערס לאָג-בוך',
+'newuserlogpagetext' => 'דאס איז א לאג פון באַניצערס אײַנשרײַבונגען.',
+
 # User rights log
 'rightslog' => 'באַניצער רעכטן לאג',
 'rightslogtext' => 'דאָס איז אַ לאג פֿון ענדערונגען צו באַניצער רעכטן.',
-'rightslogentry' => 'געביטן די מיטגלידערשאַפֿט פֿאַר $1 פֿון $2 אויף $3',
-'rightslogentry-autopromote' => 'אויטאמאטיש פראמאווירט פון $2 צו $3',
-'rightsnone' => '(גארנישט)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'ליינען דעם בלאַט',
@@ -1509,8 +1535,8 @@ $1",
 'action-block' => 'בלאקירן דעם באַניצער פֿון רעדאַקטירן',
 'action-protect' => 'ענדערן שיצונג ניוואען פֿאַר דעם בלאַט',
 'action-rollback' => 'גיך צוריקדרייען די רעדאַקטירונגען פונעם לעצטן באַניצער וואס האט רעדאַקטירט א געוויסן בלאַט',
-'action-import' => 'אימפארטירן דעם בלאַט פֿון אַן אַנדער וויקי',
-'action-importupload' => 'אימפארטירן דעם בלאַט דורך ארויפֿלאָדן אַ טעקע',
+'action-import' => 'אימפארטירן בלעטער פֿון אַן אַנדער וויקי',
+'action-importupload' => 'אימפארטירן בלעטער דורך ארויפֿלאָדן אַ טעקע',
 'action-patrol' => "אנצייכענען אנדערס' רעדאקטירונגן אלס נאכגעקוקט",
 'action-autopatrol' => 'אנצוצייכענען אייערע רעדאקטירונגן אלס איבערגעקוקטע',
 'action-unwatchedpages' => 'זען די ליסטע פון נישט אויפֿגעפאַסטע בלעטער',
@@ -1536,7 +1562,7 @@ $1",
 'rcshowhideminor' => '$1 מינערדיגע ענדערונגען',
 'rcshowhidebots' => '$1 ראבאטן',
 'rcshowhideliu' => '$1 אײַנגעשריבענע באַניצערס',
-'rcshowhideanons' => '$1 אַנאָנימע באַנוצערס',
+'rcshowhideanons' => '$1 אַנאָנימע באַניצער',
 'rcshowhidepatr' => '$1 פאַטראלירטע ענדערונגען',
 'rcshowhidemine' => '$1 מײַנע רעדאַקטירוננגען',
 'rclinks' => 'װײַזן די לעצטע $1 ענדערונגען אין די לעצטע $2 טעג.<br />$3',
@@ -1552,7 +1578,7 @@ $1",
 'rc_categories_any' => 'אלע',
 'rc-change-size-new' => '$1 {{PLURAL:$1|בייט|בייטן}} נאך דער ענדערונג',
 'newsectionsummary' => '/* $1 */ נייע אפטיילונג',
-'rc-enhanced-expand' => 'צייג דעטאלען (פארלאנגט זיך JavaScript)',
+'rc-enhanced-expand' => 'צייגן דעטאלן',
 'rc-enhanced-hide' => 'באהאלט דעטאלן',
 'rc-old-title' => 'געשאפן לכתחילה מיטן נאמען "$1"',
 
@@ -1642,6 +1668,10 @@ $1",
 * נאמען פון דער טעקע וואס ווערט ארויפגעלאָדן: <strong>[[:$1]]</strong>
 * נאמען פון דער פֿאראנענער טעקע: <strong>[[:$2]]</strong>
 זײַט אזוי גוט און קלויבט אן אנדער נאמען.',
+'fileexists-thumbnail-yes' => "די טעקע זעט אויס צו זײַן א פארקלענערט בילד  ''(קליין)''.
+[[$1|thumb]]
+זײַט אזוי גוט קאנטראלירט די טעקע <strong>[[:$1]]</strong>.
+ווען די קאנטראלירטע טעקע איז דאס זעלבע בילד אין דער אריגינעלער גרייס ברויכט מען נישט ארויפלאדן נאך א פארקלענערט בילד.",
 'file-thumbnail-no' => "דער טעקע־נאמען הייבט אן מיט <strong>$1</strong>.
 זי זעט אויס ווי א פארקלענערט בילד ''(מיניאטור)''.
 טאמער האט איר דאס בילד אין פולער רעזאלוציע טוט עס ארויפלאדן, אנדערשט זייט אזוי גוט און ענדערט דעם טעקע־נאמען.",
@@ -1702,8 +1732,10 @@ $1",
 # File backend
 'backend-fail-stream' => 'קען נישט מאכן שטראמען טעקע $1.',
 'backend-fail-notexists' => 'נישט פֿאראן די טעקע $1.',
+'backend-fail-notsame' => 'א נישט־אידענטישע טעקע עקזיסטירט שוין ביי "$1".',
 'backend-fail-invalidpath' => '$1 איז נישט קיין גילטיקער שפייכלערן שטעג.',
 'backend-fail-delete' => 'קען נישט אויסמעקן טעקע $1.',
+'backend-fail-describe' => 'קען נישט ענדערן מעטאדאטן פאר דער טעקע "$1".',
 'backend-fail-alreadyexists' => 'די טעקע $1 עקזיסטירט שוין.',
 'backend-fail-store' => "מ'קען נישט שפייכלערן טעקע $1 בײַ $2.",
 'backend-fail-copy' => 'האט נישט געקענט קאפירן "$1" צו "$2".',
@@ -1714,10 +1746,18 @@ $1",
 'backend-fail-read' => 'קען נישט ליינען טעקע "$1".',
 'backend-fail-create' => 'קען נישט שרייבן טעקע "$1".',
 'backend-fail-maxsize' => 'מ\'האט נישט געקענט שרייבן די טעקע "$1" ווייל זי איז גרעסער פון {{PLURAL:$2|איין בייט|$2 בייטן}}.',
+'backend-fail-connect' => 'מ\'קען נישט פארבינדן צום שפייכלער־בעקענד "$1".',
+'backend-fail-internal' => 'אן אומבאוואוסטער פֿעלער האט פאסירט אין שפייכלער־בעקענד "$1".',
+'backend-fail-contenttype' => 'מ\'קען נישט פעסטשטעלן דעם אינהאלט טיפ פון דער טעקע צו שפייכלערן ביי "$1".',
 
 # Lock manager
 'lockmanager-notlocked' => 'מ\'קען נישט אויפֿשליסן "$1"; ער איז נישט פֿארשלאסן.',
+'lockmanager-fail-closelock' => 'נישט מעגלעך פארשפארן שלאס טעקע פאר "$1".',
 'lockmanager-fail-deletelock' => 'נישט מעגלעך אויסמעקן שלאס טעקע פאר "$1".',
+'lockmanager-fail-acquirelock' => 'נישט מעגלעך צו באקומען שלאס טעקע פאר "$1".',
+'lockmanager-fail-openlock' => 'נישט מעגלעך עפֿענען שלאס טעקע פאר "$1".',
+'lockmanager-fail-releaselock' => 'נישט מעגלעך באפֿרייען שלאס טעקע פאר "$1".',
+'lockmanager-fail-db-release' => "מ'קען נישט באפרייען די שלאסן אויף דאטנבאזע $1.",
 
 # ZipDirectoryReader
 'zip-file-open-error' => 'געטראפן א גרײַז ביים עפענען די טעקע פאר ZIP־קאנטראלירונג.',
@@ -1739,6 +1779,7 @@ $1",
 נאר טעקע צוטריט איז ערלויבט.',
 'img-auth-streaming' => 'שטראָמענדיק "$1".',
 'img-auth-noread' => 'באניצער האט נישט קיין דערלויבניש צו ליינען "$1".',
+'img-auth-bad-query-string' => 'דער URL האט אן אומגילטיק פראגע שנורל.',
 
 # HTTP errors
 'http-invalid-url' => 'אומגילטיג URL: $1',
@@ -1762,8 +1803,7 @@ $1",
 'upload_source_file' => '(א טעקע אויף אײַער קאמפיוטער)',
 
 # Special:ListFiles
-'listfiles-summary' => 'דער דאזיקער באזונדערער בלאט ווייזט אלע ארויפגעלאדענע טעקעס.
-ווען געפילטערט לויטן באניצער, ווייזט מען נאר טעקעס וואס יענער באניצער האט ארויפגעלאדן די לעצטע ווערסיע.',
+'listfiles-summary' => 'דער דאזיקער באזונדערער בלאט ווייזט אלע ארויפגעלאדענע טעקעס.',
 'listfiles_search_for' => 'זוכן פֿאַר מעדיע נאָמען:',
 'imgfile' => 'טעקע',
 'listfiles' => 'טעקע ליסטע',
@@ -1896,6 +1936,12 @@ $1",
 'disambiguations' => 'בלעטער וואס פֿארבינדן מיט באדייטן בלעטער',
 'disambiguationspage' => 'Template:באדייטן',
 'disambiguations-text' => "די קומענדיגע בלעטער פארבינדן צו א '''באדייטן בלאט'''. זיי ברויכן ענדערשט פֿארבינדן צו דעם רעלעוואנטן טעמע בלאט.<br />א בלאט ווערט פאררעכענט פאר א באדײַטן בלאט אויב ער באניצט זיך מיט א מוסטער וואס איז פארבינדען פון [[MediaWiki:Disambiguationspage]].",
+
+'pageswithprop' => 'בלעטער מיט א בלאט אייגנשאפט',
+'pageswithprop-legend' => 'בלעטער מיט א בלאט אייגנשאפט',
+'pageswithprop-text' => 'דער בלאט האלט א רשימה פון בלעטער וואס ניצן א געוויסע בלאט אייגנשאפט.',
+'pageswithprop-prop' => 'אייגנשאפט נאמען:',
+'pageswithprop-submit' => 'גייט',
 
 'doubleredirects' => 'געטאפלטע ווײַטערפֿירונגען',
 'doubleredirectstext' => 'דער בלאט רעכנט אויס בלעטער וואס פירן ווייטער צו אנדערע ווייטערפירן בלעטער.
@@ -2062,15 +2108,12 @@ $1",
 'activeusers-hidesysops' => 'באַהאַלטן סיסאפן',
 'activeusers-noresult' => 'קיין באניצער נישט געטראפֿן.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'נייע באַניצערס לאָג-בוך',
-'newuserlogpagetext' => 'דאס איז א לאג פון באַניצערס אײַנשרײַבונגען.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'באַניצער גרופע רעכטן',
 'listgrouprights-summary' => "פֿאלגנד איז א רשימה פֿון באַניצער גרופעס דעפֿינירט אויף דער דאָזיקער וויקי, מיט זײַערע אַסאציאירטע צוטריט רעכטן.
 ס'קען זײַן  [[{{MediaWiki:Listgrouprights-helppage}}|מער אינפֿארמאַציע]] וועגן איינציקע רעכטן.",
-'listgrouprights-key' => '* <span class="listgrouprights-granted">נאָכגעגעבן רעכט</span>
+'listgrouprights-key' => 'לעגענדע:
+* <span class="listgrouprights-granted">נאָכגעגעבן רעכט</span>
  * <span class="listgrouprights-revoked">אָפגערופֿן רעכט</span>',
 'listgrouprights-group' => 'גרופע',
 'listgrouprights-rights' => 'רעכטן',
@@ -2162,19 +2205,23 @@ $1",
 
 'enotif_mailer' => 'נאטיפאקאציע שיקער {{SITENAME}}',
 'enotif_reset' => 'באַצייכענען אלע בלעטער שוין געזען',
-'enotif_newpagetext' => 'דאס איז א נייער בלאט.',
 'enotif_impersonal_salutation' => '{{SITENAME}} באַניצער',
-'changed' => 'געטוישט',
-'created' => 'געשאַפֿן',
-'enotif_subject' => 'דער בלאט $PAGETITLE אין {{SITENAME}} $CHANGEDORCREATED דורך $PAGEEDITOR',
+'enotif_subject_deleted' => '{{SITENAME}} בלאט $1 איז אויסגעמעקט געווארן דורך {{gender:$2|$2}}',
+'enotif_subject_created' => '{{SITENAME}} בלאט $1 איז געשאפן געווארן דורך {{gender:$2|$2}}',
+'enotif_subject_moved' => '{{SITENAME}} בלאט $1 איז בגאוועגט געווארן דורך {{gender:$2|$2}}',
+'enotif_subject_restored' => '{{SITENAME}} בלאט $1 איז צוריקגעשטעלט געווארן דורך {{gender:$2|$2}}',
+'enotif_subject_changed' => '{{SITENAME}} בלאט $1 איז געענדערט געווארן דורך {{gender:$2|$2}}',
+'enotif_body_intro_deleted' => 'דער {{SITENAME}} בלאט $1 איז אויסגעמעקט געווארן אום $PAGEEDITDATE דורך {{gender:$2|$2}}, זעט $3.',
+'enotif_body_intro_created' => 'דער {{SITENAME}} בלאט $1 איז געשאפן געווארן אום $PAGEEDITDATE דורך {{gender:$2|$2}}, זעט $3 פאר דער לויפיקער רעוויזיע.',
+'enotif_body_intro_moved' => 'דער {{SITENAME}} בלאט $1 איז באוועגט געווארן אום $PAGEEDITDATE דורך {{gender:$2|$2}}, זעט $3 פאר דער לויפיקער רעוויזיע.',
+'enotif_body_intro_restored' => 'דער {{SITENAME}} בלאט $1 איז צוריקגעשטעלט געווארן אום $PAGEEDITDATE דורך {{gender:$2|$2}}, זעט $3 פאר דער לויפיקער רעוויזיע.',
+'enotif_body_intro_changed' => 'דער {{SITENAME}} בלאט $1 איז געענדערט געווארן אום $PAGEEDITDATE דורך {{gender:$2|$2}}, זעט $3 פאר דער לויפיקער רעוויזיע.',
 'enotif_lastvisited' => 'זעט $1 פֿאַר אלע ענדערונגען זינט אײַער לעצטן וויזיט.',
 'enotif_lastdiff' => 'זעט $1 פאר דער ענדערונג.',
 'enotif_anon_editor' => 'אַנאנימער באַניצער $1',
 'enotif_body' => 'טײַערער $WATCHINGUSERNAME,
 
-דער {{SITENAME}} בלאט $PAGETITLE איז געווארן $CHANGEDORCREATED אום $PAGEEDITDATE דורך $PAGEEDITOR, זעט $PAGETITLE_URL פאר דער איצטיגער ווערסיע.
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 ענדערערס קורץ ווארט: $PAGESUMMARY $PAGEMINOREDIT
 
@@ -2184,10 +2231,13 @@ $NEWPAGE
 
 עס וועט מער נישט זיין קיין מעלדונגען אין פאל פון נאך ענדערונגען נאר אויב איר וועט באזוכן דעם בלאט.
 איר קענט אויך צוריקשטעלן די מעלדונגען פאנען פון אלע אייערע אויפֿגעפאסטע בלעטער אין אייער אויפפאסונג ליסטע.
-             
+
 אייער פֿריינטליכע  {{SITENAME}} מעלדונגען סיסטעם
 
 --
+צו ענדערן אייער ע־פאסט נאטיפיקאציע שטעלונגען, באזוכט
+{{canonicalurl:{{#special:Preferences}}}}
+
 צו ענדערן אייער אויפֿפאסונג ליסטע, באזוכט
 {{canonicalurl:{{#special:EditWatchlist}}}}
 
@@ -2196,6 +2246,8 @@ $UNWATCHURL
 
 פאר מער הילף:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'געשאַפֿן',
+'changed' => 'געטוישט',
 
 # Delete
 'deletepage' => 'מעק אויס בלאט',
@@ -2222,10 +2274,12 @@ $UNWATCHURL
 'deleteotherreason' => 'אנדער/נאך אן אורזאך:',
 'deletereasonotherlist' => 'אנדער אורזאך',
 'deletereason-dropdown' => '* געוויינטלעכע אויסמעקן אורזאכן
+** ספאַם
 ** פֿארלאנג פֿון שרייבער
 ** קאפירעכט ברעכונג
 ** וואנדאליזם
-** נישט יידיש',
+** נישט יידיש
+** צעבראכענע ווייטערפירונג',
 'delete-edit-reasonlist' => 'רעדאַקטירן די אויסמעקן סיבות',
 'delete-toobig' => 'דער בלאַט האט א גרויסע רעדאקטירונג היסטאריע, מער ווי $1 {{PLURAL:$1|רעוויזיע|רעוויזיעס}}. אויסמעקן אזעלכע בלעטער איז באַגרענעצט געווארן בכדי צו פֿאַרמײַדן א צופֿעליגע פֿאַרשטערונג פֿון  {{SITENAME}}.',
 'delete-warning-toobig' => 'דער בלאַט האט א גרויסע רעדאקטירונג היסטאריע, מער ווי $1 {{PLURAL:$1|רעוויזיע|רעוויזיעס}}. אויסמעקן אים קען פֿאַרשטערן דאַטנבאַזע אפעראַציעס פֿון {{SITENAME}}; זײַט פֿארזיכטיג איידער איר מעקט אויס.',
@@ -2245,7 +2299,7 @@ $UNWATCHURL
 די לעצטע ענדערונג צום בלאַט איז געווען פון [[User:$3|$3]] ([[User talk:$3|רעדן]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
 'editcomment' => "קורץ ווארט איז געווען: \"'''\$1'''\".",
 'revertpage' => 'רעדאַקטירונגען פֿון  [[Special:Contributions/$2|$2]] צוריקגענומען ([[User talk:$2|רעדן]])  צו דער לעצטער ווערסיע פֿון [[User:$1|$1]]',
-'revertpage-nouser' => 'צוריקגעשטעלט רעדאַקטירונגען פֿון (באַניצער־נאָמען אַראָפגענומען) צו לעצטער רעוויזיע פֿון [[User:$1|$1]]',
+'revertpage-nouser' => 'צוריקגעשטעלט רעדאַקטירונגען פֿון א באהאלטענעם באַניצער צו לעצטער רעוויזיע פֿון {{GENDER:$1|[[User:$1|$1]]}}',
 'rollback-success' => 'צוריקגעדרייט רעדאַקטירונגען פֿון $1 צו דער לעצטע ווערסיע פֿון $2',
 
 # Edit tokens
@@ -2263,6 +2317,7 @@ $UNWATCHURL
 'prot_1movedto2' => '[[$1]] אריבערגעפירט צו [[$2]]',
 'protect-badnamespace-title' => 'אומשיצבארער נאמענטייל',
 'protect-badnamespace-text' => 'בלעטער אין דעם נאמענטייל קען מען נישט שיצן.',
+'protect-norestrictiontypes-title' => 'נישט־שיצבארער בלאט',
 'protect-legend' => 'באַשטעטיגן שיץ',
 'protectcomment' => 'אורזאַך:',
 'protectexpiry' => 'גייט אויס:',
@@ -2345,7 +2400,7 @@ $UNWATCHURL
 'undeletedrevisions' => '{{PLURAL:$1|1 רעוויזיע|$1 רעוויזיעס}} צוריקגעשטעלט',
 'undeletedrevisions-files' => '{{PLURAL:$1|1 רעוויזיע|$1 רעוויזיעס}} און  {{PLURAL:$2|1 טעקע|$2 טעקעס}} צוריקגעשטעלט',
 'undeletedfiles' => '{{PLURAL:$1|1 טעקע|$1 טעקעס}} צוריקגעשטעלט',
-'cannotundelete' => 'צוריקשטעלונג איז דורכגעפאלן; עס איז מעגליך אז אן אנדערע האט דאס שוין צוריקגעשטעלט.',
+'cannotundelete' => 'צוריקשטעלונג איז דורכגעפאלן: $1',
 'undeletedpage' => "'''דער בלאט $1 איז געווארן צוריקגעשטעלט.'''
 
 זעט דעם [[Special:Log/delete| אויסמעקן לאג]] פֿאר א ליסטע פון די לעצטע אויסגעמעקטע און צוריקגעשטעלטע בלעטער.",
@@ -2373,12 +2428,12 @@ $1',
 'blanknamespace' => '(הויפט)',
 
 # Contributions
-'contributions' => "באניצער'ס בײַשטײַערונגען",
+'contributions' => '{{GENDER:$1|באניצער}} בײַשטײַערונגען',
 'contributions-title' => 'בײַשטײַערונגען פֿון באַניצער $1',
 'mycontris' => 'בײַשטײַערונגען',
 'contribsub2' => 'וועגן $1 ($2)',
 'nocontribs' => 'נישט געטראפן קיין ענדערונגען צוזאמעגעפאסט מיט די קריטעריעס.',
-'uctop' => '(לעצטע)',
+'uctop' => '(לויפֿיק)',
 'month' => 'ביז חודש:',
 'year' => 'ביז יאר:',
 
@@ -2776,9 +2831,9 @@ $1',
 
 # JavaScriptTest
 'javascripttest' => 'JavaScript טעסט',
-'javascripttest-disabled' => 'די  פֿונקציע איז אומאַקטיווירט אין דער דאזיקער וויקי.',
 'javascripttest-title' => 'דורכפירנדיק $1 בדיקות',
 'javascripttest-pagetext-noframework' => ' דער בלאט איז רעזערווירט פאר JavaScript. פרואוון.',
+'javascripttest-pagetext-unknownframework' => 'אומבאקאנטער טעסטן גערעם "$1".',
 'javascripttest-pagetext-skins' => 'קלויבט א באניצער־אייבערפלאך מיט וואס דורכצופירן די בדיקות:',
 'javascripttest-qunit-intro' => 'זעט [$1 דאקומענטאציע פאר טעסטן] בײַ mediawiki.org.',
 'javascripttest-qunit-heading' => 'מעדיעוויקי JavaScript QUnit קאנטראל־פראגראם',
@@ -2900,12 +2955,14 @@ $1',
 'pageinfo-default-sort' => 'גרונט סארטירן שליסל',
 'pageinfo-length' => 'בלאט לענג (אין בייטן)',
 'pageinfo-article-id' => 'בלאט נומער',
-'pageinfo-robot-policy' => 'זוכמאשין סטאטוס',
-'pageinfo-robot-index' => 'אינדעקסירבאר',
-'pageinfo-robot-noindex' => 'נישט אינדעקסירבאר',
+'pageinfo-language' => 'בלאט אינהאלט שפראך',
+'pageinfo-robot-policy' => 'אינדעקסירן דורך ראבאטן',
+'pageinfo-robot-index' => 'דערלויבט',
+'pageinfo-robot-noindex' => 'נישט דערלויבט',
 'pageinfo-views' => 'צאַל קוקן',
 'pageinfo-watchers' => '!צאָל בלאט אויפֿפאַסער',
-'pageinfo-redirects-name' => 'ווײַטערפירונגען צו דעם בלאט',
+'pageinfo-few-watchers' => 'ווינציקער ווי $1 {{PLURAL:$1|אויפֿפאסער}}',
+'pageinfo-redirects-name' => 'צאָל ווײַטערפירונגען צו דעם בלאט',
 'pageinfo-subpages-name' => 'אונטערבלעטער פון דעם בלאט',
 'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|ווײַטערפירונג|ווײַטערפירונגען}}; $3 {{PLURAL:$3|סתם בלאט|סתם בלעטער}})',
 'pageinfo-firstuser' => 'בלאט שאפער',
@@ -2919,6 +2976,19 @@ $1',
 'pageinfo-magic-words' => '{{PLURAL:$1|מאגיש ווארט|מאגישע ווערטער}} ($1)',
 'pageinfo-hidden-categories' => 'באהאלטענע {{PLURAL:$1|קאטעגאריע|קאטעגאריעס}} ($1)',
 'pageinfo-templates' => ' {{PLURAL:$1|אריבערגעשלאסענער מוסטער|אריבערגשלאסענע מוסטערן}} ($1)',
+'pageinfo-transclusions' => '{{PLURAL:$1|בלאט|בלעטער}} אריבעגעשלאסן אויף ($1)',
+'pageinfo-toolboxlink' => 'בלאַט־אינפֿארמאַציע',
+'pageinfo-redirectsto' => 'פירט ווײַטער צו',
+'pageinfo-redirectsto-info' => 'אינפֿארמאַציע',
+'pageinfo-contentpage' => 'געציילט ווי אן אינהאלט בלאט',
+'pageinfo-contentpage-yes' => 'יאָ',
+'pageinfo-protect-cascading' => 'שיצונגען קאסקאדירן פון דאנעט',
+'pageinfo-protect-cascading-yes' => 'יאָ',
+'pageinfo-protect-cascading-from' => 'שיצונגען קאסקאדירן פון',
+'pageinfo-category-info' => 'קאטעגאריע אינפארמאציע',
+'pageinfo-category-pages' => 'צאָל בלעטער',
+'pageinfo-category-subcats' => 'צאָל אונטערקאטעגאריעס',
+'pageinfo-category-files' => 'צאָל טעקעס',
 
 # Skin names
 'skinname-standard' => 'קלאסיש',
@@ -2941,6 +3011,8 @@ $1',
 'markedaspatrollederror' => 'נישט מעגלעך צו צייכענען אלס פאַטראלירט',
 'markedaspatrollederrortext' => 'איר דארפֿט ספעציפֿירן א ווערזיע צו באַצייכענען אלס פאַטראלירט.',
 'markedaspatrollederror-noautopatrol' => 'איר טאר נישט באַצייכענען די אייגענע ענדערונגען אלס פאַטראלירט.',
+'markedaspatrollednotify' => 'די ענדערונג צו $1 איז געווארן מארקירט ווי קאנטראלירט.',
+'markedaspatrollederrornotify' => 'מארקירן ווי קאנטראלירט דורכגעפאלן.',
 
 # Patrol log
 'patrol-log-page' => 'פאטראלירן לאג-בוך',
@@ -2974,6 +3046,7 @@ $1',
 'file-info-size-pages' => '$1 × $2 פיקסעלן, טעקע גרייס: $3, MIME טיפ: $4,  $5 {{PLURAL:$5|בלאט|בלעטער}}',
 'file-nohires' => 'נישטא מיט א העכערער רעזאלוציע.',
 'svg-long-desc' => 'טעקע SVG, נאמינעל: $1 × $2 פיקסעלן, טעקע גרייס: $3',
+'svg-long-error' => 'אומגילטיקע SVG טעקע: $1',
 'show-big-image' => 'בילד מיט דער גרעסטער רעזאלוציע',
 'show-big-image-preview' => 'גרייס פון דעם פארויסקוק: $1.',
 'show-big-image-other' => '{{PLURAL:$2|אנדער רעזאלוציע|אנדערע רעזאלוציעס}}: $1.',
@@ -3004,7 +3077,10 @@ $1',
 'minutes' => '{{PLURAL:$1|$1 מינוט|$1 מינוט}}',
 'hours' => '{{PLURAL:$1|$1 שעה|$1 שעה}}',
 'days' => '{{PLURAL:$1|$1 טאג|$1 טעג}}',
+'months' => '{{PLURAL:$1|איין מאנאַט|$1 מאנאַטן}}',
+'years' => '{{PLURAL:$1|איין יאָר|$1 יאָר}}',
 'ago' => 'פֿאַר $1',
+'just-now' => 'גראדע יעצט',
 
 # Bad image list
 'bad_image_list' => 'דער פֿאָרמאַט איז װי פֿאָלגנדיק:
@@ -3067,7 +3143,7 @@ $1',
 'exif-compressedbitsperpixel' => 'בילד צוזאמקוועטשן מאוד',
 'exif-pixelydimension' => 'בילד ברייט',
 'exif-pixelxdimension' => 'בילד הייך',
-'exif-usercomment' => 'באנוצער קאמענטורן',
+'exif-usercomment' => 'באניצער קאמענטורן',
 'exif-relatedsoundfile' => 'פֿאַרבונדענע אוידיאָ טעקע',
 'exif-datetimeoriginal' => 'דאטום און צייט פון דאַטן באשאפונג',
 'exif-datetimedigitized' => 'דאטום און צייט פון דיזשיטייזונג',
@@ -3185,16 +3261,19 @@ $1',
 'exif-licenseurl' => 'URL פֿאר קאפירעכט ליצענץ',
 'exif-morepermissionsurl' => 'אלטערנאטיווע ליצענצירן אינפארמאציע',
 'exif-pngfilecomment' => 'PNG טעקע הערה',
+'exif-disclaimer' => 'נאכגעבעניש',
 'exif-contentwarning' => 'אינהאלט ווארענונג',
 'exif-giffilecomment' => 'GIF טעקע הערה',
 'exif-intellectualgenre' => 'ארט  איינהייט',
 'exif-subjectnewscode' => 'טעמע קאד',
+'exif-organisationinimage' => 'אויסגעשטעלטע ארגאניזאציע',
+'exif-personinimage' => 'אויסגעשטעלטער מענטש',
 
 # EXIF attributes
 'exif-compression-1' => 'אומ-צאמגעקוועטשט',
 
 'exif-copyrighted-true' => 'געשיצט מיט קאפירעכט',
-'exif-copyrighted-false' => 'פובליקער געביט',
+'exif-copyrighted-false' => 'קאפירעכט סטאטוס נישט געשטעלט',
 
 'exif-unknowndate' => 'אומבאַוואוסטע דאַטע',
 
@@ -3239,6 +3318,11 @@ $1',
 'exif-lightsource-9' => 'פֿייַן וועטער',
 'exif-lightsource-10' => 'פאַרוואָלקנטער וועטער',
 'exif-lightsource-11' => 'שאָטן',
+
+# Flash modes
+'exif-flash-mode-3' => 'אויטא מאדע',
+'exif-flash-function-1' => 'קיין בליץ־פונקציע',
+'exif-flash-redeye-1' => 'רויט־אויג רעדוקציע',
 
 'exif-focalplaneresolutionunit-2' => 'אינטשעס',
 
@@ -3409,7 +3493,7 @@ $5
 'confirmemail_body_set' => 'עמעצער, ווארשיינליך איר, פֿון IP אַדרעס $1,
 האט געענדערט דעם ע־פאסט אַדרעס פֿון דער קאנטע "$2" צו דעם אדרעס אויף {{SITENAME}}.
 
-צו באַשטעטיקן אַז די קאנטע געהערט טאקע צו אייך און ווידער אַקטיווירן ע־פאסט דינסטן אויף {{SITENAME}}, ביטע טוט עפֿענען דעם לינק אין אייער בלעטערער:
+צו באַשטעטיקן אַז די קאנטע געהערט טאקע צו אייך און צו אַקטיווירן ע־פאסט דינסטן אויף {{SITENAME}}, ביטע טוט עפֿענען דעם לינק אין אייער בלעטערער:
 
 $3
 
@@ -3427,7 +3511,7 @@ $5
 
 # Delete conflict
 'deletedwhileediting' => 'ווארענונג: דער בלאט איז געווארן אויסגעמעקט נאכדעם וואס איר האט אנגעהויבן רעדאקטירן!',
-'confirmrecreate' => "באנוצער [[User:$1|$1]] ([[User talk:$1|רעדן]]) האט אויסגעמעקט דעם בלאט נאכדעם וואס איר האט אנגעהויבן דאס צו ענדערן, אלס אנגעבליכער סיבה:
+'confirmrecreate' => "באַניצער [[User:$1|$1]] ([[User talk:$1|רעדן]]) האט אויסגעמעקט דעם בלאט נאכדעם וואס איר האט אנגעהויבן דאס צו ענדערן, אלס אָנגעבליכער סיבה:
 :'''$2'''
 ביטע באשטעטיגט אז איר ווילט טאקע צוריקשטעלן דעם בלאט.",
 'recreate' => 'שאַפֿן פֿונדאסניי',
@@ -3548,6 +3632,7 @@ $5
 'signature' => '[[{{ns:user}}:$1|$2]] ([[{{ns:user_talk}}:$1|רעדן]])',
 
 # Core parser functions
+'unknown_extension_tag' => 'אומבאַוואוסטער פֿאַרברייטערונג טאַג "$1"',
 'duplicate-defaultsort' => '\'\'\'ווארענונג:\'\'\' גרונט סארטשליסל "$2" פֿאָרט איבערן פֿריערדיגן גרונט סארטשליסל "$1".',
 
 # Special:Version
@@ -3556,6 +3641,7 @@ $5
 'version-specialpages' => 'ספעציעלע בלעטער',
 'version-parserhooks' => 'פארזער פארברייטונגען',
 'version-variables' => 'וואַריאַבלען',
+'version-antispam' => 'ספאם פארמיידן',
 'version-skins' => 'באניצער־אייבערפלאכן',
 'version-other' => 'אנדער',
 'version-hooks' => 'Hook סטרוקטורן',
@@ -3565,6 +3651,7 @@ $5
 'version-version' => '(ווערסיע $1)',
 'version-license' => 'ליצענץ',
 'version-poweredby-others' => 'אַנדערע',
+'version-credits-summary' => 'מיר ווילן אנערקענען די פֿאלגנדע מענטשן פֿאר זייער בײַשטײַערוג צו [[Special:Version|מעדיעוויקי]].',
 'version-software' => 'אינסטאַלירט ווייכוואַרג',
 'version-software-product' => 'פראדוקט',
 'version-software-version' => 'ווערסיע',
@@ -3669,17 +3756,17 @@ $5
 'sqlite-no-fts' => '$1 אָן פֿולן-טעקסט זוכן שטיץ',
 
 # New logging system
-'logentry-delete-delete' => '$1 האט אויסגעמעקט בלאט $3',
-'logentry-delete-restore' => '$1 האט צוריקגעשטעלט בלאט $3',
-'logentry-delete-event' => '$1 האט געענדערט די זעבארקייט פון {{PLURAL:$5|א לאגבוך אקטיוויטעט|$5 לאגבוך אקטיוויטעטן}} אויף $3: $4',
-'logentry-delete-revision' => '$1 האט געענדערט די זעבארקייט פון  {{PLURAL:$5|א רעוויזיע|$5 רעוויזיעס}} אויף בלאט $3: $4',
-'logentry-delete-event-legacy' => '$1 האט געענדערט די זעבארקייט פון לאגבוך אקטיוויטעטן אויף $3',
-'logentry-delete-revision-legacy' => '$1 האט געענדערט די זעבארקייט פון רעוויזיעס אויף בלאט $3',
-'logentry-suppress-delete' => '$1 האט אונטערדריקט בלאט $3',
-'logentry-suppress-event' => '$1 האט געהיימלעך געענדערט די זעבארקייט פון {{PLURAL:$5|א לאגבוך אקטיוויטעט|$5 לאגבוך אקטיוויטעטן}} אויף $3: $4',
-'logentry-suppress-revision' => '$1 האט געהיימלעך געענדערט די זעבארקייט פון  {{PLURAL:$5|א רעוויזיע|$5 רעוויזיעס}} אויף בלאט $3: $4',
-'logentry-suppress-event-legacy' => '$1 האט געהיימלעך געענדערט די זעבארקייט פון לאגבוך אקטיוויטעטן אויף $3',
-'logentry-suppress-revision-legacy' => '$1 האט געהיימלעך געענדערט די זעבארקייט פון רעוויזיעס אויף בלאט $3',
+'logentry-delete-delete' => '$1 {{GENDER:$2|האט אויסגעמעקט}} בלאט $3',
+'logentry-delete-restore' => '$1 {{GENDER:$2|האט צוריקגעשטעלט }} בלאט $3',
+'logentry-delete-event' => '$1 {{GENDER:$2|האט געענדערט}} די זעבארקייט פון {{PLURAL:$5|א לאגבוך אקטיוויטעט|$5 לאגבוך אקטיוויטעטן}} אויף $3: $4',
+'logentry-delete-revision' => '$1 {{GENDER:$2|האט געענדערט}} די זעבארקייט פון  {{PLURAL:$5|א רעוויזיע|$5 רעוויזיעס}} אויף בלאט $3: $4',
+'logentry-delete-event-legacy' => '$1 {{GENDER:$2|האט געענדערט}} די זעבארקייט פון לאגבוך אקטיוויטעטן אויף $3',
+'logentry-delete-revision-legacy' => '$1 {{GENDER:$2|האט געענדערט}} די זעבארקייט פון רעוויזיעס אויף בלאט $3',
+'logentry-suppress-delete' => '$1 {{GENDER:$2|האט אונטערדריקט}} בלאט $3',
+'logentry-suppress-event' => '$1 {{GENDER:$2|האט געהיימלעך געענדערט}} די זעבארקייט פון {{PLURAL:$5|א לאגבוך אקטיוויטעט|$5 לאגבוך אקטיוויטעטן}} אויף $3: $4',
+'logentry-suppress-revision' => '$1 {{GENDER:$2|האט געהיימלעך געענדערט}}  די זעבארקייט פון  {{PLURAL:$5|א רעוויזיע|$5 רעוויזיעס}} אויף בלאט $3: $4',
+'logentry-suppress-event-legacy' => '$1 {{GENDER:$2|האט געהיימלעך געענדערט}}  די זעבארקייט פון לאגבוך אקטיוויטעטן אויף $3',
+'logentry-suppress-revision-legacy' => '!$1 {{GENDER:$2|האט געהיימלעך געענדערט}}  די זעבארקייט פון רעוויזיעס אויף בלאט $3',
 'revdelete-content-hid' => 'אינהאלט פארהוילן',
 'revdelete-summary-hid' => 'רעדאקטירונג קאנספעקט פארהוילן',
 'revdelete-uname-hid' => 'באניצער־נאמען פארהוילן',
@@ -3688,17 +3775,21 @@ $5
 'revdelete-uname-unhid' => 'באַניצער נאָמען ארויסגעגעבן',
 'revdelete-restricted' => 'צוגעלייגט באגרעניצונגען פאר סיסאפן',
 'revdelete-unrestricted' => 'אוועקגענומען באגרעניצונגען פאר סיסאפן',
-'logentry-move-move' => '$1 האט באוועגט בלאט $3 צו $4',
-'logentry-move-move-noredirect' => '$1 האט באוועגט בלאט $3 צו $4 אן לאזן א ווייטערפירונג',
-'logentry-move-move_redir' => '$1 האט באוועגט $3 צו $4 אריבער ווייטערפירונג',
-'logentry-move-move_redir-noredirect' => '$1 האט באוועגט $3 צו $4 אריבער א ווייטערפירונג אן לאזן א  ווייטערפירונג',
-'logentry-patrol-patrol' => '$1 האט מארקירט רעוויזיע $4 פון בלאט $3 ווי קאנטראלירט',
-'logentry-patrol-patrol-auto' => '$1 האט אויטאמאטיש מארקירט רעוויזיע $4 פון בלאט $3 ווי קאנטראלירט',
-'logentry-newusers-newusers' => 'באניצער קאנטע $1 געשאפן געווארן',
-'logentry-newusers-create' => 'באניצער קאנטע $1 געשאפן געווארן',
-'logentry-newusers-create2' => 'באניצער קאנטע $1 געשאפן געווארן דורך $3',
-'logentry-newusers-autocreate' => 'קאנטע $1 באשאפן אויטאמאטיש',
-'newuserlog-byemail' => 'פאַסווארט געשיקט דורך ע-פאסט',
+'logentry-move-move' => '$1 {{GENDER:$2|האט באוועגט}} בלאט $3 צו $4',
+'logentry-move-move-noredirect' => '$1 {{GENDER:$2|האט באוועגט}} בלאט $3 צו $4 אן לאזן א ווייטערפירונג',
+'logentry-move-move_redir' => '$1 {{GENDER:$2|האט באוועגט}} $3 צו $4 אריבער ווייטערפירונג',
+'logentry-move-move_redir-noredirect' => '$1 {{GENDER:$2|האט באוועגט}} $3 צו $4 אריבער א ווייטערפירונג אן לאזן א  ווייטערפירונג',
+'logentry-patrol-patrol' => '$1 {{GENDER:$2|האט מארקירט}} רעוויזיע $4 פון בלאט $3 ווי קאנטראלירט',
+'logentry-patrol-patrol-auto' => '$1 {{GENDER:$2|האט אויטאמאטיש מארקירט}} רעוויזיע $4 פון בלאט $3 ווי קאנטראלירט',
+'logentry-newusers-newusers' => 'באניצער קאנטע $1 איז {{GENDER:$2|געשאפן געווארן}}',
+'logentry-newusers-create' => 'באניצער קאנטע $1 איז {{GENDER:$2|געשאפן געווארן}}',
+'logentry-newusers-create2' => 'באניצער קאנטע $1 איז {{GENDER:$2|געשאפן געווארן}} דורך $3',
+'logentry-newusers-byemail' => 'באניצער קאנטע $3 איז {{GENDER:$2|געשאפן געווארן}} דורך $1 און דאס פאסווארט איז געשיקט געווארט דורך ע־פאסט',
+'logentry-newusers-autocreate' => 'באַניצער קאנטע $1 {{GENDER:$2|געשאפן}} אויטאמאטיש',
+'logentry-rights-rights' => '$1 האט {{GENDER:$2|געביטן}} גרופע מיטגלידערשאַפֿט פֿאַר $3 פֿון $4 אויף $5',
+'logentry-rights-rights-legacy' => '$1 {{GENDER:$2|האט געביטן}} גרופע מיטגלידערשאפט פאר $3',
+'logentry-rights-autopromote' => '$1 אויטאמאטיש  {{GENDER:$2|פראמאווירט}} פון $4 צו $5',
+'rightsnone' => '(גארנישט)',
 
 # Feedback
 'feedback-bugornote' => 'ווען איר זענט גרייט צו באשרייבן א טעכנישן פראבלעם ביטע [$1 מעלדט א פעלער].
@@ -3752,6 +3843,7 @@ $5
 'api-error-ok-but-empty' => 'אינערלעכער גרײַז: קיין ענטפֿער פֿון סערווירער.',
 'api-error-overwrite' => 'מען טאָר נישט איבערשרײַבן אַן עקזיסטירנדע טעקע.',
 'api-error-stashfailed' => 'אינערלעכער גרײַז: סערווירער האט נישט געקענט אײַנשפייכלערן צייַטווייַליקע טעקע.',
+'api-error-publishfailed' => 'אינערלעכער גרײַז: סערווירער האט נישט געזדאנזשעט פארעפנטלעכן צייַטווייַליקע טעקע.',
 'api-error-timeout' => 'דער סערווירער האט ניט געענטפֿערט אינערהאַלב דער דערוואַרטעטער צייַט.',
 'api-error-unclassified' => 'אַן אומבאַקאַנט טעות איז פֿארגעקומען.',
 'api-error-unknown-code' => 'אומבאַקאַנט טעות: " $1 "',
@@ -3771,5 +3863,8 @@ $5
 'duration-decades' => '$1 {{PLURAL:$1|צענדליקער|צענדליקערס}}',
 'duration-centuries' => '$1 {{PLURAL:$1|יארהונדערט|יארהונדערטער}}',
 'duration-millennia' => '$1 {{PLURAL:$1|יארטויזנט|יארטויזנטער}}',
+
+# Image rotation
+'rotate-comment' => 'בילד געדרייט דורך $1 {{PLURAL:$1|גראד}} זייגערווייז',
 
 );

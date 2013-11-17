@@ -157,7 +157,6 @@ $messages = array(
 'qbbrowse' => 'БӀаргтасса',
 'qbedit' => 'Хувца',
 'qbpageoptions' => 'ОагӀува оттамаш',
-'qbpageinfo' => 'ОагӀува тохкам',
 'qbmyoptions' => 'Са оттамаш',
 'qbspecialpages' => 'ГӀулакхий оагӀувнаш',
 'faq' => 'Каст-каста хаттараш',
@@ -186,8 +185,8 @@ $messages = array(
 'help' => 'Куцтохкам',
 'search' => 'Лахаp',
 'searchbutton' => 'Хьалаха',
-'go' => 'Дехьавала',
-'searcharticle' => 'Дехьавала',
+'go' => 'Дехьа гӀо',
+'searcharticle' => 'Дехьа гӀо',
 'history' => 'искар',
 'history_short' => 'Искар',
 'updatedmarker' => 'Со ханача денца хувцамаш хиннaд',
@@ -232,7 +231,7 @@ $messages = array(
 'lastmodifiedat' => 'Укх оагӀув тӀехьара  хувцам: $2, $1.',
 'viewcount' => 'Укх оагӀув тӀа бӀаргтасса хиннад {{PLURAL:$1|цхьазза|$1 шозза}}.',
 'protectedpage' => 'Лорама оагӀув',
-'jumpto' => 'Укхаза дехьавала/яла:',
+'jumpto' => 'Укхаза дехьа гӀо:',
 'jumptonavigation' => 'никътохкарг',
 'jumptosearch' => 'леха',
 'pool-timeout' => 'ЧIегатохара сабаран ха чакхаяьннай',
@@ -634,9 +633,11 @@ $messages = array(
 'right-move' => 'ОагIувний цIи хувца',
 'right-movefile' => 'Паьлий цIи хувца',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Дакъалаьцархоший дIаязбeнна таптар',
+
 # User rights log
 'rightslog' => 'Дакъалаьцархочунна бокъона тептар',
-'rightsnone' => '(а)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'Укх оагIуви дешам',
@@ -793,9 +794,6 @@ $messages = array(
 'linksearch-ok' => 'Лаха',
 'linksearch-line' => '$1 тIа Iинк $2 юкъера',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Дакъалаьцархоший дIаязбeнна таптар',
-
 # Special:ListGroupRights
 'listgrouprights-members' => '(тоабий дагарче)',
 
@@ -874,7 +872,7 @@ $messages = array(
 'blanknamespace' => '(Корта)',
 
 # Contributions
-'contributions' => 'Дакъалаьцархочунна къахьегам',
+'contributions' => '{{GENDER:$1|Дакъалаьцархочунна}} къахьегам',
 'contributions-title' => '$1 дакъалаьцархочунна къахьегам',
 'mycontris' => 'Са къахьегам',
 'contribsub2' => '$1 ($2) баь болх',
@@ -969,7 +967,7 @@ $messages = array(
 'allmessagesdefault' => 'Сатийна улла яздам',
 'allmessages-filter-all' => 'Дерригаш',
 'allmessages-language' => 'Мотт:',
-'allmessages-filter-submit' => 'Дехьавала/яла',
+'allmessages-filter-submit' => 'Дехьа гӀо',
 
 # Thumbnails
 'thumbnail-more' => 'Хьадоккхаде',
@@ -1115,7 +1113,7 @@ $messages = array(
 'confirm_purge_button' => 'ХIаа',
 
 # Multipage image navigation
-'imgmultigo' => 'Дехьавала/яла!',
+'imgmultigo' => 'Дехьа гӀо!',
 'imgmultigoto' => '$1 оагIув тIа дехьавала',
 
 # Table pager
@@ -1138,7 +1136,7 @@ $messages = array(
 # Special:FilePath
 'filepath' => 'Паьлачу никъ',
 'filepath-page' => 'Паьл:',
-'filepath-submit' => 'Дехьавала/яла',
+'filepath-submit' => 'Дехьа гӀо',
 
 # Special:FileDuplicateSearch
 'fileduplicatesearch-filename' => 'ПаьлацIи:',
@@ -1182,5 +1180,8 @@ $messages = array(
 'htmlform-submit' => 'ДIадахьийта',
 'htmlform-reset' => 'Хувцамаш юхадаккха',
 'htmlform-selectorother-other' => 'Кхыдола',
+
+# New logging system
+'rightsnone' => '(а)',
 
 );

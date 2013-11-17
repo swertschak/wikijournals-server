@@ -6,24 +6,16 @@
  */
 
 /** Tests for MediaWiki languages/LanguageAm.php */
-class LanguageAmTest extends MediaWikiTestCase {
-	private $lang;
-
-	function setUp() {
-		$this->lang = Language::factory( 'Am' );
-	}
-	function tearDown() {
-		unset( $this->lang );
-	}
+class LanguageAmTest extends LanguageClassesTestCase {
 
 	/** @dataProvider providePlural */
 	function testPlural( $result, $value ) {
-		$forms =  array( 'one', 'other' );
-		$this->assertEquals( $result, $this->lang->convertPlural( $value, $forms ) );
+		$forms = array( 'one', 'other' );
+		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
 	function providePlural() {
-		return array (
+		return array(
 			array( 'one', 0 ),
 			array( 'one', 1 ),
 			array( 'other', 2 ),

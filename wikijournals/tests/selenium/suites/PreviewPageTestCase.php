@@ -1,12 +1,11 @@
 <?php
-
 /**
  * Selenium server manager
  *
  * @file
  * @ingroup Testing
  * Copyright (C) 2010 Nadeesha Weerasinghe <nadeesha@calcey.com>
- * http://www.calcey.com/ 
+ * http://www.calcey.com/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,32 +21,28 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * http://www.gnu.org/copyleft/gpl.html
- *
- * @addtogroup Testing
- *
  */
 
 class PreviewPageTestCase extends SeleniumTestCase {
+	// Verify adding a new page
+	public function testPreviewPage() {
+		$wikiText = "Adding this page to test the \n Preview button functionality";
+		$newPage = "Test Preview Page";
+		$this->open( $this->getUrl() .
+			'/index.php?title=Main_Page&action=edit' );
+		$this->getNewPage( $newPage );
+		$this->type( SeleniumTestConstants::TEXT_EDITOR, $wikiText . "" );
+		$this->assertTrue( $this->isElementPresent( "//*[@id='wpPreview']" ) );
 
-    // Verify adding a new page
-    public function testPreviewPage() {
-        $wikiText = "Adding this page to test the \n Preview button functionality";
-        $newPage =  "Test Preview Page";
-        $this->open( $this->getUrl() .
-                '/index.php?title=Main_Page&action=edit' );
-        $this->getNewPage( $newPage );
-        $this->type( SeleniumTestConstants::TEXT_EDITOR, $wikiText."" );
-        $this->assertTrue($this->isElementPresent( "//*[@id='wpPreview']" ));
+		$this->click( "wpPreview" );
 
-        $this->click( "wpPreview" );
+		// Verify saved page available
+		$source = $this->gettext( "firstHeading" );
+		$correct = strstr( $source, "Test Preview Page" );
+		$this->assertEquals( $correct, true );
 
-        // Verify saved page available
-        $source = $this->gettext( "firstHeading" );
-        $correct = strstr( $source, "Test Preview Page" );
-        $this->assertEquals( $correct, true);
-
-        // Verify page content previewed succesfully
-        $contentOfPreviewPage = $this->getText( "//*[@id='content']" );
-        $this->assertContains( $wikiText, $contentOfPreviewPage  );
-    }
+		// Verify page content previewed succesfully
+		$contentOfPreviewPage = $this->getText( "//*[@id='content']" );
+		$this->assertContains( $wikiText, $contentOfPreviewPage );
+	}
 }
