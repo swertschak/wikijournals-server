@@ -19,7 +19,6 @@
     //     $arr_active_languages = array()
     $arr_active_languages = array(
         'en'=>array('name'=>'English', 'direction'=>'ltr'),
-        'es'=>array('name'=>'Spanish', 'direction'=>'ltr'),
         'de'=>array('name'=>'German', 'direction'=>'ltr'),
     );
     
