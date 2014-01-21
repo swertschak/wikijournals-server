@@ -29,6 +29,6 @@ For the installation of wikijournals on your own webserver please execute the fo
 - Create a database and a database user for wikijournals (you can also use the root user, but this is not recommended)
 - Call the url <www-root>/wikijournals/installation in the browser
 - Follow the installation steps of the installer
-- If the installer ends succesfully please copy the LocalSettings.php from the config directory of the installation directory into the main wikijournals directory
+- If the installer ends successfully please copy the LocalSettings.php from the config subdirectory of the installation directory into the main wikijournals directory
 - Now you can start wikijournals by calling the url <www-root>/wikijournals
 - Please note: The default password of the Administrator account (Login:Administrator) is "wikijournals". We recommend changing this password after first login !!
