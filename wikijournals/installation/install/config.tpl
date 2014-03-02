@@ -1,5 +1,8 @@
 <?php
 
+#error_reporting(-1);
+#ini_set('display_errors',1);
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
@@ -132,7 +135,7 @@ require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
 require_once( "$IP/extensions/ConfirmEdit/ConfirmEdit.php" );
 $wgCaptchaClass='SimpleCaptcha';
 require_once( "$IP/extensions/Nuke/Nuke.php" );
-require_once( "$IP/extensions/Gadgets/Gadgets.php" );
+#require_once( "$IP/extensions/Gadgets/Gadgets.php" );
 require_once("$IP/extensions/ConfirmAccount/ConfirmAccount.php");
 
 # End of automatically generated settings.
