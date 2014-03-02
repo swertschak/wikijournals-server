@@ -167,18 +167,33 @@ class PdfHandler extends ImageHandler {
 
 		$srcPath = $image->getLocalRefPath();
 
-		$cmd = '(' . wfEscapeShellArg( $wgPdfProcessor );
-		$cmd .= " -sDEVICE=jpeg -sOutputFile=- -dFirstPage={$page} -dLastPage={$page}";
-		$cmd .= " -r{$wgPdfHandlerDpi} -dBATCH -dNOPAUSE -q ". wfEscapeShellArg( $srcPath );
-		$cmd .= " | " . wfEscapeShellArg( $wgPdfPostProcessor );
-		$cmd .= " -depth 8 -resize {$width} - ";
-		$cmd .= wfEscapeShellArg( $dstPath ) . ")";
-		$cmd .= " 2>&1";
+		$cmd = '(' . wfEscapeShellArg(
+			$wgPdfProcessor,
+			"-sDEVICE=jpeg",
+			"-sOutputFile=-",
+			"-dFirstPage={$page}",
+			"-dLastPage={$page}",
+			"-r{$wgPdfHandlerDpi}",
+			"-dBATCH",
+			"-dNOPAUSE",
+			"-q",
+			$srcPath
+		);
+		$cmd .= " | " . wfEscapeShellArg(
+			$wgPdfPostProcessor,
+			"-depth",
+			"8",
+			"-resize",
+			$width,
+			"-",
+			$dstPath
+		);
+		$cmd .= ")";
 
 		wfProfileIn( 'PdfHandler' );
 		wfDebug( __METHOD__ . ": $cmd\n" );
 		$retval = '';
-		$err = wfShellExec( $cmd, $retval );
+		$err = wfShellExecWithStderr( $cmd, $retval );
 		wfProfileOut( 'PdfHandler' );
 
 		$removed = $this->removeBadFile( $dstPath, $retval );
@@ -315,7 +330,7 @@ class PdfHandler extends ImageHandler {
 	 */
 	function pageCount( $image ) {
 		$data = $this->getMetaArray( $image );
-		if ( !$data ) {
+		if ( !$data || !isset( $data['Pages'] ) ) {
 			return false;
 		}
 		return intval( $data['Pages'] );

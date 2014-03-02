@@ -36,7 +36,7 @@ class SpecialInterwiki extends SpecialPage {
 		$out->addModules( 'ext.interwiki.specialpage' );
 
 		$action = $par ? $par : $request->getVal( 'action', $par );
-		$return = $this->getTitle();
+		$return = $this->getPageTitle();
 
 		switch( $action ) {
 		case 'delete':
@@ -50,7 +50,9 @@ class SpecialInterwiki extends SpecialPage {
 		case 'submit':
 			if ( !$this->canModify( $out ) ) {
 				# Error msg added by canModify()
-			} elseif ( !$request->wasPosted() || !$this->getUser()->matchEditToken( $request->getVal( 'wpEditToken' ) ) ) {
+			} elseif ( !$request->wasPosted() ||
+				!$this->getUser()->matchEditToken( $request->getVal( 'wpEditToken' ) )
+			) {
 				// Prevent cross-site request forgeries
 				$out->addWikiMsg( 'sessionfailure' );
 			} else {
@@ -146,22 +148,49 @@ class SpecialInterwiki extends SpecialPage {
 			$formContent = Html::rawElement( 'tr', null,
 				Html::element( 'td', $label, $this->msg( 'interwiki-prefix-label' )->text() ) .
 				Html::rawElement( 'td', null, '<tt>' . $prefixElement . '</tt>' )
+			) . Html::rawElement(
+				'tr',
+				null,
+				Html::rawElement(
+					'td',
+					$label,
+					Xml::label( $this->msg( 'interwiki-local-label' )->text(), 'mw-interwiki-local' )
+				) .
+				Html::rawElement(
+					'td',
+					$input,
+					Xml::check( 'wpInterwikiLocal', $local, array( 'id' => 'mw-interwiki-local' ) )
+				)
 			) . Html::rawElement( 'tr', null,
-				Html::rawElement( 'td', $label, Xml::label( $this->msg( 'interwiki-local-label' )->text(), 'mw-interwiki-local' ) ) .
-				Html::rawElement( 'td', $input, Xml::check( 'wpInterwikiLocal', $local, array( 'id' => 'mw-interwiki-local' ) ) )
+				Html::rawElement(
+					'td',
+					$label,
+					Xml::label( $this->msg( 'interwiki-trans-label' )->text(), 'mw-interwiki-trans' )
+				) .
+				Html::rawElement(
+					'td',
+					$input,  Xml::check( 'wpInterwikiTrans', $trans, array( 'id' => 'mw-interwiki-trans' ) ) )
 			) . Html::rawElement( 'tr', null,
-				Html::rawElement( 'td', $label, Xml::label( $this->msg( 'interwiki-trans-label' )->text(), 'mw-interwiki-trans' ) ) .
-				Html::rawElement( 'td', $input,  Xml::check( 'wpInterwikiTrans', $trans, array( 'id' => 'mw-interwiki-trans' ) ) )
-			) . Html::rawElement( 'tr', null,
-				Html::rawElement( 'td', $label, Xml::label( $this->msg( 'interwiki-url-label' )->text(), 'mw-interwiki-url' ) ) .
+				Html::rawElement(
+					'td',
+					$label,
+					Xml::label( $this->msg( 'interwiki-url-label' )->text(), 'mw-interwiki-url' )
+				) .
 				Html::rawElement( 'td', $input, Xml::input( 'wpInterwikiURL', 60, $defaulturl,
 					array( 'tabindex' => 1, 'maxlength' => 200, 'id' => 'mw-interwiki-url' ) ) )
 			);
 		}
 
-		$form = Xml::fieldset( $topmessage, Html::rawElement( 'form',
-			array( 'id' => "mw-interwiki-{$action}form", 'method' => 'post',
-				'action' => $this->getTitle()->getLocalUrl( array( 'action' => 'submit', 'prefix' => $prefix ) ) ),
+		$form = Xml::fieldset( $topmessage, Html::rawElement(
+			'form',
+			array(
+				'id' => "mw-interwiki-{$action}form",
+				'method' => 'post',
+				'action' => $this->getPageTitle()->getLocalUrl( array(
+					'action' => 'submit',
+					'prefix' => $prefix
+				) )
+			),
 			Html::rawElement( 'p', null, $intromessage ) .
 			Html::rawElement( 'table', array( 'id' => "mw-interwiki-{$action}" ),
 				$formContent . Html::rawElement( 'tr', null,
@@ -200,7 +229,7 @@ class SpecialInterwiki extends SpecialPage {
 			return;
 		}
 		$reason = $request->getText( 'wpInterwikiReason' );
-		$selfTitle = $this->getTitle();
+		$selfTitle = $this->getPageTitle();
 		$dbw = wfGetDB( DB_MASTER );
 		switch( $do ) {
 		case 'delete':
@@ -296,7 +325,7 @@ class SpecialInterwiki extends SpecialPage {
 		if ( $canModify ) {
 			$this->getOutput()->addHTML( "<br />" . $this->msg( 'interwiki_intro_footer' )->parse() );
 			$addtext = $this->msg( 'interwiki_addtext' )->escaped();
-			$addlink = Linker::linkKnown( $this->getTitle( 'add' ), $addtext );
+			$addlink = Linker::linkKnown( $this->getPageTitle( 'add' ), $addtext );
 			$this->getOutput()->addHTML( '<p class="mw-interwiki-addlink">' . $addlink . '</p>' );
 		}
 
@@ -313,42 +342,59 @@ class SpecialInterwiki extends SpecialPage {
 			return;
 		}
 
-		$out = '';
-
 		# Output the existing Interwiki prefixes table header
-		$out .=	Html::openElement( 'table', array( 'class' => 'mw-interwikitable wikitable sortable body' ) ) . "\n";
+		$out = '';
+		$out .=	Html::openElement(
+			'table',
+			array( 'class' => 'mw-interwikitable wikitable sortable body' )
+		) . "\n";
 		$out .= Html::openElement( 'tr', array( 'id' => 'interwikitable-header' ) ) .
 			Html::element( 'th', null, $this->msg( 'interwiki_prefix' )->text() ) .
 			Html::element( 'th', null, $this->msg( 'interwiki_url' )->text() ) .
 			Html::element( 'th', null, $this->msg( 'interwiki_local' )->text() ) .
 			Html::element( 'th', null, $this->msg( 'interwiki_trans' )->text() ) .
-			( $canModify ? Html::element( 'th', array( 'class' => 'unsortable' ), $this->msg( 'interwiki_edit' )->text() ) : '' );
+			( $canModify ?
+				Html::element(
+					'th',
+					array( 'class' => 'unsortable' ),
+					$this->msg( 'interwiki_edit' )->text()
+				) :
+				''
+			);
 		$out .= Html::closeElement( 'tr' ) . "\n";
 
-		$selfTitle = $this->getTitle();
+		$selfTitle = $this->getPageTitle();
 
 		# Output the existing Interwiki prefixes table rows
 		foreach ( $iwPrefixes as $iwPrefix ) {
 			$out .= Html::openElement( 'tr', array( 'class' => 'mw-interwikitable-row' ) );
 			$out .= Html::element( 'td', array( 'class' => 'mw-interwikitable-prefix' ),
 				$iwPrefix['iw_prefix'] );
-			$out .= Html::element( 'td', array( 'class' => 'mw-interwikitable-url' ), $iwPrefix['iw_url'] );
+			$out .= Html::element(
+				'td',
+				array( 'class' => 'mw-interwikitable-url' ),
+				$iwPrefix['iw_url']
+			);
 			$attribs = array( 'class' => 'mw-interwikitable-local' );
 			// Green background for cells with "yes".
 			if( $iwPrefix['iw_local'] ) {
 				$attribs['style'] = 'background: lime;';
 			}
 			// The messages interwiki_0 and interwiki_1 are used here.
-			$out .= Html::element( 'td', $attribs,
-				( isset( $iwPrefix['iw_local'] ) ? $this->msg( 'interwiki_' . $iwPrefix['iw_local'] )->text() : '-' ) );
+			$contents = isset( $iwPrefix['iw_local'] ) ?
+				$this->msg( 'interwiki_' . $iwPrefix['iw_local'] )->text() :
+				'-';
+			$out .= Html::element( 'td', $attribs, $contents );
 			$attribs = array( 'class' => 'mw-interwikitable-trans' );
 			// Green background for cells with "yes".
 			if( $iwPrefix['iw_trans'] ) {
 				$attribs['style'] = 'background: lime;';
 			}
 			// The messages interwiki_0 and interwiki_1 are used here.
-			$out .= Html::element( 'td', $attribs,
-				( isset( $iwPrefix['iw_trans'] ) ? $this->msg( 'interwiki_' . $iwPrefix['iw_trans'] )->text() : '-' ) );
+			$contents = isset( $iwPrefix['iw_trans'] ) ?
+				$this->msg( 'interwiki_' . $iwPrefix['iw_trans'] )->text() :
+				'-';
+			$out .= Html::element( 'td', $attribs, $contents );
 
 			// Additional column when the interwiki table can be modified.
 			if ( $canModify ) {
@@ -377,7 +423,11 @@ class SpecialInterwiki extends SpecialPage {
 	private function addInfoRow( $align = 'start', $title, $text ) {
 		return Html::rawElement( 'tr', null,
 			// The classes mw-align-start and mw-align-end are used here.
-			Html::rawElement( 'th', array( 'class' => 'mw-align-' . $align ), $this->msg( $title )->escaped() ) .
+			Html::rawElement(
+				'th',
+				array( 'class' => 'mw-align-' . $align ),
+				$this->msg( $title )->escaped()
+			) .
 			// This message is expected to have wiki syntax
 			Html::rawElement( 'td', null, $this->msg( $text )->parse() )
 		);

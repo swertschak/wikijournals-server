@@ -124,6 +124,13 @@ $messages['ca'] = array(
 	'poem-desc' => "Afegeix l'etiqueta <code>&lt;poem&gt;</code> per al formatatge  de poemes",
 );
 
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'poem-desc' => 'ТӀетуху тег <code>&lt;poem&gt;</code> дешнаш дӀадаха',
+);
+
 /** Sorani Kurdish (کوردی)
  * @author Asoxor
  */
@@ -131,7 +138,7 @@ $messages['ckb'] = array(
 	'poem-desc' => 'تاگی <code>&lt;poem&gt;</code> زێدەدەکات بۆ ڕێکخستنی ھۆنراوەکان',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Matěj Grabovský
  */
 $messages['cs'] = array(
@@ -147,6 +154,7 @@ $messages['da'] = array(
 
 /** German (Deutsch)
  * @author Kghbln
+ * @author Purodha
  * @author Raimond Spekking
  */
 $messages['de'] = array(
@@ -310,7 +318,7 @@ $messages['id'] = array(
  * @author Lam-ang
  */
 $messages['ilo'] = array(
-	'poem-desc' => 'Ikkan na iti<code>&lt;poem&gt;</code> nga tag para ti pagporma ti daniw',
+	'poem-desc' => 'Agnayon ti etiketa ti <code>&lt;poem&gt;</code> para iti panagporma ti daniw',
 );
 
 /** Italian (italiano)
@@ -360,9 +368,10 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author ToePeu
+ * @author 아라
  */
 $messages['ko'] = array(
-	'poem-desc' => '시 형식을 위해 <code>&lt;poem&gt;</code> 태그를 추가',
+	'poem-desc' => '시 형식을 위해 <code>&lt;poem&gt;</code> 태그를 추가합니다',
 );
 
 /** Colognian (Ripoarisch)
@@ -402,10 +411,11 @@ $messages['lus'] = array(
 );
 
 /** Latvian (latviešu)
+ * @author Papuass
  * @author Xil
  */
 $messages['lv'] = array(
-	'poem-desc' => 'Pievieno <code>&lt;poem&gt;</code> tagu dzejas formatēšanai',
+	'poem-desc' => 'Pievieno <code>&lt;poem&gt;</code> iezīmi dzejas formatēšanai',
 );
 
 /** Macedonian (македонски)
@@ -437,7 +447,7 @@ $messages['ms'] = array(
 	'poem-desc' => 'Menambah tag <code>&lt;poem&gt;</code> untuk pemformatan puisi',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  */
 $messages['nb'] = array(
 	'poem-desc' => 'Legger til taggen <code>&lt;poem&gt;</code> for å kunne formatere dikt',
@@ -457,7 +467,7 @@ $messages['nl'] = array(
 	'poem-desc' => 'Voegt de tag <code>&lt;poem&gt;</code> toe voor de opmaak van poëzie',
 );
 
-/** Norwegian Nynorsk (norsk (nynorsk)‎)
+/** Norwegian Nynorsk (norsk nynorsk)
  * @author Harald Khan
  */
 $messages['nn'] = array(
@@ -489,7 +499,7 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'poem-desc' => 'د شعر بڼه ورکولو کړنې لپاره د <tt>&lt;شعر&gt;</tt> وييکه ورګډوي',
+	'poem-desc' => 'د شعر بڼه ورکولو کړنې لپاره د <tt>&lt;شعر&gt;</tt> وييکه ورگډوي',
 );
 
 /** Portuguese (português)
@@ -554,6 +564,13 @@ $messages['sah'] = array(
  */
 $messages['scn'] = array(
 	'poem-desc' => 'Iunci lu tag <code>&lt;poem&gt;</code> pi la furmattazioni di li testa puetici',
+);
+
+/** Scots (Scots)
+ * @author John Reid
+ */
+$messages['sco'] = array(
+	'poem-desc' => 'Adds <code>&lt;poem&gt;</code> tag fr poem formattin',
 );
 
 /** Slovak (slovenčina)

@@ -54,6 +54,10 @@ class ApiQueryGadgets extends ApiQueryBase {
 	private function getList() {
 		$gadgets = Gadget::loadStructuredList();
 
+		if ( $gadgets === false ) {
+			return array();
+		}
+
 		$result = array();
 		foreach ( $gadgets as $category => $list ) {
 			if ( $this->categories && !isset( $this->categories[$category] ) ) {
@@ -210,7 +214,7 @@ class ApiQueryGadgets extends ApiQueryBase {
 			'    api.php?action=query&list=gadgets&gaprop=id|desc',
 			'Get a list of gadgets with all possible properties:',
 			"    api.php?action=query&list=gadgets&gaprop=$allProps",
-			'Get a list of gadgets belonging to caregory "foo":',
+			'Get a list of gadgets belonging to category "foo":',
 			'    api.php?action=query&list=gadgets&gacategories=foo',
 			'Get information about gadgets "foo" and "bar":',
 			'    api.php?action=query&list=gadgets&gaids=foo|bar&gaprop=id|desc|metadata',
