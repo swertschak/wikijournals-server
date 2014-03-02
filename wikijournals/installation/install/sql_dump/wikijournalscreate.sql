@@ -19,9 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `wikijournals`
 --
-CREATE DATABASE IF NOT EXISTS `wikijournals` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `wikijournals`;
-
 -- --------------------------------------------------------
 
 --
