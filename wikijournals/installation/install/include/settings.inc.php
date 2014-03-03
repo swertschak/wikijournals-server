@@ -98,7 +98,7 @@
     // -------------------------------------------------------------------------
     // *** config file directory - directory, where config file must be created
     //     for ex.: '../common/' or 'common/' - according to directory hierarchy and relatively to start.php file
-    define('EI_CONFIG_FILE_DIRECTORY', 'config/');
+    define('EI_CONFIG_FILE_DIRECTORY', '../../');
     // *** config file name - output file with config parameters (database, username etc.)
     define('EI_CONFIG_FILE_NAME', 'LocalSettings.php');
     // *** according to directory hierarchy (you may add/remove '../' before EI_CONFIG_FILE_DIRECTORY)
@@ -112,7 +112,7 @@
     define('EI_ALLOW_UN_INSTALLATION', true);        
 
     // *** allows start all over button
-    define('EI_ALLOW_START_ALL_OVER', true);
+    define('EI_ALLOW_START_ALL_OVER', false);
     
     // *** sql dump file - file that includes SQL statements for instalation
     define('EI_SQL_DUMP_FILE_CREATE', 'sql_dump/wikijournalscreate.sql');
@@ -125,7 +125,7 @@
     define('EI_DUMP_FILE_COLLATION', 'utf8_unicode_ci');               
     
     // *** allows manual installation
-    define('EI_ALLOW_MANUAL_INSTALLATION', true);
+    define('EI_ALLOW_MANUAL_INSTALLATION', false);
     // *** manual installation text directoiry and text files
     define('EI_MANUAL_INSTALLATION_DIR', 'manual/');    
     $arr_manual_installations = array(
@@ -157,6 +157,6 @@
     define('EI_LICENSE_AGREEMENT_PAGE', 'install/license/license.txt');    
    
     // *** additional text after successful installation
-    define('EI_POST_INSTALLATION_TEXT', 'Please copy the file LocalSettings.php from the config directory to the application directory (f.e. /wikijournals)');
+    define('EI_POST_INSTALLATION_TEXT', '');
     
 ?>
