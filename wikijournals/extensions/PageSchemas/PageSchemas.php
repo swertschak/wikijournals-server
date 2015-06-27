@@ -19,13 +19,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 /* Configuration */
 
-define( 'PAGE_SCHEMAS_VERSION', '0.3' );
+define( 'PAGE_SCHEMAS_VERSION', '0.4.5' );
 
 // Credits
 $wgExtensionCredits['parserhook'][] = array(
 	'path'			=> __FILE__,
 	'name'			=> 'Page Schemas',
-	'author'		=> array( 'Ankit Garg', 'Yaron Koren' ),
+	'author'		=> array( 'Yaron Koren', 'Ankit Garg', '...' ),
 	'version'		=> PAGE_SCHEMAS_VERSION,
 	'url'			=> 'http://www.mediawiki.org/wiki/Extension:Page_Schemas',
 	'descriptionmsg'	=> 'ps-desc',
@@ -35,25 +35,29 @@ $wgExtensionCredits['parserhook'][] = array(
 $dir = dirname( __FILE__ ) . '/';
 
 // Internationalization
+$wgMessagesDirs['PageSchemas'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['PageSchemas'] = $dir . 'PageSchemas.i18n.php';
+$wgExtensionMessagesFiles['PageSchemasAlias'] = $dir . 'PageSchemas.i18n.alias.php';
 
 // Job classes
 $wgJobClasses['pageSchemasCreatePage'] = 'PSCreatePageJob';
-$wgAutoloadClasses['PSCreatePageJob'] = $dir . 'PS_CreatePageJob.php';
 
 // Register page classes
 $wgAutoloadClasses['PageSchemasHooks'] = $dir . 'PageSchemas.hooks.php';
 $wgAutoloadClasses['PageSchemas'] = $dir . 'PageSchemas.classes.php';
 $wgAutoloadClasses['PSSchema'] = $dir . 'PageSchemas.classes.php';
-$wgAutoloadClasses['ApiQueryPageSchemas'] = $dir . 'ApiQueryPageSchemas.php';
+$wgAutoloadClasses['PSTemplate'] = $dir . 'PageSchemas.classes.php';
+$wgAutoloadClasses['PSTemplateField'] = $dir . 'PageSchemas.classes.php';
+$wgAutoloadClasses['PSPageSection'] = $dir . 'PageSchemas.classes.php';
 $wgAutoloadClasses['PSGeneratePages'] = $dir . 'specials/PS_GeneratePages.php';
 $wgAutoloadClasses['PSEditSchema'] = $dir . 'specials/PS_EditSchema.php';
 $wgAutoloadClasses['PSTabs'] = $dir . 'PS_Tabs.php';
 $wgAutoloadClasses['PSExtensionHandler'] = $dir . 'PS_ExtensionHandler.php';
+$wgAutoloadClasses['PSCreatePageJob'] = $dir . 'PS_CreatePageJob.php';
 
 // Register special pages
-$wgSpecialPages['GeneratePages'] = 'PSGeneratePages'; 
-$wgSpecialPages['EditSchema'] = 'PSEditSchema'; 
+$wgSpecialPages['GeneratePages'] = 'PSGeneratePages';
+$wgSpecialPages['EditSchema'] = 'PSEditSchema';
 $wgSpecialPageGroups['GeneratePages'] = 'other';
 $wgSpecialPageGroups['EditSchema'] = 'other';
 // Register parser hook
@@ -84,7 +88,17 @@ $wgResourceModules += array(
 			'PageSchemas.css',
 		),
 		'dependencies' => array(
-			'jquery',
+		),
+	),
+);
+$wgResourceModules += array(
+	'ext.pageschemas.generatepages' => $pageSchemasResourceTemplate + array(
+		'scripts' => array(
+			'generatepages.js',
+		),
+		'styles' => array(
+		),
+		'dependencies' => array(
 		),
 	),
 );

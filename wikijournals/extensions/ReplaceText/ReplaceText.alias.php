@@ -5,6 +5,7 @@
  * @file
  * @ingroup Extensions
  */
+// @codingStandardsIgnoreFile
 
 $specialPageAliases = array();
 
@@ -23,14 +24,24 @@ $specialPageAliases['arz'] = array(
 	'ReplaceText' => array( 'تبديل_نص' ),
 );
 
-/** Breton (Brezhoneg) */
+/** Western Balochi (بلوچی رخشانی) */
+$specialPageAliases['bgn'] = array(
+	'ReplaceText' => array( 'متنی_جاگیرکورتین' ),
+);
+
+/** Breton (brezhoneg) */
 $specialPageAliases['br'] = array(
 	'ReplaceText' => array( 'Erlc\'hiañTestenn' ),
 );
 
-/** Bosnian (Bosanski) */
+/** Bosnian (bosanski) */
 $specialPageAliases['bs'] = array(
 	'ReplaceText' => array( 'ZamjenaTeksta' ),
+);
+
+/** Czech (čeština) */
+$specialPageAliases['cs'] = array(
+	'ReplaceText' => array( 'Nahradit_text' ),
 );
 
 /** German (Deutsch) */
@@ -38,14 +49,29 @@ $specialPageAliases['de'] = array(
 	'ReplaceText' => array( 'Text_ersetzen' ),
 );
 
-/** Lower Sorbian (Dolnoserbski) */
+/** Zazaki (Zazaki) */
+$specialPageAliases['diq'] = array(
+	'ReplaceText' => array( 'MetinVırnayış' ),
+);
+
+/** Lower Sorbian (dolnoserbski) */
 $specialPageAliases['dsb'] = array(
 	'ReplaceText' => array( 'Tekst wuměniś' ),
 );
 
 /** Divehi (ދިވެހިބަސް) */
 $specialPageAliases['dv'] = array(
-	'ReplaceText' => array( 'ލިޔުން ބަދަލުކުރައްވާ' ),
+	'ReplaceText' => array( 'ލިޔުން_ބަދަލުކުރައްވާ' ),
+);
+
+/** Greek (Ελληνικά) */
+$specialPageAliases['el'] = array(
+	'ReplaceText' => array( 'ΑντικατάστασηΚειμένου' ),
+);
+
+/** Esperanto (Esperanto) */
+$specialPageAliases['eo'] = array(
+	'ReplaceText' => array( 'Anstataŭigi_tekston' ),
 );
 
 /** Persian (فارسی) */
@@ -53,29 +79,29 @@ $specialPageAliases['fa'] = array(
 	'ReplaceText' => array( 'جایگزینی_متن' ),
 );
 
-/** Finnish (Suomi) */
+/** Finnish (suomi) */
 $specialPageAliases['fi'] = array(
-	'ReplaceText' => array( 'Korvaa' ),
+	'ReplaceText' => array( 'Korvaa_teksti' ),
 );
 
-/** French (Français) */
+/** French (français) */
 $specialPageAliases['fr'] = array(
 	'ReplaceText' => array( 'Remplacer_texte', 'RemplacerTexte' ),
 );
 
-/** Franco-Provençal (Arpetan) */
+/** Franco-Provençal (arpetan) */
 $specialPageAliases['frp'] = array(
 	'ReplaceText' => array( 'Remplaciér_lo_tèxto', 'RemplaciérLoTèxto' ),
 );
 
-/** Galician (Galego) */
+/** Galician (galego) */
 $specialPageAliases['gl'] = array(
-	'ReplaceText' => array( 'Substituír_o_texto' ),
+	'ReplaceText' => array( 'Substituír_o_texto', 'Substituír_texto' ),
 );
 
 /** Swiss German (Alemannisch) */
 $specialPageAliases['gsw'] = array(
-	'ReplaceText' => array( 'Täxt ersetze' ),
+	'ReplaceText' => array( 'Täxt_ersetze' ),
 );
 
 /** Hebrew (עברית) */
@@ -83,14 +109,14 @@ $specialPageAliases['he'] = array(
 	'ReplaceText' => array( 'החלפת_טקסט' ),
 );
 
-/** Croatian (Hrvatski) */
+/** Croatian (hrvatski) */
 $specialPageAliases['hr'] = array(
 	'ReplaceText' => array( 'Zamjeni_tekst' ),
 );
 
-/** Upper Sorbian (Hornjoserbsce) */
+/** Upper Sorbian (hornjoserbsce) */
 $specialPageAliases['hsb'] = array(
-	'ReplaceText' => array( 'Tekst narunać' ),
+	'ReplaceText' => array( 'Tekst_narunać' ),
 );
 
 /** Haitian (Kreyòl ayisyen) */
@@ -98,12 +124,12 @@ $specialPageAliases['ht'] = array(
 	'ReplaceText' => array( 'RanplaseTeks' ),
 );
 
-/** Hungarian (Magyar) */
+/** Hungarian (magyar) */
 $specialPageAliases['hu'] = array(
 	'ReplaceText' => array( 'Szöveg_csere' ),
 );
 
-/** Interlingua (Interlingua) */
+/** Interlingua (interlingua) */
 $specialPageAliases['ia'] = array(
 	'ReplaceText' => array( 'Reimplaciar_texto' ),
 );
@@ -113,7 +139,7 @@ $specialPageAliases['id'] = array(
 	'ReplaceText' => array( 'Ganti_teks', 'GantiTeks' ),
 );
 
-/** Italian (Italiano) */
+/** Italian (italiano) */
 $specialPageAliases['it'] = array(
 	'ReplaceText' => array( 'SostituisciTesto' ),
 );
@@ -128,6 +154,11 @@ $specialPageAliases['km'] = array(
 	'ReplaceText' => array( 'ជំនួសអត្ថបទ' ),
 );
 
+/** Korean (한국어) */
+$specialPageAliases['ko'] = array(
+	'ReplaceText' => array( '찾아바꾸기' ),
+);
+
 /** Colognian (Ripoarisch) */
 $specialPageAliases['ksh'] = array(
 	'ReplaceText' => array( 'Tex tuusche' ),
@@ -138,14 +169,14 @@ $specialPageAliases['lb'] = array(
 	'ReplaceText' => array( 'Text_ersetzen' ),
 );
 
-/** Macedonian (Македонски) */
+/** Macedonian (македонски) */
 $specialPageAliases['mk'] = array(
 	'ReplaceText' => array( 'ЗамениТекст' ),
 );
 
 /** Malayalam (മലയാളം) */
 $specialPageAliases['ml'] = array(
-	'ReplaceText' => array( 'പകരംഎഴുത്ത്' ),
+	'ReplaceText' => array( 'എഴുത്ത്മാറ്റിച്ചേർക്കുക' ),
 );
 
 /** Marathi (मराठी) */
@@ -153,17 +184,22 @@ $specialPageAliases['mr'] = array(
 	'ReplaceText' => array( 'मजकुरबदला' ),
 );
 
+/** Malay (Bahasa Melayu) */
+$specialPageAliases['ms'] = array(
+	'ReplaceText' => array( 'Ganti_teks' ),
+);
+
 /** Maltese (Malti) */
 $specialPageAliases['mt'] = array(
 	'ReplaceText' => array( 'BiddelTest' ),
 );
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
+/** Norwegian Bokmål (norsk bokmål) */
 $specialPageAliases['nb'] = array(
 	'ReplaceText' => array( 'Teksterstatning' ),
 );
 
-/** Nedersaksisch (Nedersaksisch) */
+/** Low Saxon (Netherlands) (Nedersaksies) */
 $specialPageAliases['nds-nl'] = array(
 	'ReplaceText' => array( 'Tekste_vervangen' ),
 );
@@ -173,32 +209,37 @@ $specialPageAliases['nl'] = array(
 	'ReplaceText' => array( 'TekstVervangen' ),
 );
 
-/** Occitan (Occitan) */
+/** Occitan (occitan) */
 $specialPageAliases['oc'] = array(
 	'ReplaceText' => array( 'Remplaçar tèxte', 'RemplaçarTèxte' ),
 );
 
-/** Portuguese (Português) */
+/** Portuguese (português) */
 $specialPageAliases['pt'] = array(
 	'ReplaceText' => array( 'Substituir_texto' ),
 );
 
-/** Slovak (Slovenčina) */
+/** Sicilian (sicilianu) */
+$specialPageAliases['scn'] = array(
+	'ReplaceText' => array( 'SostituisciTesto' ),
+);
+
+/** Slovak (slovenčina) */
 $specialPageAliases['sk'] = array(
 	'ReplaceText' => array( 'NahradiťText' ),
 );
 
-/** Albanian (Shqip) */
+/** Albanian (shqip) */
 $specialPageAliases['sq'] = array(
 	'ReplaceText' => array( 'ZëvendësoTekstin' ),
 );
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬) */
+/** Serbian (Cyrillic script) (српски (ћирилица)‎) */
 $specialPageAliases['sr-ec'] = array(
 	'ReplaceText' => array( 'ЗамениТекст', 'Замени_текст' ),
 );
 
-/** Swedish (Svenska) */
+/** Swedish (svenska) */
 $specialPageAliases['sv'] = array(
 	'ReplaceText' => array( 'Ersätt_text' ),
 );
@@ -210,7 +251,7 @@ $specialPageAliases['sw'] = array(
 
 /** Tagalog (Tagalog) */
 $specialPageAliases['tl'] = array(
-	'ReplaceText' => array( 'Palitan ang teksto' ),
+	'ReplaceText' => array( 'Palitan_ang_teksto' ),
 );
 
 /** Turkish (Türkçe) */
@@ -218,7 +259,32 @@ $specialPageAliases['tr'] = array(
 	'ReplaceText' => array( 'MetniDeğiştir' ),
 );
 
-/** Vèneto (Vèneto) */
+/** Ukrainian (українська) */
+$specialPageAliases['uk'] = array(
+	'ReplaceText' => array( 'Замінити_текст' ),
+);
+
+/** Venetian (vèneto) */
 $specialPageAliases['vec'] = array(
 	'ReplaceText' => array( 'SostuituissiTesto' ),
+);
+
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'ReplaceText' => array( 'Thay_văn_bản' ),
+);
+
+/** Chinese (中文) */
+$specialPageAliases['zh'] = array(
+	'ReplaceText' => array( '替换文本', '替換文本', '取代文字' ),
+);
+
+/** Simplified Chinese (中文（简体）‎) */
+$specialPageAliases['zh-hans'] = array(
+	'ReplaceText' => array( '替换文本' ),
+);
+
+/** Traditional Chinese (中文（繁體）‎) */
+$specialPageAliases['zh-hant'] = array(
+	'ReplaceText' => array( '替換文字' ),
 );

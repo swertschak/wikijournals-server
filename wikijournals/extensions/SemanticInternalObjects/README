@@ -1,6 +1,6 @@
 Semantic Internal Objects Extension
 
-        Version 0.6.8
+        Version 0.8.1
         Yaron Koren
 
 This is free software licensed under the GNU General Public License. Please
@@ -40,10 +40,9 @@ A sample call to #set_internal would be:
 }}
 
 This call would be placed in a page for a recipe, and it would define an object
-that had an automatically-generated name; if it were in a page called "Carrot
-cake", for instance, the object would be called "Carrot cake#1". If that page
-had subsequent calls to #set_internal, the objects that those calls generated
-would be called "Carrot cake#2", "Carrot cake#3", etc.
+that had an automatically-generated name; this name would start with
+"Carrot cake", but its exact name would depend on the version of Semantic
+MediaWiki being used.
 
 It should be noted that #set_internal does not display anything to the screen;
 display of the values has to be handled separately (this can be done easily
@@ -67,8 +66,8 @@ http://www.mediawiki.org/wiki/Extension:Semantic_Internal_Objects
 
 == Requirements ==
 
-This version of the Semantic Internal Objects extension requires MediaWiki 1.11
-or higher and Semantic MediaWiki 1.5.2 or higher.
+This version of the Semantic Internal Objects extension requires MediaWiki 1.16
+or higher and Semantic MediaWiki 1.5.3 or higher.
 
 == Installation ==
 
@@ -76,7 +75,7 @@ To install the extension, place the entire 'SemanticInternalObjects' directory
 within your MediaWiki 'extensions' directory, then add the following
 line to your 'LocalSettings.php' file:
 
-     require_once( "$IP/extensions/SemanticInternalObjects/SemanticInternalObjects.php" );
+ require_once( "$IP/extensions/SemanticInternalObjects/SemanticInternalObjects.php" );
 
 == Contact ==
 

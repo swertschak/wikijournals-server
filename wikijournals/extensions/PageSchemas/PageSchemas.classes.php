@@ -136,7 +136,7 @@ END;
 	static function displaySchema( $schemaXML ) {
 		global $wgTitle, $wgPageSchemasHandlerClasses;
 
-		if ( $wgTitle->getNamespace() != NS_CATEGORY ) {
+		if ( is_null( $wgTitle ) || $wgTitle->getNamespace() != NS_CATEGORY ) {
 			return '';
 		}
 		$text = "<table class=\"pageSchema mw-collapsible mw-collapsed\">\n";
@@ -159,20 +159,29 @@ END;
 		foreach ( $schemaXML->children() as $tag => $child ) {
 			if ( $tag == 'Template') {
 				$text .= self::displayTemplate( $child );
+			} elseif ( $tag == 'Section' ) {
+				$text .= self::displayPageSection( $child );
 			}
 		}
 		$text .= "</table>\n";
 		return $text;
 	}
 
-	static function displayTemplate ( $templateXML ) {
+	/**
+	 * Display the schema information for a single template, in HTML form.
+	 */
+	static function displayTemplate( $templateXML ) {
 		global $wgPageSchemasHandlerClasses;
 
 		$name = $templateXML->attributes()->name;
-		$text = self::tableRowHTML( 'templateRow', 'Template', $name );
+		$text = self::tableRowHTML( 'templateRow', wfMessage( 'ps-template' )->parse(), $name );
 		$multiple = $templateXML->attributes()->multiple;
 		if ( $multiple == 'multiple' ) {
 			$text .= self::attrRowHTML( 'schemaAttrRow', 'multiple', null );
+		}
+		$format = $templateXML->attributes()->format;
+		if ( $format ) {
+			$text .= self::attrRowHTML( 'schemaAttrRow', 'format', $format );
 		}
 
 		foreach ( $wgPageSchemasHandlerClasses as $psHandlerClass ) {
@@ -188,17 +197,23 @@ END;
 				$text .= self::attrRowHTML( 'fieldAttrRow', $fieldName, $value );
 			}
 		}
-		foreach ( $templateXML->children() as $child ) {
-			$text .= self::displayField( $child );
+		foreach ( $templateXML->children() as $elementName => $child ) {
+			if ( $elementName == 'Field' ) {
+				$text .= self::displayField( $child );
+			}
 		}
 		return $text;
 	}
 
-	static function displayField ( $fieldXML ) {
+	/**
+	 * Display the schema information for a single template field, in HTML
+	 * form.
+	 */
+	static function displayField( $fieldXML ) {
 		global $wgPageSchemasHandlerClasses;
 
 		$name = $fieldXML->attributes()->name;
-		$text = self::tableRowHTML( 'fieldRow', 'Field', $name );
+		$text = self::tableRowHTML( 'fieldRow', wfMessage( 'ps-field' )->parse(), $name );
 
 		if( ((string) $fieldXML->attributes()->list) == "list" ) {
 			$text .= self::attrRowHTML( 'fieldAttrRow', 'List', null );
@@ -231,6 +246,35 @@ END;
 		return $text;
 	}
 
+	/**
+	 * Display the schema information for a single page section, in HTML
+	 * form.
+	 */
+	static function displayPageSection( $pageSectionXML ) {
+		global $wgPageSchemasHandlerClasses;
+
+		$name = $pageSectionXML->attributes()->name;
+		$level = $pageSectionXML->attributes()->level;
+		$text = self::tableRowHTML( 'templateRow', wfMessage( 'ps-section' )->parse(), $name );
+		$text .= self::attrRowHTML( 'schemaAttrRow', wfMessage( 'ps-level' )->parse(), $level );
+
+		foreach ( $wgPageSchemasHandlerClasses as $psHandlerClass ) {
+			$returnVals = call_user_func( array( $psHandlerClass, 'getPageSectionDisplayValues' ), $pageSectionXML );
+			if ( count( $returnVals ) != 2 ) {
+				continue;
+			}
+			list( $elementName, $values ) = $returnVals;
+			$label = call_user_func( array( $psHandlerClass, 'getPageSectionDisplayString' ) );
+			$bgColor = call_user_func( array( $psHandlerClass, 'getDisplayColor' ) );
+			$text .= self::tableRowHTML( 'fieldExtensionRow', $label, $elementName, $bgColor );
+			foreach ( $values as $fieldName => $value ) {
+				$text .= self::attrRowHTML( 'fieldAttrRow', $fieldName, $value );
+			}
+		}
+
+		return $text;
+	}
+
 	public static function getValueFromObject( $object, $key ) {
 		if ( is_null( $object ) ) {
 			return null;
@@ -239,6 +283,7 @@ END;
 		}
 		return $object[$key];
 	}
+
 }
 
 /**
@@ -249,6 +294,8 @@ class PSSchema {
 	private $mPageXML = null;
 	/* Stores the template objects */
 	private $mTemplates = array();
+	/* Stores the template and page section objects */
+	private $mFormItemsList = array();
 	private $mIsPSDefined = true;
 
 	function __construct ( $categoryName ) {
@@ -275,30 +322,45 @@ class PSSchema {
 			$pageXMLstr = $row[2];
 			$this->mPageXML = simplexml_load_string ( $pageXMLstr );
 			// index for template objects
-			$i = 0;
+			$templateCount = 0;
+			$pageSectionCount = 0;
 			$inherited_templates = array();
 			foreach ( $this->mPageXML->children() as $tag => $child ) {
 				if ( $tag == 'InheritsFrom ' ) {
 					$schema_to_inherit = (string) $child->attributes()->schema;
-					if( $schema_to_inherit !=null ){
+					if( $schema_to_inherit != null ) {
 						$inheritedSchemaObj = new PSSchema( $schema_to_inherit );
 						$inherited_templates = $inheritedSchemaObj->getTemplates();
 					}
 				}
 				if ( $tag == 'Template' ) {
 					$ignore = (string) $child->attributes()->ignore;
-					if ( count($child->children()) > 0 ) {
-						$templateObj = new PSTemplate($child);
-						$this->mTemplates[$i++]= $templateObj;
+					if ( count( $child->children() ) > 0 ) {
+						$templateObj = new PSTemplate( $child );
+						$this->mFormItemsList[] = array( 'type' => $tag,
+							'number' => $templateCount,
+							'item' => $templateObj );
+							$this->mTemplates[$templateCount]= $templateObj;
+						$templateCount++;
 					} elseif ( $ignore != "true" ) {
 						// Code to add templates from inherited templates
 						$temp_name = (string) $child->attributes()->name;
 						foreach( $inherited_templates as $inherited_template ) {
-							if( $temp_name == $inherited_template->getName() ){
-								$this->mTemplates[$i++] = $inherited_template;
+							if( $inherited_template['type'] == $tag && $temp_name == $inherited_template['item']->getName() ) {
+								$this->mFormItemsList[] = array( 'type' => $tag,
+									'number' => $templateCount,
+									'item' => $inherited_template );
+									$this->mTemplates[$templateCount] = $inherited_template;
+								$templateCount++;
 							}
 						}
 					}
+				} elseif ( $tag == 'Section' ) {
+					$pageSectionObj = new PSPageSection( $child );
+					$this->mFormItemsList[] = array( 'type' => $tag,
+							'number' => $pageSectionCount,
+							'item' => $pageSectionObj );
+					$pageSectionCount++;
 				}
 			}
 		}
@@ -333,6 +395,13 @@ class PSSchema {
 		return $this->mTemplates;
 	}
 
+	/**
+	 * Returns an array of template and page section objects.
+	 */
+	public function getFormItemsList() {
+		return $this->mFormItemsList;
+	}
+
 	public function getObject( $objectName ) {
 		global $wgPageSchemasHandlerClasses;
 		foreach ( $wgPageSchemasHandlerClasses as $psHandlerClass ) {
@@ -350,6 +419,7 @@ class PSTemplate {
 	private $mTemplateName = "";
 	private $mTemplateXML = null;
 	private $mMultipleAllowed = false;
+	private $mTemplateFormat = null;
 
 	function __construct( $templateXML ) {
 		$this->mTemplateXML = $templateXML;
@@ -357,6 +427,7 @@ class PSTemplate {
 		if( ((string) $templateXML->attributes()->multiple) == "multiple" ) {
 			$this->mMultipleAllowed = true;
 		}
+		$this->mTemplateFormat = (string) $templateXML->attributes()->format;
 		// Index for template objects
 		$i = 0 ;
 		$inherited_fields = array();
@@ -403,11 +474,18 @@ class PSTemplate {
 		return $this->mMultipleAllowed;
 	}
 
+	/**
+	 * @since 0.3.1
+	 */
+	public function getFormat() {
+		return $this->mTemplateFormat;
+	}
+
 	public function getObject( $objectName ) {
 		global $wgPageSchemasHandlerClasses;
 		foreach ( $wgPageSchemasHandlerClasses as $psHandlerClass ) {
 			$object = call_user_func( array( $psHandlerClass, 'createPageSchemasObject' ), $objectName, $this->mTemplateXML );
-			if ( !empty( $object ) ) {
+			if ( $object ) {
 				return $object;
 			}
 		}
@@ -426,6 +504,7 @@ class PSTemplateField {
 	private $mIsList = false;
 	private $mDelimiter = null;
 	private $mDisplay = null;
+	private $mNamespace = null;
 
 	function __construct( $fieldXML ) {
 		$this->mFieldXML = $fieldXML;
@@ -435,6 +514,7 @@ class PSTemplateField {
 		}
 		$this->mDelimiter = $fieldXML->attributes()->delimiter;
 		$this->mDisplay = $fieldXML->attributes()->display;
+		$this->mNamespace = $fieldXML->attributes()->namespace;
 		foreach ( $fieldXML->children() as $tag => $child ) {
 			if ( $tag == 'Label' ) {
 				$this->mFieldLabel = $child;
@@ -448,6 +528,10 @@ class PSTemplateField {
 
 	public function getDisplay() {
 		return $this->mDisplay;
+	}
+
+	public function getNamespace() {
+		return $this->mNamespace;
 	}
 
 	public function getName() {
@@ -467,6 +551,39 @@ class PSTemplateField {
 
 		foreach ( $wgPageSchemasHandlerClasses as $psHandlerClass ) {
 			$object = call_user_func( array( $psHandlerClass, 'createPageSchemasObject' ), $objectName, $this->mFieldXML );
+			if ( !is_null( $object ) ) {
+				return $object;
+			}
+		}
+		return null;
+	}
+}
+
+class PSPageSection{
+
+	private $mPageSectionXML = null;
+	private $mSectionName = "";
+	private $mSectionLevel = 2;
+
+	function __construct( $pageSectionXML ) {
+		$this->mPageSectionXML = $pageSectionXML;
+		$this->mSectionName = (string)$pageSectionXML->attributes()->name;
+		$this->mSectionLevel = (string)$pageSectionXML->attributes()->level;
+	}
+
+	public function getSectionName() {
+		return $this->mSectionName;
+	}
+
+	public function getSectionLevel() {
+		return $this->mSectionLevel;
+	}
+
+	public function getObject( $objectName ) {
+		global $wgPageSchemasHandlerClasses;
+
+		foreach ( $wgPageSchemasHandlerClasses as $psHandlerClass ) {
+			$object = call_user_func( array( $psHandlerClass, 'createPageSchemasObject' ), $objectName, $this->mPageSectionXML );
 			if ( !is_null( $object ) ) {
 				return $object;
 			}

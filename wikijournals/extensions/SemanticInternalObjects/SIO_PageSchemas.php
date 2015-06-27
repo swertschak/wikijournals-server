@@ -21,7 +21,7 @@ class SIOPageSchemas extends PSExtensionHandler {
 	}
 
 	public static function getTemplateDisplayString() {
-		return wfMsg( 'semanticinternalobjects-internalproperty' );
+		return wfMessage( 'semanticinternalobjects-internalproperty' )->text();
 	}
 
 	/**
@@ -70,7 +70,7 @@ class SIOPageSchemas extends PSExtensionHandler {
 				$hasExistingValues = true;
 			}
 		}
-		$text = '<p>' . 'Name of property to connect this template\'s fields to the rest of the page (should only be used if this template can have multiple instances):' . ' ';
+		$text = '<p>' . wfMessage( 'semanticinternalobjects-mainpropertyname' )->escaped() . ' ' . wfMessage( 'semanticinternalobjects-propnamewarning' )->escaped() . ' ';
 		$propName = PageSchemas::getValueFromObject( $prop_array, 'name' );
 		$text .= Html::input( 'sio_property_name_num', $propName, array( 'size' => 15 ) ) . "\n";
 
@@ -138,9 +138,17 @@ class SIOPageSchemas extends PSExtensionHandler {
 			if ( !in_array( $propTitle, $selectedPages ) ) {
 				continue;
 			}
+
+			// FIXME: cannot access protected SMWPageSchemas::createPropertyText
 			$jobParams['page_text'] = SMWPageSchemas::createPropertyText( $pageTypeLabel, null );
 			$jobs[] = new PSCreatePageJob( $propTitle, $jobParams );
 		}
-		Job::batchInsert( $jobs );
+
+		if ( class_exists( 'JobQueueGroup' ) ) {
+			JobQueueGroup::singleton()->push( $jobs );
+		} else {
+			// MW <= 1.20
+			Job::batchInsert( $jobs );
+		}
 	}
 }

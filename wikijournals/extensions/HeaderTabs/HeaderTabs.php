@@ -14,22 +14,25 @@ $htScriptPath = $wgScriptPath . '/extensions/HeaderTabs';
 
 $dir = dirname( __FILE__ );
 
-// the file loaded depends on whether the ResourceLoader exists, which in
-// turn depends on what version of MediaWiki this is - for MW 1.17+,
-// HeaderTabs_body.jq.php will get loaded
-$useJQuery = is_callable( array( 'OutputPage', 'addModules' ) );
-
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'Header Tabs',
 	'descriptionmsg' => 'headertabs-desc',
-	'version' => '0.9',
+	'version' => '1.0.1',
 	'author' => array( '[http://www.sergeychernyshev.com Sergey Chernyshev]', 'Yaron Koren', '[http://olivierbeaton.com Olivier Finlay Beaton]' ),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Header_Tabs'
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Header_Tabs'
 );
 
 // Translations
+$wgMessagesDirs['HeaderTabs'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['HeaderTabs'] = $dir . '/HeaderTabs.i18n.php';
+
+//! @todo implement in tab parsing code instead... but problems like nowiki (2011-12-12, ofb)
+// if you make them here, it will be article wide instead of tab-wide
+// __NOTABTOC__, __TABTOC__, __NOEDITTAB__
+// and one day with a special page: __NEWTABLINK__, __NONEWTABLINK__
+// and one day if we can force toc generation: __FORCETABTOC__
+$wgExtensionMessagesFiles['HeaderTabsMagic'] = $dir . '/HeaderTabs.i18n.magic.php';
 
 // Config
 $htUseHistory = true;
@@ -38,8 +41,11 @@ $htAutomaticNamespaces = array();
 $htDefaultFirstTab = false;
 $htDisableDefaultToc = true;
 $htGenerateTabTocs = false;
-$htStyle = 'jquery-large';
+$htStyle = 'large';
 $htEditTabLink = true;
+
+// Other variables
+$htTabIndexes = array();
 
 // Extension:Configure
 if ( isset( $wgConfigureAdditionalExtensions ) && is_array( $wgConfigureAdditionalExtensions ) ) {
@@ -64,64 +70,38 @@ if ( isset( $wgConfigureAdditionalExtensions ) && is_array( $wgConfigureAddition
 					'htAutomaticNamespaces' => 'simple',
 				),
 			'schema' => false,
-			'url' => 'http://www.mediawiki.org/wiki/Extension:Header_Tabs',
+			'url' => 'https://www.mediawiki.org/wiki/Extension:Header_Tabs',
 		);
 
 } // $wgConfigureAdditionalExtensions exists
 
-// used by both jQuery and YUI
 $wgHooks['ParserFirstCallInit'][] = 'headerTabsParserFunctions';
-$wgHooks['LanguageGetMagic'][] = 'headerTabsLanguageGetMagic';
 $wgHooks['BeforePageDisplay'][] = 'HeaderTabs::addHTMLHeader';
 $wgHooks['ParserAfterTidy'][] = 'HeaderTabs::replaceFirstLevelHeaders';
+$wgHooks['ResourceLoaderGetConfigVars'][] = 'HeaderTabs::addConfigVarsToJS';
+$wgHooks['MakeGlobalVariablesScript'][] = 'HeaderTabs::setGlobalJSVariables';
 
-if ( $useJQuery ) {
-	$wgAutoloadClasses['HeaderTabs'] = "$dir/HeaderTabs_body.jq.php";
+$wgAutoloadClasses['HeaderTabs'] = "$dir/HeaderTabs_body.php";
 
-	$wgHooks['ResourceLoaderGetConfigVars'][] = 'HeaderTabs::addConfigVarsToJS';
+$wgResourceModules['ext.headertabs'] = array(
+	// JavaScript and CSS styles. To combine multiple files, just list them as an array.
+	'scripts' => 'skins/ext.headertabs.core.js',
+	// 'styles' => // the style is added in HeaderTabs::addHTMLHeader
 
-	$wgResourceModules['ext.headertabs'] = array(
-		// JavaScript and CSS styles. To combine multiple file, just list them as an array.
-		'scripts' => 'skins-jquery/ext.headertabs.core.js',
-		// 'styles' => // the style is added in HeaderTabs::addHTMLHeader
+	// If your scripts need code from other modules, list their identifiers as dependencies
+	// and ResourceLoader will make sure they're loaded before you.
+	// You don't need to manually list 'mediawiki' or 'jquery', which are always loaded.
+	'dependencies' => array( 'jquery.ui.tabs' ),
 
-		// If your scripts need code from other modules, list their identifiers as dependencies
-		// and ResourceLoader will make sure they're loaded before you.
-		// You don't need to manually list 'mediawiki' or 'jquery', which are always loaded.
-		'dependencies' => array( 'jquery.ui.tabs' ),
+	// ResourceLoader needs to know where your files are; specify your
+	// subdir relative to "/extensions" (or $wgExtensionAssetsPath)
+	'localBasePath' => dirname( __FILE__ ),
+	'remoteExtPath' => 'HeaderTabs',
+);
 
-		// ResourceLoader needs to know where your files are; specify your
-		// subdir relative to "/extensions" (or $wgExtensionAssetsPath)
-		'localBasePath' => dirname( __FILE__ ),
-		'remoteExtPath' => 'HeaderTabs',
-	);
-
-} else { // if ! $useJQuery
-	$wgAutoloadClasses['HeaderTabs'] = "$dir/HeaderTabs_body.yui.php";
-}
-
-# Parser function to insert a link changing a tab:
+# Parser function to insert a link changing a tab.
 function headerTabsParserFunctions( $parser ) {
-
-	//! @todo make this load a custom name from i18n file (2011-12-12, ofb)
-	// ensure to keep this name too for backwards compat
 	$parser->setHook( 'headertabs', array( 'HeaderTabs', 'tag' ) );
 	$parser->setFunctionHook( 'switchtablink', array( 'HeaderTabs', 'renderSwitchTabLink' ) );
-	return true;
-}
-
-function headerTabsLanguageGetMagic( &$magicWords, $langCode = "en" ) {
-	//! @todo implement in tab parsing code instead... but problems like nowiki (2011-12-12, ofb)
-	// if you make them here, it will be article wide instead of tab-wide
-	// __NOTABTOC__, __TABTOC__, __NOEDITTAB__
-	// and one day with a special page: __NEWTABLINK__, __NONEWTABLINK__
-	// and one day if we can force toc generation: __FORCETABTOC__
-
-	//! @todo make this load a custom name from i18n file (2011-12-12, ofb)
-	// ensure to keep this name too for backwards compat
-	switch ( $langCode ) {
-	default:
-		$magicWords['switchtablink']	= array ( 0, 'switchtablink' );
-	}
 	return true;
 }

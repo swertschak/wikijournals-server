@@ -19,7 +19,7 @@ if ( !defined( 'SFI_VERSION' ) ) {
  */
 class SFIMenuSelect extends SFFormInput {
 
-	
+
 	/**
 	 * Constructor.
 	 *
@@ -36,13 +36,13 @@ class SFIMenuSelect extends SFFormInput {
 	 *		input definition.
 	 */
 	public function __construct( $input_number, $cur_value, $input_name, $disabled, $other_args ) {
-		
+
 		parent::__construct( $input_number, $cur_value, $input_name, $disabled, $other_args );
-		
+
 		self::setup();
 
 		$this->addJsInitFunctionData( 'SFI_MS_init', 'null' );
-		
+
 
 	}
 
@@ -64,20 +64,25 @@ class SFIMenuSelect extends SFFormInput {
 	*/
 	static private function setup() {
 
-		global $wgOut;
-		global $sfigSettings;
+		global $wgHooks;
 
 		static $hasRun = false;
 
 		if ( !$hasRun ) {
 			$hasRun = true;
-			$wgOut->addScript( '<script type="text/javascript">sfigScriptPath="' . $sfigSettings->scriptPath . '";</script> ' );
-			$wgOut->addScript( '<script type="text/javascript" src="' . $sfigSettings->scriptPath . '/libs/menuselect.js"></script> ' );
-			$wgOut->addExtensionStyle( $sfigSettings->scriptPath . '/skins/SFI_Menuselect.css' );
+
+			$wgHooks['MakeGlobalVariablesScript'][] = 'SFIMenuSelect::setGlobalVariables';
+
 		}
 
 	}
-	
+
+	static public function setGlobalVariables( &$vars ) {
+		global $sfigSettings;
+		$vars['sfigScriptPath'] = $sfigSettings->scriptPath;
+		return true;
+	}
+
 	/**
 	 * Returns the HTML code to be included in the output page for this input.
 	 *
@@ -88,7 +93,7 @@ class SFIMenuSelect extends SFFormInput {
 	 */
 	public function getHtmlText(){
 
-		global $wgUser, $wgTitle;
+		global $wgUser, $wgParser;
 		global $sfigSettings;
 
 		// first: set up HTML attributes
@@ -100,12 +105,15 @@ class SFIMenuSelect extends SFFormInput {
 		// second: assemble HTML
 		// create visible input field (for display) and invisible field (for data)
 		$html = SFIUtils::textHTML( $this->mCurrentValue, '', $inputFieldDisabled, $this->mOtherArgs, "input_{$this->mInputNumber}_show", null, "createboxInput" )
-				. Xml::element( "input", array(
+				. Html::rawElement('span', array(
+					'class' => 'inputSpan' . ($this->mIsMandatory ? ' mandatoryFieldSpan' : '')
+				) ,
+					Html::element( "input", array(
 					'id' => "input_{$this->mInputNumber}",
 					'type' => 'hidden',
 					'name' => $this->mInputName,
 					'value' => $this->mCurrentValue
-				) );
+				) ) );
 
 
 		$html .= "<span class='SFI_menuselect' id='span_{$this->mInputNumber}_tree'>";
@@ -113,20 +121,19 @@ class SFIMenuSelect extends SFFormInput {
 
 		// parse menu structure
 
-		$parser = new Parser();
-
 		// FIXME: SF does not parse options correctly. Users have to replace | by {{!}}
 		$structure = str_replace( '{{!}}', '|', $this->mOtherArgs['structure'] );
 		$options = ParserOptions::newFromUser( $wgUser );
 
-		$structure = $parser->parse( $structure, $wgTitle, $options )->getText();
+		$structure = $wgParser->doBlockLevels( $structure, true );
+		$wgParser->replaceLinkHolders( $structure );
 
 		$html .= str_replace( '<li', '<li class=\'ui-state-default\'', $structure );
 
 		$html .= "</span>";
 
-		// wrap in span (e.g. used for mandatory inputs)
-		$html = '<span class="inputSpan' . ($this->mIsMandatory ? ' mandatoryFieldSpan' : '') . '">' .$html . '</span>';
+		// wrap in div
+		$html = '<div>' .$html . '</div>';
 
 		return $html;
 
@@ -143,22 +150,33 @@ class SFIMenuSelect extends SFFormInput {
 
 	/**
 	 * Returns the set of parameters for this form input.
-	 * 
-	 * TODO: Specify parameters specific for menuselect.
 	 */
 	public static function getParameters() {
 		$params = parent::getParameters();
-		$params[] = array(
+		$params['structure'] = array(
 			'name' => 'structure',
 			'type' => 'text',
 			'description' => wfMsg( 'semanticformsinputs-menuselect-structure' ),
 			'default' => "* item 1\n** item 11\n** item 12\n* item 2\n** item 21\n** item 22"
 		);
-		$params[] = array(
+		$params[$sfigSettings->menuSelectDisableInputField?'enable input field':'disable input field'] = array(
 			'name' => $sfigSettings->menuSelectDisableInputField?'enable input field':'disable input field',
 			'type' => 'boolean',
 			'description' => wfMsg( 'semanticformsinputs-menuselect-enableinputfield' ),
 		);
 		return $params;
-	}	
+	}
+
+	/**
+	 * Returns the names of the resource modules this input type uses.
+	 *
+	 * Returns the names of the modules as an array or - if there is only one
+	 * module - as a string.
+	 *
+	 * @return null|string|array
+	 */
+	public function getResourceModuleNames() {
+		return 'ext.semanticformsinputs.menuselect';
+	}
+
 }

@@ -40,8 +40,6 @@ class SFIDateTimePicker extends SFFormInput {
 		
 		parent::__construct( $input_number, $cur_value, $input_name, $disabled, $other_args );
 		
-		self::setup();
-
 		// prepare sub-inputs
 		
 		$this->mOtherArgs["part of dtp"] = true;
@@ -97,26 +95,6 @@ class SFIDateTimePicker extends SFFormInput {
 		return 'datetimepicker';
 	}
 
-	/**
-	 * Static setup method for input type "menuselect".
-	 * Adds the Javascript code and css used by all menuselects.
-	*/
-	static private function setup() {
-
-		global $wgOut;
-		global $sfigSettings;
-
-		static $hasRun = false;
-
-		if ( !$hasRun ) {
-			$hasRun = true;
-
-			$wgOut->addScript( '<script type="text/javascript" src="' . $sfigSettings->scriptPath . '/libs/datetimepicker.js"></script> ' );
-
-		}
-
-	}
-	
 	protected function setupJsInitAttribs() {
 		
 		global $sfigSettings;
@@ -194,24 +172,13 @@ class SFIDateTimePicker extends SFFormInput {
 
 	/**
 	 * Returns the set of parameters for this form input.
-	 * 
-	 * TODO: Specify parameters specific for menuselect.
 	 */
 	public static function getParameters() {
-		$params = parent::getParameters();
-		
-		$params[] = array(
-			'name' => 'structure',
-			'type' => 'text',
-			'description' => wfMsg( 'semanticformsinputs-menuselect-structure' ),
-			'default' => "* item 1\n** item 11\n** item 12\n* item 2\n** item 21\n** item 22"
+		return array_merge(
+			parent::getParameters(),
+			SFIDatePicker::getParameters(),
+			SFITimePicker::getParameters()
 		);
-		$params[] = array(
-			'name' => $sfigSettings->menuSelectDisableInputField?'enable input field':'disable input field',
-			'type' => 'boolean',
-			'description' => wfMsg( 'semanticformsinputs-menuselect-enableinputfield' ),
-		);
-		return $params;
 	}
 
 	/**
@@ -225,6 +192,18 @@ class SFIDateTimePicker extends SFFormInput {
 			$this->mTimePicker->getJsValidationFunctionData()
 			);
 
+	}
+
+	/**
+	 * Returns the names of the resource modules this input type uses.
+	 * 
+	 * Returns the names of the modules as an array or - if there is only one 
+	 * module - as a string.
+	 * 
+	 * @return null|string|array
+	 */
+	public function getResourceModuleNames() {
+		return 'ext.semanticformsinputs.datetimepicker';
 	}
 
 }

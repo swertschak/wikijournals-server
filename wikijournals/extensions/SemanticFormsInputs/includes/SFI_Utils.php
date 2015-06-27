@@ -64,7 +64,7 @@ class SFIUtils {
 
 		// set readonly attrib
 		if ( $isDisabled ) {
-			$attribs['readonly'] = '1';
+			$attribs['disabled'] = true;
 		}
 
 		// if no special input id is specified set the Semantic Forms standard

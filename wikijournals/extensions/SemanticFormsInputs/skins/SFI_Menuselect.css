@@ -9,6 +9,7 @@
 	display: block;
 	cursor: default;
 	position: absolute;
+	z-index: 1;
 }
 
 .SFI_menuselect a {

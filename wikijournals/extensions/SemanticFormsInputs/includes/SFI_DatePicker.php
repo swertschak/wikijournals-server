@@ -35,6 +35,10 @@ class SFIDatePicker extends SFFormInput {
 	 */
 	public function __construct( $input_number, $cur_value, $input_name, $disabled, $other_args ) {
 
+		if ( $cur_value == 'now' ) {
+			$cur_value = date('Y/m/d');
+		}
+
 		parent::__construct( $input_number, $cur_value, $input_name, $disabled, $other_args );
 
 		// call static setup
@@ -56,27 +60,33 @@ class SFIDatePicker extends SFFormInput {
 	}
 
 	/**
+	 * Returns the names of the resource modules this input type uses.
+	 * 
+	 * Returns the names of the modules as an array or - if there is only one 
+	 * module - as a string.
+	 * 
+	 * @return null|string|array
+	 */
+	public function getResourceModuleNames() {
+		return array( 'jquery.ui.datepicker', 'ext.semanticformsinputs.datepicker' );
+	}
+
+	/**
 	 * Static setup method for input type "menuselect".
 	 * Adds the Javascript code and css used by all menuselects.
 	 */
 	static private function setup() {
 
 		global $wgOut, $wgLang;
-		global $sfgScriptPath, $sfigSettings;
 
 		static $hasRun = false;
 
 		if ( !$hasRun ) {
 			$hasRun = true;
 			
-			$wgOut->addExtensionStyle( $sfgScriptPath . '/skins/jquery-ui/base/jquery.ui.datepicker.css' );
-			$wgOut->addExtensionStyle( $sfgScriptPath . '/skins/jquery-ui/base/jquery.ui.theme.css' );
-			$wgOut->addScript( '<script type="text/javascript" src="' . $sfgScriptPath . '/libs/jquery-ui/jquery.ui.datepicker.min.js"></script> ' );
-			$wgOut->addScript( '<script type="text/javascript" src="' . $sfigSettings->scriptPath . '/libs/datepicker.js"></script> ' );
-
 			// set localized messages (use MW i18n, not jQuery i18n)
 			$jstext =
-				"jQuery(function(){\n"
+				"jQuery(function(){mw.loader.using('jquery.ui.datepicker', function(){\n"
 				. "	jQuery.datepicker.regional['wiki'] = {\n"
 				. "		closeText: '" . Xml::escapeJsString( wfMsg( 'semanticformsinputs-close' ) ) . "',\n"
 				. "		prevText: '" . Xml::escapeJsString( wfMsg( 'semanticformsinputs-prev' ) ) . "',\n"
@@ -139,7 +149,7 @@ class SFIDatePicker extends SFFormInput {
 				. "		showMonthAfterYear: false,\n"
 				. "		yearSuffix: ''};\n"
 				. "	jQuery.datepicker.setDefaults(jQuery.datepicker.regional['wiki']);\n"
-				. "});\n";
+				. "});});\n";
 
 			$wgOut->addScript( Html::inlineScript(  $jstext ) );
 			
@@ -154,7 +164,7 @@ class SFIDatePicker extends SFFormInput {
 	protected function setupJsInitAttribs() {
 
 		global $sfigSettings;
-		global $wgAmericanDates;
+		global $wgAmericanDates, $wgLang;
 
 		// store user class(es) for use with buttons
 		$userClasses = array_key_exists( 'class', $this->mOtherArgs ) ? $this->mOtherArgs['class'] : '';
@@ -607,57 +617,57 @@ class SFIDatePicker extends SFFormInput {
 		global $sfigSettings;
 		
 		$params = parent::getParameters();
-		$params[] = array(
+		$params['date format'] = array(
 			'name' => 'date format',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-dateformat' )
 		);
-		$params[] = array(
+		$params['week start'] = array(
 			'name' => 'week start',
 			'type' => 'int',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-weekstart' )
 		);
-		$params[] = array(
+		$params['first date'] = array(
 			'name' => 'first date',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-firstdate' )
 		);
-		$params[] = array(
+		$params['last date'] = array(
 			'name' => 'last date',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-lastdate' )
 		);
-		$params[] = array(
+		$params['disable days of week'] = array(
 			'name' => 'disable days of week',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-disabledaysofweek' )
 		);
-		$params[] = array(
+		$params['highlight days of week'] = array(
 			'name' => 'highlight days of week',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-highlightdaysofweek' )
 		);
-		$params[] = array(
+		$params['disable dates'] = array(
 			'name' => 'disable dates',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-disabledates' )
 		);
-		$params[] = array(
+		$params['highlight days of week'] = array(
 			'name' => 'highlight days of week',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-highlightdates' )
 		);
-		$params[] = array(
+		$params[$sfigSettings->datePickerShowWeekNumbers?'hide week numbers':'show week numbers'] = array(
 			'name' => $sfigSettings->datePickerShowWeekNumbers?'hide week numbers':'show week numbers',
 			'type' => 'boolean',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-showweeknumbers' )
 		);
-		$params[] = array(
+		$params[$sfigSettings->datePickerDisableInputField?'enable input field':'disable input field'] = array(
 			'name' => $sfigSettings->datePickerDisableInputField?'enable input field':'disable input field',
 			'type' => 'boolean',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-enableinputfield' )
 		);
-		$params[] = array(
+		$params[$sfigSettings->datePickerShowResetButton?'hide reset button':'show reset button'] = array(
 			'name' => $sfigSettings->datePickerShowResetButton?'hide reset button':'show reset button',
 			'type' => 'boolean',
 			'description' => wfMsg( 'semanticformsinputs-datepicker-showresetbutton' )

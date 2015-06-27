@@ -37,12 +37,6 @@ class SFITimePicker extends SFFormInput {
 		
 		parent::__construct( $input_number, $cur_value, $input_name, $disabled, $other_args );
 		
-		// third: if the timepicker is not disabled set up JS attributes ans assemble JS call
-		if ( !$this->mIsDisabled ) {
-
-			self::setup();
-		}
-		
 		$this->addJsInitFunctionData( 'SFI_TP_init', $this->setupJsInitAttribs() );
 			
 	}
@@ -59,27 +53,6 @@ class SFITimePicker extends SFFormInput {
 		return 'timepicker';
 	}
 
-	/**
-	 * Static setup method for input type "menuselect".
-	 * Adds the Javascript code and css used by all menuselects.
-	*/
-	static private function setup() {
-
-		global $wgOut;
-		global $sfigSettings;
-
-		static $hasRun = false;
-
-		if ( !$hasRun ) {
-			$hasRun = true;
-			
-			$wgOut->addScript( '<script type="text/javascript" src="' . $sfigSettings->scriptPath . '/libs/timepicker.js"></script> ' );
-			$wgOut->addExtensionStyle( $sfigSettings->scriptPath . '/skins/SFI_Timepicker.css' );
-			
-		}
-
-	}
-	
 	/**
 	 * Set up JS attributes
 	 * 
@@ -174,11 +147,6 @@ class SFITimePicker extends SFFormInput {
 
 		global $sfigSettings;
 
-		// The timepicker is created in four steps:
-		// first: set up HTML attributes
-		// second: assemble HTML
-
-
 		// first: set up HTML attributes
 		$inputFieldDisabled =
 			array_key_exists( 'disable input field', $this->mOtherArgs )
@@ -215,27 +183,27 @@ class SFITimePicker extends SFFormInput {
 		global $sfigSettings;
 		
 		$params = parent::getParameters();
-		$params[] = array(
+		$params['mintime'] = array(
 			'name' => 'mintime',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-timepicker-mintime' ),
 		);
-		$params[] = array(
+		$params['maxtime'] = array(
 			'name' => 'maxtime',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-timepicker-maxtime' ),
 		);
-		$params[] = array(
+		$params['interval'] = array(
 			'name' => 'interval',
 			'type' => 'int',
 			'description' => wfMsg( 'semanticformsinputs-timepicker-interval' ),
 		);
-		$params[] = array(
+		$params[$sfigSettings->timePickerDisableInputField?'enable input field':'disable input field'] = array(
 			'name' => $sfigSettings->timePickerDisableInputField?'enable input field':'disable input field',
 			'type' => 'boolean',
 			'description' => wfMsg( 'semanticformsinputs-timepicker-enableinputfield' ),
 		);
-		$params[] = array(
+		$params[$sfigSettings->timePickerShowResetButton?'hide reset button':'show reset button'] = array(
 			'name' => $sfigSettings->timePickerShowResetButton?'hide reset button':'show reset button',
 			'type' => 'boolean',
 			'description' => wfMsg( 'semanticformsinputs-timepicker-showresetbutton' ),
@@ -243,4 +211,16 @@ class SFITimePicker extends SFFormInput {
 
 		return $params;
 	}	
+
+	/**
+	 * Returns the names of the resource modules this input type uses.
+	 * 
+	 * Returns the names of the modules as an array or - if there is only one 
+	 * module - as a string.
+	 * 
+	 * @return null|string|array
+	 */
+	public function getResourceModuleNames() {
+		return 'ext.semanticformsinputs.timepicker';
+	}
 }

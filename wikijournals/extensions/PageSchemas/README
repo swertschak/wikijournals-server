@@ -1,7 +1,7 @@
 Page Schemas extension
 
-        Version 0.3
-        Ankit Garg and Yaron Koren
+        Version 0.4.5
+        Yaron Koren and Ankit Garg
 
 This is free software licensed under the GNU General Public License. Please
 see http://www.gnu.org/copyleft/gpl.html for further details, including the
@@ -35,6 +35,20 @@ within your MediaWiki 'extensions' directory, then add the following
 line to your 'LocalSettings.php' file:
 
      require_once( "$IP/extensions/PageSchemas/PageSchemas.php" );
+
+== Credits ==
+
+Page Schemas was initially created by Ankit Garg as part of the 2011
+Google Summer of Code program. It was then modified substantially by
+Yaron Koren, who also mentored the Google Summer of Code project.
+
+Section handling was added by Himeshi De Silva as part of the 2013
+Google Summer of Code, again mentored by Yaron.
+
+Important code contributions were also made by Vedmaka.
+
+Language translations were provided by many people; see the files in
+the /i18n directory for the full listing.
 
 == Contact ==
 

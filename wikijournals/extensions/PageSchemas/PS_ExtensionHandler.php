@@ -39,6 +39,10 @@ class PSExtensionHandler {
 		return null;
 	}
 
+	public static function createPageSectionXMLFromForm() {
+		return null;
+	}
+
 	public static function getDisplayColor() {
 		return 'white';
 	}
@@ -49,6 +53,10 @@ class PSExtensionHandler {
 
 	public static function getSchemaEditingHTML( $pageSchema ) {
 		return null;
+	}
+
+	public static function isTemplateDataMultipleInstanceOnly() {
+		return true;
 	}
 
 	public static function getTemplateDisplayString() {
@@ -63,11 +71,18 @@ class PSExtensionHandler {
 		return null;
 	}
 
+	public static function getPageSectionDisplayString() {
+		return null;
+	}
 	/**
 	 * Returns the HTML for inputs to define a single form field,
 	 * within the Page Schemas 'edit schema' page.
 	 */
 	public static function getFieldEditingHTML( $psField ) {
+		return null;
+	}
+
+	public static function getPageSectionEditingHTML( $psPageSection ) {
 		return null;
 	}
 
@@ -104,6 +119,13 @@ class PSExtensionHandler {
 	 * Displays data on a single form input in the Page Schemas XML.
 	 */
 	public static function getFieldDisplayValues( $fieldXML ) {
+		return null;
+	}
+
+	/**
+	 * Displays form details for one page section in the Page Schemas XML.
+	 */
+	public static function getPageSectionDisplayValues( $pageSectionXML ) {
 		return null;
 	}
 }

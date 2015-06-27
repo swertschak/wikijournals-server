@@ -42,9 +42,6 @@ class SFIRegExp extends SFFormInput {
 
 		parent::__construct( $input_number, $cur_value, $input_name, $disabled, $other_args );
 
-		// call static setup
-		self::setup();
-
 		// set OR character
 		if ( array_key_exists( 'or char', $this->mOtherArgs ) ) {
 			$orChar = trim( $this->mOtherArgs['or char'] );
@@ -52,7 +49,6 @@ class SFIRegExp extends SFFormInput {
 		} else {
 			$orChar = '!';
 		}
-
 
 		// set regexp string
 		if ( array_key_exists( 'regexp', $this->mOtherArgs ) ) {
@@ -151,20 +147,23 @@ class SFIRegExp extends SFFormInput {
 	}
 
 	/**
-	 * Static setup method for input type "menuselect".
-	 * Adds the Javascript code and css used by all menuselects.
+	 * Returns the names of the resource modules this input type uses.
+	 * 
+	 * Returns the names of the modules as an array or - if there is only one 
+	 * module - as a string.
+	 * 
+	 * @return null|string|array
 	 */
-	static private function setup() {
-
-		global $wgOut;
-		global $sfigSettings;
-
-		static $hasRun = false;
-
-		if ( !$hasRun ) {
-			$hasRun = true;
-			$wgOut->addScript( '<script type="text/javascript" src="' . $sfigSettings->scriptPath . '/libs/regexp.js"></script> ' );
+	public function getResourceModuleNames() {
+		$modules = $this->mBaseInput->getResourceModuleNames();
+		if ( is_array( $modules ) ) {
+			return array_merge( $modules, array( 'ext.semanticformsinputs.regexp' ));
+		} elseif ( is_string( $modules ) ) {
+			return array( $modules, 'ext.semanticformsinputs.regexp' );
+		} else {
+			return 'ext.semanticformsinputs.regexp';
 		}
+			
 	}
 
 	/**
@@ -172,37 +171,36 @@ class SFIRegExp extends SFFormInput {
 	 */
 	public static function getParameters() {
 		$params = parent::getParameters();
-		$params[] = array(
+		$params['regexp'] = array(
 			'name' => 'regexp',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-regexp-regexp' )
 		);
-		$params[] = array(
+		$params['base type'] = array(
 			'name' => 'base type',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-regexp-basetype' )
 		);
-		$params[] = array(
+		$params['base prefix'] = array(
 			'name' => 'base prefix',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-regexp-baseprefix' )
 		);
-		$params[] = array(
+		$params['or char'] = array(
 			'name' => 'or char',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-regexp-orchar' )
 		);
-		$params[] = array(
+		$params['inverse'] = array(
 			'name' => 'inverse',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-regexp-inverse' )
 		);
-		$params[] = array(
+		$params['message'] = array(
 			'name' => 'message',
 			'type' => 'string',
 			'description' => wfMsg( 'semanticformsinputs-regexp-message' )
 		);
-
 
 		return $params;
 	}

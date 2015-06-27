@@ -39,7 +39,10 @@ class SIOInternalObject {
 	}
 
 	public function getName() {
-		return $this->mMainTitle->getDBkey() . '#' . $this->mIndex;
+		// Pad number to three digits, so that SMW's sorting (which
+		// treats the values as strings, not numbers) will work
+		// correctly.
+		return $this->mMainTitle->getDBkey() . '#' . sprintf( '%03d', $this->mIndex );
 	}
 
 	public function getNamespace() {
@@ -97,7 +100,7 @@ class SIOSQLStore extends SMWSQLStore2 {
 	 */
 	function getStorageSQL( $internalObject ) {
 		if ( method_exists( 'SMWDIWikiPage', 'getSubobjectName' ) ) {
-			// SMW 1.6
+			// SMW 1.6+
 			$ioID = $this->makeSMWPageID( $internalObject->getName(), $internalObject->getNamespace(), '', '' );
 		} else {
 			$ioID = $this->makeSMWPageID( $internalObject->getName(), $internalObject->getNamespace(), '' );
@@ -118,7 +121,7 @@ class SIOSQLStore extends SMWSQLStore2 {
 			
 			if ( $isRelation ) {
 				if ( method_exists( 'SMWDIWikiPage', 'getSubobjectName' ) ) {
-					// SMW 1.6
+					// SMW 1.6+
 					$mainPageID = $this->makeSMWPageID( $value->getDBkey(), $value->getNamespace(), $value->getInterwiki(), '' );
 				} else {
 					$mainPageID = $this->makeSMWPageID( $value->getDBkey(), $value->getNamespace(), $value->getInterwiki() );
@@ -130,7 +133,7 @@ class SIOSQLStore extends SMWSQLStore2 {
 				);
 			} elseif ( $isAttribute ) {
 				if ( class_exists( 'SMWCompatibilityHelpers' ) ) {
-					// SMW 1.6
+					// SMW 1.6+
 					$dataItem = $value->getDataItem();
 					$keys = SMWCompatibilityHelpers::getDBkeysFromDataItem( $dataItem );
 					$valueNum = $dataItem->getSortKey();
@@ -158,7 +161,7 @@ class SIOSQLStore extends SMWSQLStore2 {
 				$upAtts2[] = $upAttr;
 			} elseif ( $isText ) {
 				if ( method_exists( $value, 'getShortWikiText' ) ) {
-					// SMW 1.6
+					// SMW 1.6+
 					$key = $value->getShortWikiText();
 				} else {
 					$keys = $value->getDBkeys();
@@ -170,7 +173,22 @@ class SIOSQLStore extends SMWSQLStore2 {
 					'value_blob' => $key
 				);
 			} elseif ( $isCoords ) {
-				$keys = $value->getDBkeys();
+				if ( class_exists( 'SMWDIGeoCoord' ) ) {
+					// SMW 1.6+
+					$dataItem = $value->getDataItem();
+					$coordinateSet = $dataItem->getCoordinateSet();
+					$keys = array(
+						$coordinateSet['lat'],
+						$coordinateSet['lon']
+					);
+				} elseif ( class_exists( 'SMWCompatibilityHelpers' ) ) {
+					// Also SMW 1.6+ - this will probably
+					// never get called.
+					$dataItem = $value->getDataItem();
+					$keys = SMWCompatibilityHelpers::getDBkeysFromDataItem( $dataItem );
+				} else {
+					$keys = $value->getDBkeys();
+				}
 				$upCoords[] = array(
 					's_id' => $ioID,
 					'p_id' => $this->makeSMWPropertyID( $property ),
@@ -262,6 +280,8 @@ class SIOHandler {
 	 * Handle the #set_internal parser function.
 	 */
 	public static function doSetInternal( &$parser ) {
+		global $wgContLang;
+
 		$title = $parser->getTitle();
 		$mainPageFullName = $title->getText();
 		if ( ( $nsText = $title->getNsText() ) != '' ) {
@@ -285,17 +305,17 @@ class SIOHandler {
 		$params = func_get_args();
 		array_shift( $params ); // we already know the $parser...
 		$internalObject = new SIOInternalObject( $title, $curObjectNum );
-		$objToPagePropName = array_shift( $params );
+		$objToPagePropName = $wgContLang->ucfirst( array_shift( $params ) );
 		$internalObject->addPropertyAndValue( $objToPagePropName, self::$mCurPageFullName );
 		
 		foreach ( $params as $param ) {
-			$parts = explode( '=', trim( $param ), 2 );
+			$parts = explode( '=', $param, 2 );
 			
 			if ( count( $parts ) == 2 ) {
-				$key = $parts[0];
-				$value = $parts[1];
-				// if the property name ends with '#list', it's
-				// a comma-delimited group of values
+				$key = trim( $parts[0] );
+				$value = trim( $parts[1] );
+				// If the property name ends with '#list', it's
+				// a comma-delimited group of values.
 				if ( substr( $key, - 5 ) == '#list' ) {
 					$key = substr( $key, 0, strlen( $key ) - 5 );
 					$listValues = explode( ',', $value );
@@ -313,7 +333,7 @@ class SIOHandler {
 	}
 
 	/**
-	 * Handle the #set_internal_recurring_event parser function.
+	 * Handles the #set_internal_recurring_event parser function.
 	 */
 	public static function doSetInternalRecurringEvent( &$parser ) {
 		$params = func_get_args();
@@ -322,13 +342,8 @@ class SIOHandler {
 		// First param should be a standalone property name.
 		$objToPagePropName = array_shift( $params );
 
-		// The location of this function changed in SMW 1.5.3
-		if ( class_exists( 'SMWSetRecurringEvent' ) ) {
-			$results = SMWSetRecurringEvent::getDatesForRecurringEvent( $params );
-		} else {
-			$results = SMWParserExtensions::getDatesForRecurringEvent( $params );
-		}
-		
+		$results = SMWSetRecurringEvent::getDatesForRecurringEvent( $params );
+
 		if ( $results == null ) {
 			return null;
 		}
@@ -385,7 +400,7 @@ class SIOHandler {
 			wfRunHooks( 'SIOHandler::updateData', array( $internalObject ) );
 		}
 
-		// now save everything to the database, in a single transaction
+		// Now save everything to the database, in a single transaction.
 		$db = wfGetDB( DB_MASTER );
 		$db->begin( 'SIO::updatePageData' );
 
@@ -461,7 +476,12 @@ class SIOHandler {
 		$uniqueTitles = array();
 		
 		foreach ( $jobs as $i => $job ) {
-			$title = Title::makeTitleSafe( $job->title->getNamespace(), $job->title->getText() );
+			if ( method_exists( $job, 'getTitle' ) ) {
+				// MW 1.20?
+				$title = Title::makeTitleSafe( $job->getTitle()->getNamespace(), $job->getTitle()->getText() );
+			} else {
+				$title = Title::makeTitleSafe( $job->title->getNamespace(), $job->title->getText() );
+			}
 			$id = $title->getArticleID();
 			$uniqueTitles[$id] = $title;
 		}
@@ -483,15 +503,21 @@ class SIOHandler {
 	 * a SIO object instead of filtering them down to unique titles.
 	 */
 	 static function handleRefreshingOfInternalObjects( &$jobs ) {
-	 	$allJobs = $jobs;
-	 	$jobs = array();
-	 	
-	 	foreach ( $allJobs as $job ) {
-	 		if ( strpos( $job->title->getText(), '#' ) === false ) {
-	 			$jobs[] = $job;
-	 		}
-	 	}
-	 	
+		$allJobs = $jobs;
+		$jobs = array();
+		
+		foreach ( $allJobs as $job ) {
+			if ( method_exists( $job, 'getTitle' ) ) {
+				// MW 1.20?
+				$jobTitle = $job->getTitle();
+			} else {
+				$jobTitle = $job->title;
+			}
+			if ( strpos( $jobTitle->getText(), '#' ) === false ) {
+				$jobs[] = $job;
+			}
+		}
+
 		return true;
 	}
 	

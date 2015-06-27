@@ -8,6 +8,7 @@
 	position: absolute;
 	cursor: default;
 	margin-top: 22px;
+	z-index: 1;
 }
 
 .SFI_timepicker ul { /* hours and minutes lists */
