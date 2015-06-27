@@ -4,7 +4,7 @@
 /*jshint camelcase:false, quotmark:false */
 ( function ( $, mw ) { $.wikiEditor.modules.toolbar.config = {
 
-getDefaultConfig: function() {
+getDefaultConfig: function () {
 	var fileNamespace = mw.config.get( 'wgFormattedNamespaces' )[6];
 	return { 'toolbar': {
 		// Main section
@@ -310,28 +310,6 @@ getDefaultConfig: function() {
 								'options': {
 									'pre': "# ",
 									'periMsg': 'wikieditor-toolbar-tool-olist-example',
-									'post': "",
-									'ownline': true,
-									'splitlines': true
-								}
-							}
-						},
-						'indent': {
-							'labelMsg': 'wikieditor-toolbar-tool-indent',
-							'type': 'button',
-							'icon': {
-								'default': 'format-indent.png',
-								'default-rtl': 'format-indent-rtl.png'
-							},
-							'offset': {
-								'default': [2, -646],
-								'default-rtl': [-70, -430]
-							},
-							'action': {
-								'type': 'encapsulate',
-								'options': {
-									'pre': ":",
-									'periMsg': 'wikieditor-toolbar-tool-indent-example',
 									'post': "",
 									'ownline': true,
 									'splitlines': true

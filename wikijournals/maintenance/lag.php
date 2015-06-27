@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script to show database lag.
@@ -39,7 +39,9 @@ class DatabaseLag extends Maintenance {
 		if ( $this->hasOption( 'r' ) ) {
 			$lb = wfGetLB();
 			echo 'time     ';
-			for ( $i = 1; $i < $lb->getServerCount(); $i++ ) {
+
+			$serverCount = $lb->getServerCount();
+			for ( $i = 1; $i < $serverCount; $i++ ) {
 				$hostname = $lb->getServerName( $i );
 				printf( "%-12s ", $hostname );
 			}
@@ -68,4 +70,4 @@ class DatabaseLag extends Maintenance {
 }
 
 $maintClass = "DatabaseLag";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

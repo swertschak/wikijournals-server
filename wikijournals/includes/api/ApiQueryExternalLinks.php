@@ -31,7 +31,7 @@
  */
 class ApiQueryExternalLinks extends ApiQueryBase {
 
-	public function __construct( $query, $moduleName ) {
+	public function __construct( ApiQuery $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'el' );
 	}
 
@@ -88,7 +88,7 @@ class ApiQueryExternalLinks extends ApiQueryBase {
 			$entry = array();
 			$to = $row->el_to;
 			// expand protocol-relative urls
-			if( $params['expandurl'] ) {
+			if ( $params['expandurl'] ) {
 				$to = wfExpandUrl( $to, PROTO_CANONICAL );
 			}
 			ApiResult::setContent( $entry, $to );
@@ -127,39 +127,28 @@ class ApiQueryExternalLinks extends ApiQueryBase {
 
 	public function getParamDescription() {
 		$p = $this->getModulePrefix();
+
 		return array(
 			'limit' => 'How many links to return',
 			'offset' => 'When more results are available, use this to continue',
 			'protocol' => array(
-				"Protocol of the url. If empty and {$p}query set, the protocol is http.",
+				"Protocol of the URL. If empty and {$p}query set, the protocol is http.",
 				"Leave both this and {$p}query empty to list all external links"
 			),
-			'query' => 'Search string without protocol. Useful for checking whether a certain page contains a certain external url',
-			'expandurl' => 'Expand protocol-relative urls with the canonical protocol',
-		);
-	}
-
-	public function getResultProperties() {
-		return array(
-			'' => array(
-				'*' => 'string'
-			)
+			'query' => 'Search string without protocol. Useful for checking ' .
+				'whether a certain page contains a certain external url',
+			'expandurl' => 'Expand protocol-relative URLs with the canonical protocol',
 		);
 	}
 
 	public function getDescription() {
-		return 'Returns all external urls (not interwikis) from the given page(s)';
-	}
-
-	public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
-			array( 'code' => 'bad_query', 'info' => 'Invalid query' ),
-		) );
+		return 'Returns all external URLs (not interwikis) from the given page(s).';
 	}
 
 	public function getExamples() {
 		return array(
-			'api.php?action=query&prop=extlinks&titles=Main%20Page' => 'Get a list of external links on the [[Main Page]]',
+			'api.php?action=query&prop=extlinks&titles=Main%20Page'
+				=> 'Get a list of external links on the [[Main Page]]',
 		);
 	}
 

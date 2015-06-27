@@ -1,20 +1,24 @@
 <?php
 
+// @codingStandardsIgnoreStart Ignore Squiz.Classes.ValidClassName.NotCamelCaps
 class LanguageBe_taraskTest extends LanguageClassesTestCase {
-
+	// @codingStandardsIgnoreEnd
 	/**
 	 * Make sure the language code we are given is indeed
 	 * be-tarask. This is to ensure LanguageClassesTestCase
 	 * does not give us the wrong language.
 	 */
-	function testBeTaraskTestsUsesBeTaraskCode() {
+	public function testBeTaraskTestsUsesBeTaraskCode() {
 		$this->assertEquals( 'be-tarask',
 			$this->getLang()->getCode()
 		);
 	}
 
-	/** see bug 23156 & r64981 */
-	function testSearchRightSingleQuotationMarkAsApostroph() {
+	/**
+	 * @see bug 23156 & r64981
+	 * @covers Language::commafy
+	 */
+	public function testSearchRightSingleQuotationMarkAsApostroph() {
 		$this->assertEquals(
 			"'",
 			$this->getLang()->normalizeForSearch( '’' ),
@@ -22,24 +26,41 @@ class LanguageBe_taraskTest extends LanguageClassesTestCase {
 		);
 	}
 
-	/** see bug 23156 & r64981 */
-	function testCommafy() {
+	/**
+	 * @see bug 23156 & r64981
+	 * @covers Language::commafy
+	 */
+	public function testCommafy() {
 		$this->assertEquals( '1,234,567', $this->getLang()->commafy( '1234567' ) );
 		$this->assertEquals( '12,345', $this->getLang()->commafy( '12345' ) );
 	}
 
-	/** see bug 23156 & r64981 */
-	function testDoesNotCommafyFourDigitsNumber() {
+	/**
+	 * @see bug 23156 & r64981
+	 * @covers Language::commafy
+	 */
+	public function testDoesNotCommafyFourDigitsNumber() {
 		$this->assertEquals( '1234', $this->getLang()->commafy( '1234' ) );
 	}
 
-	/** @dataProvider providePluralFourForms */
-	function testPluralFourForms( $result, $value ) {
+	/**
+	 * @dataProvider providePlural
+	 * @covers Language::convertPlural
+	 */
+	public function testPlural( $result, $value ) {
 		$forms = array( 'one', 'few', 'many', 'other' );
 		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
-	function providePluralFourForms() {
+	/**
+	 * @dataProvider providePlural
+	 * @covers Language::getPluralRuleType
+	 */
+	public function testGetPluralRuleType( $result, $value ) {
+		$this->assertEquals( $result, $this->getLang()->getPluralRuleType( $value ) );
+	}
+
+	public static function providePlural() {
 		return array(
 			array( 'one', 1 ),
 			array( 'many', 11 ),
@@ -55,19 +76,22 @@ class LanguageBe_taraskTest extends LanguageClassesTestCase {
 		);
 	}
 
-	/** @dataProvider providePluralTwoForms */
-	function testPluralTwoForms( $result, $value ) {
-		$forms = array( 'one', 'several' );
+	/**
+	 * @dataProvider providePluralTwoForms
+	 * @covers Language::convertPlural
+	 */
+	public function testPluralTwoForms( $result, $value ) {
+		$forms = array( '1=one', 'other' );
 		$this->assertEquals( $result, $this->getLang()->convertPlural( $value, $forms ) );
 	}
 
-	function providePluralTwoForms() {
+	public static function providePluralTwoForms() {
 		return array(
+			array( 'other', 0 ),
 			array( 'one', 1 ),
-			array( 'several', 11 ),
-			array( 'several', 91 ),
-			array( 'several', 121 ),
+			array( 'other', 11 ),
+			array( 'other', 91 ),
+			array( 'other', 121 ),
 		);
 	}
-
 }

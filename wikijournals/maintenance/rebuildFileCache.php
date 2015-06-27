@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that builds file cache for content pages.
@@ -49,7 +49,7 @@ class RebuildFileCache extends Maintenance {
 
 	public function execute() {
 		global $wgUseFileCache, $wgReadOnly, $wgContentNamespaces, $wgRequestTime;
-		global $wgTitle, $wgOut;
+		global $wgOut;
 		if ( !$wgUseFileCache ) {
 			$this->error( "Nothing to do -- \$wgUseFileCache is disabled.", true );
 		}
@@ -104,22 +104,22 @@ class RebuildFileCache extends Maintenance {
 				$rebuilt = false;
 				$wgRequestTime = microtime( true ); # bug 22852
 
-				$wgTitle = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
-				if ( null == $wgTitle ) {
+				$title = Title::makeTitleSafe( $row->page_namespace, $row->page_title );
+				if ( null == $title ) {
 					$this->output( "Page {$row->page_id} has bad title\n" );
 					continue; // broken title?
 				}
 
 				$context = new RequestContext;
-				$context->setTitle( $wgTitle );
-				$article = Article::newFromTitle( $wgTitle, $context );
+				$context->setTitle( $title );
+				$article = Article::newFromTitle( $title, $context );
 				$context->setWikiPage( $article->getPage() );
 
 				$wgOut = $context->getOutput(); // set display title
 
 				// If the article is cacheable, then load it
 				if ( $article->isFileCacheable() ) {
-					$cache = HTMLFileCache::newFromTitle( $wgTitle, 'view' );
+					$cache = HTMLFileCache::newFromTitle( $title, 'view' );
 					if ( $cache->isCacheGood() ) {
 						if ( $overwrite ) {
 							$rebuilt = true;
@@ -151,12 +151,8 @@ class RebuildFileCache extends Maintenance {
 			$blockEnd += $this->mBatchSize;
 		}
 		$this->output( "Done!\n" );
-
-		// Remove these to be safe
-		if ( isset( $wgTitle ) )
-			unset( $wgTitle );
 	}
 }
 
 $maintClass = "RebuildFileCache";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

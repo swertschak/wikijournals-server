@@ -43,7 +43,7 @@ class MaintenanceFixup extends Maintenance {
 	private $testCase;
 
 	/**
-	 * shutdownSimulated === true iff simulateShutdown has done it's work
+	 * shutdownSimulated === true if simulateShutdown has done it's work
 	 *
 	 * @var bool
 	 */
@@ -81,7 +81,7 @@ class MaintenanceFixup extends Maintenance {
 			return;
 		}
 
-		return call_user_func_array( array( "parent", __FUNCTION__ ), func_get_args() );
+		call_user_func_array( array( "parent", __FUNCTION__ ), func_get_args() );
 	}
 
 	/**
@@ -111,7 +111,6 @@ class MaintenanceFixup extends Maintenance {
 		$this->testCase = $testCase;
 	}
 
-
 	// --- Making protected functions visible for test
 
 	public function output( $out, $channel = null ) {
@@ -122,17 +121,17 @@ class MaintenanceFixup extends Maintenance {
 		return call_user_func_array( array( "parent", __FUNCTION__ ), func_get_args() );
 	}
 
-
 	// --- Requirements for getting instance of abstract class
 
 	public function execute() {
 		$this->testCase->fail( __METHOD__ . " called unexpectedly" );
 	}
-
 }
 
+/**
+ * @covers Maintenance
+ */
 class MaintenanceTest extends MediaWikiTestCase {
-
 
 	/**
 	 * The main Maintenance instance that is used for testing.
@@ -140,7 +139,6 @@ class MaintenanceTest extends MediaWikiTestCase {
 	 * @var MaintenanceFixup
 	 */
 	private $m;
-
 
 	protected function setUp() {
 		parent::setUp();
@@ -155,18 +153,17 @@ class MaintenanceTest extends MediaWikiTestCase {
 		parent::tearDown();
 	}
 
-
 	/**
 	 * asserts the output before and after simulating shutdown
 	 *
 	 * This function simulates shutdown of self::m.
 	 *
-	 * @param $preShutdownOutput string: expected output before simulating shutdown
-	 * @param $expectNLAppending bool: Whether or not shutdown simulation is expected
-	 *            to add a newline to the output. If false, $preShutdownOutput is the
-	 *            expected output after shutdown simulation. Otherwise,
-	 *            $preShutdownOutput with an appended newline is the expected output
-	 *            after shutdown simulation.
+	 * @param string $preShutdownOutput Expected output before simulating shutdown
+	 * @param bool $expectNLAppending Whether or not shutdown simulation is expected
+	 *   to add a newline to the output. If false, $preShutdownOutput is the
+	 *   expected output after shutdown simulation. Otherwise,
+	 *   $preShutdownOutput with an appended newline is the expected output
+	 *   after shutdown simulation.
 	 */
 	private function assertOutputPrePostShutdown( $preShutdownOutput, $expectNLAppending ) {
 
@@ -180,12 +177,10 @@ class MaintenanceTest extends MediaWikiTestCase {
 		$this->expectOutputString( $postShutdownOutput );
 	}
 
-
 	// Although the following tests do not seem to be too consistent (compare for
 	// example the newlines within the test.*StringString tests, or the
 	// test.*Intermittent.* tests), the objective of these tests is not to describe
 	// consistent behavior, but rather currently existing behavior.
-
 
 	function testOutputEmpty() {
 		$this->m->output( "" );
@@ -816,5 +811,20 @@ class MaintenanceTest extends MediaWikiTestCase {
 		$this->assertOutputPrePostShutdown( "foobar\n\n", false );
 	}
 
+	/**
+	 * @covers Maintenance::getConfig
+	 */
+	public function testGetConfig() {
+		$this->assertInstanceOf( 'Config', $this->m->getConfig() );
+		$this->assertSame( ConfigFactory::getDefaultInstance()->makeConfig( 'main' ), $this->m->getConfig() );
+	}
 
+	/**
+	 * @covers Maintenance::setConfig
+	 */
+	public function testSetConfig() {
+		$conf = $this->getMock( 'Config' );
+		$this->m->setConfig( $conf );
+		$this->assertSame( $conf, $this->m->getConfig() );
+	}
 }

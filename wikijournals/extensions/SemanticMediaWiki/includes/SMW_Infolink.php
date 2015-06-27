@@ -5,7 +5,6 @@
  * @author Markus Krötzsch
  * @author Jeroen De Dauw
  *
- * @file
  * @ingroup SMW
  */
 
@@ -376,8 +375,8 @@ class SMWInfolink {
 				//      make URLs less readable
 				//
 				$value = str_replace(
-					array( '-', '#', "\n", ' ', '/', '[', ']', '<', '>', '&lt;', '&gt;', '&amp;', '\'\'', '|', '&', '%', '?', '$' ),
-					array( '-2D', '-23', '-0A', '-20', '-2F', '-5B', '-5D', '-3C', '-3E', '-3C', '-3E', '-26', '-27-27', '-7C', '-26', '-25', '-3F', '-24' ),
+					array( '-', '#', "\n", ' ', '/', '[', ']', '<', '>', '&lt;', '&gt;', '&amp;', '\'\'', '|', '&', '%', '?', '$', "\\", ";" ),
+					array( '-2D', '-23', '-0A', '-20', '-2F', '-5B', '-5D', '-3C', '-3E', '-3C', '-3E', '-26', '-27-27', '-7C', '-26', '-25', '-3F', '-24', '-5C', "-3B" ),
 					$value
 				);
 
@@ -392,7 +391,7 @@ class SMWInfolink {
 
 			foreach ( $params as $name => $value ) {
 				if ( is_string( $name ) && ( $name !== '' ) ) {
-					$value = $name . '=' . rawurlencode( $value );
+					$value = rawurlencode( $name ) . '=' . rawurlencode( $value );
 
 					if ( $result !== '' ) {
 						$result .= '&';

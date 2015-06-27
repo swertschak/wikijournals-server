@@ -27,26 +27,25 @@
  * @ingroup FileBackend
  */
 class FSFile {
-	protected $path; // path to file
-	private $sha1Base36 = null; // File Sha1Base36
+	/** @var string Path to file */
+	protected $path;
+
+	/** @var string File SHA-1 in base 36 */
+	protected $sha1Base36;
 
 	/**
 	 * Sets up the file object
 	 *
 	 * @param string $path Path to temporary file on local disk
-	 * @throws MWException
 	 */
 	public function __construct( $path ) {
-		if ( FileBackend::isStoragePath( $path ) ) {
-			throw new MWException( __METHOD__ . " given storage path `$path`." );
-		}
 		$this->path = $path;
 	}
 
 	/**
 	 * Returns the file system path
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function getPath() {
 		return $this->path;
@@ -82,6 +81,7 @@ class FSFile {
 		if ( $timestamp !== false ) {
 			$timestamp = wfTimestamp( TS_MW, $timestamp );
 		}
+
 		return $timestamp;
 	}
 
@@ -98,7 +98,7 @@ class FSFile {
 	 * Get an associative array containing information about
 	 * a file with the given storage path.
 	 *
-	 * @param $ext Mixed: the file extension, or true to extract it from the filename.
+	 * @param string|bool $ext The file extension, or true to extract it from the filename.
 	 *             Set it to false to ignore the extension.
 	 *
 	 * @return array
@@ -118,9 +118,9 @@ class FSFile {
 				$ext = self::extensionFromPath( $this->path );
 			}
 
-			# mime type according to file contents
+			# MIME type according to file contents
 			$info['file-mime'] = $this->getMimeType();
-			# logical mime type
+			# logical MIME type
 			$info['mime'] = $magic->improveTypeFromExtension( $info['file-mime'], $ext );
 
 			list( $info['major_mime'], $info['minor_mime'] ) = File::splitMime( $info['mime'] );
@@ -147,13 +147,14 @@ class FSFile {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $info;
 	}
 
 	/**
 	 * Placeholder file properties to use for files that don't exist
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public static function placeholderProps() {
 		$info = array();
@@ -165,14 +166,15 @@ class FSFile {
 		$info['width'] = 0;
 		$info['height'] = 0;
 		$info['bits'] = 0;
+
 		return $info;
 	}
 
 	/**
 	 * Exract image size information
 	 *
-	 * @param $gis array
-	 * @return Array
+	 * @param array $gis
+	 * @return array
 	 */
 	protected function extractImageSizeInfo( array $gis ) {
 		$info = array();
@@ -184,6 +186,7 @@ class FSFile {
 		} else {
 			$info['bits'] = 0;
 		}
+
 		return $info;
 	}
 
@@ -194,7 +197,7 @@ class FSFile {
 	 * 160 log 2 / log 36 = 30.95, so the 160-bit hash fills 31 digits in base 36
 	 * fairly neatly.
 	 *
-	 * @param $recache bool
+	 * @param bool $recache
 	 * @return bool|string False on failure
 	 */
 	public function getSha1Base36( $recache = false ) {
@@ -202,6 +205,7 @@ class FSFile {
 
 		if ( $this->sha1Base36 !== null && !$recache ) {
 			wfProfileOut( __METHOD__ );
+
 			return $this->sha1Base36;
 		}
 
@@ -214,31 +218,33 @@ class FSFile {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $this->sha1Base36;
 	}
 
 	/**
 	 * Get the final file extension from a file system path
 	 *
-	 * @param $path string
+	 * @param string $path
 	 * @return string
 	 */
 	public static function extensionFromPath( $path ) {
 		$i = strrpos( $path, '.' );
+
 		return strtolower( $i ? substr( $path, $i + 1 ) : '' );
 	}
 
 	/**
 	 * Get an associative array containing information about a file in the local filesystem.
 	 *
-	 * @param string $path absolute local filesystem path
-	 * @param $ext Mixed: the file extension, or true to extract it from the filename.
-	 *             Set it to false to ignore the extension.
-	 *
+	 * @param string $path Absolute local filesystem path
+	 * @param string|bool $ext The file extension, or true to extract it from the filename.
+	 *   Set it to false to ignore the extension.
 	 * @return array
 	 */
 	public static function getPropsFromPath( $path, $ext = true ) {
 		$fsFile = new self( $path );
+
 		return $fsFile->getProps( $ext );
 	}
 
@@ -249,19 +255,12 @@ class FSFile {
 	 * 160 log 2 / log 36 = 30.95, so the 160-bit hash fills 31 digits in base 36
 	 * fairly neatly.
 	 *
-	 * @param $path string
-	 * @param $recache bool
-	 *
+	 * @param string $path
 	 * @return bool|string False on failure
 	 */
-	public static function getSha1Base36FromPath( $path, $recache = false ) {
-		static $sha1Base36 = array();
+	public static function getSha1Base36FromPath( $path ) {
+		$fsFile = new self( $path );
 
-		if ( !isset( $sha1Base36[$path] ) || $recache ) {
-			$fsFile = new self( $path );
-			$sha1Base36[$path] = $fsFile->getSha1Base36();
-		}
-
-		return $sha1Base36[$path];
+		return $fsFile->getSha1Base36();
 	}
 }

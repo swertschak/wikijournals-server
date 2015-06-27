@@ -17,6 +17,7 @@ include_once( $smwgIP . 'languages/SMW_Language.php' );
  * French language labels for important SMW labels (namespaces, datatypes,...).
  *
  * @author Pierre Matringe
+ * @author LIMAFOX76
  * @ingroup SMWLanguage
  * @ingroup Language
  */
@@ -24,7 +25,6 @@ class SMWLanguageFr extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Page', // name of page datatype
-		'_str' => 'Chaîne de caractères',  // name of the string type
 		'_txt' => 'Texte',  // name of the text type (very long strings)
 		'_cod' => 'Code',  // name of the (source) code type
 		'_boo' => 'Booléen',  // name of the boolean type
@@ -37,14 +37,15 @@ class SMWLanguageFr extends SMWLanguage {
 		'_anu' => 'Annotation-URI',  // name of the annotation URI type (OWL annotation property)
 		'_tel' => 'Numéro de téléphone',  // name of the telephone (URI) type
 		'_rec' => 'Enregistrement', // name of record data type
-		'_qty' => 'Quantity', // name of the number type with units of measurement //TODO: translate
+		'_qty' => 'Quantité', // name of the number type with units of measurement
 	);
 
 	protected $m_DatatypeAliases = array(
 		'URI'                   => '_uri',
 		'Nombre entier'         => '_num',
 		'Nombre décimal'        => '_num',
-		'Énumeration'           => '_str',
+		'Chaîne de caractères'  => '_txt',  // old name of the string type
+		'Énumeration'           => '_txt',
 	);
 
 	protected $m_SpecialProperties = array(
@@ -59,13 +60,24 @@ class SMWLanguageFr extends SMWLanguage {
 		'_SERV' => 'Fournit le service',
 		'_PVAL' => 'Valeur possible',
 		'_MDAT' => 'Date de modification',
+		'_CDAT' => 'Date de création',
+		'_NEWP' => 'Est une nouvelle page',
+		'_LEDT' => 'Le dernier contributeur est',
 		'_ERRP' => 'A une valeur incorrecte pour',
 		'_LIST' => 'A le champ',
-		'_SOBJ' => 'Has subobject', // TODO: translate
+		'_SOBJ' => 'Possède un sous-objet',
+		'_ASK'  => 'Possède une requête',
+		'_ASKST'=> 'Champ de requête',
+		'_ASKFO'=> 'Format de requête',
+		'_ASKSI'=> 'Taille de la requête',
+		'_ASKDE'=> 'Profondeur de la requête',
+		'_ASKDU'=> 'Durée de la requête',
+		'_MEDIA'=> 'Media type',
+		'_MIME' => 'Mime type'
 	);
 
 	protected $m_SpecialPropertyAliases = array(
-		'Unité de mesure'   => '_UNIT',
+		'Unité de mesure' => '_UNIT'
 	);
 
 	protected $m_Namespaces = array(
@@ -82,7 +94,6 @@ class SMWLanguageFr extends SMWLanguage {
 	protected $m_months = array( "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre" );
 
 	protected $m_monthsshort = array( "jan", "fév", "mar", "avr", "mai", "jun", "jul", "aoû", "sep", "oct", "nov", "déc" );
-
 }
 
 

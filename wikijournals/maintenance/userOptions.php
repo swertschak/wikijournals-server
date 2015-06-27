@@ -25,10 +25,10 @@
  */
 
 // This is a command line script, load tools and parse args
-require_once( 'userOptions.inc' );
+require_once 'userOptions.inc';
 
 // Load up our tool system, exit with usage() if options are not fine
-$uo = new userOptions( $options, $args );
+$uo = new UserOptions( $options, $args );
 
 $uo->run();
 

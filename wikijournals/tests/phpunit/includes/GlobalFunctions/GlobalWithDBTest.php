@@ -1,18 +1,21 @@
 <?php
 
 /**
+ * @group GlobalFunctions
  * @group Database
  */
 class GlobalWithDBTest extends MediaWikiTestCase {
 	/**
 	 * @dataProvider provideWfIsBadImageList
+	 * @covers ::wfIsBadImage
 	 */
-	function testWfIsBadImage( $name, $title, $blacklist, $expected, $desc ) {
+	public function testWfIsBadImage( $name, $title, $blacklist, $expected, $desc ) {
 		$this->assertEquals( $expected, wfIsBadImage( $name, $title, $blacklist ), $desc );
 	}
 
-	function provideWfIsBadImageList() {
+	public static function provideWfIsBadImageList() {
 		$blacklist = '* [[File:Bad.jpg]] except [[Nasty page]]';
+
 		return array(
 			array( 'Bad.jpg', false, $blacklist, true,
 				'Called on a bad image' ),

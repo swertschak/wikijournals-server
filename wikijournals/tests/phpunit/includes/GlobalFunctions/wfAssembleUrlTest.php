@@ -1,9 +1,12 @@
 <?php
 /**
- * Tests for wfAssembleUrl()
+ * @group GlobalFunctions
+ * @covers ::wfAssembleUrl
  */
 class WfAssembleUrlTest extends MediaWikiTestCase {
-	/** @dataProvider provideURLParts */
+	/**
+	 * @dataProvider provideURLParts
+	 */
 	public function testWfAssembleUrl( $parts, $output ) {
 		$partsDump = print_r( $parts, true );
 		$this->assertEquals(
@@ -86,7 +89,6 @@ class WfAssembleUrlTest extends MediaWikiTestCase {
 								$parts['fragment'] = $fragment;
 								$url .= '#' . $fragment;
 							}
-
 
 							$cases[] = array(
 								$parts,

@@ -1,0 +1,7 @@
+[gerrit]
+host=gerrit.wikimedia.org
+port=29418
+project=mediawiki/extensions/SemanticForms
+defaultbranch=REL1_24
+defaultrebase=0
+defaultremote=origin

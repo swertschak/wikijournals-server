@@ -31,7 +31,7 @@
  */
 class ApiQueryLangBacklinks extends ApiQueryGeneratorBase {
 
-	public function __construct( $query, $moduleName ) {
+	public function __construct( ApiQuery $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'lbl' );
 	}
 
@@ -44,7 +44,7 @@ class ApiQueryLangBacklinks extends ApiQueryGeneratorBase {
 	}
 
 	/**
-	 * @param $resultPageSet ApiPageSet
+	 * @param ApiPageSet $resultPageSet
 	 * @return void
 	 */
 	public function run( $resultPageSet = null ) {
@@ -92,14 +92,14 @@ class ApiQueryLangBacklinks extends ApiQueryGeneratorBase {
 				$this->addOption( 'ORDER BY', array(
 					'll_title' . $sort,
 					'll_from' . $sort
-				));
+				) );
 			}
 		} else {
 			$this->addOption( 'ORDER BY', array(
 				'll_lang' . $sort,
 				'll_title' . $sort,
 				'll_from' . $sort
-			));
+			) );
 		}
 
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );
@@ -111,10 +111,14 @@ class ApiQueryLangBacklinks extends ApiQueryGeneratorBase {
 		$count = 0;
 		$result = $this->getResult();
 		foreach ( $res as $row ) {
-			if ( ++ $count > $params['limit'] ) {
-				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
-				// Continue string preserved in case the redirect query doesn't pass the limit
-				$this->setContinueEnumParameter( 'continue', "{$row->ll_lang}|{$row->ll_title}|{$row->ll_from}" );
+			if ( ++$count > $params['limit'] ) {
+				// We've reached the one extra which shows that there are
+				// additional pages to be had. Stop here... Continue string
+				// preserved in case the redirect query doesn't pass the limit.
+				$this->setContinueEnumParameter(
+					'continue',
+					"{$row->ll_lang}|{$row->ll_title}|{$row->ll_from}"
+				);
 				break;
 			}
 
@@ -140,7 +144,10 @@ class ApiQueryLangBacklinks extends ApiQueryGeneratorBase {
 
 				$fit = $result->addValue( array( 'query', $this->getModuleName() ), null, $entry );
 				if ( !$fit ) {
-					$this->setContinueEnumParameter( 'continue', "{$row->ll_lang}|{$row->ll_title}|{$row->ll_from}" );
+					$this->setContinueEnumParameter(
+						'continue',
+						"{$row->ll_lang}|{$row->ll_title}|{$row->ll_from}"
+					);
 					break;
 				}
 			}
@@ -195,27 +202,10 @@ class ApiQueryLangBacklinks extends ApiQueryGeneratorBase {
 			'prop' => array(
 				'Which properties to get',
 				' lllang         - Adds the language code of the language link',
-				' lltitle        - Adds the title of the language ink',
+				' lltitle        - Adds the title of the language link',
 			),
 			'limit' => 'How many total pages to return',
 			'dir' => 'The direction in which to list',
-		);
-	}
-
-	public function getResultProperties() {
-		return array(
-			'' => array(
-				'pageid' => 'integer',
-				'ns' => 'namespace',
-				'title' => 'string',
-				'redirect' => 'boolean'
-			),
-			'lllang' => array(
-				'lllang' => 'string'
-			),
-			'lltitle' => array(
-				'lltitle' => 'string'
-			)
 		);
 	}
 
@@ -223,14 +213,9 @@ class ApiQueryLangBacklinks extends ApiQueryGeneratorBase {
 		return array( 'Find all pages that link to the given language link.',
 			'Can be used to find all links with a language code, or',
 			'all links to a title (with a given language).',
-			'Using neither parameter is effectively "All Language Links"',
+			'Using neither parameter is effectively "All Language Links".',
+			'Note that this may not consider language links added by extensions.',
 		);
-	}
-
-	public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
-			array( 'missingparam', 'lang' ),
-		) );
 	}
 
 	public function getExamples() {
@@ -238,5 +223,9 @@ class ApiQueryLangBacklinks extends ApiQueryGeneratorBase {
 			'api.php?action=query&list=langbacklinks&lbltitle=Test&lbllang=fr',
 			'api.php?action=query&generator=langbacklinks&glbltitle=Test&glbllang=fr&prop=info'
 		);
+	}
+
+	public function getHelpUrls() {
+		return 'https://www.mediawiki.org/wiki/API:Langbacklinks';
 	}
 }

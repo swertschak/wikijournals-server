@@ -22,11 +22,20 @@ $wgHooks['ParserFirstCallInit'][] = 'wfCite';
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'Cite',
-	'author' => array( 'Ævar Arnfjörð Bjarmason', 'Marius Hoch' ),
+	'author' => array(
+		'Ævar Arnfjörð Bjarmason',
+		'Andrew Garrett',
+		'Brion Vibber',
+		'Marius Hoch',
+		'Steve Sanbeg'
+	),
 	'descriptionmsg' => 'cite-desc',
-	'url' => 'https://www.mediawiki.org/wiki/Extension:Cite/Cite.php'
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Cite/Cite.php',
+	'license-name' => 'GPLv2',
 );
+
 $wgParserTestFiles[] = __DIR__ . "/citeParserTests.txt";
+$wgMessagesDirs['Cite'] = __DIR__ . '/i18n/core';
 $wgExtensionMessagesFiles['Cite'] = __DIR__ . "/Cite.i18n.php";
 $wgAutoloadClasses['Cite'] = __DIR__ . "/Cite_body.php";
 $wgSpecialPageGroups['Cite'] = 'pagetools';
@@ -42,11 +51,6 @@ $wgAllowCiteGroups = true;
  * An emergency optimisation measure for caching cite <references /> output.
  */
 $wgCiteCacheReferences = false;
-
-/**
- * Enables experimental popups
- */
-$wgCiteEnablePopups = false;
 
 /**
  * Performs the hook registration.
@@ -74,20 +78,6 @@ $wgResourceModules['ext.cite'] = $citeResourceTemplate + array(
 		'cite_references_link_accessibility_label',
 		'cite_references_link_many_accessibility_label',
 	),
-);
-
-$wgResourceModules['ext.cite.popups'] = $citeResourceTemplate + array(
-	'scripts' => 'ext.cite.popups.js',
-	'position' => 'bottom',
-	'dependencies' => array(
-		'jquery.tooltip',
-	),
-);
-
-$wgResourceModules['jquery.tooltip'] = $citeResourceTemplate + array(
-	'styles' => 'jquery.tooltip/jquery.tooltip.css',
-	'scripts' => 'jquery.tooltip/jquery.tooltip.js',
-	'position' => 'bottom',
 );
 
 /* Add RTL fix for the cite <sup> elements */

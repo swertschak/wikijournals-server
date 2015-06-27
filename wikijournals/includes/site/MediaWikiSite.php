@@ -33,15 +33,14 @@
  * @ingroup Site
  */
 class MediaWikiSite extends Site {
-
 	const PATH_FILE = 'file_path';
 	const PATH_PAGE = 'page_path';
 
 	/**
 	 * @since 1.21
-	 * @deprecated Just use the constructor or the factory Site::newForType
+	 * @deprecated since 1.21 Just use the constructor or the factory Site::newForType
 	 *
-	 * @param integer $globalId
+	 * @param int $globalId
 	 *
 	 * @return MediaWikiSite
 	 */
@@ -67,23 +66,25 @@ class MediaWikiSite extends Site {
 	 *
 	 * @since 1.21
 	 *
-	 * @param string $title the target page's title, in normalized form.
+	 * @param string $title The target page's title, in normalized form.
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function toDBKey( $title ) {
 		return str_replace( ' ', '_', $title );
 	}
 
 	/**
-	 * Returns the normalized form of the given page title, using the normalization rules of the given site.
-	 * If the given title is a redirect, the redirect weill be resolved and the redirect target is returned.
+	 * Returns the normalized form of the given page title, using the
+	 * normalization rules of the given site. If the given title is a redirect,
+	 * the redirect weill be resolved and the redirect target is returned.
 	 *
-	 * @note  : This actually makes an API request to the remote site, so beware that this function is slow and depends
-	 *          on an external service.
+	 * @note This actually makes an API request to the remote site, so beware
+	 *   that this function is slow and depends on an external service.
 	 *
-	 * @note  : If MW_PHPUNIT_TEST is defined, the call to the external site is skipped, and the title
-	 *          is normalized using the local normalization rules as implemented by the Title class.
+	 * @note If MW_PHPUNIT_TEST is defined, the call to the external site is
+	 *   skipped, and the title is normalized using the local normalization
+	 *   rules as implemented by the Title class.
 	 *
 	 * @see Site::normalizePageName
 	 *
@@ -103,8 +104,10 @@ class MediaWikiSite extends Site {
 
 		// Go on call the external site
 		if ( defined( 'MW_PHPUNIT_TEST' ) ) {
-			// If the code is under test, don't call out to other sites, just normalize locally.
-			// Note: this may cause results to be inconsistent with the actual normalization used by the respective remote site!
+			// If the code is under test, don't call out to other sites, just
+			// normalize locally.
+			// Note: this may cause results to be inconsistent with the actual
+			// normalization used by the respective remote site!
 
 			$t = Title::newFromText( $pageName );
 			return $t->getPrefixedText();
@@ -123,17 +126,17 @@ class MediaWikiSite extends Site {
 				'converttitles' => true,
 				'format' => 'json',
 				'titles' => $pageName,
-				//@todo: options for maxlag and maxage
+				// @todo options for maxlag and maxage
 				// Note that maxlag will lead to a long delay before a reply is made,
 				// but that maxage can avoid the extreme delay. On the other hand
 				// maxage could be nice to use anyhow as it stops unnecessary requests.
 				// Also consider smaxage if maxage is used.
 			);
 
-			$url = $this->getFileUrl( 'api.php' ) . '?' . wfArrayToCgi( $args );
+			$url = wfAppendQuery( $this->getFileUrl( 'api.php' ), $args );
 
 			// Go on call the external site
-			//@todo: we need a good way to specify a timeout here.
+			// @todo we need a good way to specify a timeout here.
 			$ret = Http::get( $url );
 		}
 
@@ -152,12 +155,14 @@ class MediaWikiSite extends Site {
 		$page = static::extractPageRecord( $data, $pageName );
 
 		if ( isset( $page['missing'] ) ) {
-			wfDebugLog( "MediaWikiSite", "call to <$url> returned a marker for a missing page title! " . $ret );
+			wfDebugLog( "MediaWikiSite", "call to <$url> returned a marker for a missing page title! "
+				. $ret );
 			return false;
 		}
 
 		if ( isset( $page['invalid'] ) ) {
-			wfDebugLog( "MediaWikiSite", "call to <$url> returned a marker for an invalid page title! " . $ret );
+			wfDebugLog( "MediaWikiSite", "call to <$url> returned a marker for an invalid page title! "
+				. $ret );
 			return false;
 		}
 
@@ -177,7 +182,7 @@ class MediaWikiSite extends Site {
 	 * @param array $externalData A reply from the API on a external server.
 	 * @param string $pageTitle Identifies the page at the external site, needing normalization.
 	 *
-	 * @return array|boolean a 'page' structure representing the page identified by $pageTitle.
+	 * @return array|bool A 'page' structure representing the page identified by $pageTitle.
 	 */
 	private static function extractPageRecord( $externalData, $pageTitle ) {
 		// If there is a special case with only one returned page
@@ -185,7 +190,7 @@ class MediaWikiSite extends Site {
 		// the single page in the "pages" substructure.
 		if ( isset( $externalData['query']['pages'] ) ) {
 			$pages = array_values( $externalData['query']['pages'] );
-			if ( count( $pages) === 1 ) {
+			if ( count( $pages ) === 1 ) {
 				return $pages[0];
 			}
 		}
@@ -210,7 +215,7 @@ class MediaWikiSite extends Site {
 			// Filter the substructure down to what we actually are using.
 			$collectedHits = array_filter(
 				array_values( $externalData['query'][$listId] ),
-				function( $a ) use ( $fieldId, $pageTitle ) {
+				function ( $a ) use ( $fieldId, $pageTitle ) {
 					return $a[$fieldId] === $pageTitle;
 				}
 			);
@@ -309,7 +314,7 @@ class MediaWikiSite extends Site {
 	 *
 	 * @since 1.21
 	 *
-	 * @param string|boolean $pageName Page name or false (default: false)
+	 * @param string|bool $pageName Page name or false (default: false)
 	 *
 	 * @return string
 	 */
@@ -335,7 +340,7 @@ class MediaWikiSite extends Site {
 	 *
 	 * @since 1.21
 	 *
-	 * @param string|boolean $path
+	 * @param string|bool $path
 	 *
 	 * @return string
 	 */
@@ -348,5 +353,4 @@ class MediaWikiSite extends Site {
 
 		return $filePath;
 	}
-
 }

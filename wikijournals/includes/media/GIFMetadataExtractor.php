@@ -32,9 +32,14 @@
  * @ingroup Media
  */
 class GIFMetadataExtractor {
-	static $gif_frame_sep;
-	static $gif_extension_sep;
-	static $gif_term;
+	/** @var string */
+	private static $gifFrameSep;
+
+	/** @var string */
+	private static $gifExtensionSep;
+
+	/** @var string */
+	private static $gifTerm;
 
 	const VERSION = 1;
 
@@ -45,13 +50,13 @@ class GIFMetadataExtractor {
 
 	/**
 	 * @throws Exception
-	 * @param $filename string
+	 * @param string $filename
 	 * @return array
 	 */
 	static function getMetadata( $filename ) {
-		self::$gif_frame_sep = pack( "C", ord( "," ) );
-		self::$gif_extension_sep = pack( "C", ord( "!" ) );
-		self::$gif_term = pack( "C", ord( ";" ) );
+		self::$gifFrameSep = pack( "C", ord( "," ) );
+		self::$gifExtensionSep = pack( "C", ord( "!" ) );
+		self::$gifTerm = pack( "C", ord( ";" ) );
 
 		$frameCount = 0;
 		$duration = 0.0;
@@ -90,10 +95,10 @@ class GIFMetadataExtractor {
 		// Skip over the GCT
 		self::readGCT( $fh, $bpp );
 
-		while( !feof( $fh ) ) {
+		while ( !feof( $fh ) ) {
 			$buf = fread( $fh, 1 );
 
-			if ( $buf == self::$gif_frame_sep ) {
+			if ( $buf == self::$gifFrameSep ) {
 				// Found a frame
 				$frameCount++;
 
@@ -108,9 +113,11 @@ class GIFMetadataExtractor {
 				self::readGCT( $fh, $bpp );
 				fread( $fh, 1 );
 				self::skipBlock( $fh );
-			} elseif ( $buf == self::$gif_extension_sep ) {
+			} elseif ( $buf == self::$gifExtensionSep ) {
 				$buf = fread( $fh, 1 );
-				if ( strlen( $buf ) < 1 ) throw new Exception( "Ran out of input" );
+				if ( strlen( $buf ) < 1 ) {
+					throw new Exception( "Ran out of input" );
+				}
 				$extension_code = unpack( 'C', $buf );
 				$extension_code = $extension_code[1];
 
@@ -121,7 +128,9 @@ class GIFMetadataExtractor {
 					fread( $fh, 1 ); // Transparency, disposal method, user input
 
 					$buf = fread( $fh, 2 ); // Delay, in hundredths of seconds.
-					if ( strlen( $buf ) < 2 ) throw new Exception( "Ran out of input" );
+					if ( strlen( $buf ) < 2 ) {
+						throw new Exception( "Ran out of input" );
+					}
 					$delay = unpack( 'v', $buf );
 					$delay = $delay[1];
 					$duration += $delay * 0.01;
@@ -129,7 +138,9 @@ class GIFMetadataExtractor {
 					fread( $fh, 1 ); // Transparent colour index
 
 					$term = fread( $fh, 1 ); // Should be a terminator
-					if ( strlen( $term ) < 1 ) throw new Exception( "Ran out of input" );
+					if ( strlen( $term ) < 1 ) {
+						throw new Exception( "Ran out of input" );
+					}
 					$term = unpack( 'C', $term );
 					$term = $term[1];
 					if ( $term != 0 ) {
@@ -157,8 +168,8 @@ class GIFMetadataExtractor {
 
 					$commentCount = count( $comment );
 					if ( $commentCount === 0
-						|| $comment[$commentCount-1] !== $data )
-					{
+						|| $comment[$commentCount - 1] !== $data
+					) {
 						// Some applications repeat the same comment on each
 						// frame of an animated GIF image, so if this comment
 						// is identical to the last, only extract once.
@@ -168,14 +179,16 @@ class GIFMetadataExtractor {
 					// Application extension (Netscape info about the animated gif)
 					// or XMP (or theoretically any other type of extension block)
 					$blockLength = fread( $fh, 1 );
-					if ( strlen( $blockLength ) < 1 ) throw new Exception( "Ran out of input" );
+					if ( strlen( $blockLength ) < 1 ) {
+						throw new Exception( "Ran out of input" );
+					}
 					$blockLength = unpack( 'C', $blockLength );
 					$blockLength = $blockLength[1];
 					$data = fread( $fh, $blockLength );
 
 					if ( $blockLength != 11 ) {
-						wfDebug( __METHOD__ . ' GIF application block with wrong length' );
-						fseek( $fh, -($blockLength + 1), SEEK_CUR );
+						wfDebug( __METHOD__ . " GIF application block with wrong length\n" );
+						fseek( $fh, -( $blockLength + 1 ), SEEK_CUR );
 						self::skipBlock( $fh );
 						continue;
 					}
@@ -190,7 +203,9 @@ class GIFMetadataExtractor {
 
 						// Unsigned little-endian integer, loop count or zero for "forever"
 						$loopData = fread( $fh, 2 );
-						if ( strlen( $loopData ) < 2 ) throw new Exception( "Ran out of input" );
+						if ( strlen( $loopData ) < 2 ) {
+							throw new Exception( "Ran out of input" );
+						}
 						$loopData = unpack( 'v', $loopData );
 						$loopCount = $loopData[1];
 
@@ -207,28 +222,29 @@ class GIFMetadataExtractor {
 						$xmp = self::readBlock( $fh, true );
 
 						if ( substr( $xmp, -257, 3 ) !== "\x01\xFF\xFE"
-							|| substr( $xmp, -4 ) !== "\x03\x02\x01\x00" )
-						{
+							|| substr( $xmp, -4 ) !== "\x03\x02\x01\x00"
+						) {
 							// this is just a sanity check.
 							throw new Exception( "XMP does not have magic trailer!" );
 						}
 
 						// strip out trailer.
 						$xmp = substr( $xmp, 0, -257 );
-
 					} else {
 						// unrecognized extension block
-						fseek( $fh, -($blockLength + 1), SEEK_CUR );
+						fseek( $fh, -( $blockLength + 1 ), SEEK_CUR );
 						self::skipBlock( $fh );
 						continue;
 					}
 				} else {
 					self::skipBlock( $fh );
 				}
-			} elseif ( $buf == self::$gif_term ) {
+			} elseif ( $buf == self::$gifTerm ) {
 				break;
 			} else {
-				if ( strlen( $buf ) < 1 ) throw new Exception( "Ran out of input" );
+				if ( strlen( $buf ) < 1 ) {
+					throw new Exception( "Ran out of input" );
+				}
 				$byte = unpack( 'C', $buf );
 				$byte = $byte[1];
 				throw new Exception( "At position: " . ftell( $fh ) . ", Unknown byte " . $byte );
@@ -245,25 +261,28 @@ class GIFMetadataExtractor {
 	}
 
 	/**
-	 * @param $fh
-	 * @param $bpp
+	 * @param resource $fh
+	 * @param int $bpp
 	 * @return void
 	 */
 	static function readGCT( $fh, $bpp ) {
 		if ( $bpp > 0 ) {
-			for( $i = 1; $i <= pow( 2, $bpp ); ++$i ) {
+			$max = pow( 2, $bpp );
+			for ( $i = 1; $i <= $max; ++$i ) {
 				fread( $fh, 3 );
 			}
 		}
 	}
 
 	/**
-	 * @param $data
+	 * @param string $data
 	 * @throws Exception
 	 * @return int
 	 */
 	static function decodeBPP( $data ) {
-		if ( strlen( $data ) < 1 ) throw new Exception( "Ran out of input" );
+		if ( strlen( $data ) < 1 ) {
+			throw new Exception( "Ran out of input" );
+		}
 		$buf = unpack( 'C', $data );
 		$buf = $buf[1];
 		$bpp = ( $buf & 7 ) + 1;
@@ -275,13 +294,15 @@ class GIFMetadataExtractor {
 	}
 
 	/**
-	 * @param $fh
+	 * @param resource $fh
 	 * @throws Exception
 	 */
 	static function skipBlock( $fh ) {
 		while ( !feof( $fh ) ) {
 			$buf = fread( $fh, 1 );
-			if ( strlen( $buf ) < 1 ) throw new Exception( "Ran out of input" );
+			if ( strlen( $buf ) < 1 ) {
+				throw new Exception( "Ran out of input" );
+			}
 			$block_len = unpack( 'C', $buf );
 			$block_len = $block_len[1];
 			if ( $block_len == 0 ) {
@@ -297,8 +318,8 @@ class GIFMetadataExtractor {
 	 * saying how long the sub-block is, followed by the sub-block.
 	 * The entire block is terminated by a sub-block of length
 	 * 0.
-	 * @param $fh FileHandle
-	 * @param $includeLengths Boolean Include the length bytes of the
+	 * @param resource $fh File handle
+	 * @param bool $includeLengths Include the length bytes of the
 	 *  sub-blocks in the returned value. Normally this is false,
 	 *  except XMP is weird and does a hack where you need to keep
 	 *  these length bytes.
@@ -310,7 +331,7 @@ class GIFMetadataExtractor {
 		$subLength = fread( $fh, 1 );
 		$blocks = 0;
 
-		while( $subLength !== "\0" ) {
+		while ( $subLength !== "\0" ) {
 			$blocks++;
 			if ( $blocks > self::MAX_SUBBLOCKS ) {
 				throw new Exception( "MAX_SUBBLOCKS exceeded (over $blocks sub-blocks)" );
@@ -325,7 +346,7 @@ class GIFMetadataExtractor {
 			$data .= fread( $fh, ord( $subLength ) );
 			$subLength = fread( $fh, 1 );
 		}
+
 		return $data;
 	}
-
 }

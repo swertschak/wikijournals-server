@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lokal Profil"
+		]
+	},
+	"semanticrating-desc": "Gör det möjligt för användare att betygsätta objekt med stjärnor",
+	"semanticrating-max": "Det maximala antalet stjärnor i ett betyg"
+}

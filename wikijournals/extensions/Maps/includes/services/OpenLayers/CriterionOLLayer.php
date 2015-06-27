@@ -9,8 +9,9 @@
  * @ingroup Maps
  * @ingroup Criteria
  * @ingroup MapsOpenLayers
- * 
- * @author Jeroen De Dauw
+ *
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class CriterionOLLayer extends CriterionMapLayer {
 	
@@ -20,8 +21,8 @@ class CriterionOLLayer extends CriterionMapLayer {
 	 * 
 	 * @since 0.7
 	 */
-	public function __construct() {
-		parent::__construct( 'openlayers' );
+	public function __construct( $groupNameSeparator = ';' ) {
+		parent::__construct( $groupNameSeparator );
 	}	
 	
 	/**

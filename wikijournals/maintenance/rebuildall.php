@@ -22,7 +22,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that rebuilds link tracking tables from scratch.
@@ -35,10 +35,15 @@ class RebuildAll extends Maintenance {
 		$this->mDescription = "Rebuild links, text index and recent changes";
 	}
 
+	public function getDbType() {
+		return Maintenance::DB_ADMIN;
+	}
+
 	public function execute() {
 		// Rebuild the text index
 		if ( wfGetDB( DB_SLAVE )->getType() != 'postgres' ) {
-			$this->output( "** Rebuilding fulltext search index (if you abort this will break searching; run this script again to fix):\n" );
+			$this->output( "** Rebuilding fulltext search index (if you abort "
+				. "this will break searching; run this script again to fix):\n" );
 			$rebuildText = $this->runChild( 'RebuildTextIndex', 'rebuildtextindex.php' );
 			$rebuildText->execute();
 		}
@@ -49,7 +54,8 @@ class RebuildAll extends Maintenance {
 		$rebuildRC->execute();
 
 		// Rebuild link tables
-		$this->output( "\n\n** Rebuilding links tables -- this can take a long time. It should be safe to abort via ctrl+C if you get bored.\n" );
+		$this->output( "\n\n** Rebuilding links tables -- this can take a long time. "
+			. "It should be safe to abort via ctrl+C if you get bored.\n" );
 		$rebuildLinks = $this->runChild( 'RefreshLinks', 'refreshLinks.php' );
 		$rebuildLinks->execute();
 
@@ -58,4 +64,4 @@ class RebuildAll extends Maintenance {
 }
 
 $maintClass = "RebuildAll";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

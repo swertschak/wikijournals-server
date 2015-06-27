@@ -60,6 +60,11 @@ class PdfHandler extends ImageHandler {
 	 * @return bool
 	 */
 	function validateParam( $name, $value ) {
+		if ( $name === 'page' && trim( $value ) !== (string) intval( $value ) ) {
+			// Extra junk on the end of page, probably actually a caption
+			// e.g. [[File:Foo.pdf|thumb|Page 3 of the document shows foo]]
+			return false;
+		}
 		if ( in_array( $name, array( 'width', 'height', 'page' ) ) ) {
 			return ( $value > 0 );
 		}
@@ -133,7 +138,7 @@ class PdfHandler extends ImageHandler {
 	 * @return MediaTransformError|MediaTransformOutput|ThumbnailImage|TransformParameterError
 	 */
 	function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
-		global $wgPdfProcessor, $wgPdfPostProcessor, $wgPdfHandlerDpi;
+		global $wgPdfProcessor, $wgPdfPostProcessor, $wgPdfHandlerDpi, $wgPdfHandlerJpegQuality;
 
 		$metadata = $image->getMetadata();
 
@@ -165,7 +170,24 @@ class PdfHandler extends ImageHandler {
 			return $this->doThumbError( $width, $height, 'thumbnail_dest_directory' );
 		}
 
-		$srcPath = $image->getLocalRefPath();
+		// Thumbnail extraction is very inefficient for large files.
+		// Provide a way to pool count limit the number of downloaders.
+		if ( $image->getSize() >= 1e7 ) { // 10MB
+			$work = new PoolCounterWorkViaCallback( 'GetLocalFileCopy', sha1( $image->getName() ),
+				array(
+					'doWork' => function() use ( $image ) {
+						return $image->getLocalRefPath();
+					}
+				)
+			);
+			$srcPath = $work->execute();
+		} else {
+			$srcPath = $image->getLocalRefPath();
+		}
+
+		if ( $srcPath === false ) { // could not download original
+			return $this->doThumbError( $width, $height, 'filemissing' );
+		}
 
 		$cmd = '(' . wfEscapeShellArg(
 			$wgPdfProcessor,
@@ -183,6 +205,8 @@ class PdfHandler extends ImageHandler {
 			$wgPdfPostProcessor,
 			"-depth",
 			"8",
+			"-quality",
+			$wgPdfHandlerJpegQuality,
 			"-resize",
 			$width,
 			"-",

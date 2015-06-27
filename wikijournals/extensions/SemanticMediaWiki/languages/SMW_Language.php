@@ -52,13 +52,14 @@ abstract class SMWLanguage {
 	static protected $enDatatypeAliases = array(
 		'URL'                   => '_uri',
 		'Page'                  => '_wpg',
-		'String'                => '_str',
+		'String'                => '_txt',
 		'Text'                  => '_txt',
 		'Code'                  => '_cod',
 		'Boolean'               => '_boo',
 		'Number'                => '_num',
 		'Geographic coordinates'=> '_geo',
 		'Geographic coordinate' => '_geo', // deprecated, see Bug 30990
+		'Geographic polygon'    => '_gpo',
 		'Temperature'           => '_tem',
 		'Quantity'              => '_qty',
 		'Date'                  => '_dat',
@@ -85,6 +86,14 @@ abstract class SMWLanguage {
 		'Has improper value for' => '_ERRP',
 		'Has fields'        => '_LIST',
 		'Has subobject'     => '_SOBJ',
+		'Has query'         => '_ASK',
+		'Has query string'  => '_ASKST',
+		'Has query format'  => '_ASKFO',
+		'Has query size'    => '_ASKSI',
+		'Has query depth'   => '_ASKDE',
+		'Has query duration' => '_ASKDU',
+		'Has media type'     => '_MEDIA',
+		'Has mime type'      => '_MIME',
 	);
 
 	public function __construct() {
@@ -181,7 +190,7 @@ abstract class SMWLanguage {
 		}
 		if ( $this->m_useEnDefaultAliases && isset( SMWLanguage::$enPropertyAliases[$propName] ) ) {
 			return SMWLanguage::$enPropertyAliases[$propName];
-		} 
+		}
 		return null;
 	}
 

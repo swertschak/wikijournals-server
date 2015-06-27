@@ -34,12 +34,14 @@ class UploadFromUrl extends UploadBase {
 
 	protected $mTempPath, $mTmpHandle;
 
+	protected static $allowedUrls = array();
+
 	/**
 	 * Checks if the user is allowed to use the upload-by-URL feature. If the
 	 * user is not allowed, return the name of the user right as a string. If
 	 * the user is allowed, have the parent do further permissions checking.
 	 *
-	 * @param $user User
+	 * @param User $user
 	 *
 	 * @return bool|string
 	 */
@@ -47,6 +49,7 @@ class UploadFromUrl extends UploadBase {
 		if ( !$user->isAllowed( 'upload_by_url' ) ) {
 			return 'upload_by_url';
 		}
+
 		return parent::isAllowed( $user );
 	}
 
@@ -56,6 +59,7 @@ class UploadFromUrl extends UploadBase {
 	 */
 	public static function isEnabled() {
 		global $wgAllowCopyUploads;
+
 		return $wgAllowCopyUploads && parent::isEnabled();
 	}
 
@@ -64,7 +68,7 @@ class UploadFromUrl extends UploadBase {
 	 * The domains in the whitelist can include wildcard characters (*) in place
 	 * of any of the domain levels, e.g. '*.flickr.com' or 'upload.*.gov.uk'.
 	 *
-	 * @param $url string
+	 * @param string $url
 	 * @return bool
 	 */
 	public static function isAllowedHost( $url ) {
@@ -77,7 +81,7 @@ class UploadFromUrl extends UploadBase {
 			return false;
 		}
 		$valid = false;
-		foreach( $wgCopyUploadsDomains as $domain ) {
+		foreach ( $wgCopyUploadsDomains as $domain ) {
 			// See if the domain for the upload matches this whitelisted domain
 			$whitelistedDomainPieces = explode( '.', $domain );
 			$uploadDomainPieces = explode( '.', $parsedUrl['host'] );
@@ -101,15 +105,32 @@ class UploadFromUrl extends UploadBase {
 			}
 			*/
 		}
+
 		return $valid;
+	}
+
+	/**
+	 * Checks whether the URL is not allowed.
+	 *
+	 * @param string $url
+	 * @return bool
+	 */
+	public static function isAllowedUrl( $url ) {
+		if ( !isset( self::$allowedUrls[$url] ) ) {
+			$allowed = true;
+			wfRunHooks( 'IsUploadAllowedFromUrl', array( $url, &$allowed ) );
+			self::$allowedUrls[$url] = $allowed;
+		}
+
+		return self::$allowedUrls[$url];
 	}
 
 	/**
 	 * Entry point for API upload
 	 *
-	 * @param $name string
-	 * @param $url string
-	 * @param $async mixed Whether the download should be performed
+	 * @param string $name
+	 * @param string $url
+	 * @param bool|string $async Whether the download should be performed
 	 * asynchronous. False for synchronous, async or async-leavemessage for
 	 * asynchronous download.
 	 * @throws MWException
@@ -130,7 +151,7 @@ class UploadFromUrl extends UploadBase {
 
 	/**
 	 * Entry point for SpecialUpload
-	 * @param $request WebRequest object
+	 * @param WebRequest $request
 	 */
 	public function initializeFromRequest( &$request ) {
 		$desiredDestName = $request->getText( 'wpDestFile' );
@@ -145,13 +166,14 @@ class UploadFromUrl extends UploadBase {
 	}
 
 	/**
-	 * @param $request WebRequest object
+	 * @param WebRequest $request
 	 * @return bool
 	 */
 	public static function isValidRequest( $request ) {
 		global $wgUser;
 
 		$url = $request->getVal( 'wpUploadFileURL' );
+
 		return !empty( $url )
 			&& Http::isValidURI( $url )
 			&& $wgUser->isAllowed( 'upload_by_url' );
@@ -160,39 +182,53 @@ class UploadFromUrl extends UploadBase {
 	/**
 	 * @return string
 	 */
-	public function getSourceType() { return 'url'; }
+	public function getSourceType() {
+		return 'url';
+	}
 
 	/**
+	 * Download the file (if not async)
+	 *
+	 * @param array $httpOptions Array of options for MWHttpRequest. Ignored if async.
+	 *   This could be used to override the timeout on the http request.
 	 * @return Status
 	 */
-	public function fetchFile() {
+	public function fetchFile( $httpOptions = array() ) {
 		if ( !Http::isValidURI( $this->mUrl ) ) {
 			return Status::newFatal( 'http-invalid-url' );
 		}
 
-		if( !self::isAllowedHost( $this->mUrl ) ) {
+		if ( !self::isAllowedHost( $this->mUrl ) ) {
 			return Status::newFatal( 'upload-copy-upload-invalid-domain' );
 		}
-		if ( !$this->mAsync ) {
-			return $this->reallyFetchFile();
+		if ( !self::isAllowedUrl( $this->mUrl ) ) {
+			return Status::newFatal( 'upload-copy-upload-invalid-url' );
 		}
+		if ( !$this->mAsync ) {
+			return $this->reallyFetchFile( $httpOptions );
+		}
+
 		return Status::newGood();
 	}
+
 	/**
 	 * Create a new temporary file in the URL subdirectory of wfTempDir().
 	 *
 	 * @return string Path to the file
 	 */
 	protected function makeTemporaryFile() {
-		return tempnam( wfTempDir(), 'URL' );
+		$tmpFile = TempFSFile::factory( 'URL' );
+		$tmpFile->bind( $this );
+
+		return $tmpFile->getPath();
 	}
 
 	/**
 	 * Callback: save a chunk of the result of a HTTP request to the temporary file
 	 *
-	 * @param $req mixed
-	 * @param $buffer string
-	 * @return int number of bytes handled
+	 * @param mixed $req
+	 * @param string $buffer
+	 * @return int Number of bytes handled
 	 */
 	public function saveTempFileChunk( $req, $buffer ) {
 		$nbytes = fwrite( $this->mTmpHandle, $buffer );
@@ -211,9 +247,12 @@ class UploadFromUrl extends UploadBase {
 	/**
 	 * Download the file, save it to the temporary file and update the file
 	 * size and set $mRemoveTempFile to true.
+	 *
+	 * @param array $httpOptions Array of options for MWHttpRequest
 	 * @return Status
 	 */
-	protected function reallyFetchFile() {
+	protected function reallyFetchFile( $httpOptions = array() ) {
+		global $wgCopyUploadProxy, $wgCopyUploadTimeout;
 		if ( $this->mTempPath === false ) {
 			return Status::newFatal( 'tmp-create-error' );
 		}
@@ -227,12 +266,14 @@ class UploadFromUrl extends UploadBase {
 		$this->mRemoveTempFile = true;
 		$this->mFileSize = 0;
 
-		$options = array(
-			'followRedirects' => true
-		);
-		global $wgCopyUploadProxy;
+		$options = $httpOptions + array( 'followRedirects' => true );
+
 		if ( $wgCopyUploadProxy !== false ) {
 			$options['proxy'] = $wgCopyUploadProxy;
+		}
+
+		if ( $wgCopyUploadTimeout && !isset( $options['timeout'] ) ) {
+			$options['timeout'] = $wgCopyUploadTimeout;
 		}
 		$req = MWHttpRequest::factory( $this->mUrl, $options );
 		$req->setCallback( array( $this, 'saveTempFileChunk' ) );
@@ -263,42 +304,46 @@ class UploadFromUrl extends UploadBase {
 		if ( $this->mAsync ) {
 			return array( 'status' => UploadBase::OK );
 		}
+
 		return parent::verifyUpload();
 	}
 
 	/**
 	 * Wrapper around the parent function in order to defer checking warnings
 	 * until the file really has been fetched.
-	 * @return Array
+	 * @return array
 	 */
 	public function checkWarnings() {
 		if ( $this->mAsync ) {
 			$this->mIgnoreWarnings = false;
+
 			return array();
 		}
+
 		return parent::checkWarnings();
 	}
 
 	/**
 	 * Wrapper around the parent function in order to defer checking protection
 	 * until we are sure that the file can actually be uploaded
-	 * @param $user User
+	 * @param User $user
 	 * @return bool|mixed
 	 */
 	public function verifyTitlePermissions( $user ) {
 		if ( $this->mAsync ) {
 			return true;
 		}
+
 		return parent::verifyTitlePermissions( $user );
 	}
 
 	/**
 	 * Wrapper around the parent function in order to defer uploading to the
 	 * job queue for asynchronous uploads
-	 * @param $comment string
-	 * @param $pageText string
-	 * @param $watch bool
-	 * @param $user User
+	 * @param string $comment
+	 * @param string $pageText
+	 * @param bool $watch
+	 * @param User $user
 	 * @return Status
 	 */
 	public function performUpload( $comment, $pageText, $watch, $user ) {
@@ -312,11 +357,11 @@ class UploadFromUrl extends UploadBase {
 	}
 
 	/**
-	 * @param $comment
-	 * @param $pageText
-	 * @param $watch
-	 * @param $user User
-	 * @return String
+	 * @param string $comment
+	 * @param string $pageText
+	 * @param bool $watch
+	 * @param User $user
+	 * @return string
 	 */
 	protected function insertJob( $comment, $pageText, $watch, $user ) {
 		$sessionKey = $this->stashSession();
@@ -333,7 +378,7 @@ class UploadFromUrl extends UploadBase {
 		) );
 		$job->initializeSessionData();
 		JobQueueGroup::singleton()->push( $job );
+
 		return $sessionKey;
 	}
-
 }

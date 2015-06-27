@@ -49,9 +49,9 @@ class CliInstaller extends Installer {
 	/**
 	 * Constructor.
 	 *
-	 * @param $siteName
-	 * @param $admin
-	 * @param $option Array
+	 * @param string $siteName
+	 * @param string $admin
+	 * @param array $option
 	 */
 	function __construct( $siteName, $admin = null, array $option = array() ) {
 		global $wgContLang;
@@ -107,6 +107,15 @@ class CliInstaller extends Installer {
 		if ( isset( $option['pass'] ) ) {
 			$this->setVar( '_AdminPassword', $option['pass'] );
 		}
+
+		// Set up the default skins
+		$skins = $this->findExtensions( 'skins' );
+		$this->setVar( '_Skins', $skins );
+
+		if ( $skins ) {
+			$skinNames = array_map( 'strtolower', $skins );
+			$this->setVar( 'wgDefaultSkin', $this->getDefaultSkin( $skinNames ) );
+		}
 	}
 
 	/**
@@ -114,7 +123,7 @@ class CliInstaller extends Installer {
 	 */
 	public function execute() {
 		$vars = Installer::getExistingLocalSettings();
-		if( $vars ) {
+		if ( $vars ) {
 			$this->showStatusMessage(
 				Status::newFatal( "config-localsettings-cli-upgrade" )
 			);
@@ -137,6 +146,9 @@ class CliInstaller extends Installer {
 	}
 
 	public function startStage( $step ) {
+		// Messages: config-install-database, config-install-tables, config-install-interwiki,
+		// config-install-stats, config-install-keys, config-install-sysop, config-install-mainpage,
+		// config-install-extensions
 		$this->showMessage( "config-install-$step" );
 	}
 
@@ -156,7 +168,7 @@ class CliInstaller extends Installer {
 	}
 
 	/**
-	 * @param $params array
+	 * @param array $params
 	 *
 	 * @return string
 	 */
@@ -166,6 +178,7 @@ class CliInstaller extends Installer {
 		$text = wfMessage( $msg, $params )->parse();
 
 		$text = preg_replace( '/<a href="(.*?)".*?>(.*?)<\/a>/', '$2 &lt;$1&gt;', $text );
+
 		return html_entity_decode( strip_tags( $text ), ENT_QUOTES );
 	}
 
@@ -195,15 +208,17 @@ class CliInstaller extends Installer {
 		if ( !$this->specifiedScriptPath ) {
 			$this->showMessage( 'config-no-cli-uri', $this->getVar( "wgScriptPath" ) );
 		}
+
 		return parent::envCheckPath();
 	}
 
 	protected function envGetDefaultServer() {
-		return $this->getVar( 'wgServer' );
+		return null; // Do not guess if installing from CLI
 	}
 
 	public function dirIsExecutable( $dir, $url ) {
 		$this->showMessage( 'config-no-cli-uploads-check', $dir );
+
 		return false;
 	}
 }

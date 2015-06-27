@@ -26,7 +26,7 @@
 
 #$optionsWithArgs = array( 'begin', 'max-slave-lag' );
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that will find all rows in the categorylinks table
@@ -47,7 +47,7 @@ class UpdateCollation extends Maintenance {
 		$this->mDescription = <<<TEXT
 This script will find all rows in the categorylinks table whose collation is
 out-of-date (cl_collation != '$wgCategoryCollation') and repopulate cl_sortkey
-using the page title and cl_sortkey_prefix.  If everything's collation is
+using the page title and cl_sortkey_prefix.  If all collations are
 up-to-date, it will do nothing.
 TEXT;
 
@@ -81,6 +81,10 @@ TEXT;
 			$collationName = $wgCategoryCollation;
 			$collation = Collation::singleton();
 		}
+
+		// Collation sanity check: in some cases the constructor will work,
+		// but this will raise an exception, breaking all category pages
+		$collation->getFirstLetter( 'MediaWiki' );
 
 		$options = array(
 			'LIMIT' => self::BATCH_SIZE,
@@ -116,6 +120,7 @@ TEXT;
 			}
 			if ( $count == 0 ) {
 				$this->output( "Collations up-to-date.\n" );
+
 				return;
 			}
 			$this->output( "Fixing collation for $count rows.\n" );
@@ -146,7 +151,8 @@ TEXT;
 					# This is an old-style row, so the sortkey needs to be
 					# converted.
 					if ( $row->cl_sortkey == $title->getText()
-						|| $row->cl_sortkey == $title->getPrefixedText() ) {
+						|| $row->cl_sortkey == $title->getPrefixedText()
+					) {
 						$prefix = '';
 					} else {
 						# Custom sortkey, use it as a prefix
@@ -184,13 +190,12 @@ TEXT;
 						__METHOD__
 					);
 				}
+				if ( $row ) {
+					$batchConds = array( $this->getBatchCondition( $row, $dbw ) );
+				}
 			}
 			if ( !$dryRun ) {
 				$dbw->commit( __METHOD__ );
-			}
-
-			if ( $row ) {
-				$batchConds = array( $this->getBatchCondition( $row ) );
 			}
 
 			$count += $res->numRows();
@@ -214,9 +219,11 @@ TEXT;
 	/**
 	 * Return an SQL expression selecting rows which sort above the given row,
 	 * assuming an ordering of cl_to, cl_type, cl_from
+	 * @param stdClass $row
+	 * @param DatabaseBase $dbw
+	 * @return string
 	 */
-	function getBatchCondition( $row ) {
-		$dbw = $this->getDB( DB_MASTER );
+	function getBatchCondition( $row, $dbw ) {
 		$fields = array( 'cl_to', 'cl_type', 'cl_from' );
 		$first = true;
 		$cond = false;
@@ -234,6 +241,7 @@ TEXT;
 				$prefix .= " AND $equality";
 			}
 		}
+
 		return $cond;
 	}
 
@@ -303,4 +311,4 @@ TEXT;
 }
 
 $maintClass = "UpdateCollation";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

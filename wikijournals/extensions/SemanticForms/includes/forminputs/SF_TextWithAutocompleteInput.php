@@ -23,17 +23,25 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 	}
 
 	public static function getOtherPropTypesHandled() {
-		return array( '_str' );
+		if ( defined( 'SMWDataItem::TYPE_STRING' ) ) {
+			// SMW < 1.9
+			return array( '_str' );
+		} else {
+			return array( '_txt' );
+		}
 	}
 
 	public static function getDefaultPropTypeLists() {
-		return array(
-			'_wpg' => array( 'is_list' => true, 'size' => 100 )
-		);
+		return array();
 	}
 
 	public static function getOtherPropTypeListsHandled() {
-		return array( '_str' );
+		if ( defined( 'SMWDataItem::TYPE_STRING' ) ) {
+			// SMW < 1.9
+			return array( '_str' );
+		} else {
+			return array( '_txt' );
+		}
 	}
 
 	public static function getAutocompletionTypeAndSource( &$field_args ) {
@@ -78,7 +86,7 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 	}
 
 	public static function setAutocompleteValues( $field_args ) {
-		global $sfgAutocompleteValues;
+		global $sfgAutocompleteValues, $sfgMaxLocalAutocompleteValues;
 
 		// Get all autocomplete-related values, plus delimiter value
 		// (it's needed also for the 'uploadable' link, if there is one).
@@ -111,6 +119,10 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 				$autocompleteValues = explode( ',', $field_args['values'] );
 			} else {
 				$autocompleteValues = SFUtils::getAutocompleteValues( $autocompletionSource, $autocompleteFieldType );
+			}
+			if( count($autocompleteValues) > $sfgMaxLocalAutocompleteValues &&
+			$autocompleteFieldType != 'values' && !array_key_exists( 'values dependent on', $field_args ) ) {
+				$remoteDataType = $autocompleteFieldType;
 			}
 			$sfgAutocompleteValues[$autocompleteSettings] = $autocompleteValues;
 		}
@@ -191,22 +203,22 @@ class SFTextWithAutocompleteInput extends SFTextInput {
 		$params[] = array(
 			'name' => 'values from url',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_valuesfromurl' )
+			'description' => wfMessage( 'sf_forminputs_valuesfromurl' )->text()
 		);
 		$params[] = array(
 			'name' => 'remote autocompletion',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_remoteautocompletion' )
+			'description' => wfMessage( 'sf_forminputs_remoteautocompletion' )->text()
 		);
 		$params[] = array(
 			'name' => 'list',
 			'type' => 'boolean',
-			'description' => wfMsg( 'sf_forminputs_list' )
+			'description' => wfMessage( 'sf_forminputs_list' )->text()
 		);
 		$params[] = array(
 			'name' => 'delimiter',
 			'type' => 'string',
-			'description' => wfMsg( 'sf_forminputs_delimiter' )
+			'description' => wfMessage( 'sf_forminputs_delimiter' )->text()
 		);
 		return $params;
 	}

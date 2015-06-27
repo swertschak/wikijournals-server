@@ -20,7 +20,7 @@
  * @file
  * @ingroup Maintenance
  */
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script to check images to see if they exist, are readable, etc.
@@ -73,13 +73,13 @@ class CheckImages extends Maintenance {
 				}
 
 				if ( $stat['size'] != $row->img_size ) {
-					$this->output( "{$row->img_name}: size mismatch DB={$row->img_size}, actual={$stat['size']}\n" );
+					$this->output( "{$row->img_name}: size mismatch DB={$row->img_size}, "
+						. "actual={$stat['size']}\n" );
 					continue;
 				}
 
 				$numGood++;
 			}
-
 		} while ( $res->numRows() );
 
 		$this->output( "Good images: $numGood/$numImages\n" );
@@ -87,4 +87,4 @@ class CheckImages extends Maintenance {
 }
 
 $maintClass = "CheckImages";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

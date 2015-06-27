@@ -5,14 +5,18 @@
  */
 class SideBarTest extends MediaWikiLangTestCase {
 
-	/** A skin template, reinitialized before each test */
+	/**
+	 * A skin template, reinitialized before each test
+	 * @var SkinTemplate
+	 */
 	private $skin;
 	/** Local cache for sidebar messages */
 	private $messages;
 
 	/** Build $this->messages array */
 	private function initMessagesHref() {
-		# List of default messages for the sidebar:
+		# List of default messages for the sidebar. The sidebar doesn't care at
+		# all whether they are full URLs, interwiki links or local titles.
 		$URL_messages = array(
 			'mainpage',
 			'portal-url',
@@ -22,10 +26,16 @@ class SideBarTest extends MediaWikiLangTestCase {
 			'helppage',
 		);
 
+		# We're assuming that isValidURI works as advertised: it's also
+		# tested separately, in tests/phpunit/includes/HttpTest.php.
 		foreach ( $URL_messages as $m ) {
 			$titleName = MessageCache::singleton()->get( $m );
-			$title = Title::newFromText( $titleName );
-			$this->messages[$m]['href'] = $title->getLocalURL();
+			if ( Http::isValidURI( $titleName ) ) {
+				$this->messages[$m]['href'] = $titleName;
+			} else {
+				$title = Title::newFromText( $titleName );
+				$this->messages[$m]['href'] = $title->getLocalURL();
+			}
 		}
 	}
 
@@ -36,16 +46,12 @@ class SideBarTest extends MediaWikiLangTestCase {
 		$this->skin->getContext()->setLanguage( Language::factory( 'en' ) );
 	}
 
-	protected function tearDown() {
-		parent::tearDown();
-		$this->skin = null;
-	}
-
 	/**
 	 * Internal helper to test the sidebar
-	 * @param $expected
-	 * @param $text
-	 * @param $message (Default: '')
+	 * @param array $expected
+	 * @param string $text
+	 * @param string $message (Default: '')
+	 * @todo this assert method to should be converted to a test using a dataprovider..
 	 */
 	private function assertSideBar( $expected, $text, $message = '' ) {
 		$bar = array();
@@ -53,7 +59,10 @@ class SideBarTest extends MediaWikiLangTestCase {
 		$this->assertEquals( $expected, $bar, $message );
 	}
 
-	function testSidebarWithOnlyTwoTitles() {
+	/**
+	 * @covers SkinTemplate::addToSidebarPlain
+	 */
+	public function testSidebarWithOnlyTwoTitles() {
 		$this->assertSideBar(
 			array(
 				'Title1' => array(),
@@ -65,7 +74,10 @@ class SideBarTest extends MediaWikiLangTestCase {
 		);
 	}
 
-	function testExpandMessages() {
+	/**
+	 * @covers SkinTemplate::addToSidebarPlain
+	 */
+	public function testExpandMessages() {
 		$this->assertSidebar(
 			array( 'Title' => array(
 				array(
@@ -81,7 +93,15 @@ class SideBarTest extends MediaWikiLangTestCase {
 		);
 	}
 
-	function testExternalUrlsRequireADescription() {
+	/**
+	 * @covers SkinTemplate::addToSidebarPlain
+	 */
+	public function testExternalUrlsRequireADescription() {
+		$this->setMwGlobals( array(
+			'wgNoFollowLinks' => true,
+			'wgNoFollowDomainExceptions' => array(),
+			'wgNoFollowNsExceptions' => array(),
+		) );
 		$this->assertSidebar(
 			array( 'Title' => array(
 				# ** http://www.mediawiki.org/| Home
@@ -100,14 +120,14 @@ class SideBarTest extends MediaWikiLangTestCase {
 ** http://valid.no.desc.org/
 '
 		);
-
 	}
 
 	/**
 	 * bug 33321 - Make sure there's a | after transforming.
 	 * @group Database
+	 * @covers SkinTemplate::addToSidebarPlain
 	 */
-	function testTrickyPipe() {
+	public function testTrickyPipe() {
 		$this->assertSidebar(
 			array( 'Title' => array(
 				# The first 2 are skipped
@@ -116,13 +136,13 @@ class SideBarTest extends MediaWikiLangTestCase {
 				# ** Baz|Fred
 				array(
 					'text' => 'Fred',
-					'href' => Title::newFromText( 'Baz' )->getLocalUrl(),
+					'href' => Title::newFromText( 'Baz' )->getLocalURL(),
 					'id' => 'n-Fred',
 					'active' => null,
 				),
 				array(
 					'text' => 'title-to-display',
-					'href' => Title::newFromText( 'page-to-go-to' )->getLocalUrl(),
+					'href' => Title::newFromText( 'page-to-go-to' )->getLocalURL(),
 					'id' => 'n-title-to-display',
 					'active' => null,
 				),
@@ -135,7 +155,6 @@ class SideBarTest extends MediaWikiLangTestCase {
 '
 		);
 	}
-
 
 	#### Attributes for external links ##########################
 	private function getAttribs() {
@@ -151,11 +170,14 @@ class SideBarTest extends MediaWikiLangTestCase {
 
 	/**
 	 * Simple test to verify our helper assertAttribs() is functional
-	 * Please note this assume MediaWiki default settings:
-	 *   $wgNoFollowLinks = true
-	 *   $wgExternalLinkTarget = false
 	 */
-	function testTestAttributesAssertionHelper() {
+	public function testTestAttributesAssertionHelper() {
+		$this->setMwGlobals( array(
+			'wgNoFollowLinks' => true,
+			'wgNoFollowDomainExceptions' => array(),
+			'wgNoFollowNsExceptions' => array(),
+			'wgExternalLinkTarget' => false,
+		) );
 		$attribs = $this->getAttribs();
 
 		$this->assertArrayHasKey( 'rel', $attribs );
@@ -167,39 +189,31 @@ class SideBarTest extends MediaWikiLangTestCase {
 	/**
 	 * Test $wgNoFollowLinks in sidebar
 	 */
-	function testRespectWgnofollowlinks() {
-		global $wgNoFollowLinks;
-		$saved = $wgNoFollowLinks;
-		$wgNoFollowLinks = false;
+	public function testRespectWgnofollowlinks() {
+		$this->setMwGlobals( 'wgNoFollowLinks', false );
 
 		$attribs = $this->getAttribs();
 		$this->assertArrayNotHasKey( 'rel', $attribs,
 			'External URL in sidebar do not have rel=nofollow when $wgNoFollowLinks = false'
 		);
-
-		// Restore global
-		$wgNoFollowLinks = $saved;
 	}
 
 	/**
 	 * Test $wgExternaLinkTarget in sidebar
+	 * @dataProvider dataRespectExternallinktarget
 	 */
-	function testRespectExternallinktarget() {
-		global $wgExternalLinkTarget;
-		$saved = $wgExternalLinkTarget;
+	public function testRespectExternallinktarget( $externalLinkTarget ) {
+		$this->setMwGlobals( 'wgExternalLinkTarget', $externalLinkTarget );
 
-		$wgExternalLinkTarget = '_blank';
 		$attribs = $this->getAttribs();
 		$this->assertArrayHasKey( 'target', $attribs );
-		$this->assertEquals( $attribs['target'], '_blank' );
-
-		$wgExternalLinkTarget = '_self';
-		$attribs = $this->getAttribs();
-		$this->assertArrayHasKey( 'target', $attribs );
-		$this->assertEquals( $attribs['target'], '_self' );
-
-		// Restore global
-		$wgExternalLinkTarget = $saved;
+		$this->assertEquals( $attribs['target'], $externalLinkTarget );
 	}
 
+	public static function dataRespectExternallinktarget() {
+		return array(
+			array( '_blank' ),
+			array( '_self' ),
+		);
+	}
 }

@@ -28,9 +28,8 @@
  * @ingroup Media
  */
 class BmpHandler extends BitmapHandler {
-
 	/**
-	 * @param $file
+	 * @param File $file
 	 * @return bool
 	 */
 	function mustRender( $file ) {
@@ -40,9 +39,9 @@ class BmpHandler extends BitmapHandler {
 	/**
 	 * Render files as PNG
 	 *
-	 * @param $text
-	 * @param $mime
-	 * @param $params
+	 * @param string $text
+	 * @param string $mime
+	 * @param array $params
 	 * @return array
 	 */
 	function getThumbType( $text, $mime, $params = null ) {
@@ -52,21 +51,21 @@ class BmpHandler extends BitmapHandler {
 	/**
 	 * Get width and height from the bmp header.
 	 *
-	 * @param $image
-	 * @param $filename
+	 * @param File $image
+	 * @param string $filename
 	 * @return array
 	 */
 	function getImageSize( $image, $filename ) {
 		$f = fopen( $filename, 'rb' );
-		if( !$f ) {
+		if ( !$f ) {
 			return false;
 		}
 		$header = fread( $f, 54 );
 		fclose( $f );
 
 		// Extract binary form of width and height from the header
-		$w = substr( $header, 18, 4);
-		$h = substr( $header, 22, 4);
+		$w = substr( $header, 18, 4 );
+		$h = substr( $header, 22, 4 );
 
 		// Convert the unsigned long 32 bits (little endian):
 		try {
@@ -75,6 +74,7 @@ class BmpHandler extends BitmapHandler {
 		} catch ( MWException $e ) {
 			return false;
 		}
+
 		return array( $w[1], $h[1] );
 	}
 }

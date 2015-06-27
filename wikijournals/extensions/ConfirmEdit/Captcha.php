@@ -38,9 +38,10 @@ class SimpleCaptcha {
 		$captcha = $this->getCaptcha();
 		$index = $this->storeCaptcha( $captcha );
 
-		return "<p><label for=\"wpCaptchaWord\">{$captcha['question']}</label> = " .
+		return "<p><label for=\"wpCaptchaWord\">{$captcha['question']} = </label>" .
 			Xml::element( 'input', array(
 				'name' => 'wpCaptchaWord',
+				'class' => 'mw-ui-input',
 				'id'   => 'wpCaptchaWord',
 				'size'  => 5,
 				'autocomplete' => 'off',
@@ -547,7 +548,12 @@ class SimpleCaptcha {
 				// For older MediaWiki
 				$message = wfMessage( 'captcha-createaccount-fail' )->text();
 				// For MediaWiki 1.23+
-				$status = Status::newFatal( 'captcha-createaccount-fail' );
+				$status = Status::newGood();
+				
+				// Apply a *non*-fatal warning. This will still abort the
+				// account creation but returns a "Warning" response to the
+				// API or UI.
+				$status->warning( 'captcha-createaccount-fail' );
 				return false;
 			}
 		}
@@ -818,18 +824,27 @@ class SimpleCaptcha {
 
 		return true;
 	}
-	
+
 	/**
 	 * Pass extra data back in API results for account creation.
 	 *
 	 * @param ApiCreateAccount $apiModule
-	 * @param LoginForm &loginForm
-	 * @param array &$params
-	 * @return hook return value
+	 * @param LoginForm &loginPage
+	 * @param array &$result
+	 * @return bool: Hook return value
 	 */
 	function addNewAccountApiResult( $apiModule, $loginPage, &$result ) {
 		if ( $result['result'] !== 'Success' && $this->needCreateAccountCaptcha() ) {
-			$this->addCaptchaAPI( $result );
+
+			// If we failed a captcha, override the generic 'Warning' result string
+			if ( $result['result'] === 'Warning' && isset( $result['warnings'] ) ) {
+				foreach ( $result['warnings'] as $warning ) {
+					if ( $warning['message'] === 'captcha-createaccount-fail' ) {
+						$this->addCaptchaAPI( $result );
+						$result['result'] = 'NeedCaptcha';
+					}
+				}
+			}
 		}
 		return true;
 	}

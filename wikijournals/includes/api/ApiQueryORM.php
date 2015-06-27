@@ -104,7 +104,7 @@ abstract class ApiQueryORM extends ApiQueryBase {
 	protected function getParams() {
 		return array_filter(
 			$this->extractRequestParams(),
-			function( $prop ) {
+			function ( $prop ) {
 				return isset( $prop );
 			}
 		);
@@ -228,7 +228,7 @@ abstract class ApiQueryORM extends ApiQueryBase {
 	 * @return array
 	 */
 	public function getAllowedParams() {
-		$params = array (
+		$params = array(
 			'props' => array(
 				ApiBase::PARAM_TYPE => $this->getTable()->getFieldNames(),
 				ApiBase::PARAM_ISMULTI => true,
@@ -252,7 +252,7 @@ abstract class ApiQueryORM extends ApiQueryBase {
 	 * @return array
 	 */
 	public function getParamDescription() {
-		$descriptions = array (
+		$descriptions = array(
 			'props' => 'Fields to query',
 			'continue' => 'Offset number from where to continue the query',
 			'limit' => 'Max amount of rows to return',
@@ -260,5 +260,4 @@ abstract class ApiQueryORM extends ApiQueryBase {
 
 		return array_merge( $this->getTable()->getFieldDescriptions(), $descriptions );
 	}
-
 }

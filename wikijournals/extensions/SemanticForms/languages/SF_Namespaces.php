@@ -41,7 +41,15 @@ $namespaceNames['ca'] = array(
  */
 $namespaceNames['de'] = array(
 	SF_NS_FORM           => 'Formular',
-	SF_NS_FORM_TALK      => 'Formular Diskussion'
+	SF_NS_FORM_TALK      => 'Formular_Diskussion'
+);
+
+/**
+ * @author Protnet
+ */
+$namespaceNames['el'] = array(
+	SF_NS_FORM           => 'Φόρμα',
+	SF_NS_FORM_TALK      => 'Συζήτηση_φόρμας'
 );
 
 $namespaceNames['en'] = array(

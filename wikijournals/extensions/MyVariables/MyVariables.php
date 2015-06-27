@@ -20,18 +20,19 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 // Register this extension on Special:Version
 $wgExtensionCredits['parserhook'][] = array(
-	'path'           => __FILE__,
-	'name'           => 'MyVariables',
-	'version'        => '3.1.2',
-	'url'            => 'https://www.mediawiki.org/wiki/Extension:MyVariables',
-	'author'         => array( '[[mw:User:Nad|Aran Dunkley]]', '[[mw:User:Pastakhov|Pavel Astakhov]]', '...',  ),
-	'descriptionmsg' => 'myvariables-desc'
+	'path'				=> __FILE__,
+	'name'				=> 'MyVariables',
+	'version'			=> '3.2.0',
+	'url'				=> 'https://www.mediawiki.org/wiki/Extension:MyVariables',
+	'author'			=> array( '[https://www.mediawiki.org/wiki/User:Nad Aran Dunkley]', '[https://www.mediawiki.org/wiki/User:Pastakhov Pavel Astakhov]', '...',  ),
+	'descriptionmsg'	=> 'myvariables-desc'
 );
 
 // Tell the whereabouts of files
 $dir = dirname(__FILE__);
 
 // Allow translations for this extension
+$wgMessagesDirs['MyVariables'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['MyVariables'] = $dir . '/MyVariables.i18n.php';
 $wgExtensionMessagesFiles['MyVariablesMagic'] = $dir . '/MyVariables.i18n.magic.php';
 

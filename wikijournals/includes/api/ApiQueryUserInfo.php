@@ -31,9 +31,11 @@
  */
 class ApiQueryUserInfo extends ApiQueryBase {
 
+	const WL_UNREAD_LIMIT = 1000;
+
 	private $prop = array();
 
-	public function __construct( $query, $moduleName ) {
+	public function __construct( ApiQuery $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'ui' );
 	}
 
@@ -50,7 +52,6 @@ class ApiQueryUserInfo extends ApiQueryBase {
 	}
 
 	protected function getCurrentUserInfo() {
-		global $wgHiddenPrefs;
 		$user = $this->getUser();
 		$result = $this->getResult();
 		$vals = array();
@@ -68,6 +69,10 @@ class ApiQueryUserInfo extends ApiQueryBase {
 				$vals['blockedby'] = $block->getByName();
 				$vals['blockedbyid'] = $block->getBy();
 				$vals['blockreason'] = $user->blockedFor();
+				$vals['blockedtimestamp'] = wfTimestamp( TS_ISO_8601, $block->mTimestamp );
+				$vals['blockexpiry'] = $block->getExpiry() === 'infinity'
+					? 'infinite'
+					: wfTimestamp( TS_ISO_8601, $block->getExpiry() );
 			}
 		}
 
@@ -103,13 +108,22 @@ class ApiQueryUserInfo extends ApiQueryBase {
 			$vals['options'] = $user->getOptions();
 		}
 
+		if ( isset( $this->prop['preferencestoken'] ) ) {
+			$p = $this->getModulePrefix();
+			$this->setWarning(
+				"{$p}prop=preferencestoken has been deprecated. Please use action=query&meta=tokens instead."
+			);
+		}
 		if ( isset( $this->prop['preferencestoken'] ) &&
-			is_null( $this->getMain()->getRequest()->getVal( 'callback' ) )
+			is_null( $this->getMain()->getRequest()->getVal( 'callback' ) ) &&
+			$user->isAllowed( 'editmyoptions' )
 		) {
 			$vals['preferencestoken'] = $user->getEditToken( '', $this->getMain()->getRequest() );
 		}
 
 		if ( isset( $this->prop['editcount'] ) ) {
+			// use intval to prevent null if a non-logged-in user calls
+			// api.php?format=jsonfm&action=query&meta=userinfo&uiprop=editcount
 			$vals['editcount'] = intval( $user->getEditCount() );
 		}
 
@@ -117,15 +131,17 @@ class ApiQueryUserInfo extends ApiQueryBase {
 			$vals['ratelimits'] = $this->getRateLimits();
 		}
 
-		if ( isset( $this->prop['realname'] ) && !in_array( 'realname', $wgHiddenPrefs ) ) {
+		if ( isset( $this->prop['realname'] ) && !in_array( 'realname', $this->getConfig()->get( 'HiddenPrefs' ) ) ) {
 			$vals['realname'] = $user->getRealName();
 		}
 
-		if ( isset( $this->prop['email'] ) ) {
-			$vals['email'] = $user->getEmail();
-			$auth = $user->getEmailAuthenticationTimestamp();
-			if ( !is_null( $auth ) ) {
-				$vals['emailauthenticated'] = wfTimestamp( TS_ISO_8601, $auth );
+		if ( $user->isAllowed( 'viewmyprivateinfo' ) ) {
+			if ( isset( $this->prop['email'] ) ) {
+				$vals['email'] = $user->getEmail();
+				$auth = $user->getEmailAuthenticationTimestamp();
+				if ( !is_null( $auth ) ) {
+					$vals['emailauthenticated'] = wfTimestamp( TS_ISO_8601, $auth );
+				}
 			}
 		}
 
@@ -147,11 +163,33 @@ class ApiQueryUserInfo extends ApiQueryBase {
 			$result->setIndexedTagName( $acceptLang, 'lang' );
 			$vals['acceptlang'] = $acceptLang;
 		}
+
+		if ( isset( $this->prop['unreadcount'] ) ) {
+			$dbr = $this->getQuery()->getNamedDB( 'watchlist', DB_SLAVE, 'watchlist' );
+
+			$sql = $dbr->selectSQLText(
+				'watchlist',
+				array( 'dummy' => 1 ),
+				array(
+					'wl_user' => $user->getId(),
+					'wl_notificationtimestamp IS NOT NULL',
+				),
+				__METHOD__,
+				array( 'LIMIT' => self::WL_UNREAD_LIMIT )
+			);
+			$count = $dbr->selectField( array( 'c' => "($sql)" ), 'COUNT(*)' );
+
+			if ( $count >= self::WL_UNREAD_LIMIT ) {
+				$vals['unreadcount'] = self::WL_UNREAD_LIMIT . '+';
+			} else {
+				$vals['unreadcount'] = (int)$count;
+			}
+		}
+
 		return $vals;
 	}
 
 	protected function getRateLimits() {
-		global $wgRateLimits;
 		$user = $this->getUser();
 		if ( !$user->isPingLimitable() ) {
 			return array(); // No limits
@@ -167,14 +205,15 @@ class ApiQueryUserInfo extends ApiQueryBase {
 		if ( $user->isNewbie() ) {
 			$categories[] = 'ip';
 			$categories[] = 'subnet';
-			if ( !$user->isAnon() )
+			if ( !$user->isAnon() ) {
 				$categories[] = 'newbie';
+			}
 		}
 		$categories = array_merge( $categories, $user->getGroups() );
 
 		// Now get the actual limits
 		$retval = array();
-		foreach ( $wgRateLimits as $action => $limits ) {
+		foreach ( $this->getConfig()->get( 'RateLimits' ) as $action => $limits ) {
 			foreach ( $categories as $cat ) {
 				if ( isset( $limits[$cat] ) && !is_null( $limits[$cat] ) ) {
 					$retval[$action][$cat]['hits'] = intval( $limits[$cat][0] );
@@ -182,6 +221,7 @@ class ApiQueryUserInfo extends ApiQueryBase {
 				}
 			}
 		}
+
 		return $retval;
 	}
 
@@ -204,7 +244,8 @@ class ApiQueryUserInfo extends ApiQueryBase {
 					'email',
 					'realname',
 					'acceptlang',
-					'registrationdate'
+					'registrationdate',
+					'unreadcount',
 				)
 			)
 		);
@@ -221,76 +262,23 @@ class ApiQueryUserInfo extends ApiQueryBase {
 				'  rights           - Lists all the rights the current user has',
 				'  changeablegroups - Lists the groups the current user can add to and remove from',
 				'  options          - Lists all preferences the current user has set',
-				'  preferencestoken - Get a token to change current user\'s preferences',
+				'  preferencestoken - DEPRECATED! Get a token to change current user\'s preferences',
 				'  editcount        - Adds the current user\'s edit count',
 				'  ratelimits       - Lists all rate limits applying to the current user',
 				'  realname         - Adds the user\'s real name',
 				'  email            - Adds the user\'s email address and email authentication date',
-				'  acceptlang       - Echoes the Accept-Language header sent by the client in a structured format',
+				'  acceptlang       - Echoes the Accept-Language header sent by ' .
+					'the client in a structured format',
 				'  registrationdate - Adds the user\'s registration date',
-			)
-		);
-	}
-
-	public function getResultProperties() {
-		return array(
-			ApiBase::PROP_LIST => false,
-			'' => array(
-				'id' => 'integer',
-				'name' => 'string',
-				'anon' => 'boolean'
-			),
-			'blockinfo' => array(
-				'blockid' => array(
-					ApiBase::PROP_TYPE => 'integer',
-					ApiBase::PROP_NULLABLE => true
-				),
-				'blockedby' => array(
-					ApiBase::PROP_TYPE => 'string',
-					ApiBase::PROP_NULLABLE => true
-				),
-				'blockedbyid' => array(
-					ApiBase::PROP_TYPE => 'integer',
-					ApiBase::PROP_NULLABLE => true
-				),
-				'blockedreason' => array(
-					ApiBase::PROP_TYPE => 'string',
-					ApiBase::PROP_NULLABLE => true
-				)
-			),
-			'hasmsg' => array(
-				'messages' => 'boolean'
-			),
-			'preferencestoken' => array(
-				'preferencestoken' => 'string'
-			),
-			'editcount' => array(
-				'editcount' => 'integer'
-			),
-			'realname' => array(
-				'realname' => array(
-					ApiBase::PROP_TYPE => 'string',
-					ApiBase::PROP_NULLABLE => true
-				)
-			),
-			'email' => array(
-				'email' => 'string',
-				'emailauthenticated' => array(
-					ApiBase::PROP_TYPE => 'timestamp',
-					ApiBase::PROP_NULLABLE => true
-				)
-			),
-			'registrationdate' => array(
-				'registrationdate' => array(
-					ApiBase::PROP_TYPE => 'timestamp',
-					ApiBase::PROP_NULLABLE => true
-				)
+				'  unreadcount      - Adds the count of unread pages on the user\'s watchlist ' .
+					'(maximum ' . ( self::WL_UNREAD_LIMIT - 1 ) . '; returns "' .
+					self::WL_UNREAD_LIMIT . '+" if more)',
 			)
 		);
 	}
 
 	public function getDescription() {
-		return 'Get information about the current user';
+		return 'Get information about the current user.';
 	}
 
 	public function getExamples() {

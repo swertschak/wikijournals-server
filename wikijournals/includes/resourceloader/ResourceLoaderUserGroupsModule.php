@@ -25,11 +25,15 @@
  */
 class ResourceLoaderUserGroupsModule extends ResourceLoaderWikiModule {
 
-	/* Protected Methods */
+	/* Protected Members */
+
 	protected $origin = self::ORIGIN_USER_SITEWIDE;
+	protected $targets = array( 'desktop', 'mobile' );
+
+	/* Protected Methods */
 
 	/**
-	 * @param $context ResourceLoaderContext
+	 * @param ResourceLoaderContext $context
 	 * @return array
 	 */
 	protected function getPages( ResourceLoaderContext $context ) {
@@ -37,6 +41,12 @@ class ResourceLoaderUserGroupsModule extends ResourceLoaderWikiModule {
 
 		$userName = $context->getUser();
 		if ( $userName === null ) {
+			return array();
+		}
+
+		$useSiteJs = $this->getConfig()->get( 'UseSiteJs' );
+		$useSiteCss = $this->getConfig()->get( 'UseSiteCss' );
+		if ( !$useSiteJs && !$useSiteCss ) {
 			return array();
 		}
 
@@ -51,12 +61,16 @@ class ResourceLoaderUserGroupsModule extends ResourceLoaderWikiModule {
 		}
 
 		$pages = array();
-		foreach( $user->getEffectiveGroups() as $group ) {
-			if ( in_array( $group, array( '*', 'user' ) ) ) {
+		foreach ( $user->getEffectiveGroups() as $group ) {
+			if ( $group == '*' ) {
 				continue;
 			}
-			$pages["MediaWiki:Group-$group.js"] = array( 'type' => 'script' );
-			$pages["MediaWiki:Group-$group.css"] = array( 'type' => 'style' );
+			if ( $useSiteJs ) {
+				$pages["MediaWiki:Group-$group.js"] = array( 'type' => 'script' );
+			}
+			if ( $useSiteCss ) {
+				$pages["MediaWiki:Group-$group.css"] = array( 'type' => 'style' );
+			}
 		}
 		return $pages;
 	}

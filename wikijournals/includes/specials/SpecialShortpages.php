@@ -38,15 +38,18 @@ class ShortPagesPage extends QueryPage {
 	}
 
 	function getQueryInfo() {
-		return array (
-			'tables' => array ( 'page' ),
-			'fields' => array ( 'namespace' => 'page_namespace',
-					'title' => 'page_title',
-					'value' => 'page_len' ),
-			'conds' => array ( 'page_namespace' =>
-					MWNamespace::getContentNamespaces(),
-					'page_is_redirect' => 0 ),
-			'options' => array ( 'USE INDEX' => 'page_redirect_namespace_len' )
+		return array(
+			'tables' => array( 'page' ),
+			'fields' => array(
+				'namespace' => 'page_namespace',
+				'title' => 'page_title',
+				'value' => 'page_len'
+			),
+			'conds' => array(
+				'page_namespace' => MWNamespace::getContentNamespaces(),
+				'page_is_redirect' => 0
+			),
+			'options' => array( 'USE INDEX' => 'page_redirect_namespace_len' )
 		);
 	}
 
@@ -55,9 +58,8 @@ class ShortPagesPage extends QueryPage {
 	}
 
 	/**
-	 * @param $db DatabaseBase
-	 * @param $res
-	 * @return void
+	 * @param DatabaseBase $db
+	 * @param ResultWrapper $res
 	 */
 	function preprocessResults( $db, $res ) {
 		# There's no point doing a batch check if we aren't caching results;
@@ -79,6 +81,11 @@ class ShortPagesPage extends QueryPage {
 		return false;
 	}
 
+	/**
+	 * @param Skin $skin
+	 * @param object $result Result row
+	 * @return string
+	 */
 	function formatResult( $skin, $result ) {
 		$dm = $this->getLanguage()->getDirMark();
 
@@ -107,8 +114,8 @@ class ShortPagesPage extends QueryPage {
 		$size = $this->msg( 'nbytes' )->numParams( $result->value )->escaped();
 
 		return $exists
-				? "${hlinkInParentheses} {$dm}{$plink} {$dm}[{$size}]"
-				: "<del>${hlinkInParentheses} {$dm}{$plink} {$dm}[{$size}]</del>";
+			? "${hlinkInParentheses} {$dm}{$plink} {$dm}[{$size}]"
+			: "<del>${hlinkInParentheses} {$dm}{$plink} {$dm}[{$size}]</del>";
 	}
 
 	protected function getGroupName() {

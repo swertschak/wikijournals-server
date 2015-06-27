@@ -22,7 +22,7 @@
  * @see wfWaitForSlaves()
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script to wait until slave lag goes under a certain value.
@@ -34,10 +34,11 @@ class WaitForSlave extends Maintenance {
 		parent::__construct();
 		$this->addArg( 'maxlag', 'How long to wait for the slaves, default 10 seconds', false );
 	}
+
 	public function execute() {
 		wfWaitForSlaves( $this->getArg( 0, 10 ) );
 	}
 }
 
 $maintClass = "WaitForSlave";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

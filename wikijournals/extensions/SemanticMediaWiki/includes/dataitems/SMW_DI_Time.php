@@ -1,8 +1,6 @@
 <?php
-/**
- * @file
- * @ingroup SMWDataItems
- */
+
+use SMW\DataItemException;
 
 /**
  * This class implements time data items.
@@ -104,10 +102,10 @@ class SMWDITime extends SMWDataItem {
 	public function __construct( $calendarmodel, $year, $month = false, $day = false,
 	                             $hour = false, $minute = false, $second = false ) {
 		if ( ( $calendarmodel != self::CM_GREGORIAN ) && ( $calendarmodel != self::CM_JULIAN ) ) {
-			throw new SMWDataItemException( "Unsupported calendar model constant \"$calendarmodel\"." );
+			throw new DataItemException( "Unsupported calendar model constant \"$calendarmodel\"." );
 		}
 		if ( $year == 0 ) {
-			throw new SMWDataItemException( "There is no year 0 in Gregorian and Julian calendars." );
+			throw new DataItemException( "There is no year 0 in Gregorian and Julian calendars." );
 		}
 		$this->m_model   = $calendarmodel;
 		$this->m_year    = intval( $year );
@@ -120,10 +118,10 @@ class SMWDITime extends SMWDataItem {
 		     ( $this->m_minutes < 0 ) || ( $this->m_minutes > 59 ) ||
 		     ( $this->m_seconds < 0 ) || ( $this->m_seconds > 59 ) ||
 		     ( $this->m_month < 1 ) || ( $this->m_month > 12 ) ) {
-			throw new SMWDataItemException( "Part of the date is out of bounds." );
+			throw new DataItemException( "Part of the date is out of bounds." );
 		}
 		if ( $this->m_day > self::getDayNumberForMonth( $this->m_month, $this->m_year, $this->m_model ) ) {
-			throw new SMWDataItemException( "Month {$this->m_month} in year {$this->m_year} did not have {$this->m_day} days in this calendar model." );
+			throw new DataItemException( "Month {$this->m_month} in year {$this->m_year} did not have {$this->m_day} days in this calendar model." );
 		}
 		if ( $month === false ) {
 			$this->m_precision = self::PREC_Y;
@@ -171,13 +169,42 @@ class SMWDITime extends SMWDataItem {
 	public function getSecond() {
 		return $this->m_seconds;
 	}
-	
+
+	/**
+	 * Creates and returns a new instance of SMWDITime from a MW timestamp.
+	 *
+	 * @since 1.8
+	 *
+	 * @param string $timestamp must be in format
+	 *
+	 * @return SMWDITime|false
+	 */
+	public static function newFromTimestamp( $timestamp ) {
+		$timestamp = wfTimestamp( TS_MW, (string)$timestamp );
+
+		if ( $timestamp === false ) {
+			return false;
+		}
+
+		return new self(
+			SMWDITime::CM_GREGORIAN,
+			substr( $timestamp, 0, 4 ),
+			substr( $timestamp, 4, 2 ),
+			substr( $timestamp, 6, 2 ),
+			substr( $timestamp, 8, 2 ),
+			substr( $timestamp, 10, 2 ),
+			substr( $timestamp, 12, 2 )
+		);
+	}
+
 	/**
 	 * Returns a MW timestamp representatation of the value.
 	 * 
 	 * @since 1.6.2
 	 * 
 	 * @param $outputtype
+	 *
+	 * @return mixed
 	 */
 	public function getMwTimestamp( $outputtype = TS_UNIX ) {
 		return wfTimestamp(
@@ -249,8 +276,8 @@ class SMWDITime extends SMWDataItem {
 	}
 
 	/**
-	 * Create a data item from the provided serialization string and type
-	 * ID.
+	 * Create a data item from the provided serialization string.
+	 *
 	 * @return SMWDITime
 	 */
 	public static function doUnserialize( $serialization ) {
@@ -262,7 +289,7 @@ class SMWDITime extends SMWDataItem {
 				if ( is_numeric( $parts[$i] ) ) {
 					$values[$i] = intval( $parts[$i] );
 				} else {
-					throw new SMWDataItemException( "Unserialization failed: the string \"$serialization\" is no valid datetime specification." );
+					throw new DataItemException( "Unserialization failed: the string \"$serialization\" is no valid datetime specification." );
 				}
 			} else {
 				$values[$i] = false;
@@ -270,7 +297,7 @@ class SMWDITime extends SMWDataItem {
 		}
 		
 		if ( count( $parts ) <= 1 ) {
-			throw new SMWDataItemException( "Unserialization failed: the string \"$serialization\" is no valid URI." );
+			throw new DataItemException( "Unserialization failed: the string \"$serialization\" is no valid URI." );
 		}
 		
 		return new self( $values[0], $values[1], $values[2], $values[3], $values[4], $values[5], $values[6] );
@@ -432,4 +459,11 @@ class SMWDITime extends SMWDataItem {
 		}
 	}
 
+	public function equals( SMWDataItem $di ) {
+		if ( $di->getDIType() !== SMWDataItem::TYPE_TIME ) {
+			return false;
+		}
+
+		return $di->getSortKey() === $this->getSortKey();
+	}
 }

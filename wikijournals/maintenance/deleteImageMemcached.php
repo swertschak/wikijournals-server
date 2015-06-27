@@ -24,7 +24,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that deletes image information from the object cache.
@@ -59,13 +59,20 @@ class DeleteImageCache extends Maintenance {
 		$total = $this->getImageCount();
 
 		foreach ( $res as $row ) {
-			if ( $i % $this->report == 0 )
-				$this->output( sprintf( "%s: %13s done (%s)\n", wfWikiID(), "$i/$total", wfPercent( $i / $total * 100 ) ) );
+			if ( $i % $this->report == 0 ) {
+				$this->output( sprintf(
+					"%s: %13s done (%s)\n",
+					wfWikiID(),
+					"$i/$total",
+					wfPercent( $i / $total * 100 )
+				) );
+			}
 			$md5 = md5( $row->img_name );
 			$wgMemc->delete( wfMemcKey( 'Image', $md5 ) );
 
-			if ( $sleep != 0 )
+			if ( $sleep != 0 ) {
 				usleep( $sleep );
+			}
 
 			++$i;
 		}
@@ -73,9 +80,10 @@ class DeleteImageCache extends Maintenance {
 
 	private function getImageCount() {
 		$dbr = wfGetDB( DB_SLAVE );
+
 		return $dbr->selectField( 'image', 'COUNT(*)', array(), __METHOD__ );
 	}
 }
 
 $maintClass = "DeleteImageCache";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

@@ -4,9 +4,9 @@
  *
  * @group Database
  * @group Dump
+ * @covers BackupDumper
  */
 class BackupDumperLoggerTest extends DumpTestCase {
-
 
 	// We'll add several log entries and users for this test. The following
 	// variables hold the corresponding ids.
@@ -16,16 +16,15 @@ class BackupDumperLoggerTest extends DumpTestCase {
 	/**
 	 * adds a log entry to the database.
 	 *
-	 * @param $type string: type of the log entry
-	 * @param $subtype string: subtype of the log entry
-	 * @param $user User: user that performs the logged operation
-	 * @param $ns int: number of the namespace for the entry's target's title
-	 * @param $title string: title of the entry's target
-	 * @param $comment string: comment of the log entry
-	 * @param $parameters Array: (optional) accompanying data that is attached
-	 *               to the entry
+	 * @param string $type Type of the log entry
+	 * @param string $subtype Subtype of the log entry
+	 * @param User $user User that performs the logged operation
+	 * @param int $ns Number of the namespace for the entry's target's title
+	 * @param string $title Title of the entry's target
+	 * @param string $comment Comment of the log entry
+	 * @param array $parameters (optional) accompanying data that is attached to the entry
 	 *
-	 * @return int id of the added log entry
+	 * @return int Id of the added log entry
 	 */
 	private function addLogEntry( $type, $subtype, User $user, $ns, $title,
 		$comment = null, $parameters = null
@@ -39,6 +38,7 @@ class BackupDumperLoggerTest extends DumpTestCase {
 		if ( $parameters !== null ) {
 			$logEntry->setParameters( $parameters );
 		}
+
 		return $logEntry->insert();
 	}
 
@@ -75,30 +75,26 @@ class BackupDumperLoggerTest extends DumpTestCase {
 				$user2, NS_MAIN, "PageA", "SomeOtherComment",
 				array( 'key1' => 1, 3 => 'value3' ) );
 			$this->assertGreaterThan( 0, $this->logId3 );
-
 		} catch ( Exception $e ) {
 			// We'd love to pass $e directly. However, ... see
 			// documentation of exceptionFromAddDBData in
 			// DumpTestCase
 			$this->exceptionFromAddDBData = $e;
 		}
-
 	}
-
 
 	/**
 	 * asserts that the xml reader is at the beginning of a log entry and skips over
 	 * it while analyzing it.
 	 *
-	 * @param $id int: id of the log entry
-	 * @param $user_name string: user name of the log entry's performer
-	 * @param $user_id int: user id of the log entry 's performer
-	 * @param $comment string|null: comment of the log entry. If null, the comment
-	 *             text is ignored.
-	 * @param $type string: type of the log entry
-	 * @param $subtype string: subtype of the log entry
-	 * @param $title string: title of the log entry's target
-	 * @param $parameters array: (optional) unserialized data accompanying the log entry
+	 * @param int $id Id of the log entry
+	 * @param string $user_name User name of the log entry's performer
+	 * @param int $user_id User id of the log entry 's performer
+	 * @param string|null $comment Comment of the log entry. If null, the comment text is ignored.
+	 * @param string $type Type of the log entry
+	 * @param string $subtype Subtype of the log entry
+	 * @param string $title Title of the log entry's target
+	 * @param array $parameters (optional) unserialized data accompanying the log entry
 	 */
 	private function assertLogItem( $id, $user_name, $user_id, $comment, $type,
 		$subtype, $title, $parameters = array()
@@ -226,5 +222,4 @@ class BackupDumperLoggerTest extends DumpTestCase {
 		// the following statement to catch good output
 		$this->expectOutputString( '' );
 	}
-
 }

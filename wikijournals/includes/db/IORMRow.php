@@ -32,26 +32,15 @@
  */
 
 interface IORMRow {
-
-	/**
-	 * Constructor.
-	 *
-	 * @since 1.20
-	 *
-	 * @param IORMTable $table
-	 * @param array|null $fields
-	 * @param boolean $loadDefaults
-	 */
-	public function __construct( IORMTable $table, $fields = null, $loadDefaults = false );
-
 	/**
 	 * Load the specified fields from the database.
 	 *
 	 * @since 1.20
+	 * @deprecated since 1.22
 	 *
 	 * @param array|null $fields
-	 * @param boolean $override
-	 * @param boolean $skipLoaded
+	 * @param bool $override
+	 * @param bool $skipLoaded
 	 *
 	 * @return bool Success indicator
 	 */
@@ -74,8 +63,9 @@ interface IORMRow {
 	 * Gets the value of a field but first loads it if not done so already.
 	 *
 	 * @since 1.20
+	 * @deprecated since 1.22
 	 *
-	 * @param string$name
+	 * @param string $name
 	 *
 	 * @return mixed
 	 */
@@ -95,7 +85,7 @@ interface IORMRow {
 	 *
 	 * @since 1.20
 	 *
-	 * @return integer|null
+	 * @return int|null
 	 */
 	public function getId();
 
@@ -104,7 +94,7 @@ interface IORMRow {
 	 *
 	 * @since 1.20
 	 *
-	 * @param integer|null $id
+	 * @param int|null $id
 	 */
 	public function setId( $id );
 
@@ -115,7 +105,7 @@ interface IORMRow {
 	 *
 	 * @param string $name
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasField( $name );
 
@@ -124,7 +114,7 @@ interface IORMRow {
 	 *
 	 * @since 1.20
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function hasIdField();
 
@@ -134,7 +124,7 @@ interface IORMRow {
 	 * @since 1.20
 	 *
 	 * @param array $fields The fields to set
-	 * @param boolean $override Override already set fields with the provided values?
+	 * @param bool $override Override already set fields with the provided values?
 	 */
 	public function setFields( array $fields, $override = true );
 
@@ -145,7 +135,7 @@ interface IORMRow {
 	 * @since 1.20
 	 *
 	 * @param null|array $fields
-	 * @param boolean $incNullId
+	 * @param bool $incNullId
 	 *
 	 * @return array
 	 */
@@ -155,8 +145,9 @@ interface IORMRow {
 	 * Load the default values, via getDefaults.
 	 *
 	 * @since 1.20
+	 * @deprecated since 1.22
 	 *
-	 * @param boolean $override
+	 * @param bool $override
 	 */
 	public function loadDefaults( $override = true );
 
@@ -167,8 +158,9 @@ interface IORMRow {
 	 * @since 1.20
 	 *
 	 * @param string|null $functionName
+	 * @deprecated since 1.22
 	 *
-	 * @return boolean Success indicator
+	 * @return bool Success indicator
 	 */
 	public function save( $functionName = null );
 
@@ -176,8 +168,9 @@ interface IORMRow {
 	 * Removes the object from the database.
 	 *
 	 * @since 1.20
+	 * @deprecated since 1.22
 	 *
-	 * @return boolean Success indicator
+	 * @return bool Success indicator
 	 */
 	public function remove();
 
@@ -215,14 +208,14 @@ interface IORMRow {
 
 	/**
 	 * Add an amount (can be negative) to the specified field (needs to be numeric).
-	 * TODO: most off this stuff makes more sense in the table class
 	 *
 	 * @since 1.20
+	 * @deprecated since 1.22
 	 *
 	 * @param string $field
-	 * @param integer $amount
+	 * @param int $amount
 	 *
-	 * @return boolean Success indicator
+	 * @return bool Success indicator
 	 */
 	public function addToField( $field, $amount );
 
@@ -239,6 +232,7 @@ interface IORMRow {
 	 * Computes and updates the values of the summary fields.
 	 *
 	 * @since 1.20
+	 * @deprecated since 1.22
 	 *
 	 * @param array|string|null $summaryFields
 	 */
@@ -248,8 +242,9 @@ interface IORMRow {
 	 * Sets the value for the @see $updateSummaries field.
 	 *
 	 * @since 1.20
+	 * @deprecated since 1.22
 	 *
-	 * @param boolean $update
+	 * @param bool $update
 	 */
 	public function setUpdateSummaries( $update );
 
@@ -257,8 +252,9 @@ interface IORMRow {
 	 * Sets the value for the @see $inSummaryMode field.
 	 *
 	 * @since 1.20
+	 * @deprecated since 1.22
 	 *
-	 * @param boolean $summaryMode
+	 * @param bool $summaryMode
 	 */
 	public function setSummaryMode( $summaryMode );
 
@@ -266,9 +262,9 @@ interface IORMRow {
 	 * Returns the table this IORMRow is a row in.
 	 *
 	 * @since 1.20
+	 * @deprecated since 1.22
 	 *
 	 * @return IORMTable
 	 */
 	public function getTable();
-
 }

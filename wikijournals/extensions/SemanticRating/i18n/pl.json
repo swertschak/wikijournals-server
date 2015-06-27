@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chrumps"
+		]
+	},
+	"semanticrating-desc": "Pozwala użytkownikom na ocenę elementów za pomocą gwiazdek",
+	"semanticrating-max": "Maksymalna liczba gwiazdek w rankingu"
+}

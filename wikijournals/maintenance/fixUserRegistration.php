@@ -22,7 +22,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that fixes the user_registration field.
@@ -44,10 +44,20 @@ class FixUserRegistration extends Maintenance {
 		foreach ( $res as $row ) {
 			$id = $row->user_id;
 			// Get first edit time
-			$timestamp = $dbr->selectField( 'revision', 'MIN(rev_timestamp)', array( 'rev_user' => $id ), __METHOD__ );
+			$timestamp = $dbr->selectField(
+				'revision',
+				'MIN(rev_timestamp)',
+				array( 'rev_user' => $id ),
+				__METHOD__
+			);
 			// Update
 			if ( !empty( $timestamp ) ) {
-				$dbw->update( 'user', array( 'user_registration' => $timestamp ), array( 'user_id' => $id ), __METHOD__ );
+				$dbw->update(
+					'user',
+					array( 'user_registration' => $timestamp ),
+					array( 'user_id' => $id ),
+					__METHOD__
+				);
 				$this->output( "$id $timestamp\n" );
 			} else {
 				$this->output( "$id NULL\n" );
@@ -58,4 +68,4 @@ class FixUserRegistration extends Maintenance {
 }
 
 $maintClass = "FixUserRegistration";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

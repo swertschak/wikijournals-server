@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script to cleans up old database tables, dropping old indexes
@@ -38,10 +38,11 @@ class CleanupAncientTables extends Maintenance {
 	}
 
 	public function execute() {
-		if( !$this->hasOption( 'force' ) ) {
+		if ( !$this->hasOption( 'force' ) ) {
 			$this->error( "This maintenance script will remove old columns and indexes.\n"
-				. "It is recommended to backup your database first, and ensure all your data has been migrated to newer tables\n"
-				. "If you want to continue, run this script again with the --force \n"
+				. "It is recommended to backup your database first, and ensure all your data has\n"
+				. "been migrated to newer tables. If you want to continue, run this script again\n"
+				. "with --force.\n"
 			);
 		}
 
@@ -61,7 +62,7 @@ class CleanupAncientTables extends Maintenance {
 			'validate', // 1.6
 		);
 
-		foreach( $ancientTables as $table ) {
+		foreach ( $ancientTables as $table ) {
 			if ( $db->tableExists( $table, __METHOD__ ) ) {
 				$this->output( "Dropping table $table..." );
 				$db->dropTable( $table, __METHOD__ );
@@ -78,11 +79,11 @@ class CleanupAncientTables extends Maintenance {
 			'user_timestamp',
 			'usertext_timestamp',
 		);
-		foreach( $oldIndexes as $index ) {
+		foreach ( $oldIndexes as $index ) {
 			if ( $db->indexExists( 'text', $index, __METHOD__ ) ) {
 				$this->output( "Dropping index $index from the text table..." );
 				$db->query( "DROP INDEX " . $db->addIdentifierQuotes( $index )
-						. " ON " . $db->tableName( 'text' ) );
+					. " ON " . $db->tableName( 'text' ) );
 				$this->output( "done.\n" );
 			}
 		}
@@ -97,11 +98,11 @@ class CleanupAncientTables extends Maintenance {
 			'old_minor_edit',
 			'inverse_timestamp',
 		);
-		foreach( $oldFields as $field ) {
+		foreach ( $oldFields as $field ) {
 			if ( $db->fieldExists( 'text', $field, __METHOD__ ) ) {
 				$this->output( "Dropping the $field field from the text table..." );
 				$db->query( "ALTER TABLE  " . $db->tableName( 'text' )
-						. " DROP COLUMN " . $db->addIdentifierQuotes( $field )  );
+					. " DROP COLUMN " . $db->addIdentifierQuotes( $field ) );
 				$this->output( "done.\n" );
 			}
 		}
@@ -110,4 +111,4 @@ class CleanupAncientTables extends Maintenance {
 }
 
 $maintClass = "CleanupAncientTables";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

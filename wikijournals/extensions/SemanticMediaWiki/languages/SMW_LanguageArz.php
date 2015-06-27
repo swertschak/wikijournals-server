@@ -24,7 +24,6 @@ class SMWLanguageArz extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'الصفحة', // name of page datatype
-		'_str' => 'سلسلة',  // name of the string type
 		'_txt' => 'نص',  // name of the text type
 		'_cod' => 'كود',  // name of the (source) code type
 		'_boo' => 'منطقى',  // name of the boolean type
@@ -44,7 +43,8 @@ class SMWLanguageArz extends SMWLanguage {
 		'URI'         => '_uri',
 		'Float'       => '_num',
 		'Integer'     => '_num',
-		'Enumeration' => '_str'
+		/*LTR hint for text editors*/  'سلسلة' => '_txt',  // old name of the string type
+		'Enumeration' => '_txt'
 	);
 
 	protected $m_SpecialProperties = array(
@@ -59,9 +59,20 @@ class SMWLanguageArz extends SMWLanguage {
 		'_SERV' => 'يوفر الخدمة',
 		'_PVAL' => 'يسمح بالقيمة',
 		'_MDAT' => 'Modification date',  // TODO: translate
+		'_CDAT' => 'Creation date', // TODO: translate
+		'_NEWP' => 'Is a new page', // TODO: translate
+		'_LEDT' => 'Last editor is', // TODO: translate
 		'_ERRP' => 'Has improper value for', // TODO: translate
 		'_LIST' => 'Has fields', // TODO: translate
 		'_SOBJ' => 'Has subobject', // TODO: translate
+		'_ASK'  => 'Has query', // TODO: translate
+		'_ASKST'=> 'Query string', // TODO: translate
+		'_ASKFO'=> 'Query format', // TODO: translate
+		'_ASKSI'=> 'Query size', // TODO: translate
+		'_ASKDE'=> 'Query depth', // TODO: translate
+		'_ASKDU'=> 'Query duration', // TODO: translate
+		'_MEDIA'=> 'Media type',
+		'_MIME' => 'Mime type'
 	);
 
 	protected $m_SpecialPropertyAliases = array(

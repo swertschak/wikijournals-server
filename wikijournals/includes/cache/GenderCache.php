@@ -41,50 +41,51 @@ class GenderCache {
 		if ( $that === null ) {
 			$that = new self();
 		}
+
 		return $that;
 	}
 
-	protected function __construct() {}
+	protected function __construct() {
+	}
 
 	/**
 	 * Returns the default gender option in this wiki.
-	 * @return String
+	 * @return string
 	 */
 	protected function getDefault() {
 		if ( $this->default === null ) {
 			$this->default = User::getDefaultOption( 'gender' );
 		}
+
 		return $this->default;
 	}
 
 	/**
 	 * Returns the gender for given username.
-	 * @param string $username or User: username
-	 * @param string $caller the calling method
-	 * @return String
+	 * @param string|User $username Username
+	 * @param string $caller The calling method
+	 * @return string
 	 */
 	public function getGenderOf( $username, $caller = '' ) {
 		global $wgUser;
 
-		if( $username instanceof User ) {
+		if ( $username instanceof User ) {
 			$username = $username->getName();
 		}
 
 		$username = self::normalizeUsername( $username );
 		if ( !isset( $this->cache[$username] ) ) {
-
 			if ( $this->misses >= $this->missLimit && $wgUser->getName() !== $username ) {
-				if( $this->misses === $this->missLimit ) {
+				if ( $this->misses === $this->missLimit ) {
 					$this->misses++;
 					wfDebug( __METHOD__ . ": too many misses, returning default onwards\n" );
 				}
-				return $this->getDefault();
 
+				return $this->getDefault();
 			} else {
 				$this->misses++;
 				$this->doQuery( $username, $caller );
 			}
-
 		}
 
 		/* Undefined if there is a valid username which for some reason doesn't
@@ -96,13 +97,15 @@ class GenderCache {
 	/**
 	 * Wrapper for doQuery that processes raw LinkBatch data.
 	 *
-	 * @param $data
-	 * @param $caller
+	 * @param array $data
+	 * @param string $caller
 	 */
 	public function doLinkBatch( $data, $caller = '' ) {
 		$users = array();
 		foreach ( $data as $ns => $pagenames ) {
-			if ( !MWNamespace::hasGenderDistinction( $ns ) ) continue;
+			if ( !MWNamespace::hasGenderDistinction( $ns ) ) {
+				continue;
+			}
 			foreach ( array_keys( $pagenames ) as $username ) {
 				$users[$username] = true;
 			}
@@ -115,8 +118,8 @@ class GenderCache {
 	 * Wrapper for doQuery that processes a title or string array.
 	 *
 	 * @since 1.20
-	 * @param $titles List: array of Title objects or strings
-	 * @param string $caller the calling method
+	 * @param array $titles Array of Title objects or strings
+	 * @param string $caller The calling method
 	 */
 	public function doTitlesArray( $titles, $caller = '' ) {
 		$users = array();
@@ -136,21 +139,21 @@ class GenderCache {
 
 	/**
 	 * Preloads genders for given list of users.
-	 * @param $users List|String: usernames
-	 * @param string $caller the calling method
+	 * @param array|string $users Usernames
+	 * @param string $caller The calling method
 	 */
 	public function doQuery( $users, $caller = '' ) {
 		$default = $this->getDefault();
 
 		$usersToCheck = array();
-		foreach ( (array) $users as $value ) {
+		foreach ( (array)$users as $value ) {
 			$name = self::normalizeUsername( $value );
 			// Skip users whose gender setting we already know
 			if ( !isset( $this->cache[$name] ) ) {
 				// For existing users, this value will be overwritten by the correct value
 				$this->cache[$name] = $default;
 				// query only for valid names, which can be in the database
-				if( User::isValidUserName( $name ) ) {
+				if ( User::isValidUserName( $name ) ) {
 					$usersToCheck[] = $name;
 				}
 			}
@@ -184,6 +187,7 @@ class GenderCache {
 		if ( $indexSlash !== false ) {
 			$username = substr( $username, 0, $indexSlash );
 		}
+
 		// normalize underscore/spaces
 		return strtr( $username, '_', ' ' );
 	}

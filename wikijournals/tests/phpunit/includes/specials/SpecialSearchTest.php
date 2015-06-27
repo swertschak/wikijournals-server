@@ -8,19 +8,20 @@
  */
 
 class SpecialSearchTest extends MediaWikiTestCase {
-	private $search;
 
 	/**
 	 * @covers SpecialSearch::load
 	 * @dataProvider provideSearchOptionsTests
-	 * @param $requested Array Request parameters. For example array( 'ns5' => true, 'ns6' => true). NULL to use default options.
-	 * @param $userOptions Array User options to test with. For example array('searchNs5' => 1 );. NULL to use default options.
-	 * @param $expectedProfile An expected search profile name
-	 * @param $expectedNs Array Expected namespaces
+	 * @param array $requested Request parameters. For example:
+	 *   array( 'ns5' => true, 'ns6' => true). Null to use default options.
+	 * @param array $userOptions User options to test with. For example:
+	 *   array('searchNs5' => 1 );. Null to use default options.
+	 * @param string $expectedProfile An expected search profile name
+	 * @param array $expectedNS Expected namespaces
+	 * @param string $message
 	 */
-	function testProfileAndNamespaceLoading(
-		$requested, $userOptions, $expectedProfile, $expectedNS,
-		$message = 'Profile name and namespaces mismatches!'
+	public function testProfileAndNamespaceLoading( $requested, $userOptions,
+		$expectedProfile, $expectedNS, $message = 'Profile name and namespaces mismatches!'
 	) {
 		$context = new RequestContext;
 		$context->setUser(
@@ -46,17 +47,16 @@ class SpecialSearchTest extends MediaWikiTestCase {
 			array( /** Expected: */
 				'ProfileName' => $expectedProfile,
 				'Namespaces' => $expectedNS,
-			)
-			, array( /** Actual: */
+			),
+			array( /** Actual: */
 				'ProfileName' => $search->getProfile(),
 				'Namespaces' => $search->getNamespaces(),
-			)
-			, $message
+			),
+			$message
 		);
-
 	}
 
-	function provideSearchOptionsTests() {
+	public static function provideSearchOptionsTests() {
 		$defaultNS = SearchEngine::defaultNamespaces();
 		$EMPTY_REQUEST = array();
 		$NO_USER_PREF = null;
@@ -96,6 +96,7 @@ class SpecialSearchTest extends MediaWikiTestCase {
 	/**
 	 * Helper to create a new User object with given options
 	 * User remains anonymous though
+	 * @param array|null $opt
 	 */
 	function newUserWithSearchNS( $opt = null ) {
 		$u = User::newFromId( 0 );
@@ -105,6 +106,7 @@ class SpecialSearchTest extends MediaWikiTestCase {
 		foreach ( $opt as $name => $value ) {
 			$u->setOption( $name, $value );
 		}
+
 		return $u;
 	}
 
@@ -112,7 +114,10 @@ class SpecialSearchTest extends MediaWikiTestCase {
 	 * Verify we do not expand search term in <title> on search result page
 	 * https://gerrit.wikimedia.org/r/4841
 	 */
-	function testSearchTermIsNotExpanded() {
+	public function testSearchTermIsNotExpanded() {
+		$this->setMwGlobals( array(
+			'wgSearchType' => null,
+		) );
 
 		# Initialize [[Special::Search]]
 		$search = new SpecialSearch();
@@ -135,6 +140,5 @@ class SpecialSearchTest extends MediaWikiTestCase {
 			$pageTitle,
 			"Search term '{$term}' should not be expanded in Special:Search <title>"
 		);
-
 	}
 }

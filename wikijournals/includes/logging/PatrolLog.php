@@ -27,17 +27,23 @@
  * logs of patrol events
  */
 class PatrolLog {
-
 	/**
 	 * Record a log event for a change being patrolled
 	 *
-	 * @param $rc Mixed: change identifier or RecentChange object
-	 * @param $auto Boolean: was this patrol event automatic?
-	 * @param $user User: user performing the action or null to use $wgUser
+	 * @param int|RecentChange $rc Change identifier or RecentChange object
+	 * @param bool $auto Was this patrol event automatic?
+	 * @param User $user User performing the action or null to use $wgUser
 	 *
 	 * @return bool
 	 */
 	public static function record( $rc, $auto = false, User $user = null ) {
+		global $wgLogAutopatrol;
+
+		// do not log autopatrolled edits if setting disables it
+		if ( $auto && !$wgLogAutopatrol ) {
+			return false;
+		}
+
 		if ( !$rc instanceof RecentChange ) {
 			$rc = RecentChange::newFromId( $rc );
 			if ( !is_object( $rc ) ) {
@@ -58,15 +64,16 @@ class PatrolLog {
 		if ( !$auto ) {
 			$entry->publish( $logid, 'udp' );
 		}
+
 		return true;
 	}
 
 	/**
 	 * Prepare log parameters for a patrolled change
 	 *
-	 * @param $change RecentChange to represent
-	 * @param $auto Boolean: whether the patrol event was automatic
-	 * @return Array
+	 * @param RecentChange $change RecentChange to represent
+	 * @param bool $auto Whether the patrol event was automatic
+	 * @return array
 	 */
 	private static function buildParams( $change, $auto ) {
 		return array(
@@ -75,5 +82,4 @@ class PatrolLog {
 			'6::auto' => (int)$auto
 		);
 	}
-
 }

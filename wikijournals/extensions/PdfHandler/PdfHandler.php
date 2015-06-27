@@ -45,6 +45,7 @@ $wgPdftoText        = 'pdftotext';
 
 $wgPdfOutputExtension = 'jpg';
 $wgPdfHandlerDpi = 150;
+$wgPdfHandlerJpegQuality = 95;
 
 // This setting, if enabled, will put creating thumbnails into a job queue,
 // so they do not have to be created on-the-fly,
@@ -54,7 +55,8 @@ $wgPdfCreateThumbnailsInJobQueue = false;
 // To upload new PDF files you'll need to do this too:
 // $wgFileExtensions[] = 'pdf';
 
-$dir = dirname( __FILE__ ) . '/';
+$dir = __DIR__ . '/';
+$wgMessagesDirs['PdfHandler'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['PdfHandler'] = $dir . 'PdfHandler.i18n.php';
 $wgAutoloadClasses['PdfImage'] = $dir . 'PdfHandler.image.php';
 $wgAutoloadClasses['PdfHandler'] = $dir . 'PdfHandler_body.php';

@@ -6,7 +6,6 @@
  */
 
 class AdminLinks extends SpecialPage {
-
 	/**
 	 * Constructor
 	 */
@@ -18,33 +17,36 @@ class AdminLinks extends SpecialPage {
 		$tree = new ALTree();
 
 		// 'general' section
-		$general_section = new ALSection( wfMsg( 'adminlinks_general' ) );
+		$general_section = new ALSection( $this->msg( 'adminlinks_general' )->text() );
 		$main_row = new ALRow( 'main' );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Statistics' ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Version' ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Specialpages' ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Log' ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Allmessages' ) );
-		$main_row->addItem( ALItem::newFromEditLink( 'Sidebar', wfMsg( 'adminlinks_editsidebar' ) ) );
-		$main_row->addItem( ALItem::newFromEditLink( 'Common.css', wfMsg( 'adminlinks_editcss' ) ) );
-		$main_row->addItem( ALItem::newFromEditLink( 'Mainpage', wfMsg( 'adminlinks_editmainpagename' ) ) );
+		$main_row->addItem( ALItem::newFromEditLink(
+			'Sidebar',
+			$this->msg( 'adminlinks_editsidebar' )->text()
+		) );
+		$main_row->addItem( ALItem::newFromEditLink( 'Common.css', $this->msg( 'adminlinks_editcss' ) ) );
+		$main_row->addItem( ALItem::newFromEditLink( 'Mainpage', $this->msg( 'adminlinks_editmainpagename' ) ) );
 		$general_section->addRow( $main_row );
 		$tree->addSection( $general_section );
 
 		// 'users' section
-		$users_section = new ALSection( wfMsg( 'adminlinks_users' ) );
+		$users_section = new ALSection( $this->msg( 'adminlinks_users' )->text() );
 		$main_row = new ALRow( 'main' );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Listusers' ) );
 		$ul = SpecialPage::getTitleFor( 'Userlogin' );
 		$al = SpecialPage::getTitleFor( 'AdminLinks' );
-		$main_row->addItem( AlItem::newFromPage( $ul, wfMsg( 'adminlinks_createuser' ),
+		$main_row->addItem( AlItem::newFromPage( $ul, $this->msg( 'adminlinks_createuser' )->text(),
 			array( 'type' => 'signup', 'returnto' => $al->getPrefixedText() ) ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Userrights' ) );
 		$users_section->addRow( $main_row );
 		$tree->addSection( $users_section );
 
 		// 'browsing and searching' section
-		$browse_search_section = new ALSection( wfMsg( 'adminlinks_browsesearch' ) );
+		$browse_search_section = new ALSection( $this->msg( 'adminlinks_browsesearch' )->text() );
 		$main_row = new ALRow( 'main' );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Allpages' ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Listfiles' ) );
@@ -53,7 +55,7 @@ class AdminLinks extends SpecialPage {
 		$tree->addSection( $browse_search_section );
 
 		// 'importing and exporting' section
-		$import_export_section = new ALSection( wfMsg( 'adminlinks_importexport' ) );
+		$import_export_section = new ALSection( $this->msg( 'adminlinks_importexport' )->text() );
 		$main_row = new ALRow( 'main' );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Export' ) );
 		$main_row->addItem( ALItem::newFromSpecialPage( 'Import' ) );
@@ -83,7 +85,7 @@ class AdminLinks extends SpecialPage {
 	 * @param array $personal_urls
 	 * @param Title $title
 	 *
-	 * @return true
+	 * @return bool true
 	 */
 	public static function addURLToUserLinks( array &$personal_urls, Title &$title ) {
 		global $wgUser;
@@ -92,7 +94,7 @@ class AdminLinks extends SpecialPage {
 			$al = SpecialPage::getTitleFor( 'AdminLinks' );
 			$href = $al->getLocalURL();
 			$admin_links_vals = array(
-				'text' => wfMsg( 'adminlinks' ),
+				'text' => wfMessage( 'adminlinks' )->text(),
 				'href' => $href,
 				'active' => ( $href == $title->getLocalURL() )
 			);
@@ -123,7 +125,7 @@ class AdminLinks extends SpecialPage {
  * page
  */
 class ALTree {
-	var $sections;
+	public $sections;
 
 	function __construct() {
 		$this->sections = array();
@@ -165,8 +167,8 @@ class ALTree {
  * A single section of the Admin Links 'tree', composed of a header and rows
  */
 class ALSection {
-	var $header;
-	var $rows;
+	public $header;
+	public $rows;
 
 	function __construct( $header ) {
 		$this->header = $header;
@@ -210,8 +212,8 @@ class ALSection {
  * for organizing the rows), and a set of "items" (links)
  */
 class ALRow {
-	var $name;
-	var $items;
+	public $name;
+	public $items;
 
 	function __construct( $name ) {
 		$this->name = $name;
@@ -249,26 +251,26 @@ class ALRow {
  * is not displayed and is only used for organizational purposes.
  */
 class ALItem {
-	var $text;
-	var $label;
+	public $text;
+	public $label;
 
-	static function newFromPage( $page_name, $desc = null, $params = null ) {
+	static function newFromPage( $page_name_or_title, $desc = null, $query = array() ) {
 		$item = new ALItem();
 		$item->label = $desc;
-		if ( $params != null ) {
-			global $wgUser;
-			$item->text = $wgUser->getSkin()->linkKnown( $page_name, $desc, array(), $params );
-		} else
-			$item->text = "[[$page_name|$desc]]";
+		if ( $page_name_or_title instanceof Title ) {
+			$title = $page_name_or_title;
+		} else {
+			$title = Title::newFromText( $page_name_or_title );
+		}
+		$item->text = Linker::linkKnown( $title, $desc, array(), $query );
 		return $item;
 	}
 
 	static function newFromSpecialPage( $page_name ) {
 		$item = new ALItem();
 		$item->label = $page_name;
-		$page = SpecialPage::getPage( $page_name );
-		global $wgUser;
-		$item->text = $wgUser->getSkin()->linkKnown( $page->getTitle(), $page->getDescription() );
+		$page = SpecialPageFactory::getPage( $page_name );
+		$item->text = Linker::linkKnown( $page->getTitle(), $page->getDescription() );
 		return $item;
 	}
 
@@ -287,5 +289,4 @@ class ALItem {
 		$item->text = "<a class=\"external text\" rel=\"nofollow\" href=\"$url\">$label</a>";
 		return $item;
 	}
-
 }

@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Yfdyh000",
+			"Liuxinyu970226"
+		]
+	},
+	"semanticrating-desc": "允许用户使用星级打分",
+	"semanticrating-max": "评分中的最多星数"
+}

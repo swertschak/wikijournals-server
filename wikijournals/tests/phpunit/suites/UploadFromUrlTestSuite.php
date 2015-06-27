@@ -1,6 +1,6 @@
 <?php
 
-require_once( dirname( __DIR__ ) . '/includes/upload/UploadFromUrlTest.php' );
+require_once dirname( __DIR__ ) . '/includes/upload/UploadFromUrlTest.php';
 
 class UploadFromUrlTestSuite extends PHPUnit_Framework_TestSuite {
 	public $savedGlobals = array();
@@ -16,16 +16,16 @@ class UploadFromUrlTestSuite extends PHPUnit_Framework_TestSuite {
 	}
 
 	protected function setUp() {
-		global $wgParser, $wgParserConf, $IP, $messageMemc, $wgMemc,
-			$wgUser, $wgLang, $wgOut, $wgRequest, $wgStyleDirectory, $wgEnableParserCache,
-			$wgNamespaceAliases, $wgNamespaceProtection, $parserMemc;
+		global $wgParser, $wgParserConf, $IP, $messageMemc, $wgMemc, $wgUser,
+			$wgLang, $wgOut, $wgRequest, $wgStyleDirectory,
+			$wgEnableParserCache, $wgNamespaceAliases, $wgNamespaceProtection,
+			$parserMemc;
 
 		$tmpGlobals = array();
 
 		$tmpGlobals['wgScript'] = '/index.php';
 		$tmpGlobals['wgScriptPath'] = '/';
 		$tmpGlobals['wgArticlePath'] = '/wiki/$1';
-		$tmpGlobals['wgStyleSheetPath'] = '/skins';
 		$tmpGlobals['wgStylePath'] = '/skins';
 		$tmpGlobals['wgThumbnailScriptPath'] = false;
 		$tmpGlobals['wgLocalFileRepo'] = array(
@@ -36,7 +36,7 @@ class UploadFromUrlTestSuite extends PHPUnit_Framework_TestSuite {
 			'transformVia404' => false,
 			'backend' => new FSFileBackend( array(
 				'name' => 'local-backend',
-				'lockManager' => 'fsLockManager',
+				'wikiId' => wfWikiId(),
 				'containerPaths' => array(
 					'local-public' => wfTempDir() . '/test-repo/public',
 					'local-thumb' => wfTempDir() . '/test-repo/thumb',
@@ -56,14 +56,12 @@ class UploadFromUrlTestSuite extends PHPUnit_Framework_TestSuite {
 		$wgNamespaceAliases['Image'] = NS_FILE;
 		$wgNamespaceAliases['Image_talk'] = NS_FILE_TALK;
 
-
 		$wgEnableParserCache = false;
 		DeferredUpdates::clearPendingUpdates();
 		$wgMemc = wfGetMainCache();
 		$messageMemc = wfGetMessageCacheStorage();
 		$parserMemc = wfGetParserCacheStorage();
 
-		// $wgContLang = new StubContLang;
 		$wgUser = new User;
 		$context = new RequestContext;
 		$wgLang = $context->getLanguage();
@@ -97,6 +95,7 @@ class UploadFromUrlTestSuite extends PHPUnit_Framework_TestSuite {
 
 	/**
 	 * Remove the dummy uploads directory
+	 * @param string $dir
 	 */
 	private function teardownUploadDir( $dir ) {
 		if ( $this->keepUploads ) {
@@ -138,7 +137,7 @@ class UploadFromUrlTestSuite extends PHPUnit_Framework_TestSuite {
 	/**
 	 * Delete the specified files, if they exist.
 	 *
-	 * @param $files Array: full paths to files to delete.
+	 * @param array $files Full paths to files to delete.
 	 */
 	private static function deleteFiles( $files ) {
 		foreach ( $files as $file ) {
@@ -151,7 +150,7 @@ class UploadFromUrlTestSuite extends PHPUnit_Framework_TestSuite {
 	/**
 	 * Delete the specified directories, if they exist. Must be empty.
 	 *
-	 * @param $dirs Array: full paths to directories to delete.
+	 * @param array $dirs Full paths to directories to delete.
 	 */
 	private static function deleteDirs( $dirs ) {
 		foreach ( $dirs as $dir ) {
@@ -165,7 +164,7 @@ class UploadFromUrlTestSuite extends PHPUnit_Framework_TestSuite {
 	 * Create a dummy uploads directory which will contain a couple
 	 * of files in order to pass existence tests.
 	 *
-	 * @return String: the directory
+	 * @return string The directory
 	 */
 	private function setupUploadDir() {
 		global $IP;
@@ -184,14 +183,15 @@ class UploadFromUrlTestSuite extends PHPUnit_Framework_TestSuite {
 
 		if ( file_exists( $dir ) ) {
 			wfDebug( "Already exists!\n" );
+
 			return $dir;
 		}
 
 		wfMkdirParents( $dir . '/3/3a', null, __METHOD__ );
-		copy( "$IP/skins/monobook/headbg.jpg", "$dir/3/3a/Foobar.jpg" );
+		copy( "$IP/tests/phpunit/data/upload/headbg.jpg", "$dir/3/3a/Foobar.jpg" );
 
 		wfMkdirParents( $dir . '/0/09', null, __METHOD__ );
-		copy( "$IP/skins/monobook/headbg.jpg", "$dir/0/09/Bad.jpg" );
+		copy( "$IP/tests/phpunit/data/upload/headbg.jpg", "$dir/0/09/Bad.jpg" );
 
 		return $dir;
 	}
@@ -201,6 +201,7 @@ class UploadFromUrlTestSuite extends PHPUnit_Framework_TestSuite {
 		// the UploadFromUrlTest class
 		class_exists( 'UploadFromUrlTest' );
 		$suite = new UploadFromUrlTestSuite( 'UploadFromUrlTest' );
+
 		return $suite;
 	}
 }

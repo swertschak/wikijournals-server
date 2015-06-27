@@ -9,23 +9,69 @@
 					"mw.Map",
 					"mw.Message",
 					"mw.loader",
+					"mw.loader.store",
 					"mw.html",
 					"mw.html.Cdata",
-					"mw.html.Raw"
+					"mw.html.Raw",
+					"mw.hook"
 				]
 			},
 			{
 				"name": "General",
 				"classes": [
 					"mw.Title",
+					"mw.Uri",
 					"mw.notification",
+					"mw.Notification_",
+					"mw.user",
 					"mw.util",
-					"mw.plugin.notify"
+					"mw.plugin.*",
+					"mw.cookie"
 				]
+			},
+			{
+				"name": "Actions",
+				"classes": ["mw.toolbar"]
 			},
 			{
 				"name": "API",
 				"classes": ["mw.Api*"]
+			},
+			{
+				"name": "Language",
+				"classes": [
+					"mw.language*",
+					"mw.cldr",
+					"mw.jqueryMsg"
+				]
+			},
+			{
+				"name": "Page",
+				"classes": [
+					"mw.page*"
+				]
+			},
+			{
+				"name": "Interfaces",
+				"classes": [
+					"mw.Feedback"
+				]
+			},
+			{
+				"name": "Special",
+				"classes": [
+					"mw.special*"
+				]
+			},
+			{
+				"name": "Development",
+				"classes": [
+					"mw.log",
+					"mw.inspect",
+					"mw.inspect.reports",
+					"mw.Debug",
+					"mw.Debug.profile"
+				]
 			}
 		]
 	},
@@ -33,20 +79,28 @@
 		"name": "jQuery",
 		"groups": [
 			{
-				"name": "Core",
-				"classes": ["jQuery", "jQuery.Event", "jQuery.Promise", "jQuery.Deferred", "jQuery.jqXHR"]
-			},
-			{
 				"name": "Plugins",
-				"classes": ["jQuery.plugin.*"]
+				"classes": [
+					"jQuery.client",
+					"jQuery.colorUtil",
+					"jQuery.plugin.*"
+				]
 			}
 		]
 	},
 	{
-		"name": "Misc",
+		"name": "Upstream",
 		"groups": [
 			{
-				"name": "Native",
+				"name": "OOJS",
+				"classes": ["OO", "OO.*"]
+			},
+			{
+				"name": "jQuery",
+				"classes": ["jQuery", "jQuery.Event", "jQuery.Callbacks", "jQuery.Promise", "jQuery.Deferred", "jQuery.jqXHR", "QUnit"]
+			},
+			{
+				"name": "JavaScript",
 				"classes": ["Array", "Boolean", "Date", "Function", "Number", "Object", "RegExp", "String"]
 			}
 		]

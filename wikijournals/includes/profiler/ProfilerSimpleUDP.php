@@ -23,42 +23,43 @@
 
 /**
  * ProfilerSimpleUDP class, that sends out messages for 'udpprofile' daemon
- * (the one from mediawiki/trunk/udpprofile SVN )
+ * (the one from
+ *  http://git.wikimedia.org/tree/operations%2Fsoftware.git/master/udpprofile)
  * @ingroup Profiler
  */
-class ProfilerSimpleUDP extends ProfilerSimple {
+class ProfilerSimpleUDP extends ProfilerStandard {
+	protected function collateOnly() {
+		return true;
+	}
+
 	public function isPersistent() {
 		return true;
 	}
 
 	public function logData() {
-		global $wgUDPProfilerHost, $wgUDPProfilerPort;
+		global $wgUDPProfilerHost, $wgUDPProfilerPort, $wgUDPProfilerFormatString;
 
 		$this->close();
 
-		if ( isset( $this->mCollated['-total'] ) && $this->mCollated['-total']['real'] < $this->mMinimumTime ) {
-			# Less than minimum, ignore
-			return;
-		}
-
-		if ( !MWInit::functionExists( 'socket_create' ) ) {
+		if ( !function_exists( 'socket_create' ) ) {
 			# Sockets are not enabled
 			return;
 		}
 
-		$sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+		$sock = socket_create( AF_INET, SOCK_DGRAM, SOL_UDP );
 		$plength = 0;
 		$packet = "";
 		foreach ( $this->mCollated as $entry => $pfdata ) {
-			if( !isset( $pfdata['count'] )
+			if ( !isset( $pfdata['count'] )
 				|| !isset( $pfdata['cpu'] )
 				|| !isset( $pfdata['cpu_sq'] )
 				|| !isset( $pfdata['real'] )
 				|| !isset( $pfdata['real_sq'] ) ) {
 				continue;
 			}
-			$pfline = sprintf( "%s %s %d %f %f %f %f %s\n", $this->getProfileID(), "-", $pfdata['count'],
-				$pfdata['cpu'], $pfdata['cpu_sq'], $pfdata['real'], $pfdata['real_sq'], $entry);
+			$pfline = sprintf( $wgUDPProfilerFormatString, $this->getProfileID(), $pfdata['count'],
+				$pfdata['cpu'], $pfdata['cpu_sq'], $pfdata['real'], $pfdata['real_sq'], $entry,
+				$pfdata['memory'] );
 			$length = strlen( $pfline );
 			/* printf("<!-- $pfline -->"); */
 			if ( $length + $plength > 1400 ) {

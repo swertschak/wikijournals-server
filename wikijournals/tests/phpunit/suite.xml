@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- colors don't work on Windows! -->
+<!--
+Colors don't work on Windows!
+phpunit.php enables colors for other OSs at runtime
+-->
 <phpunit bootstrap="./bootstrap.php"
-         colors="true"
-         backupGlobals="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         stopOnFailure="false"
-		 timeoutForSmallTests="10"
-		 timeoutForMediumTests="30"
-		 timeoutForLargeTests="60"
-         strict="true"
-		 verbose="true">
+	colors="false"
+	backupGlobals="false"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	forceCoversAnnotation="true"
+	stopOnFailure="false"
+	timeoutForSmallTests="10"
+	timeoutForMediumTests="30"
+	timeoutForLargeTests="60"
+	strict="true"
+	verbose="true">
 	<testsuites>
 		<testsuite name="includes">
 			<directory>includes</directory>
@@ -29,14 +33,15 @@
 			<directory>maintenance</directory>
 		</testsuite>
 		<testsuite name="structure">
-			<file>AutoLoaderTest.php</file>
-			<file>StructureTest.php</file>
+			<directory>structure</directory>
 		</testsuite>
 		<testsuite name="uploadfromurl">
 			<file>suites/UploadFromUrlTestSuite.php</file>
 		</testsuite>
 		<testsuite name="extensions">
 			<file>suites/ExtensionsTestSuite.php</file>
+			<file>suites/ExtensionsParserTestSuite.php</file>
+			<file>suites/LessTestSuite.php</file>
 		</testsuite>
 	</testsuites>
 	<groups>
@@ -47,4 +52,13 @@
 			<group>Stub</group>
 		</exclude>
 	</groups>
+	<filter>
+		<whitelist addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">../../includes</directory>
+			<directory suffix=".php">../../languages</directory>
+			<directory suffix=".php">../../maintenance</directory>
+			<directory suffix=".php">../../resources</directory>
+			<directory suffix=".php">../../skins</directory>
+		</whitelist>
+	</filter>
 </phpunit>

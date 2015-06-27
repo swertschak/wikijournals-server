@@ -27,7 +27,6 @@ class SMWLanguageEn extends SMWLanguage {
 
 	protected $m_DatatypeLabels = array(
 		'_wpg' => 'Page', // name of page datatype
-		'_str' => 'String',  // name of the string type
 		'_txt' => 'Text',  // name of the text type
 		'_cod' => 'Code',  // name of the (source) code type
 		'_boo' => 'Boolean',  // name of the boolean type
@@ -47,10 +46,12 @@ class SMWLanguageEn extends SMWLanguage {
 		'URI'         => '_uri',
 		'Float'       => '_num',
 		'Integer'     => '_num',
-		'Enumeration' => '_str',
+		'Enumeration' => '_txt',
+		'String'      => '_txt',
 		'Phone number' => '_tel',
 		'E-mail'       => '_ema',
-		'Geographic coordinate' => '_geo'
+		'Geographic coordinate' => '_geo',
+		'Geographic polygon'    => '_gpo',
 	);
 
 	protected $m_SpecialProperties = array(
@@ -71,6 +72,14 @@ class SMWLanguageEn extends SMWLanguage {
 		'_ERRP' => 'Has improper value for',
 		'_LIST' => 'Has fields',
 		'_SOBJ' => 'Has subobject',
+		'_ASK'  => 'Has query',
+		'_ASKST'=> 'Query string',
+		'_ASKFO'=> 'Query format',
+		'_ASKSI'=> 'Query size',
+		'_ASKDE'=> 'Query depth',
+		'_ASKDU'=> 'Query duration',
+		'_MEDIA'=> 'Media type',
+		'_MIME' => 'MIME type'
 	);
 
 	protected $m_SpecialPropertyAliases = array(

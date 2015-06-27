@@ -23,7 +23,6 @@
  * @author Brad Jorsch
  */
 
-
 /**
  * Special:PagesWithProp to search the page_props table
  * @ingroup SpecialPage
@@ -31,6 +30,7 @@
  */
 class SpecialPagesWithProp extends QueryPage {
 	private $propName = null;
+	private $existingPropNames = null;
 
 	function __construct( $name = 'PagesWithProp' ) {
 		parent::__construct( $name );
@@ -43,21 +43,12 @@ class SpecialPagesWithProp extends QueryPage {
 	function execute( $par ) {
 		$this->setHeaders();
 		$this->outputHeader();
+		$this->getOutput()->addModuleStyles( 'mediawiki.special.pagesWithProp' );
 
 		$request = $this->getRequest();
 		$propname = $request->getVal( 'propname', $par );
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			'page_props',
-			'pp_propname',
-			'',
-			__METHOD__,
-			array( 'DISTINCT', 'ORDER BY' => 'pp_propname' )
-		);
-		foreach ( $res as $row ) {
-			$propnames[$row->pp_propname] = $row->pp_propname;
-		}
+		$propnames = $this->getExistingPropNames();
 
 		$form = new HTMLForm( array(
 			'propname' => array(
@@ -70,9 +61,8 @@ class SpecialPagesWithProp extends QueryPage {
 			),
 		), $this->getContext() );
 		$form->setMethod( 'get' );
-		$form->setAction( $this->getTitle()->getFullUrl() );
 		$form->setSubmitCallback( array( $this, 'onSubmit' ) );
-		$form->setWrapperLegend( $this->msg( 'pageswithprop-legend' ) );
+		$form->setWrapperLegendMsg( 'pageswithprop-legend' );
 		$form->addHeaderText( $this->msg( 'pageswithprop-text' )->parseAsBlock() );
 		$form->setSubmitTextMsg( 'pageswithprop-submit' );
 
@@ -86,6 +76,18 @@ class SpecialPagesWithProp extends QueryPage {
 	public function onSubmit( $data, $form ) {
 		$this->propName = $data['propname'];
 		parent::execute( $data['propname'] );
+	}
+
+	/**
+	 * Return an array of subpages beginning with $search that this special page will accept.
+	 *
+	 * @param string $search Prefix to search for
+	 * @param int $limit Maximum number of results to return
+	 * @return string[] Matching subpages
+	 */
+	public function prefixSearchSubpages( $search, $limit = 10 ) {
+		$subpages = array_keys( $this->getExistingPropNames() );
+		return self::prefixSearchArray( $search, $limit, $subpages );
 	}
 
 	/**
@@ -120,16 +122,53 @@ class SpecialPagesWithProp extends QueryPage {
 		return array( 'page_id' );
 	}
 
+	/**
+	 * @param Skin $skin
+	 * @param object $result Result row
+	 * @return string
+	 */
 	function formatResult( $skin, $result ) {
 		$title = Title::newFromRow( $result );
 		$ret = Linker::link( $title, null, array(), array(), array( 'known' ) );
 		if ( $result->pp_value !== '' ) {
-			$value = $this->msg( 'parentheses' )
-				->rawParams( Xml::span( $result->pp_value, 'prop-value' ) )
-				->escaped();
-			$ret .= " $value";
+			// Do not show very long or binary values on the special page
+			$valueLength = strlen( $result->pp_value );
+			$isBinary = strpos( $result->pp_value, "\0" ) !== false;
+			$isTooLong = $valueLength > 1024;
+
+			if ( $isBinary || $isTooLong ) {
+				$message = $this
+					->msg( $isBinary ? 'pageswithprop-prophidden-binary' : 'pageswithprop-prophidden-long' )
+					->params( $this->getLanguage()->formatSize( $valueLength ) );
+
+				$propValue = Html::element( 'span', array( 'class' => 'prop-value-hidden' ), $message->text() );
+			} else {
+				$propValue = Html::element( 'span', array( 'class' => 'prop-value' ), $result->pp_value );
+			}
+
+			$ret .= $this->msg( 'colon-separator' )->escaped() . $propValue;
 		}
+
 		return $ret;
+	}
+
+	public function getExistingPropNames() {
+		if ( $this->existingPropNames === null ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				'page_props',
+				'pp_propname',
+				'',
+				__METHOD__,
+				array( 'DISTINCT', 'ORDER BY' => 'pp_propname' )
+			);
+			$propnames = array();
+			foreach ( $res as $row ) {
+				$propnames[$row->pp_propname] = $row->pp_propname;
+			}
+			$this->existingPropNames = $propnames;
+		}
+		return $this->existingPropNames;
 	}
 
 	protected function getGroupName() {

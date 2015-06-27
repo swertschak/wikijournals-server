@@ -1,6 +1,7 @@
 <?php
 /**
- * Tests for wfBCP47()
+ * @group GlobalFunctions
+ * @covers ::wfBCP47
  */
 class WfBCP47Test extends MediaWikiTestCase {
 	/**
@@ -13,7 +14,7 @@ class WfBCP47Test extends MediaWikiTestCase {
 	 * @see http://tools.ietf.org/html/bcp47
 	 * @dataProvider provideLanguageCodes()
 	 */
-	function testBCP47( $code, $expected ) {
+	public function testBCP47( $code, $expected ) {
 		$code = strtolower( $code );
 		$this->assertEquals( $expected, wfBCP47( $code ),
 			"Applying BCP47 standard to lower case '$code'"
@@ -28,7 +29,7 @@ class WfBCP47Test extends MediaWikiTestCase {
 	/**
 	 * Array format is ($code, $expected)
 	 */
-	function provideLanguageCodes() {
+	public static function provideLanguageCodes() {
 		return array(
 			// Extracted from BCP47 (list not exhaustive)
 			# 2.1.1
@@ -96,7 +97,7 @@ class WfBCP47Test extends MediaWikiTestCase {
 			 *  az-Arab-x-AZE-derbend
 			 * AZE being private, it should be lower case, hence the test above
 			 * should probably be:
-			#array( 'az-arab-x-aze-derbend', 'az-Arab-x-AZE-derbend' ),
+			 *  array( 'az-arab-x-aze-derbend', 'az-Arab-x-AZE-derbend' ),
 			 */
 
 			# Private use registry values:
@@ -115,20 +116,6 @@ class WfBCP47Test extends MediaWikiTestCase {
 			// de-419-DE
 			// a-DE
 			// ar-a-aaa-b-bbb-a-ccc
-
-			/*
-			// ISO 15924 :
-			array( 'sr-Cyrl', 'sr-Cyrl' ),
-			# @todo FIXME: Fix our function?
-			array( 'SR-lATN', 'sr-Latn' ),
-			array( 'fr-latn', 'fr-Latn' ),
-			// Use lowercase for single segment
-			// ISO 3166-1-alpha-2 code
-			array( 'US', 'us' ),  # USA
-			array( 'uS', 'us' ),  # USA
-			array( 'Fr', 'fr' ),  # France
-			array( 'va', 'va' ),  # Holy See (Vatican City State)
-			 */
 		);
 	}
 }

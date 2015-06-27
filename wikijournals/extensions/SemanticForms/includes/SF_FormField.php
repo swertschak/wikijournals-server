@@ -25,6 +25,7 @@ class SFFormField {
 	// (though they could be)
 	private $mIsUploadable;
 	private $mFieldArgs;
+	private $mDescriptionArgs;
 	// somewhat of a hack - these two fields are for a field in a specific
 	// representation of a form, not the form definition; ideally these
 	// should be contained in a third 'field' class, called something like
@@ -44,6 +45,7 @@ class SFFormField {
 		$f->mIsUploadable = false;
 		$f->mPossibleValues = null;
 		$f->mFieldArgs = array();
+		$f->mDescriptionArgs = array();
 		return $f;
 	}
 
@@ -139,6 +141,10 @@ class SFFormField {
 		$this->mFieldArgs[$key] = $value;
 	}
 
+	public function setDescriptionArg( $key, $value ) {
+		$this->mDescriptionArgs[$key] = $value;
+	}
+
 	function inputTypeDropdownHTML( $field_form_text, $default_input_type, $possible_input_types, $cur_input_type ) {
 		if ( !is_null( $default_input_type ) ) {
 			array_unshift( $possible_input_types, $default_input_type );
@@ -148,14 +154,15 @@ class SFFormField {
 		foreach ( $possible_input_types as $i => $input_type ) {
 			if ( $i == 0 ) {
 				$dropdownHTML .= "	<option value=\".$input_type\">$input_type " .
-				wfMsg( 'sf_createform_inputtypedefault' ) . "</option>\n";
+					wfMessage( 'sf_createform_inputtypedefault' )->escaped() . "</option>\n";
 			} else {
 				$selected_str = ( $cur_input_type == $input_type ) ? "selected" : "";
 				$dropdownHTML .= "	<option value=\"$input_type\" $selected_str>$input_type</option>\n";
 			}
 		}
-		$hidden_text = wfMsg( 'sf_createform_hidden' );
+		$hidden_text = wfMessage( 'sf_createform_hidden' )->escaped();
 		$selected_str = ( $cur_input_type == 'hidden' ) ? "selected" : "";
+		// @todo FIXME: Contains hard coded parentheses.
 		$dropdownHTML .= "	<option value=\"hidden\" $selected_str>($hidden_text)</option>\n";
 		$text = "\t" . Html::rawElement( 'select',
 			array(
@@ -169,13 +176,13 @@ class SFFormField {
 	function creationHTML( $template_num ) {
 		$field_form_text = $template_num . "_" . $this->mNum;
 		$template_field = $this->template_field;
-		$text = '<h3>' . wfMsg( 'sf_createform_field' ) . " '" . $template_field->getFieldName() . "'</h3>\n";
+		$text = '<h3>' . wfMessage( 'sf_createform_field' )->escaped() . " '" . $template_field->getFieldName() . "'</h3>\n";
 		$prop_link_text = SFUtils::linkText( SMW_NS_PROPERTY, $template_field->getSemanticProperty() );
 		// TODO - remove this probably-unnecessary check?
 		if ( $template_field->getSemanticProperty() == "" ) {
 			// Print nothing if there's no semantic property.
 		} elseif ( $template_field->getPropertyType() == "" ) {
-			$text .= '<p>' . wfMsgExt( 'sf_createform_fieldpropunknowntype', 'parse', $prop_link_text ) . "</p>\n";
+			$text .= '<p>' . wfMessage( 'sf_createform_fieldpropunknowntype', $prop_link_text )->parseAsBlock() . "</p>\n";
 		} else {
 			if ( $template_field->isList() ) {
 				$propDisplayMsg = 'sf_createform_fieldproplist';
@@ -189,26 +196,26 @@ class SFFormField {
 			if ( $smwgContLang != null ) {
 				$datatypeLabels = $smwgContLang->getDatatypeLabels();
 				$datatypeLabels['enumeration'] = 'enumeration';
-				$propertyTypeLabel = $datatypeLabels[$template_field->getPropertyType()];
-				if ( class_exists( 'SMWDIProperty' ) ) {
-					// "Type:" namespace was removed in SMW 1.6.
-					// TODO: link to Special:Types instead?
-					$propertyTypeStr = $propertyTypeLabel;
-				} else {
-					$propertyTypeStr = SFUtils::linkText( SMW_NS_TYPE, $propertyTypeLabel );
+
+				$propTypeID = $template_field->getPropertyType();
+
+				// Special handling for SMW 1.9
+				if ( $propTypeID == '_str' && !array_key_exists( '_str', $datatypeLabels ) ) {
+					$propTypeID = '_txt';
 				}
+				$propertyTypeStr = $datatypeLabels[$propTypeID];
 			}
-			$text .= Html::rawElement( 'p', null, wfMsgExt( $propDisplayMsg, 'parseinline', $prop_link_text, $propertyTypeStr ) ) . "\n";
+			$text .= Html::rawElement( 'p', null, wfMessage( $propDisplayMsg, $prop_link_text, $propertyTypeStr )->parse() ) . "\n";
 		}
 		// If it's not a semantic field - don't add any text.
-		$form_label_text = wfMsg( 'sf_createform_formlabel' );
+		$form_label_text = wfMessage( 'sf_createform_formlabel' )->text();
 		$form_label_input = Html::input(
 			'label_' . $field_form_text,
 			$template_field->getLabel(),
 			'text',
 			array( 'size' => 20 )
 		);
-		$input_type_text = wfMsg( 'sf_createform_inputtype' );
+		$input_type_text = wfMessage( 'sf_createform_inputtype' )->escaped();
 		$text .= <<<END
 	<div class="formField">
 	<p>$form_label_text $form_label_input
@@ -245,7 +252,8 @@ END;
 			}
 		}
 
-		$text .= "<fieldset class=\"sfCollapsibleFieldset\"><legend>Other parameters</legend>\n";
+		$other_param_text = wfMessage( 'sf_createform_otherparameters' )->escaped();
+		$text .= "<fieldset class=\"sfCollapsibleFieldset\"><legend>$other_param_text</legend>\n";
 		$text .= Html::rawElement( 'div', array( 'class' => 'otherInputParams' ),
 			SFCreateForm::showInputTypeOptions( $cur_input_type, $field_form_text, $paramValues ) ) . "\n";
 		$text .= "</fieldset>\n";
@@ -263,13 +271,35 @@ END;
 	// such templates in form definitions gets more sophisticated
 	function createMarkup( $part_of_multiple, $is_last_field_in_template ) {
 		$text = "";
-		if ( $this->template_field->getLabel() !== '' ) {
-			if ( $part_of_multiple ) {
-				$text .= "'''" . $this->template_field->getLabel() . ":''' ";
-			} else {
-				$text .= "! " . $this->template_field->getLabel() . ":\n";
+		$descPlaceholder = "";
+		$textBeforeField = "";
+
+		if ( array_key_exists( "Description", $this->mDescriptionArgs ) ) {
+			$fieldDesc = $this->mDescriptionArgs['Description'];
+			if ( $fieldDesc != '' ) {
+				if ( isset( $this->mDescriptionArgs['DescriptionTooltipMode'] ) ) {
+					$descPlaceholder = " {{#info:$fieldDesc}}";
+				} else {
+					$descPlaceholder = '<br><p class="sfFieldDescription" style="font-size:0.7em; color:gray;">' . $fieldDesc . '</p>';
+				}
 			}
 		}
+
+		if ( array_key_exists( "TextBeforeField", $this->mDescriptionArgs ) ) {
+			$textBeforeField = $this->mDescriptionArgs['TextBeforeField'];
+		}
+
+		$fieldLabel = $this->template_field->getLabel();
+		if ( $textBeforeField != '' ) {
+			$fieldLabel = $textBeforeField . ' ' . $fieldLabel;
+		}
+
+		if ( $part_of_multiple ) {
+			$text .= "'''$fieldLabel:''' $descPlaceholder";
+		} else {
+			$text .= "! $fieldLabel: $descPlaceholder\n";
+		}
+
 		if ( ! $part_of_multiple ) { $text .= "| "; }
 		$text .= "{{{field|" . $this->template_field->getFieldName();
 		// TODO - why is there an input type field in both the form
@@ -348,6 +378,7 @@ END;
 
 		global $wgParser;
 		foreach ( $other_args as $argname => $argvalue ) {
+
 			if ( is_string( $argvalue ) ) {
 				$other_args[$argname] =
 					$wgParser->recursiveTagParse( $argvalue );

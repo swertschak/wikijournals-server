@@ -43,7 +43,32 @@ class ExternalStoreMwstore extends ExternalStoreMedium {
 			// backends should at least have "read-after-create" consistency.
 			return $be->getFileContents( array( 'src' => $url ) );
 		}
+
 		return false;
+	}
+
+	/**
+	 * Fetch data from given external store URLs.
+	 * The URL returned is of the form of the form mwstore://backend/container/wiki/id
+	 *
+	 * @param array $urls An array of external store URLs
+	 * @return array A map from url to stored content. Failed results are not represented.
+	 */
+	public function batchFetchFromURLs( array $urls ) {
+		$pathsByBackend = array();
+		foreach ( $urls as $url ) {
+			$be = FileBackendGroup::singleton()->backendFromPath( $url );
+			if ( $be instanceof FileBackend ) {
+				$pathsByBackend[$be->getName()][] = $url;
+			}
+		}
+		$blobs = array();
+		foreach ( $pathsByBackend as $backendName => $paths ) {
+			$be = FileBackendGroup::singleton()->get( $backendName );
+			$blobs = $blobs + $be->getFileContentsMulti( array( 'srcs' => $paths ) );
+		}
+
+		return $blobs;
 	}
 
 	/**
@@ -59,14 +84,17 @@ class ExternalStoreMwstore extends ExternalStoreMedium {
 			// Segregate items by wiki ID for the sake of bookkeeping
 			$wiki = isset( $this->params['wiki'] ) ? $this->params['wiki'] : wfWikiID();
 
-			$url = $be->getContainerStoragePath( 'data' ) . '/' .
-				rawurlencode( $wiki ) . "/{$rand[0]}/{$rand[1]}/{$rand[2]}/{$id}";
+			$url = $be->getContainerStoragePath( 'data' ) . '/' . rawurlencode( $wiki );
+			$url .= ( $be instanceof FSFileBackend )
+				? "/{$rand[0]}/{$rand[1]}/{$rand[2]}/{$id}" // keep directories small
+				: "/{$rand[0]}/{$rand[1]}/{$id}"; // container sharding is only 2-levels
 
 			$be->prepare( array( 'dir' => dirname( $url ), 'noAccess' => 1, 'noListing' => 1 ) );
 			if ( $be->create( array( 'dst' => $url, 'content' => $data ) )->isOK() ) {
 				return $url;
 			}
 		}
+
 		return false;
 	}
 }

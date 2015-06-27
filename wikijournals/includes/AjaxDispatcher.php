@@ -48,14 +48,21 @@ class AjaxDispatcher {
 	private $args;
 
 	/**
+	 * @var Config
+	 */
+	private $config;
+
+	/**
 	 * Load up our object with user supplied data
 	 */
-	function __construct() {
+	function __construct( Config $config ) {
 		wfProfileIn( __METHOD__ );
+
+		$this->config = $config;
 
 		$this->mode = "";
 
-		if ( ! empty( $_GET["rs"] ) ) {
+		if ( !empty( $_GET["rs"] ) ) {
 			$this->mode = "get";
 		}
 
@@ -63,10 +70,10 @@ class AjaxDispatcher {
 			$this->mode = "post";
 		}
 
-		switch( $this->mode ) {
+		switch ( $this->mode ) {
 			case 'get':
 				$this->func_name = isset( $_GET["rs"] ) ? $_GET["rs"] : '';
-				if ( ! empty( $_GET["rsargs"] ) ) {
+				if ( !empty( $_GET["rsargs"] ) ) {
 					$this->args = $_GET["rsargs"];
 				} else {
 					$this->args = array();
@@ -74,7 +81,7 @@ class AjaxDispatcher {
 				break;
 			case 'post':
 				$this->func_name = isset( $_POST["rs"] ) ? $_POST["rs"] : '';
-				if ( ! empty( $_POST["rsargs"] ) ) {
+				if ( !empty( $_POST["rsargs"] ) ) {
 					$this->args = $_POST["rsargs"];
 				} else {
 					$this->args = array();
@@ -95,31 +102,29 @@ class AjaxDispatcher {
 	 * BEWARE! Data are passed as they have been supplied by the user,
 	 * they should be carefully handled in the function processing the
 	 * request.
+	 *
+	 * @param User $user
 	 */
-	function performAction() {
-		global $wgAjaxExportList, $wgUser;
-
+	function performAction( User $user ) {
 		if ( empty( $this->mode ) ) {
 			return;
 		}
 
 		wfProfileIn( __METHOD__ );
 
-		if ( ! in_array( $this->func_name, $wgAjaxExportList ) ) {
+		if ( !in_array( $this->func_name, $this->config->get( 'AjaxExportList' ) ) ) {
 			wfDebug( __METHOD__ . ' Bad Request for unknown function ' . $this->func_name . "\n" );
 
 			wfHttpError(
 				400,
 				'Bad Request',
-				"unknown function " . (string) $this->func_name
+				"unknown function " . $this->func_name
 			);
-		} elseif ( !in_array( 'read', User::getGroupPermissions( array( '*' ) ), true )
-			&& !$wgUser->isAllowed( 'read' ) )
-		{
+		} elseif ( !User::isEveryoneAllowed( 'read' ) && !$user->isAllowed( 'read' ) ) {
 			wfHttpError(
 				403,
 				'Forbidden',
-				'You must log in to view pages.' );
+				'You are not allowed to view pages.' );
 		} else {
 			wfDebug( __METHOD__ . ' dispatching ' . $this->func_name . "\n" );
 

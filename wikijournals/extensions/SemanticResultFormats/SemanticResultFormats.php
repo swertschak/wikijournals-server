@@ -2,57 +2,48 @@
 
 /**
  * Main entry point for the SemanticResultFormats extension.
- * http://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats
- * 
- * @file SemanticResultFormats.php
- * @ingroup SemanticResultFormats
- * 
- * @licence GNU GPL v3+
+ * http://www.semantic-mediawiki.org/wiki/Semantic_Result_Formats
+ *
+ * @licence GNU GPL v2 or later
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
- */
-
-/**
- * This documentation group collects source code files belonging to SemanticResultFormats.
- * 
- * @defgroup SemanticResultFormats SemanticResultFormats
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
-if ( version_compare( $wgVersion, '1.16', '<' ) ) {
-	die( '<b>Error:</b> This version of Semantic Result Formats requires MediaWiki 1.16 or above; use SRF 1.6.x for older versions.' );
+if ( defined( 'SRF_VERSION' ) ) {
+	// Do not initialize more than once.
+	return 1;
 }
 
-// Show a warning if Semantic MediaWiki is not loaded.
+define( 'SRF_VERSION', '2.1.2' );
+
+if ( version_compare( $GLOBALS['wgVersion'], '1.19c', '<' ) ) {
+	throw new Exception( 'This version of Semantic Result Formats requires MediaWiki 1.17 or above; use SRF 1.7.x or SRF 1.6.x for older versions.' );
+}
+
+if ( !defined( 'SMW_VERSION' ) && is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+	include_once( __DIR__ . '/vendor/autoload.php' );
+}
+
 if ( ! defined( 'SMW_VERSION' ) ) {
-	die( '<b>Error:</b> You need to have <a href="http://semantic-mediawiki.org/wiki/Semantic_MediaWiki">Semantic MediaWiki</a> installed in order to use <a href="https://www.mediawiki.org/wiki/Extension:Semantic Result Formats">Semantic Result Formats</a>.<br />' );
+	throw new Exception( 'You need to have Semantic MediaWiki installed in order to use Semantic Result Formats' );
 }
 
-if ( version_compare( SMW_VERSION, '1.6.2 alpha', '<' ) ) {
-	die( '<b>Error:</b> This version of Semantic Result Formats requires Semantic MediaWiki 1.7 or above; use Semantic Result Formats 1.6.1 for older versions of SMW.' );
-}
+$GLOBALS['wgMessagesDirs']['SemanticResultFormats'] = __DIR__ . '/i18n';
+$GLOBALS['wgExtensionMessagesFiles']['SemanticResultFormats'] = __DIR__ . '/SemanticResultFormats.i18n.php';
+$GLOBALS['wgExtensionMessagesFiles']['SemanticResultFormatsMagic'] = __DIR__ . '/SemanticResultFormats.i18n.magic.php';
 
-define( 'SRF_VERSION', '1.7.1' );
+$GLOBALS['srfgIP'] = __DIR__;
 
 // Require the settings file.
-require dirname( __FILE__ ) . '/SRF_Settings.php';
+require __DIR__ . '/SemanticResultFormats.settings.php';
 
-if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-	require dirname( __FILE__ ) . '/SRF_Resources.php';
-}
+// Resource definitions
+$GLOBALS['wgResourceModules'] = array_merge( $GLOBALS['wgResourceModules'], include( __DIR__ . "/Resources.php" ) );
 
-// Initialize the formats later on, so the $srfgFormats setting can be manipulated in LocalSettings.
-$wgExtensionFunctions[] = 'srffInitFormats';
-
-$wgExtensionMessagesFiles['SemanticResultFormats'] = dirname( __FILE__ ) . '/SRF_Messages.php';
-$wgExtensionMessagesFiles['SemanticResultFormatsMagic'] = dirname( __FILE__ ) . '/SRF_Magic.php';
-
-$srfgScriptPath = ( $wgExtensionAssetsPath === false ? $wgScriptPath . '/extensions' : $wgExtensionAssetsPath ) . '/SemanticResultFormats'; 
-$srfgIP = dirname( __FILE__ );
-
-$wgExtensionCredits['semantic'][] = array(
+$GLOBALS['wgExtensionCredits']['semantic'][] = array(
 	'path' => __FILE__,
 	'name' => 'Semantic Result Formats',
 	'version' => SRF_VERSION,
@@ -61,68 +52,65 @@ $wgExtensionCredits['semantic'][] = array(
 	// the current rule is to list anyone who has created, or contributed
 	// significantly to, at least three formats, or the overall extension.
 	'author' => array(
-		'[http://www.mediawiki.org/wiki/User:Jeroen_De_Dauw Jeroen De Dauw]',
+		'James Hong Kong',
+		'Stephan Gambke',
+		'[https://www.mediawiki.org/wiki/User:Jeroen_De_Dauw Jeroen De Dauw]',
 		'Yaron Koren',
-		'[http://korrekt.org Markus Krötzsch]',
-		'[http://simia.net Denny Vrandecic]',
 		'...'
 	),
-	'url' => 'https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats',
-	'descriptionmsg' => 'srf-desc'
+	'url' => 'https://semantic-mediawiki.org/wiki/Semantic_Result_Formats',
+	'descriptionmsg' => 'srf-desc',
+	'license-name'   => 'GPL-2.0+'
 );
 
-$formatDir = dirname( __FILE__ ) . '/';
+$formatDir = __DIR__ . '/formats/';
 
-$wgAutoloadClasses['SRFTimeline'] = $formatDir . 'Timeline/SRF_Timeline.php';
-$wgAutoloadClasses['SRFvCard'] = $formatDir . 'vCard/SRF_vCard.php';
-$wgAutoloadClasses['SRFiCalendar'] = $formatDir . 'iCalendar/SRF_iCalendar.php';
-$wgAutoloadClasses['SRFBibTeX'] = $formatDir . 'BibTeX/SRF_BibTeX.php';
-$wgAutoloadClasses['SRFCalendar'] = $formatDir . 'Calendar/SRF_Calendar.php';
-$wgAutoloadClasses['SRFOutline'] = $formatDir . 'Outline/SRF_Outline.php';
-$wgAutoloadClasses['SRFMath'] = $formatDir . 'Math/SRF_Math.php';
-$wgAutoloadClasses['SRFExhibit'] = $formatDir . 'Exhibit/SRF_Exhibit.php';
-$wgAutoloadClasses['SRFGoogleBar'] = $formatDir . 'GoogleCharts/SRF_GoogleBar.php';
-$wgAutoloadClasses['SRFGooglePie'] = $formatDir . 'GoogleCharts/SRF_GooglePie.php';
-$wgAutoloadClasses['SRFJitGraph'] = $formatDir . 'JitGraph/SRF_JitGraph.php';
-$wgAutoloadClasses['SRFjqPlotPie'] = $formatDir . 'jqPlot/SRF_jqPlotPie.php';
-$wgAutoloadClasses['SRFjqPlotBar'] = $formatDir . 'jqPlot/SRF_jqPlotBar.php';
-$wgAutoloadClasses['SRFGraph'] = $formatDir . 'GraphViz/SRF_Graph.php';
-$wgAutoloadClasses['SRFProcess'] = $formatDir . 'GraphViz/SRF_Process.php';
-$wgAutoloadClasses['SRFPloticusVBar'] = $formatDir . 'Ploticus/SRF_PloticusVBar.php';
-$wgAutoloadClasses['SRFGallery'] = $formatDir . 'Gallery/SRF_Gallery.php';
-$wgAutoloadClasses['SRFTagCloud'] = $formatDir . 'TagCloud/SRF_TagCloud.php';
-$wgAutoloadClasses['SRFArray'] = $formatDir . 'Array/SRF_Array.php';
-$wgAutoloadClasses['SRFHash'] = $formatDir . 'Array/SRF_Array.php';
-$wgAutoloadClasses['SRFValueRank'] = $formatDir . 'ValueRank/SRF_ValueRank.php';
-$wgAutoloadClasses['SRFD3Line'] = $formatDir . 'D3/SRF_D3Line.php';
-$wgAutoloadClasses['SRFD3Bar'] = $formatDir . 'D3/SRF_D3Bar.php';
-$wgAutoloadClasses['SRFD3Treemap'] = $formatDir . 'D3/SRF_D3Treemap.php';  
-$wgAutoloadClasses['SRFTree'] = $formatDir . 'Tree/SRF_Tree.php';  
-$wgAutoloadClasses['SRFFiltered'] = $formatDir . 'Filtered/SRF_Filtered.php';  
+global $wgAutoloadClasses;
 
 unset( $formatDir );
 
-$wgAutoloadClasses['SRFParserFunctions'] = $srfgIP . '/SRF_ParserFunctions.php';
-$wgAutoloadClasses['SRFHooks'] = $srfgIP . '/SRF_Hooks.php';
+global $wgHooks;
 
-$wgHooks['AdminLinks'][] = 'SRFHooks::addToAdminLinks';
+// Admin Links hook needs to be called in a delayed way so that it
+// will always be called after SMW's Admin Links addition; as of
+// SMW 1.9, SMW delays calling all its hook functions.
+$wgExtensionFunctions[] = function() {
+	$GLOBALS['wgHooks']['AdminLinks'][] = 'SRFHooks::addToAdminLinks';
+};
+
 $wgHooks['ParserFirstCallInit'][] = 'SRFParserFunctions::registerFunctions';
+$wgHooks['UnitTestsList'][] = 'SRFHooks::registerUnitTests';
+
+$wgHooks['ResourceLoaderTestModules'][] = 'SRFHooks::registerQUnitTests';
+$wgHooks['ResourceLoaderGetConfigVars'][] = 'SRFHooks::onResourceLoaderGetConfigVars';
+
+// register API modules
+$GLOBALS['wgAPIModules']['ext.srf.slideshow.show'] = 'SRFSlideShowApi';
+
+// User preference
+$GLOBALS['wgHooks']['GetPreferences'][] = 'SRFHooks::onGetPreferences';
 
 /**
  * Autoload the query printer classes and associate them with their formats in the $smwgResultFormats array.
- * 
+ *
  * @since 1.5.2
  */
-function srffInitFormats() {
-	global $srfgFormats, $smwgResultFormats, $smwgResultAliases, $wgAutoloadClasses;
-	
+$GLOBALS['wgExtensionFunctions'][] = function() {
+	global $srfgFormats, $smwgResultFormats, $smwgResultAliases;
+
+	$GLOBALS['srfgScriptPath'] = ( $GLOBALS['wgExtensionAssetsPath'] === false ?
+			$GLOBALS['wgScriptPath'] . '/extensions' : $GLOBALS['wgExtensionAssetsPath'] ) . '/SemanticResultFormats';
+
 	$formatClasses = array(
+		// Assign the Boilerplate class to a format identifier
+		// 'boilerplate' => 'SRFBoilerplate',
 		'timeline' => 'SRFTimeline',
 		'eventline' => 'SRFTimeline',
 		'vcard' => 'SRFvCard',
 		'icalendar' => 'SRFiCalendar',
 		'bibtex' => 'SRFBibTeX',
 		'calendar' => 'SRFCalendar',
+		'eventcalendar' => 'SRF\EventCalendar',
 		'outline' => 'SRFOutline',
 		'sum' => 'SRFMath',
 		'product' => 'SRFMath',
@@ -134,40 +122,55 @@ function srffInitFormats() {
 		'googlebar' => 'SRFGoogleBar',
 		'googlepie' => 'SRFGooglePie',
 		'jitgraph' => 'SRFJitGraph',
-		'jqplotpie' => 'SRFjqPlotPie',
-		'jqplotbar' => 'SRFjqPlotBar',
+		'jqplotchart' => 'SRFjqPlotChart',
+		'jqplotseries' => 'SRFjqPlotSeries',
 		'graph' => 'SRFGraph',
 		'process' => 'SRFProcess',
 		'ploticusvbar' => 'SRFPloticusVBar',
-		'gallery' => 'SRFGallery',
-		'tagcloud' => 'SRFTagCloud',
+		'gallery' => 'SRF\Gallery',
+		'tagcloud' => 'SRF\TagCloud',
 		'valuerank' => 'SRFValueRank',
 		'array' => 'SRFArray',
 		'hash' => 'SRFHash',
-		'D3Line' => 'SRFD3Line',
-		'D3Bar' => 'SRFD3Bar',
-		'D3Treemap' => 'SRFD3Treemap',
+		'd3chart' => 'SRFD3Chart',
 		'tree' => 'SRFTree',
 		'ultree' => 'SRFTree',
 		'oltree' => 'SRFTree',
 		'filtered' => 'SRFFiltered',
+		'latest' => 'SRFTime',
+		'earliest' => 'SRFTime',
+		'slideshow' => 'SRFSlideShow',
+		'timeseries' => 'SRFTimeseries',
+		'sparkline' => 'SRFSparkline',
+		'listwidget' => 'SRFListWidget',
+		'pagewidget' => 'SRFPageWidget',
+		'dygraphs' => 'SRFDygraphs',
+		'incoming' => 'SRFIncoming',
+		'media' => 'SRF\MediaPlayer',
+		'excel' => 'SRF\SRFExcel',
+		'datatables' => 'SRF\DataTables'
 	);
 
 	$formatAliases = array(
-		'tagcloud' => array( 'tag cloud' ),
-		'valuerank' => array( 'value rank' )
+		'tagcloud'   => array( 'tag cloud' ),
+		'datatables'   => array( 'datatable' ),
+		'valuerank'  => array( 'value rank' ),
+		'd3chart'    => array( 'd3 chart' ),
+		'timeseries' => array ( 'time series' ),
+		'jqplotchart' => array( 'jqplot chart', 'jqplotpie', 'jqplotbar' ),
+		'jqplotseries' => array( 'jqplot series' ),
 	);
-	
+
 	foreach ( $srfgFormats as $format ) {
 		if ( array_key_exists( $format, $formatClasses ) ) {
 			$smwgResultFormats[$format] = $formatClasses[$format];
-			
+
 			if ( isset( $smwgResultAliases ) && array_key_exists( $format, $formatAliases ) ) {
 				$smwgResultAliases[$format] = $formatAliases[$format];
 			}
 		}
 		else {
-			wfDebug( "There is not result format class associated with the format '$format'." );
+			wfDebug( "There is no result format class associated with the '$format' format." );
 		}
-	}	
-}
+	}
+};

@@ -26,23 +26,12 @@ class SFFormLinker {
 	 * in the wiki.
 	 */
 	static function getIncomingProperties( $title ) {
-		$store = smwfGetStore();
-		// SMW 1.6+
-		if ( class_exists( 'SMWDataItem' ) ) {
-			$value = SMWDIWikiPage::newFromTitle( $title );
-		} else {
-			$title_text = SFUtils::titleString( $title );
-			$value = SMWDataValueFactory::newTypeIDValue( '_wpg', $title_text );
-		}
+		$store = SFUtils::getSMWStore();
+		$value = SMWDIWikiPage::newFromTitle( $title );
 		$properties = $store->getInProperties( $value );
 		$propertyNames = array();
 		foreach ( $properties as $property ) {
-			// SMW 1.6+
-			if ( $property instanceof SMWDIProperty ) {
-				$property_name = $property->getKey();
-			} else {
-				$property_name = $property->getWikiValue();
-			}
+			$property_name = $property->getKey();
 			if ( !empty( $property_name ) ) {
 				$propertyNames[] = $property_name;
 			}
@@ -57,7 +46,8 @@ class SFFormLinker {
 		if ( self::$mLinkedPagesRetrieved ) {
 			return;
 		}
-		$store = smwfGetStore();
+
+		$store = SFUtils::getSMWStore();
 		if ( class_exists( 'SMWDataItem' ) ) {
 			$value = SMWDIWikiPage::newFromTitle( $title );
 		} else {
@@ -67,6 +57,7 @@ class SFFormLinker {
 		foreach ( $data->getProperties() as $property ) {
 			$propertyValues = $data->getPropertyValues( $property );
 			foreach ( $propertyValues as $propertyValue ) {
+				$propertyName = null;
 				$linkedPageName = null;
 				if ( $propertyValue instanceof SMWDIWikiPage ) {
 					$propertyName = $property->getKey();
@@ -134,7 +125,7 @@ class SFFormLinker {
 
 		global $sfgContLang;
 
-		$store = smwfGetStore();
+		$store = SFUtils::getSMWStore();
 		$subject = Title::makeTitleSafe( $page_namespace, $page_name );
 		$form_names = SFUtils::getSMWPropertyValues( $store, $subject, $prop_smw_id );
 
@@ -172,13 +163,28 @@ class SFFormLinker {
 				global $sfgFormPrinter;
 				$form_name = $auto_create_forms[0];
 				$form_title = Title::makeTitleSafe( SF_NS_FORM, $form_name );
-				$form_article = new Article( $form_title );
-				$form_definition = $form_article->getContent();
+				$form_definition = SFUtils::getPageText( $form_title );
+				$preloadContent = null;
+
+				// Allow outside code to set/change the
+				// preloaded text.
+				wfRunHooks( 'sfEditFormPreloadText', array( &$preloadContent, $title, $form_title ) );
+
 				list ( $form_text, $javascript_text, $data_text, $form_page_title, $generated_page_name ) =
-					$sfgFormPrinter->formHTML( $form_definition, false, false, null, null, 'Some very long page name that will hopefully never get created ABCDEF123', null );
+					$sfgFormPrinter->formHTML( $form_definition, false, false, null, $preloadContent, 'Some very long page name that will hopefully never get created ABCDEF123', null );
 				$params = array();
-				global $wgUser;
-				$params['user_id'] = $wgUser->getId();
+
+				// Get user "responsible" for all auto-generated
+				// pages from red links.
+				$userID = 1;
+				global $sfgAutoCreateUser;
+				if ( !is_null( $sfgAutoCreateUser ) ) {
+					$user = User::newFromName( $sfgAutoCreateUser );
+					if ( !is_null( $user ) ) {
+						$userID = $user->getId();
+					}
+				}
+				$params['user_id'] = $userID;
 				$params['page_text'] = $data_text;
 				$job = new SFCreatePageJob( $title, $params );
 				Job::batchInsert( array( $job ) );
@@ -204,13 +210,15 @@ class SFFormLinker {
 			return null;
 		}
 
-		$fe = SFUtils::getSpecialPage( 'FormEdit' );
+		$fe = SpecialPageFactory::getPage( 'FormEdit' );
 
 		$fe_url = $fe->getTitle()->getLocalURL();
 		if ( count( $default_forms ) > 0 ) {
 			$form_edit_url = $fe_url . "/" . $default_forms[0] . "/" . SFUtils::titleURLString( $target_page_title );
 		} else {
-			$form_edit_url = $fe_url . "/" . SFUtils::titleURLString( $target_page_title );
+			$form_edit_url = $fe_url;
+			$form_edit_url .= ( strpos( $form_edit_url, "?" ) ) ? "&" : "?";
+			$form_edit_url .= 'target=' . urlencode( SFUtils::titleString( $target_page_title ) );
 		}
 		foreach ( $alt_forms as $i => $alt_form ) {
 			$form_edit_url .= ( strpos( $form_edit_url, "?" ) ) ? "&" : "?";
@@ -245,7 +253,7 @@ class SFFormLinker {
 		if ( '' === $namespace_name ) {
 			// If it's in the main (blank) namespace, check for the
 			// file named with the word for "Main" in this language.
-			$namespace_name = wfMsgForContent( 'sf_blank_namespace' );
+			$namespace_name = wfMessage( 'sf_blank_namespace' )->inContentLanguage()->text();
 		}
 		if ( $form_edit_link = self::getFormEditLinkForPage( $title, $namespace_name, NS_PROJECT ) ) {
 			return $form_edit_link;
@@ -342,7 +350,7 @@ class SFFormLinker {
 		if ( NS_MAIN === $namespace ) {
 			// If it's in the main (blank) namespace, check for the
 			// file named with the word for "Main" in this language.
-			$namespace_label = wfMsgForContent( 'sf_blank_namespace' );
+			$namespace_label = wfMessage( 'sf_blank_namespace' )->inContentLanguage()->text();
 		} else {
 			global $wgContLang;
 			$namespace_labels = $wgContLang->getNamespaces();
@@ -351,5 +359,4 @@ class SFFormLinker {
 		$default_forms = self::getFormsThatPagePointsTo( $namespace_label, NS_PROJECT, self::DEFAULT_FORM );
 		return $default_forms;
 	}
-
 }

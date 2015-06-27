@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fitoschido",
+			"Macofe"
+		]
+	},
+	"semanticrating-desc": "Permite a los usuarios calificar artículos con estrellas",
+	"semanticrating-max": "El número máximo de estrellas en una calificación"
+}

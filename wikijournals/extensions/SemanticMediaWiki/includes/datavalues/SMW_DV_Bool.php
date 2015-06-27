@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -36,12 +35,12 @@ class SMWBoolValue extends SMWDataValue {
 			$boolvalue = true;
 		} elseif ( $lcv === '0' ) {
 			$boolvalue = false;
-		} elseif ( in_array( $lcv, explode( ',', wfMsgForContent( 'smw_true_words' ) ), true ) ) {
+		} elseif ( in_array( $lcv, explode( ',', wfMessage( 'smw_true_words' )->inContentLanguage()->text() ), true ) ) {
 			$boolvalue = true;
-		} elseif ( in_array( $lcv, explode( ',', wfMsgForContent( 'smw_false_words' ) ), true ) ) {
+		} elseif ( in_array( $lcv, explode( ',', wfMessage( 'smw_false_words' )->inContentLanguage()->text() ), true ) ) {
 			$boolvalue = false;
 		} else {
-			$this->addError( wfMsgForContent( 'smw_noboolean', $value ) );
+			$this->addError( wfMessage( 'smw_noboolean', $value )->inContentLanguage()->text() );
 		}
 		$this->m_dataitem = new SMWDIBoolean( $boolvalue, $this->m_typeid );
 	}
@@ -72,7 +71,7 @@ class SMWBoolValue extends SMWDataValue {
 			$this->m_falsecaption = 'false';
 		} elseif ( strtolower( $formatstring ) == 'x' ) { // X format
 			$this->m_truecaption = '<span style="font-family: sans-serif; ">X</span>';
-			$this->m_falsecaption = '';
+			$this->m_falsecaption = '&nbsp;';
 		} else { // format "truelabel, falselabel" (hopefully)
 			$captions = explode( ',', $formatstring, 2 );
 			if ( count( $captions ) == 2 ) { // note: escaping needed to be safe; MW-sanitising would be an alternative
@@ -119,9 +118,13 @@ class SMWBoolValue extends SMWDataValue {
 		if ( $useformat && ( isset( $this->m_truecaption ) ) ) {
 			return $this->m_dataitem->getBoolean() ? $this->m_truecaption : $this->m_falsecaption;
 		} else {
-			$vals = explode( ',', wfMsgForContent( $this->m_dataitem->getBoolean() ? 'smw_true_words' : 'smw_false_words' ) );
+			$vals = explode(
+				',',
+				wfMessage(
+					$this->m_dataitem->getBoolean() ? 'smw_true_words' : 'smw_false_words'
+				)->inContentLanguage()->text()
+			);
 			return reset( $vals );
 		}
 	}
-
 }

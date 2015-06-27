@@ -1,13 +1,12 @@
 <?php
 
 /**
- *
  * @group Database
  * ^--- make sure temporary tables are used.
  */
 class LinksUpdateTest extends MediaWikiTestCase {
 
-	function  __construct( $name = null, array $data = array(), $dataName = '' ) {
+	function __construct( $name = null, array $data = array(), $dataName = '' ) {
 		parent::__construct( $name, $data, $dataName );
 
 		$this->tablesUsed = array_merge( $this->tablesUsed,
@@ -52,7 +51,11 @@ class LinksUpdateTest extends MediaWikiTestCase {
 		return array( $t, $po );
 	}
 
+	/**
+	 * @covers ParserOutput::addLink
+	 */
 	public function testUpdate_pagelinks() {
+		/** @var ParserOutput $po */
 		list( $t, $po ) = $this->makeTitleAndParserOutput( "Testing", 111 );
 
 		$po->addLink( Title::newFromText( "Foo" ) );
@@ -60,21 +63,51 @@ class LinksUpdateTest extends MediaWikiTestCase {
 		$po->addLink( Title::newFromText( "linksupdatetest:Foo" ) ); // interwiki link should be ignored
 		$po->addLink( Title::newFromText( "#Foo" ) ); // hash link should be ignored
 
-		$this->assertLinksUpdate( $t, $po, 'pagelinks', 'pl_namespace, pl_title', 'pl_from = 111', array(
-			array( NS_MAIN, 'Foo' ),
-		) );
+		$update = $this->assertLinksUpdate(
+			$t,
+			$po,
+			'pagelinks',
+			'pl_namespace,
+			pl_title',
+			'pl_from = 111',
+			array( array( NS_MAIN, 'Foo' ) )
+		);
+		$this->assertArrayEquals( array(
+			Title::makeTitle( NS_MAIN, 'Foo' ),  // newFromText doesn't yield the same internal state....
+		), $update->getAddedLinks() );
 
 		$po = new ParserOutput();
 		$po->setTitleText( $t->getPrefixedText() );
 
 		$po->addLink( Title::newFromText( "Bar" ) );
+		$po->addLink( Title::newFromText( "Talk:Bar" ) );
 
-		$this->assertLinksUpdate( $t, $po, 'pagelinks', 'pl_namespace, pl_title', 'pl_from = 111', array(
-			array( NS_MAIN, 'Bar' ),
-		) );
+		$update = $this->assertLinksUpdate(
+			$t,
+			$po,
+			'pagelinks',
+			'pl_namespace,
+			pl_title',
+			'pl_from = 111',
+			array(
+				array( NS_MAIN, 'Bar' ),
+				array( NS_TALK, 'Bar' ),
+			)
+		);
+		$this->assertArrayEquals( array(
+			Title::makeTitle( NS_MAIN, 'Bar' ),
+			Title::makeTitle( NS_TALK, 'Bar' ),
+		), $update->getAddedLinks() );
+		$this->assertArrayEquals( array(
+			Title::makeTitle( NS_MAIN, 'Foo' ),
+		), $update->getRemovedLinks() );
 	}
 
+	/**
+	 * @covers ParserOutput::addExternalLink
+	 */
 	public function testUpdate_externallinks() {
+		/** @var ParserOutput $po */
 		list( $t, $po ) = $this->makeTitleAndParserOutput( "Testing", 111 );
 
 		$po->addExternalLink( "http://testing.com/wiki/Foo" );
@@ -84,7 +117,11 @@ class LinksUpdateTest extends MediaWikiTestCase {
 		) );
 	}
 
+	/**
+	 * @covers ParserOutput::addCategory
+	 */
 	public function testUpdate_categorylinks() {
+		/** @var ParserOutput $po */
 		$this->setMwGlobals( 'wgCategoryCollation', 'uppercase' );
 
 		list( $t, $po ) = $this->makeTitleAndParserOutput( "Testing", 111 );
@@ -96,7 +133,11 @@ class LinksUpdateTest extends MediaWikiTestCase {
 		) );
 	}
 
+	/**
+	 * @covers ParserOutput::addInterwikiLink
+	 */
 	public function testUpdate_iwlinks() {
+		/** @var ParserOutput $po */
 		list( $t, $po ) = $this->makeTitleAndParserOutput( "Testing", 111 );
 
 		$target = Title::makeTitleSafe( NS_MAIN, "Foo", '', 'linksupdatetest' );
@@ -107,51 +148,111 @@ class LinksUpdateTest extends MediaWikiTestCase {
 		) );
 	}
 
+	/**
+	 * @covers ParserOutput::addTemplate
+	 */
 	public function testUpdate_templatelinks() {
+		/** @var ParserOutput $po */
 		list( $t, $po ) = $this->makeTitleAndParserOutput( "Testing", 111 );
 
 		$po->addTemplate( Title::newFromText( "Template:Foo" ), 23, 42 );
 
-		$this->assertLinksUpdate( $t, $po, 'templatelinks', 'tl_namespace, tl_title', 'tl_from = 111', array(
-			array( NS_TEMPLATE, 'Foo' ),
-		) );
+		$this->assertLinksUpdate(
+			$t,
+			$po,
+			'templatelinks',
+			'tl_namespace,
+			tl_title',
+			'tl_from = 111',
+			array( array( NS_TEMPLATE, 'Foo' ) )
+		);
 	}
 
+	/**
+	 * @covers ParserOutput::addImage
+	 */
 	public function testUpdate_imagelinks() {
+		/** @var ParserOutput $po */
 		list( $t, $po ) = $this->makeTitleAndParserOutput( "Testing", 111 );
 
 		$po->addImage( "Foo.png" );
-
 
 		$this->assertLinksUpdate( $t, $po, 'imagelinks', 'il_to', 'il_from = 111', array(
 			array( 'Foo.png' ),
 		) );
 	}
 
+	/**
+	 * @covers ParserOutput::addLanguageLink
+	 */
 	public function testUpdate_langlinks() {
+		$this->setMwGlobals( array(
+			'wgCapitalLinks' => true,
+		) );
+
+		/** @var ParserOutput $po */
 		list( $t, $po ) = $this->makeTitleAndParserOutput( "Testing", 111 );
 
 		$po->addLanguageLink( Title::newFromText( "en:Foo" )->getFullText() );
-
 
 		$this->assertLinksUpdate( $t, $po, 'langlinks', 'll_lang, ll_title', 'll_from = 111', array(
 			array( 'En', 'Foo' ),
 		) );
 	}
 
+	/**
+	 * @covers ParserOutput::setProperty
+	 */
 	public function testUpdate_page_props() {
+		global $wgPagePropsHaveSortkey;
+
+		/** @var ParserOutput $po */
 		list( $t, $po ) = $this->makeTitleAndParserOutput( "Testing", 111 );
 
-		$po->setProperty( "foo", "bar" );
+		$fields = array( 'pp_propname', 'pp_value' );
+		$expected = array();
 
-		$this->assertLinksUpdate( $t, $po, 'page_props', 'pp_propname, pp_value', 'pp_page = 111', array(
-			array( 'foo', 'bar' ),
-		) );
+		$po->setProperty( "bool", true );
+		$expected[] = array( "bool", true );
+
+		$po->setProperty( "float", 4.0 + 1.0 / 4.0 );
+		$expected[] = array( "float", 4.0 + 1.0 / 4.0 );
+
+		$po->setProperty( "int", -7 );
+		$expected[] = array( "int", -7 );
+
+		$po->setProperty( "string", "33 bar" );
+		$expected[] = array( "string", "33 bar" );
+
+		// compute expected sortkey values
+		if ( $wgPagePropsHaveSortkey ) {
+			$fields[] = 'pp_sortkey';
+
+			foreach ( $expected as &$row ) {
+				$value = $row[1];
+
+				if ( is_int( $value ) || is_float( $value ) || is_bool( $value ) ) {
+					$row[] = floatval( $value );
+				} else {
+					$row[] = null;
+				}
+			}
+		}
+
+		$this->assertLinksUpdate( $t, $po, 'page_props', $fields, 'pp_page = 111', $expected );
 	}
 
-	#@todo: test recursive, too!
+	public function testUpdate_page_props_without_sortkey() {
+		$this->setMwGlobals( 'wgPagePropsHaveSortkey', false );
 
-	protected function assertLinksUpdate( Title $title, ParserOutput $parserOutput, $table, $fields, $condition, array $expectedRows ) {
+		$this->testUpdate_page_props();
+	}
+
+	// @todo test recursive, too!
+
+	protected function assertLinksUpdate( Title $title, ParserOutput $parserOutput,
+		$table, $fields, $condition, array $expectedRows
+	) {
 		$update = new LinksUpdate( $title, $parserOutput );
 
 		//NOTE: make sure LinksUpdate does not generate warnings when called inside a transaction.
@@ -160,5 +261,6 @@ class LinksUpdateTest extends MediaWikiTestCase {
 		$update->commitTransaction();
 
 		$this->assertSelect( $table, $fields, $condition, $expectedRows );
+		return $update;
 	}
 }

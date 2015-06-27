@@ -11,16 +11,18 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
 $wgExtensionCredits['specialpage'][] = array(
 	'path' => __FILE__,
 	'name' => 'Admin Links',
-	'version' => '0.1.6',
+	'version' => '0.2',
 	'author' => 'Yaron Koren',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:Admin_Links',
 	'descriptionmsg' => 'adminlinks-desc',
 );
 
-$wgAdminLinksIP = dirname( __FILE__ ) . '/';
+$wgAdminLinksIP = __DIR__ . '/';
+$wgMessagesDirs['AdminLinks'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['AdminLinks'] = $wgAdminLinksIP . 'AdminLinks.i18n.php';
 $wgExtensionMessagesFiles['AdminLinksAlias'] = $wgAdminLinksIP . 'AdminLinks.alias.php';
 $wgSpecialPages['AdminLinks'] = 'AdminLinks';
+$wgSpecialPageGroups['AdminLinks'] = 'users';
 $wgHooks['PersonalUrls'][] = 'AdminLinks::addURLToUserLinks';
 $wgAvailableRights[] = 'adminlinks';
 // by default, sysops see the link to this page

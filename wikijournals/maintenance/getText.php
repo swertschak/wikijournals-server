@@ -23,7 +23,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that outputs page text to stdout.
@@ -52,7 +52,10 @@ class GetTextMaint extends Maintenance {
 			$titleText = $title->getPrefixedText();
 			$this->error( "Page $titleText does not exist.\n", true );
 		}
-		$content = $rev->getContent( $this->hasOption( 'show-private' ) ? Revision::RAW : Revision::FOR_PUBLIC );
+		$content = $rev->getContent( $this->hasOption( 'show-private' )
+			? Revision::RAW
+			: Revision::FOR_PUBLIC );
+
 		if ( $content === false ) {
 			$titleText = $title->getPrefixedText();
 			$this->error( "Couldn't extract the text from $titleText.\n", true );
@@ -62,4 +65,4 @@ class GetTextMaint extends Maintenance {
 }
 
 $maintClass = "GetTextMaint";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

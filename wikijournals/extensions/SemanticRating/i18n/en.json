@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cicalese"
+		]
+	},
+	"semanticrating-desc": "Allows users to rate items with stars",
+	"semanticrating-max": "The maximum number of stars in a rating"
+}

@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dafer45",
+			"Jopparn",
+			"Lokal Profil"
+		]
+	},
+	"sphinxsearch-desc": "Ersätter MediaWiki-sökmotorn med [http://www.sphinxsearch.com/ Sphinx]",
+	"sphinxPowered": "Drivs av $1",
+	"sphinxClientFailed": "Kunde inte initiera Sphinx-klient.",
+	"sphinxSearchFailed": "Frågan misslyckades: $1",
+	"sphinxPspellError": "Kunde inte anropa pspell-tillägget."
+}

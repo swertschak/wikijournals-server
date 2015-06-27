@@ -48,15 +48,15 @@ $.wikiEditor = {
 			msie: [['>=', 7]],
 			// Layout issues in FF < 2
 			firefox: [['>=', 2]],
-			// Text selection bugs galore - this may be a different situation with the new iframe-based solution
+			// Text selection bugs galore
 			opera: [['>=', 9.6]],
 			// jQuery minimums
 			safari: [['>=', 3]],
 			chrome: [['>=', 3]],
 			netscape: [['>=', 9]],
 			blackberry: false,
-			ipod: false,
-			iphone: false
+			ipod: [['>=', 6]],
+			iphone: [['>=', 6]]
 		},
 		// Right-to-left languages
 		rtl: {
@@ -64,15 +64,15 @@ $.wikiEditor = {
 			msie: [['>=', 8]],
 			// Layout issues in FF < 2
 			firefox: [['>=', 2]],
-			// Text selection bugs galore - this may be a different situation with the new iframe-based solution
+			// Text selection bugs galore
 			opera: [['>=', 9.6]],
 			// jQuery minimums
 			safari: [['>=', 3]],
 			chrome: [['>=', 3]],
 			netscape: [['>=', 9]],
 			blackberry: false,
-			ipod: false,
-			iphone: false
+			ipod: [['>=', 6]],
+			iphone: [['>=', 6]]
 		}
 	},
 
@@ -216,21 +216,21 @@ $.fn.wikiEditor = function () {
 
 // Skip any further work when running in browsers that are unsupported
 if ( !$.wikiEditor.isSupported() ) {
-	return $(this);
+	return $( this );
 }
 
 /* Initialization */
 
 // The wikiEditor context is stored in the element's data, so when this function gets called again we can pick up right
 // where we left off
-var context = $(this).data( 'wikiEditor-context' );
+var context = $( this ).data( 'wikiEditor-context' );
 // On first call, we need to set things up, but on all following calls we can skip right to the API handling
 if ( !context || typeof context === 'undefined' ) {
 
 	// Star filling the context with useful data - any jQuery selections, as usual should be named with a preceding $
 	context = {
 		// Reference to the textarea element which the wikiEditor is being built around
-		'$textarea': $(this),
+		'$textarea': $( this ),
 		// Container for any number of mutually exclusive views that are accessible by tabs
 		'views': {},
 		// Container for any number of module-specific data - only including data for modules in use on this context
@@ -238,25 +238,9 @@ if ( !context || typeof context === 'undefined' ) {
 		// General place to shouve bits of data into
 		'data': {},
 		// Unique numeric ID of this instance used both for looking up and differentiating instances of wikiEditor
-		'instance': $.wikiEditor.instances.push( $(this) ) - 1,
-		// Array mapping elements in the textarea to character offsets
-		'offsets': null,
-		// Cache for context.fn.htmlToText()
-		'htmlToTextMap': {},
-		// The previous HTML of the iframe, stored to detect whether something really changed.
-		'oldHTML': null,
-		// Same for delayedChange()
-		'oldDelayedHTML': null,
-		// The previous selection of the iframe, stored to detect whether the selection has changed
-		'oldDelayedSel': null,
+		'instance': $.wikiEditor.instances.push( $( this ) ) - 1,
 		// Saved selection state for old IE (<=10)
 		'savedSelection': null,
-		// Stack of states in { html: [string] } form
-		'history': [],
-		// Current history state position - this is number of steps backwards, so it's always -1 or less
-		'historyPosition': -1,
-		/// The previous historyPosition, stored to detect if change events were due to an undo or redo action
-		'oldDelayedHistoryPosition': -1,
 		// List of extensions active on this context
 		'extensions': []
 	};
@@ -264,7 +248,7 @@ if ( !context || typeof context === 'undefined' ) {
 	/**
 	 * Externally Accessible API
 	 *
-	 * These are available using calls to $(selection).wikiEditor( call, data ) where selection is a jQuery selection
+	 * These are available using calls to $( selection ).wikiEditor( call, data ) where selection is a jQuery selection
 	 * of the textarea that the wikiEditor instance was built around.
 	 */
 
@@ -352,9 +336,9 @@ if ( !context || typeof context === 'undefined' ) {
 					name in $.wikiEditor.modules[module].evt
 				) {
 					var ret = $.wikiEditor.modules[module].evt[name]( context, event );
-					if (ret !== null) {
+					if ( ret !== null ) {
 						//if 1 returns false, the end result is false
-						if( returnFromModules === null ) {
+						if ( returnFromModules === null ) {
 							returnFromModules = ret;
 						} else {
 							returnFromModules = returnFromModules && ret;
@@ -404,10 +388,10 @@ if ( !context || typeof context === 'undefined' ) {
 						} )
 						.click( function ( event ) {
 							context.$ui.find( '.wikiEditor-ui-view' ).hide();
-							context.$ui.find( '.' + $(this).parent().attr( 'rel' ) ).show();
+							context.$ui.find( '.' + $( this ).parent().attr( 'rel' ) ).show();
 							context.$tabs.find( 'div' ).removeClass( 'current' );
-							$(this).parent().addClass( 'current' );
-							$(this).blur();
+							$( this ).parent().addClass( 'current' );
+							$( this ).blur();
 							if ( 'init' in options && typeof options.init === 'function' ) {
 								options.init( context );
 							}
@@ -502,6 +486,9 @@ if ( !context || typeof context === 'undefined' ) {
 		.append( $( '<span>' + mediaWiki.msg( 'wikieditor-loading' ) + '</span>' )
 			.css( 'marginTop', context.$textarea.height() / 2 ) );
 	*/
+	/* Preserving cursor and focus state, which will get lost due to wrapAll */
+	var hasFocus = context.$textarea.is( ':focus' ),
+		cursorPos = context.$textarea.textSelection( 'getCaretPosition', { startAndEnd: true } );
 	// Encapsulate the textarea with some containers for layout
 	context.$textarea
 	/* Disabling our loading div for now
@@ -513,6 +500,14 @@ if ( !context || typeof context === 'undefined' ) {
 		.wrapAll( $( '<div>' ).addClass( 'wikiEditor-ui-left' ) )
 		.wrapAll( $( '<div>' ).addClass( 'wikiEditor-ui-bottom' ) )
 		.wrapAll( $( '<div>' ).addClass( 'wikiEditor-ui-text' ) );
+	// Restore scroll position after this wrapAll (tracked by mediawiki.action.edit)
+	context.$textarea.prop( 'scrollTop', $( '#wpScrolltop' ).val() );
+	// Restore focus and cursor if needed
+	if ( hasFocus ) {
+		context.$textarea.focus();
+		context.$textarea.textSelection( 'setSelection', { start: cursorPos[0], end: cursorPos[1] } );
+	}
+
 	// Get references to some of the newly created containers
 	context.$ui = context.$textarea.parent().parent().parent().parent().parent();
 	context.$wikitext = context.$textarea.parent().parent().parent().parent();
@@ -523,15 +518,16 @@ if ( !context || typeof context === 'undefined' ) {
 				.append( $( '<div>' ).addClass( 'wikiEditor-ui-tabs' ).hide() )
 				.append( $( '<div>' ).addClass( 'wikiEditor-ui-buttons' ) )
 		)
-		.before( $( '<div style="clear: both;"></div>' ) );
+		.before( $( '<div>' ).addClass( 'wikiEditor-ui-clear' ) );
 	// Get references to some of the newly created containers
 	context.$controls = context.$ui.find( '.wikiEditor-ui-buttons' ).hide();
 	context.$buttons = context.$ui.find( '.wikiEditor-ui-buttons' );
 	context.$tabs = context.$ui.find( '.wikiEditor-ui-tabs' );
 	// Clear all floating after the UI
-	context.$ui.after( $( '<div style="clear: both;"></div>' ) );
+	context.$ui.after( $( '<div>' ).addClass( 'wikiEditor-ui-clear' ) );
 	// Attach a right container
 	context.$wikitext.append( $( '<div>' ).addClass( 'wikiEditor-ui-right' ) );
+	context.$wikitext.append( $( '<div>' ).addClass( 'wikiEditor-ui-clear' ) );
 	// Attach a top container to the left pane
 	context.$wikitext.find( '.wikiEditor-ui-left' ).prepend( $( '<div>' ).addClass( 'wikiEditor-ui-top' ) );
 	// Setup the intial view
@@ -582,7 +578,7 @@ if ( args.length > 0 ) {
 }
 
 // Store the context for next time, and support chaining
-return $(this).data( 'wikiEditor-context', context );
+return $( this ).data( 'wikiEditor-context', context );
 
 };
 

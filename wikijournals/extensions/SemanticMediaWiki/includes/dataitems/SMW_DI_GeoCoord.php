@@ -1,11 +1,12 @@
 <?php
 
+use SMW\DataItemException;
+
 /**
  * Implementation of dataitems that are geographic coordinates.
  *
  * @since 1.6
  *
- * @file SMW_DI_GeoCoord.php
  * @ingroup SemanticMaps
  *
  * @licence GNU GPL v3
@@ -60,7 +61,7 @@ class SMWDIGeoCoord extends SMWDataItem {
 				}
 			}
 			else {
-				throw new SMWDataItemException( 'Invalid coordinate data passed to the SMWDIGeoCoord constructor' );
+				throw new DataItemException( 'Invalid coordinate data passed to the SMWDIGeoCoord constructor' );
 			}
 		}
 		elseif ( $count === 2 || $count === 3 ) {
@@ -72,7 +73,7 @@ class SMWDIGeoCoord extends SMWDataItem {
 			}
 		}
 		else {
-			throw new SMWDataItemException( 'Invalid coordinate data passed to the SMWDIGeoCoord constructor' );
+			throw new DataItemException( 'Invalid coordinate data passed to the SMWDIGeoCoord constructor' );
 		}
 	}
 
@@ -136,7 +137,7 @@ class SMWDIGeoCoord extends SMWDataItem {
 		$count = count( $parts );
 		
 		if ( $count !== 2 && $count !== 3 ) {
-			throw new SMWDataItemException( 'Unserialization of coordinates failed' );
+			throw new DataItemException( 'Unserialization of coordinates failed' );
 		}
 		
 		$coords = array( 'lat' => (float)$parts[0], 'lon' => (float)$parts[1] );
@@ -181,4 +182,11 @@ class SMWDIGeoCoord extends SMWDataItem {
 		return $this->altitude;
 	}
 
+	public function equals( SMWDataItem $di ) {
+		if ( $di->getDIType() !== SMWDataItem::TYPE_GEO ) {
+			return false;
+		}
+
+		return $di->getSerialization() === $this->getSerialization();
+	}
 }

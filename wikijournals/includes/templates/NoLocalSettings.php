@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 /**
  * Template used when there is no LocalSettings.php file.
  *
@@ -22,7 +23,7 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-        die( "NoLocalSettings.php is not a valid MediaWiki entry point\n" );
+	die( "NoLocalSettings.php is not a valid MediaWiki entry point\n" );
 }
 
 if ( !isset( $wgVersion ) ) {
@@ -33,8 +34,8 @@ if ( !isset( $wgVersion ) ) {
 $matches = array();
 $ext = 'php';
 $path = '/';
-foreach( array_filter( explode( '/', $_SERVER['PHP_SELF'] ) ) as $part ) {
-	if( !preg_match( '/\.(php5?)$/', $part, $matches ) ) {
+foreach ( array_filter( explode( '/', $_SERVER['PHP_SELF'] ) ) as $part ) {
+	if ( !preg_match( '/\.(php5?)$/', $part, $matches ) ) {
 		$path .= "$part/";
 	} else {
 		$ext = $matches[1] == 'php5' ? 'php5' : 'php';
@@ -52,12 +53,12 @@ if ( !function_exists( 'session_name' ) ) {
 	$installerStarted = ( $success && isset( $_SESSION['installData'] ) );
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns='http://www.w3.org/1999/xhtml' lang='en'>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 	<head>
+		<meta charset="UTF-8" />
 		<title>MediaWiki <?php echo htmlspecialchars( $wgVersion ) ?></title>
-		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-		<style type='text/css' media='screen'>
+		<style media='screen'>
 			html, body {
 				color: #000;
 				background-color: #fff;
@@ -71,20 +72,25 @@ if ( !function_exists( 'session_name' ) ) {
 		</style>
 	</head>
 	<body>
-		<img src="<?php echo htmlspecialchars( $path ) ?>skins/common/images/mediawiki.png" alt='The MediaWiki logo' />
+		<img src="<?php echo htmlspecialchars( $path ) ?>resources/assets/mediawiki.png" alt='The MediaWiki logo' />
 
 		<h1>MediaWiki <?php echo htmlspecialchars( $wgVersion ) ?></h1>
 		<div class='error'>
-		<p>LocalSettings.php not found.</p>
-		<p>
-		<?php
-		if ( $installerStarted ) {
-			echo( "Please <a href=\"" . htmlspecialchars( $path ) . "mw-config/index." . htmlspecialchars( $ext ) . "\"> complete the installation</a> and download LocalSettings.php." );
-		} else {
-			echo( "Please <a href=\"" . htmlspecialchars( $path ) . "mw-config/index." . htmlspecialchars( $ext ) . "\"> set up the wiki</a> first." );
-		}
-		?>
-		</p>
+		<?php if ( !file_exists( MW_CONFIG_FILE ) ) { ?>
+			<p>LocalSettings.php not found.</p>
+			<p>
+			<?php
+			if ( $installerStarted ) {
+				echo "Please <a href=\"" . htmlspecialchars( $path ) . "mw-config/index." . htmlspecialchars( $ext ) . "\">complete the installation</a> and download LocalSettings.php.";
+			} else {
+				echo "Please <a href=\"" . htmlspecialchars( $path ) . "mw-config/index." . htmlspecialchars( $ext ) . "\">set up the wiki</a> first.";
+			}
+			?>
+			</p>
+		<?php } else { ?>
+			<p>LocalSettings.php not readable.</p>
+			<p>Please correct file permissions and try again.</p>
+		<?php } ?>
 
 		</div>
 	</body>

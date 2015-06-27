@@ -1,7 +1,5 @@
 <?php
 /**
- *
- *
  * Created on Feb 10, 2013
  *
  * Copyright © 2013 Yuri Astrakhan "<Firstname><Lastname>@gmail.com"
@@ -24,7 +22,6 @@
  * @file
  */
 
-
 /** This class has some common functionality for testing query module
  */
 abstract class ApiQueryTestBase extends ApiTestCase {
@@ -37,41 +34,47 @@ STR;
 
 	/**
 	 * Merges all requests parameter + expected values into one
-	 * @param ... list of arrays, each of which contains exactly two
+	 * @param array $v,... List of arrays, each of which contains exactly two
 	 * @return array
 	 */
 	protected function merge( /*...*/ ) {
 		$request = array();
 		$expected = array();
-		foreach	( func_get_args() as $v ) {
+		foreach ( func_get_args() as $v ) {
 			list( $req, $exp ) = $this->validateRequestExpectedPair( $v );
 			$request = array_merge_recursive( $request, $req );
 			$this->mergeExpected( $expected, $exp );
 		}
+
 		return array( $request, $expected );
 	}
 
 	/**
 	 * Check that the parameter is a valid two element array,
 	 * with the first element being API request and the second - expected result
+	 * @param array $v
+	 * @return array
 	 */
 	private function validateRequestExpectedPair( $v ) {
 		$this->assertType( 'array', $v, self::PARAM_ASSERT );
-		$this->assertEquals( 2, count($v), self::PARAM_ASSERT );
+		$this->assertEquals( 2, count( $v ), self::PARAM_ASSERT );
 		$this->assertArrayHasKey( 0, $v, self::PARAM_ASSERT );
 		$this->assertArrayHasKey( 1, $v, self::PARAM_ASSERT );
 		$this->assertType( 'array', $v[0], self::PARAM_ASSERT );
 		$this->assertType( 'array', $v[1], self::PARAM_ASSERT );
+
 		return $v;
 	}
 
 	/**
 	 * Recursively merges the expected values in the $item into the $all
+	 * @param array &$all
+	 * @param array $item
 	 */
 	private function mergeExpected( &$all, $item ) {
 		foreach ( $item as $k => $v ) {
 			if ( array_key_exists( $k, $all ) ) {
-				if ( is_array ( $all[$k] ) ) {
+				if ( is_array( $all[$k] ) ) {
 					$this->mergeExpected( $all[$k], $v );
 				} else {
 					$this->assertEquals( $all[$k], $v );
@@ -84,7 +87,7 @@ STR;
 
 	/**
 	 * Checks that the request's result matches the expected results.
-	 * @param $values array is a two element array( request, expected_results )
+	 * @param array $values Array is a two element array( request, expected_results )
 	 * @throws Exception
 	 */
 	protected function check( $values ) {
@@ -103,47 +106,43 @@ STR;
 
 	protected function assertResult( $exp, $result, $message = '' ) {
 		try {
-			$this->assertResultRecursive( $exp, $result );
-		} catch ( Exception $e ) {
+			$exp = self::sanitizeResultArray( $exp );
+			$result = self::sanitizeResultArray( $result );
+			$this->assertEquals( $exp, $result );
+		} catch ( PHPUnit_Framework_ExpectationFailedException $e ) {
 			if ( is_array( $message ) ) {
 				$message = http_build_query( $message );
 			}
-			print( "\nRequest: $message\n" );
-			print( "\nExpected:\n" );
-			print_r( $exp );
-			print( "\nResult:\n" );
-			print_r( $result );
-			throw $e; // rethrow it
+			throw new PHPUnit_Framework_ExpectationFailedException(
+				$e->getMessage() . "\nRequest: $message",
+				new PHPUnit_Framework_ComparisonFailure(
+					$exp,
+					$result,
+					print_r( $exp, true ),
+					print_r( $result, true ),
+					false,
+					$e->getComparisonFailure()->getMessage() . "\nRequest: $message"
+				)
+			);
 		}
 	}
 
 	/**
-	 * Recursively compare arrays, ignoring mismatches in numeric key and pageids.
-	 * @param $expected array expected values
-	 * @param $result array returned values
+	 * Recursively ksorts a result array and removes any 'pageid' keys.
+	 * @param array $result
+	 * @return array
 	 */
-	private function assertResultRecursive( $expected, $result ) {
-		reset( $expected );
-		reset( $result );
-		while ( true ) {
-			$e = each( $expected );
-			$r = each( $result );
-			// If either of the arrays is shorter, abort. If both are done, success.
-			$this->assertEquals( (bool)$e, (bool)$r );
-			if ( !$e ) {
-				break; // done
-			}
-			// continue only if keys are identical or both keys are numeric
-			$this->assertTrue( $e['key'] === $r['key'] || ( is_numeric( $e['key'] ) && is_numeric( $r['key'] ) ) );
-			// don't compare pageids
-			if ( $e['key'] !== 'pageid' ) {
-				// If values are arrays, compare recursively, otherwise compare with ===
-				if ( is_array( $e['value'] ) && is_array( $r['value'] ) ) {
-					$this->assertResultRecursive( $e['value'], $r['value'] );
-				} else {
-					$this->assertEquals( $e['value'], $r['value'] );
-				}
+	private static function sanitizeResultArray( $result ) {
+		unset( $result['pageid'] );
+		foreach ( $result as $key => $value ) {
+			if ( is_array( $value ) ) {
+				$result[$key] = self::sanitizeResultArray( $value );
 			}
 		}
+
+		// Sort the result by keys, then take advantage of how array_merge will
+		// renumber numeric keys while leaving others alone.
+		ksort( $result );
+		return array_merge( $result );
 	}
 }

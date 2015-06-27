@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script to import all scripts in the MediaWiki namespace from a
@@ -65,13 +65,12 @@ class ImportSiteScripts extends Maintenance {
 			$content = ContentHandler::makeContent( $text, $wikiPage->getTitle() );
 			$wikiPage->doEditContent( $content, "Importing from $url", 0, false, $user );
 		}
-
 	}
 
 	protected function fetchScriptList() {
 		$data = array(
 			'action' => 'query',
-			'format' => 'php',//'json',
+			'format' => 'php', //'json',
 			'list' => 'allpages',
 			'apnamespace' => '8',
 			'aplimit' => '500',
@@ -100,9 +99,8 @@ class ImportSiteScripts extends Maintenance {
 		} while ( isset( $result['query-continue'] ) );
 
 		return $pages;
-
 	}
 }
 
 $maintClass = 'ImportSiteScripts';
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

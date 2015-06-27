@@ -59,7 +59,7 @@ class FileDuplicateSearchPage extends QueryPage {
 	/**
 	 * Fetch dupes from all connected file repositories.
 	 *
-	 * @return Array of File objects
+	 * @return array Array of File objects
 	 */
 	function getDupes() {
 		return RepoGroup::singleton()->findBySha1( $this->hash );
@@ -67,7 +67,7 @@ class FileDuplicateSearchPage extends QueryPage {
 
 	/**
 	 *
-	 * @param array $dupes of File objects
+	 * @param array $dupes Array of File objects
 	 */
 	function showList( $dupes ) {
 		$html = array();
@@ -96,16 +96,14 @@ class FileDuplicateSearchPage extends QueryPage {
 	}
 
 	function execute( $par ) {
-		global $wgScript;
-
 		$this->setHeaders();
 		$this->outputHeader();
 
-		$this->filename = isset( $par ) ?  $par : $this->getRequest()->getText( 'filename' );
+		$this->filename = $par !== null ? $par : $this->getRequest()->getText( 'filename' );
 		$this->file = null;
 		$this->hash = '';
 		$title = Title::newFromText( $this->filename, NS_FILE );
-		if( $title && $title->getText() != '' ) {
+		if ( $title && $title->getText() != '' ) {
 			$this->file = wfFindFile( $title );
 		}
 
@@ -113,37 +111,46 @@ class FileDuplicateSearchPage extends QueryPage {
 
 		# Create the input form
 		$out->addHTML(
-			Xml::openElement( 'form', array( 'id' => 'fileduplicatesearch', 'method' => 'get', 'action' => $wgScript ) ) .
-			Html::hidden( 'title', $this->getTitle()->getPrefixedDBkey() ) .
-			Xml::openElement( 'fieldset' ) .
-			Xml::element( 'legend', null, $this->msg( 'fileduplicatesearch-legend' )->text() ) .
-			Xml::inputLabel( $this->msg( 'fileduplicatesearch-filename' )->text(), 'filename', 'filename', 50, $this->filename ) . ' ' .
-			Xml::submitButton( $this->msg( 'fileduplicatesearch-submit' )->text() ) .
-			Xml::closeElement( 'fieldset' ) .
-			Xml::closeElement( 'form' )
+			Html::openElement(
+				'form',
+				array( 'id' => 'fileduplicatesearch', 'method' => 'get', 'action' => wfScript() )
+			) . "\n" .
+				Html::hidden( 'title', $this->getPageTitle()->getPrefixedDBkey() ) . "\n" .
+				Html::openElement( 'fieldset' ) . "\n" .
+				Html::element( 'legend', null, $this->msg( 'fileduplicatesearch-legend' )->text() ) . "\n" .
+				Xml::inputLabel(
+					$this->msg( 'fileduplicatesearch-filename' )->text(),
+					'filename',
+					'filename',
+					50,
+					$this->filename
+				) . "\n" .
+				Xml::submitButton( $this->msg( 'fileduplicatesearch-submit' )->text() ) . "\n" .
+				Html::closeElement( 'fieldset' ) . "\n" .
+				Html::closeElement( 'form' )
 		);
 
-		if( $this->file ) {
+		if ( $this->file ) {
 			$this->hash = $this->file->getSha1();
-		} elseif( $this->filename !== '' ) {
+		} elseif ( $this->filename !== '' ) {
 			$out->wrapWikiMsg(
 				"<p class='mw-fileduplicatesearch-noresults'>\n$1\n</p>",
 				array( 'fileduplicatesearch-noresults', wfEscapeWikiText( $this->filename ) )
 			);
 		}
 
-		if( $this->hash != '' ) {
+		if ( $this->hash != '' ) {
 			# Show a thumbnail of the file
 			$img = $this->file;
 			if ( $img ) {
 				$thumb = $img->transform( array( 'width' => 120, 'height' => 120 ) );
-				if( $thumb ) {
+				if ( $thumb ) {
 					$out->addHTML( '<div id="mw-fileduplicatesearch-icon">' .
 						$thumb->toHtml( array( 'desc-link' => false ) ) . '<br />' .
 						$this->msg( 'fileduplicatesearch-info' )->numParams(
 							$img->getWidth(), $img->getHeight() )->params(
-							$this->getLanguage()->formatSize( $img->getSize() ),
-							$img->getMimeType() )->parseAsBlock() .
+								$this->getLanguage()->formatSize( $img->getSize() ),
+								$img->getMimeType() )->parseAsBlock() .
 						'</div>' );
 				}
 			}
@@ -152,7 +159,7 @@ class FileDuplicateSearchPage extends QueryPage {
 			$numRows = count( $dupes );
 
 			# Show a short summary
-			if( $numRows == 1 ) {
+			if ( $numRows == 1 ) {
 				$out->wrapWikiMsg(
 					"<p class='mw-fileduplicatesearch-result-1'>\n$1\n</p>",
 					array( 'fileduplicatesearch-result-1', wfEscapeWikiText( $this->filename ) )
@@ -172,14 +179,16 @@ class FileDuplicateSearchPage extends QueryPage {
 
 	function doBatchLookups( $list ) {
 		$batch = new LinkBatch();
-		foreach( $list as $file ) {
+		/** @var File $file */
+		foreach ( $list as $file ) {
 			$batch->addObj( $file->getTitle() );
-			if( $file->isLocal() ) {
+			if ( $file->isLocal() ) {
 				$userName = $file->getUser( 'text' );
 				$batch->add( NS_USER, $userName );
 				$batch->add( NS_USER_TALK, $userName );
 			}
 		}
+
 		$batch->execute();
 	}
 

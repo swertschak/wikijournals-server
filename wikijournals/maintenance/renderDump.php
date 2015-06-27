@@ -7,7 +7,7 @@
  * Templates etc are pulled from the local wiki database, not from the dump.
  *
  * Copyright (C) 2006 Brion Vibber <brion@pobox.com>
- * http://www.mediawiki.org/
+ * https://www.mediawiki.org/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that takes page text out of an XML dump file
@@ -69,20 +69,22 @@ class DumpRenderer extends Maintenance {
 		$importer->doImport();
 
 		$delta = microtime( true ) - $this->startTime;
-		$this->error( "Rendered {$this->count} pages in " . round($delta, 2) . " seconds " );
-		if ($delta > 0)
-			$this->error( round($this->count / $delta, 2) . " pages/sec" );
+		$this->error( "Rendered {$this->count} pages in " . round( $delta, 2 ) . " seconds " );
+		if ( $delta > 0 ) {
+			$this->error( round( $this->count / $delta, 2 ) . " pages/sec" );
+		}
 		$this->error( "\n" );
 	}
 
 	/**
 	 * Callback function for each revision, turn into HTML and save
-	 * @param $rev Revision
+	 * @param Revision $rev
 	 */
 	public function handleRevision( $rev ) {
 		$title = $rev->getTitle();
 		if ( !$title ) {
 			$this->error( "Got bogus revision with null title!" );
+
 			return;
 		}
 		$display = $title->getPrefixedText();
@@ -104,11 +106,10 @@ class DumpRenderer extends Maintenance {
 		$output = $content->getParserOutput( $title, null, $options );
 
 		file_put_contents( $filename,
-			"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" " .
-			"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" .
-			"<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" .
+			"<!DOCTYPE html>\n" .
+			"<html lang=\"en\" dir=\"ltr\">\n" .
 			"<head>\n" .
-			"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n" .
+			"<meta charset=\"UTF-8\" />\n" .
 			"<title>" . htmlspecialchars( $display ) . "</title>\n" .
 			"</head>\n" .
 			"<body>\n" .
@@ -119,4 +120,4 @@ class DumpRenderer extends Maintenance {
 }
 
 $maintClass = "DumpRenderer";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

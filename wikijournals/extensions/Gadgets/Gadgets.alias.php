@@ -59,6 +59,11 @@ $specialPageAliases['ce'] = array(
 	'Gadgets' => array( 'Гаджеташ' ),
 );
 
+/** Sorani Kurdish (کوردی) */
+$specialPageAliases['ckb'] = array(
+	'Gadgets' => array( 'ئامرازەکان' ),
+);
+
 /** Czech (čeština) */
 $specialPageAliases['cs'] = array(
 	'Gadgets' => array( 'Udělátka' ),
@@ -256,7 +261,7 @@ $specialPageAliases['oc'] = array(
 
 /** Punjabi (ਪੰਜਾਬੀ) */
 $specialPageAliases['pa'] = array(
-	'Gadgets' => array( 'ਛੋਟੇ_ਸੰਦ' ),
+	'Gadgets' => array( 'ਛੋਟੇ_ਸੰਦ', 'ਛੋਟੇ_ਔਜ਼ਾਰ' ),
 );
 
 /** Polish (polski) */
@@ -301,7 +306,7 @@ $specialPageAliases['sl'] = array(
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎) */
 $specialPageAliases['sr-ec'] = array(
-	'Gadgets' => array( 'Гаџети' ),
+	'Gadgets' => array( 'Гаџети', 'Геџети' ),
 );
 
 /** Swedish (svenska) */
@@ -341,7 +346,7 @@ $specialPageAliases['vec'] = array(
 
 /** Vietnamese (Tiếng Việt) */
 $specialPageAliases['vi'] = array(
-	'Gadgets' => array( 'Công_cụ_đa_năng' ),
+	'Gadgets' => array( 'Tiện_ích', 'Công_cụ_đa_năng' ),
 );
 
 /** Simplified Chinese (中文（简体）‎) */

@@ -3,9 +3,18 @@
 /**
  * @group Search
  * @group Database
+ *
+ * @covers SearchEngine<extended>
+ * @note Coverage will only ever show one of on of the Search* classes
  */
 class SearchEngineTest extends MediaWikiLangTestCase {
-	protected $search, $pageList;
+
+	/**
+	 * @var SearchEngine
+	 */
+	protected $search;
+
+	protected $pageList;
 
 	/**
 	 * Checks for database type & version.
@@ -15,17 +24,23 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 		parent::setUp();
 
 		// Search tests require MySQL or SQLite with FTS
-		# Get database type and version
 		$dbType = $this->db->getType();
-		$dbSupported =
-			( $dbType === 'mysql' )
-				|| ( $dbType === 'sqlite' && $this->db->getFulltextSearchModule() == 'FTS3' );
+		$dbSupported = ( $dbType === 'mysql' )
+			|| ( $dbType === 'sqlite' && $this->db->getFulltextSearchModule() == 'FTS3' );
 
 		if ( !$dbSupported ) {
 			$this->markTestSkipped( "MySQL or SQLite with FTS3 only" );
 		}
 
 		$searchType = $this->db->getSearchEngine();
+		$this->setMwGlobals( array(
+			'wgSearchType' => $searchType
+		) );
+
+		if ( !isset( self::$pageList ) ) {
+			$this->addPages();
+		}
+
 		$this->search = new $searchType( $this->db );
 	}
 
@@ -35,22 +50,18 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 		parent::tearDown();
 	}
 
-	function pageExists( $title ) {
-		return false;
-	}
-
-	function addDBData() {
-		if ( $this->pageExists( 'Not_Main_Page' ) ) {
-			return;
-		}
-
+	protected function addPages() {
 		if ( !$this->isWikitextNS( NS_MAIN ) ) {
-			//@todo: cover the case of non-wikitext content in the main namespace
+			// @todo cover the case of non-wikitext content in the main namespace
 			return;
 		}
 
 		$this->insertPage( "Not_Main_Page", "This is not a main page", 0 );
-		$this->insertPage( 'Talk:Not_Main_Page', 'This is not a talk page to the main page, see [[smithee]]', 1 );
+		$this->insertPage(
+			'Talk:Not_Main_Page',
+			'This is not a talk page to the main page, see [[smithee]]',
+			1
+		);
 		$this->insertPage( 'Smithee', 'A smithee is one who smiths. See also [[Alan Smithee]]', 0 );
 		$this->insertPage( 'Talk:Smithee', 'This article sucks.', 1 );
 		$this->insertPage( 'Unrelated_page', 'Nothing in this page is about the S word.', 0 );
@@ -68,12 +79,11 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 		$this->insertPage( 'DomainName', 'example.com', 0 );
 	}
 
-	function fetchIds( $results ) {
+	protected function fetchIds( $results ) {
 		if ( !$this->isWikitextNS( NS_MAIN ) ) {
 			$this->markTestIncomplete( __CLASS__ . " does no yet support non-wikitext content "
 				. "in the main namespace" );
 		}
-
 		$this->assertTrue( is_object( $results ) );
 
 		$matches = array();
@@ -87,17 +97,18 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 		# sort them numerically so we will compare simply that we received
 		# the expected matches.
 		sort( $matches );
+
 		return $matches;
 	}
 
 	/**
 	 * Insert a new page
 	 *
-	 * @param $pageName String: page name
-	 * @param $text String: page's content
-	 * @param $n Integer: unused
+	 * @param string $pageName Page name
+	 * @param string $text Page's content
+	 * @param int $ns Unused
 	 */
-	function insertPage( $pageName, $text, $ns ) {
+	protected function insertPage( $pageName, $text, $ns ) {
 		$title = Title::newFromText( $pageName, $ns );
 
 		$user = User::newFromName( 'WikiSysop' );
@@ -114,7 +125,7 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 		return true;
 	}
 
-	function testFullWidth() {
+	public function testFullWidth() {
 		$this->assertEquals(
 			array( 'FullOneUp', 'FullTwoLow', 'HalfOneUp', 'HalfTwoLow' ),
 			$this->fetchIds( $this->search->searchText( 'AZ' ) ),
@@ -133,14 +144,14 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 			"Search for normalized from Full-width Lower" );
 	}
 
-	function testTextSearch() {
+	public function testTextSearch() {
 		$this->assertEquals(
 			array( 'Smithee' ),
 			$this->fetchIds( $this->search->searchText( 'smithee' ) ),
 			"Plain search failed" );
 	}
 
-	function testTextPowerSearch() {
+	public function testTextPowerSearch() {
 		$this->search->setNamespaces( array( 0, 1, 4 ) );
 		$this->assertEquals(
 			array(
@@ -151,7 +162,7 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 			"Power search failed" );
 	}
 
-	function testTitleSearch() {
+	public function testTitleSearch() {
 		$this->assertEquals(
 			array(
 				'Alan Smithee',
@@ -161,7 +172,7 @@ class SearchEngineTest extends MediaWikiLangTestCase {
 			"Title search failed" );
 	}
 
-	function testTextTitlePowerSearch() {
+	public function testTextTitlePowerSearch() {
 		$this->search->setNamespaces( array( 0, 1, 4 ) );
 		$this->assertEquals(
 			array(

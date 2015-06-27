@@ -31,7 +31,7 @@
  */
 class ApiQueryLangLinks extends ApiQueryBase {
 
-	public function __construct( $query, $moduleName ) {
+	public function __construct( ApiQuery $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'll' );
 	}
 
@@ -41,9 +41,17 @@ class ApiQueryLangLinks extends ApiQueryBase {
 		}
 
 		$params = $this->extractRequestParams();
+		$prop = array_flip( (array)$params['prop'] );
 
 		if ( isset( $params['title'] ) && !isset( $params['lang'] ) ) {
 			$this->dieUsageMsg( array( 'missingparam', 'lang' ) );
+		}
+
+		// Handle deprecated param
+		$this->requireMaxOneParameter( $params, 'url', 'prop' );
+		if ( $params['url'] ) {
+			$this->logFeatureUsage( 'prop=langlinks&llurl' );
+			$prop = array( 'url' => 1 );
 		}
 
 		$this->addFields( array(
@@ -67,27 +75,28 @@ class ApiQueryLangLinks extends ApiQueryBase {
 			);
 		}
 
-			$sort = ( $params['dir'] == 'descending' ? ' DESC' : '' );
-			if ( isset( $params['lang'] ) ) {
+		//FIXME: (follow-up) To allow extensions to add to the language links, we need
+		//       to load them all, add the extra links, then apply paging.
+		//       Should not be terrible, it's not going to be more than a few hundred links.
+
+		// Note that, since (ll_from, ll_lang) is a unique key, we don't need
+		// to sort by ll_title to ensure deterministic ordering.
+		$sort = ( $params['dir'] == 'descending' ? ' DESC' : '' );
+		if ( isset( $params['lang'] ) ) {
 			$this->addWhereFld( 'll_lang', $params['lang'] );
 			if ( isset( $params['title'] ) ) {
 				$this->addWhereFld( 'll_title', $params['title'] );
-				$this->addOption( 'ORDER BY', 'll_from' . $sort );
-			} else {
-				$this->addOption( 'ORDER BY', array(
-							'll_title' . $sort,
-							'll_from' . $sort
-				));
 			}
+			$this->addOption( 'ORDER BY', 'll_from' . $sort );
 		} else {
 			// Don't order by ll_from if it's constant in the WHERE clause
 			if ( count( $this->getPageSet()->getGoodTitles() ) == 1 ) {
 				$this->addOption( 'ORDER BY', 'll_lang' . $sort );
 			} else {
 				$this->addOption( 'ORDER BY', array(
-							'll_from' . $sort,
-							'll_lang' . $sort
-				));
+					'll_from' . $sort,
+					'll_lang' . $sort
+				) );
 			}
 		}
 
@@ -103,11 +112,17 @@ class ApiQueryLangLinks extends ApiQueryBase {
 				break;
 			}
 			$entry = array( 'lang' => $row->ll_lang );
-			if ( $params['url'] ) {
+			if ( isset( $prop['url'] ) ) {
 				$title = Title::newFromText( "{$row->ll_lang}:{$row->ll_title}" );
 				if ( $title ) {
 					$entry['url'] = wfExpandUrl( $title->getFullURL(), PROTO_CURRENT );
 				}
+			}
+			if ( isset( $prop['langname'] ) ) {
+				$entry['langname'] = Language::fetchLanguageName( $row->ll_lang, $params['inlanguagecode'] );
+			}
+			if ( isset( $prop['autonym'] ) ) {
+				$entry['autonym'] = Language::fetchLanguageName( $row->ll_lang );
 			}
 			ApiResult::setContent( $entry, $row->ll_title );
 			$fit = $this->addPageSubItem( $row->ll_from, $entry );
@@ -123,6 +138,7 @@ class ApiQueryLangLinks extends ApiQueryBase {
 	}
 
 	public function getAllowedParams() {
+		global $wgContLang;
 		return array(
 			'limit' => array(
 				ApiBase::PARAM_DFLT => 10,
@@ -132,7 +148,18 @@ class ApiQueryLangLinks extends ApiQueryBase {
 				ApiBase::PARAM_MAX2 => ApiBase::LIMIT_BIG2
 			),
 			'continue' => null,
-			'url' => false,
+			'url' => array(
+				ApiBase::PARAM_DFLT => false,
+				ApiBase::PARAM_DEPRECATED => true,
+			),
+			'prop' => array(
+				ApiBase::PARAM_ISMULTI => true,
+				ApiBase::PARAM_TYPE => array(
+					'url',
+					'langname',
+					'autonym',
+				)
+			),
 			'lang' => null,
 			'title' => null,
 			'dir' => array(
@@ -142,6 +169,7 @@ class ApiQueryLangLinks extends ApiQueryBase {
 					'descending'
 				)
 			),
+			'inlanguagecode' => $wgContLang->getCode(),
 		);
 	}
 
@@ -149,39 +177,29 @@ class ApiQueryLangLinks extends ApiQueryBase {
 		return array(
 			'limit' => 'How many langlinks to return',
 			'continue' => 'When more results are available, use this to continue',
-			'url' => 'Whether to get the full URL',
+			'url' => "Whether to get the full URL (Cannot be used with {$this->getModulePrefix()}prop)",
+			'prop' => array(
+				'Which additional properties to get for each interlanguage link',
+				' url      - Adds the full URL',
+				' langname - Adds the localised language name (best effort, use CLDR extension)',
+				"            Use {$this->getModulePrefix()}inlanguagecode to control the language",
+				' autonym  - Adds the native language name',
+			),
 			'lang' => 'Language code',
 			'title' => "Link to search for. Must be used with {$this->getModulePrefix()}lang",
 			'dir' => 'The direction in which to list',
-		);
-	}
-
-	public function getResultProperties() {
-		return array(
-			'' => array(
-				'lang' => 'string',
-				'url' => array(
-					ApiBase::PROP_TYPE => 'string',
-					ApiBase::PROP_NULLABLE => true
-				),
-				'*' => 'string'
-			)
+			'inlanguagecode' => 'Language code for localised language names',
 		);
 	}
 
 	public function getDescription() {
-		return 'Returns all interlanguage links from the given page(s)';
-	}
-
-	public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
-			array( 'missingparam', 'lang' ),
-		) );
+		return 'Returns all interlanguage links from the given page(s).';
 	}
 
 	public function getExamples() {
 		return array(
-			'api.php?action=query&prop=langlinks&titles=Main%20Page&redirects=' => 'Get interlanguage links from the [[Main Page]]',
+			'api.php?action=query&prop=langlinks&titles=Main%20Page&redirects='
+				=> 'Get interlanguage links from the [[Main Page]]',
 		);
 	}
 

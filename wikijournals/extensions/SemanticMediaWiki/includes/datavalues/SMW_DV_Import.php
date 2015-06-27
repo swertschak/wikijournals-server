@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -29,11 +28,11 @@ class SMWImportValue extends SMWDataValue {
 		$this->m_qname = $value;
 
 		list( $onto_ns, $onto_section ) = explode( ':', $this->m_qname, 2 );
-		$msglines = preg_split( "([\n][\s]?)", wfMsgForContent( "smw_import_$onto_ns" ) ); // get the definition for "$namespace:$section"
+		$msglines = preg_split( "([\n][\s]?)", wfMessage( "smw_import_$onto_ns" )->inContentLanguage()->text() ); // get the definition for "$namespace:$section"
 
 		if ( count( $msglines ) < 2 ) { // error: no elements for this namespace
-			$this->addError( wfMsgForContent( 'smw_unknown_importns', $onto_ns ) );
-			$this->m_dataitem = new SMWDIString( 'ERROR' );
+			$this->addError( wfMessage( 'smw-datavalue-import-unknownns', $onto_ns )->inContentLanguage()->text() );
+			$this->m_dataitem = new SMWDIBlob( 'ERROR' );
 			return;
 		}
 
@@ -71,42 +70,11 @@ class SMWImportValue extends SMWDataValue {
 			}
 		}
 
-		// check whether element of correct type was found (extracts data from factbox)
-		/// TODO: parser needed to do that
-// 		if(SMWParseData::getSMWData($parser) instanceof SMWSemanticData) {
-// 			$this_ns = SMWParseData::getSMWData($parser)->getSubject()->getNamespace();
-// 			$error = null;
-// 			switch ($elemtype) {
-// 				case SMW_NS_PROPERTY: case NS_CATEGORY:
-// 					if ($this_ns != $elemtype) {
-// 						$error = wfMsgForContent('smw_nonright_importtype',$value, $wgContLang->getNsText($elemtype));
-// 					}
-// 					break;
-// 				case NS_MAIN:
-// 					if ( (SMW_NS_PROPERTY == $this_ns) || (NS_CATEGORY == $this_ns)) {
-// 						$error = wfMsgForContent('smw_wrong_importtype',$value, $wgContLang->getNsText($this_ns));
-// 					}
-// 					break;
-// 				case -1:
-// 					$error = wfMsgForContent('smw_no_importelement',$value);
-// 			}
-//
-// 			if (null != $error) {
-// 				$this->addError($error);
-// 				return;
-// 			}
-// 		}
-
-		try {
-			$this->m_dataitem = new SMWDIString( $this->m_namespace . ' ' . $this->m_section . ' ' . $this->m_uri );
-		} catch ( SMWStringLengthException $e ) {
-			$this->addError( wfMsgForContent( 'smw_maxstring', '"' . $this->m_namespace . ' ' . $this->m_section . ' ' . $this->m_uri . '"' ) );
-			$this->m_dataitem = new SMWDIString( 'ERROR' );
-		}
+		$this->m_dataitem = new SMWDIBlob( $this->m_namespace . ' ' . $this->m_section . ' ' . $this->m_uri );
 
 		// check whether caption is set, otherwise assign link statement to caption
 		if ( $this->m_caption === false ) {
-			$this->m_caption = "[" . $this->m_uri . " " . $this->m_qname . "] (" . $this->m_name . ")";
+			$this->m_caption = "[" . $this->m_uri . " " . $this->m_qname . "] " . $this->modifyToIncludeParentheses( $this->m_name );
 		}
 	}
 
@@ -116,17 +84,17 @@ class SMWImportValue extends SMWDataValue {
 	 * @return boolean
 	 */
 	protected function loadDataItem( SMWDataItem $dataItem ) {
-		if ( $dataItem->getDIType() == SMWDataItem::TYPE_STRING ) {
+		if ( $dataItem instanceof SMWDIBlob ) {
 			$this->m_dataitem = $dataItem;
 			$parts = explode( ' ', $dataItem->getString(), 3 );
 			if ( count( $parts ) != 3 ) {
-				$this->addError( wfMsgForContent( 'smw_parseerror' ) );
+				$this->addError( wfMessage( 'smw_parseerror' )->inContentLanguage()->text() );
 			} else {
 				$this->m_namespace = $parts[0];
 				$this->m_section = $parts[1];
 				$this->m_uri = $parts[2];
 				$this->m_qname = $this->m_namespace . ':' . $this->m_section;
-				$this->m_caption = "[" . $this->m_uri . " " . $this->m_qname . "] (" . $this->m_name . ")";
+				$this->m_caption = "[" . $this->m_uri . " " . $this->m_qname . "] " . $this->modifyToIncludeParentheses( $this->m_name );
 			}
 			return true;
 		} else {
@@ -145,9 +113,9 @@ class SMWImportValue extends SMWDataValue {
 	public function getLongWikiText( $linked = null ) {
 		if ( !$this->isValid() ) {
 			return $this->getErrorText();
-		} else {
-			return "[" . $this->m_uri . " " . $this->m_qname . "] (" . $this->m_name . ")";
 		}
+
+		return "[" . $this->m_uri . " " . $this->m_qname . "] " . $this->modifyToIncludeParentheses( $this->m_name );
 	}
 
 	public function getLongHTMLText( $linker = null ) {
@@ -173,4 +141,9 @@ class SMWImportValue extends SMWDataValue {
 	public function getLocalName() {
 		return $this->m_section;
 	}
+
+	private function modifyToIncludeParentheses( $name ) {
+		return $name !== '' ? wfMessage( 'parentheses', $name )->parse() : '';
+	}
+
 }

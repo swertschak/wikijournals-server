@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kghbln",
+			"Cicalese"
+		]
+	},
+	"semanticrating-desc": "{{desc|name=Semantic Rating|url=http://www.mediawiki.org/wiki/Extension:Semantic_Rating}}",
+	"semanticrating-max": "The description of the form field parameter representing the maximum number of stars"
+}

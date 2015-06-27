@@ -42,6 +42,7 @@ class StreamFile {
 		wfProfileIn( __METHOD__ );
 
 		if ( FileBackend::isStoragePath( $fname ) ) { // sanity
+			wfProfileOut( __METHOD__ );
 			throw new MWException( __FUNCTION__ . " given storage path '$fname'." );
 		}
 
@@ -157,10 +158,14 @@ class StreamFile {
 		# used for thumbnails (thumb.php)
 		if ( $wgTrivialMimeDetection ) {
 			switch ( $ext ) {
-				case 'gif': return 'image/gif';
-				case 'png': return 'image/png';
-				case 'jpg': return 'image/jpeg';
-				case 'jpeg': return 'image/jpeg';
+				case 'gif':
+					return 'image/gif';
+				case 'png':
+					return 'image/png';
+				case 'jpg':
+					return 'image/jpeg';
+				case 'jpeg':
+					return 'image/jpeg';
 			}
 
 			return 'unknown/unknown';
@@ -184,8 +189,8 @@ class StreamFile {
 				return 'unknown/unknown';
 			}
 			if ( $wgCheckFileExtensions && $wgStrictFileExtensions
-				&& !UploadBase::checkFileExtensionList( $extList, $wgFileExtensions ) )
-			{
+				&& !UploadBase::checkFileExtensionList( $extList, $wgFileExtensions )
+			) {
 				return 'unknown/unknown';
 			}
 			if ( $wgVerifyMimeType && in_array( strtolower( $type ), $wgMimeTypeBlacklist ) ) {

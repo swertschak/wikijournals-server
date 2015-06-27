@@ -1,9 +1,16 @@
 <?php
-/**
- * Tests for the PathRouter parsing
- */
 
+/**
+ * Tests for the PathRouter parsing.
+ *
+ * @covers PathRouter
+ */
 class PathRouterTest extends MediaWikiTestCase {
+
+	/**
+	 * @var PathRouter
+	 */
+	protected $basicRouter;
 
 	protected function setUp() {
 		parent::setUp();
@@ -151,18 +158,20 @@ class PathRouterTest extends MediaWikiTestCase {
 		$router->add( array( 'qwerty' => "/qwerty/$1" ), array( 'qwerty' => '$key' ) );
 		$router->add( "/$2/$1", array( 'restricted-to-y' => '$2' ), array( '$2' => 'y' ) );
 
-		foreach ( array(
-					'/Foo' => array( 'title' => 'Foo' ),
-					'/Bar' => array( 'ping' => 'pong' ),
-					'/Baz' => array( 'marco' => 'polo' ),
-					'/asdf-foo' => array( 'title' => 'qwerty-foo' ),
-					'/qwerty-bar' => array( 'title' => 'asdf-bar' ),
-					'/a/Foo' => array( 'title' => 'Foo' ),
-					'/asdf/Foo' => array( 'title' => 'Foo' ),
-					'/qwerty/Foo' => array( 'title' => 'Foo', 'qwerty' => 'qwerty' ),
-					'/baz/Foo' => array( 'title' => 'Foo', 'unrestricted' => 'baz' ),
-					'/y/Foo' => array( 'title' => 'Foo', 'restricted-to-y' => 'y' ),
-				) as $path => $result ) {
+		foreach (
+			array(
+				'/Foo' => array( 'title' => 'Foo' ),
+				'/Bar' => array( 'ping' => 'pong' ),
+				'/Baz' => array( 'marco' => 'polo' ),
+				'/asdf-foo' => array( 'title' => 'qwerty-foo' ),
+				'/qwerty-bar' => array( 'title' => 'asdf-bar' ),
+				'/a/Foo' => array( 'title' => 'Foo' ),
+				'/asdf/Foo' => array( 'title' => 'Foo' ),
+				'/qwerty/Foo' => array( 'title' => 'Foo', 'qwerty' => 'qwerty' ),
+				'/baz/Foo' => array( 'title' => 'Foo', 'unrestricted' => 'baz' ),
+				'/y/Foo' => array( 'title' => 'Foo', 'restricted-to-y' => 'y' ),
+			) as $path => $result
+		) {
 			$this->assertEquals( $router->parse( $path ), $result );
 		}
 	}
@@ -227,10 +236,11 @@ class PathRouterTest extends MediaWikiTestCase {
 	 * Ensure the router doesn't choke on long paths.
 	 */
 	public function testLength() {
+		// @codingStandardsIgnoreStart Ignore long line warnings
 		$matches = $this->basicRouter->parse( "/wiki/Lorem_ipsum_dolor_sit_amet,_consectetur_adipisicing_elit,_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._Ut_enim_ad_minim_veniam,_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._Duis_aute_irure_dolor_in_reprehenderit_in_voluptate_velit_esse_cillum_dolore_eu_fugiat_nulla_pariatur._Excepteur_sint_occaecat_cupidatat_non_proident,_sunt_in_culpa_qui_officia_deserunt_mollit_anim_id_est_laborum." );
 		$this->assertEquals( $matches, array( 'title' => "Lorem_ipsum_dolor_sit_amet,_consectetur_adipisicing_elit,_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._Ut_enim_ad_minim_veniam,_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._Duis_aute_irure_dolor_in_reprehenderit_in_voluptate_velit_esse_cillum_dolore_eu_fugiat_nulla_pariatur._Excepteur_sint_occaecat_cupidatat_non_proident,_sunt_in_culpa_qui_officia_deserunt_mollit_anim_id_est_laborum." ) );
+		// @codingStandardsIgnoreEnd
 	}
-
 
 	/**
 	 * Ensure that the php passed site of parameter values are not urldecoded
@@ -251,5 +261,4 @@ class PathRouterTest extends MediaWikiTestCase {
 		$matches = $router->parse( "/wiki/Foo" );
 		$this->assertEquals( $matches, array( 'title' => 'bar%20$1' ) );
 	}
-
 }

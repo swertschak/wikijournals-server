@@ -20,7 +20,7 @@ class SFTemplateInForm {
 	function handlePropertySettingInTemplate( $fieldName, $propertyName, $isList, &$templateFields, $templateText ) {
 		global $wgContLang;
 		$templateField = SFTemplateField::create( $fieldName, $wgContLang->ucfirst( $fieldName ), $propertyName, $isList );
-		$cur_pos = stripos( $templateText, $fieldName );
+		$cur_pos = stripos( $templateText, $fieldName.'|' );
 		$templateFields[$cur_pos] = $templateField;
 	}
 
@@ -41,10 +41,8 @@ class SFTemplateInForm {
 		// they're part of an "#if" statement), so they're only
 		// recorded the first time they're found.
 		$template_title = Title::makeTitleSafe( NS_TEMPLATE, $this->mTemplateName );
-		$template_article = null;
-		if ( isset( $template_title ) ) $template_article = new Article( $template_title, 0 );
-		if ( isset( $template_article ) ) {
-			$templateText = $template_article->getContent();
+		if ( isset( $template_title ) ) {
+			$templateText = SFUtils::getPageText( $template_title );
 			// Ignore 'noinclude' sections and 'includeonly' tags.
 			$templateText = StringUtils::delimiterReplace( '<noinclude>', '</noinclude>', '', $templateText );
 			$templateText = strtr( $templateText, array( '<includeonly>' => '', '</includeonly>' => '' ) );
@@ -63,7 +61,7 @@ class SFTemplateInForm {
 				// There was an error in the preg_match_all()
 				// call - let the user know about it.
 				if ( preg_last_error() == PREG_BACKTRACK_LIMIT_ERROR ) {
-					print 'Semantic Forms error: backtrace limit exceeded during parsing! Please increase the value of <a href="http://www.php.net/manual/en/pcre.configuration.php#ini.pcre.backtrack-limit">pcre.backtrack-limit</a> in the PHP settings.';
+					print 'Semantic Forms error: backtrace limit exceeded during parsing! Please increase the value of <a href="http://www.php.net/manual/en/pcre.configuration.php#ini.pcre.backtrack-limit">pcre.backtrack_limit</a> in php.ini or LocalSettings.php.';
 				}
 			}
 
@@ -79,9 +77,10 @@ class SFTemplateInForm {
 				}
 			}
 
-			// Then, get calls to #set and #set_internal
-			// (thankfully, they have basically the same syntax).
-			if ( preg_match_all( '/#(set|set_internal):(.*?}}})\s*}}/mis', $templateText, $matches ) ) {
+			// Then, get calls to #set, #set_internal and
+			// #subobject. (Thankfully, they all have similar
+			// syntax).
+			if ( preg_match_all( '/#(set|set_internal|subobject):(.*?}}})\s*}}/mis', $templateText, $matches ) ) {
 				foreach ( $matches[2] as $match ) {
 					if ( preg_match_all( '/([^|{]*?)=\s*{{{([^|}]*)/mis', $match, $matches2 ) ) {
 						foreach ( $matches2[1] as $i => $propertyName ) {
@@ -96,7 +95,8 @@ class SFTemplateInForm {
 				}
 			}
 
-			// Then, get calls to #declare.
+			// Then, get calls to #declare. (This is really rather
+			// optional, since no one seems to use #declare.)
 			if ( preg_match_all( '/#declare:(.*?)}}/mis', $templateText, $matches ) ) {
 				foreach ( $matches[1] as $match ) {
 					$setValues = explode( '|', $match );
@@ -159,9 +159,9 @@ class SFTemplateInForm {
 
 	function creationHTML( $template_num ) {
 		$checked_str = ( $this->mAllowMultiple ) ? "checked" : "";
-		$template_str = wfMsg( 'sf_createform_template' );
-		$template_label_input = wfMsg( 'sf_createform_templatelabelinput' );
-		$allow_multiple_text = wfMsg( 'sf_createform_allowmultiple' );
+		$template_str = wfMessage( 'sf_createform_template' )->escaped();
+		$template_label_input = wfMessage( 'sf_createform_templatelabelinput' )->escaped();
+		$allow_multiple_text = wfMessage( 'sf_createform_allowmultiple' )->escaped();
 		$text = <<<END
 	<input type="hidden" name="template_$template_num" value="$this->mTemplateName">
 	<div class="templateForm">
@@ -176,7 +176,7 @@ END;
 		}
 		$removeTemplateButton = Html::input(
 			'del_' . $template_num,
-			wfMsg( 'sf_createform_removetemplate' ),
+			wfMessage( 'sf_createform_removetemplate' )->text(),
 			'submit'
 		);
 		$text .= "\t" . Html::rawElement( 'p', null, $removeTemplateButton ) . "\n";

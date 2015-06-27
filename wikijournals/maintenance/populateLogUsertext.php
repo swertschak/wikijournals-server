@@ -24,7 +24,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that makes the required database updates for
@@ -52,6 +52,7 @@ class PopulateLogUsertext extends LoggedUpdateMaintenance {
 		$start = $db->selectField( 'logging', 'MIN(log_id)', false, __METHOD__ );
 		if ( !$start ) {
 			$this->output( "Nothing to do.\n" );
+
 			return true;
 		}
 		$end = $db->selectField( 'logging', 'MAX(log_id)', false, __METHOD__ );
@@ -77,9 +78,10 @@ class PopulateLogUsertext extends LoggedUpdateMaintenance {
 			wfWaitForSlaves();
 		}
 		$this->output( "Done populating log_user_text field.\n" );
+
 		return true;
 	}
 }
 
 $maintClass = "PopulateLogUsertext";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

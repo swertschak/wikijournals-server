@@ -25,7 +25,7 @@
  * @todo document
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that rebuilds search index table from scratch.
@@ -50,8 +50,6 @@ class RebuildTextIndex extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgTitle;
-
 		// Shouldn't be needed for Postgres
 		$this->db = wfGetDB( DB_MASTER );
 		if ( $this->db->getType() == 'postgres' ) {
@@ -61,14 +59,14 @@ class RebuildTextIndex extends Maintenance {
 		$this->db = wfGetDB( DB_MASTER );
 		if ( $this->db->getType() == 'sqlite' ) {
 			if ( !DatabaseSqlite::getFulltextSearchModule() ) {
-				$this->error( "Your version of SQLite module for PHP doesn't support full-text search (FTS3).\n", true );
+				$this->error( "Your version of SQLite module for PHP doesn't "
+					. "support full-text search (FTS3).\n", true );
 			}
 			if ( !$this->db->checkForEnabledSearch() ) {
-				$this->error( "Your database schema is not configured for full-text search support. Run update.php.\n", true );
+				$this->error( "Your database schema is not configured for "
+					. "full-text search support. Run update.php.\n", true );
 			}
 		}
-
-		$wgTitle = Title::newFromText( "Rebuild text index script" );
 
 		if ( $this->db->getType() == 'mysql' ) {
 			$this->dropMysqlTextIndex();
@@ -115,9 +113,8 @@ class RebuildTextIndex extends Maintenance {
 
 					$rev = new Revision( $s );
 					$content = $rev->getContent();
-					$text = $content->getTextForSearchIndex();
 
-					$u = new SearchUpdate( $s->page_id, $title, $text );
+					$u = new SearchUpdate( $s->page_id, $title, $content );
 					$u->doUpdate();
 				} catch ( MWContentSerializationException $ex ) {
 					$this->output( "Failed to deserialize content of revision {$s->rev_id} of page "
@@ -147,7 +144,7 @@ class RebuildTextIndex extends Maintenance {
 		$searchindex = $this->db->tableName( 'searchindex' );
 		$this->output( "\nRebuild the index...\n" );
 		$sql = "ALTER TABLE $searchindex ADD FULLTEXT si_title (si_title), " .
-		  "ADD FULLTEXT si_text (si_text)";
+			"ADD FULLTEXT si_text (si_text)";
 		$this->db->query( $sql, __METHOD__ );
 	}
 
@@ -162,4 +159,4 @@ class RebuildTextIndex extends Maintenance {
 }
 
 $maintClass = "RebuildTextIndex";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

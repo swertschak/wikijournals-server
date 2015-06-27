@@ -32,27 +32,13 @@
 class ApiQueryQueryPage extends ApiQueryGeneratorBase {
 	private $qpMap;
 
-	/**
-	 * Some query pages are useless because they're available elsewhere in the API
-	 */
-	private $uselessQueryPages = array(
-		'MIMEsearch', // aiprop=mime
-		'LinkSearch', // list=exturlusage
-		'FileDuplicateSearch', // prop=duplicatefiles
-	);
-
-	public function __construct( $query, $moduleName ) {
+	public function __construct( ApiQuery $query, $moduleName ) {
 		parent::__construct( $query, $moduleName, 'qp' );
-		// We need to do this to make sure $wgQueryPages is set up
-		// This SUCKS
-		global $IP;
-		require_once( "$IP/includes/QueryPage.php" );
-
 		// Build mapping from special page names to QueryPage classes
-		global $wgQueryPages;
+		$uselessQueryPages = $this->getConfig()->get( 'APIUselessQueryPages' );
 		$this->qpMap = array();
-		foreach ( $wgQueryPages as $page ) {
-			if( !in_array( $page[1], $this->uselessQueryPages ) ) {
+		foreach ( QueryPage::getPages() as $page ) {
+			if ( !in_array( $page[1], $uselessQueryPages ) ) {
 				$this->qpMap[$page[1]] = $page[0];
 			}
 		}
@@ -67,11 +53,9 @@ class ApiQueryQueryPage extends ApiQueryGeneratorBase {
 	}
 
 	/**
-	 * @param $resultPageSet ApiPageSet
+	 * @param ApiPageSet $resultPageSet
 	 */
 	public function run( $resultPageSet = null ) {
-		global $wgQueryCacheLimit;
-
 		$params = $this->extractRequestParams();
 		$result = $this->getResult();
 
@@ -91,7 +75,7 @@ class ApiQueryQueryPage extends ApiQueryGeneratorBase {
 				if ( $ts ) {
 					$r['cachedtimestamp'] = wfTimestamp( TS_ISO_8601, $ts );
 				}
-				$r['maxresults'] = $wgQueryCacheLimit;
+				$r['maxresults'] = $this->getConfig()->get( 'QueryCacheLimit' );
 			}
 		}
 		$result->addValue( array( 'query' ), $this->getModuleName(), $r );
@@ -135,7 +119,10 @@ class ApiQueryQueryPage extends ApiQueryGeneratorBase {
 			}
 		}
 		if ( is_null( $resultPageSet ) ) {
-			$result->setIndexedTagName_internal( array( 'query', $this->getModuleName(), 'results' ), 'page' );
+			$result->setIndexedTagName_internal(
+				array( 'query', $this->getModuleName(), 'results' ),
+				'page'
+			);
 		} else {
 			$resultPageSet->populateFromTitles( $titles );
 		}
@@ -147,6 +134,7 @@ class ApiQueryQueryPage extends ApiQueryGeneratorBase {
 		if ( $qp->getRestriction() != '' ) {
 			return 'private';
 		}
+
 		return 'public';
 	}
 
@@ -175,51 +163,17 @@ class ApiQueryQueryPage extends ApiQueryGeneratorBase {
 		);
 	}
 
-	public function getResultProperties() {
-		return array(
-			ApiBase::PROP_ROOT => array(
-				'name' => array(
-					ApiBase::PROP_TYPE => 'string',
-					ApiBase::PROP_NULLABLE => false
-				),
-				'disabled' => array(
-					ApiBase::PROP_TYPE => 'boolean',
-					ApiBase::PROP_NULLABLE => false
-				),
-				'cached' => array(
-					ApiBase::PROP_TYPE => 'boolean',
-					ApiBase::PROP_NULLABLE => false
-				),
-				'cachedtimestamp' => array(
-					ApiBase::PROP_TYPE => 'timestamp',
-					ApiBase::PROP_NULLABLE => true
-				)
-			),
-			'' => array(
-				'value' => 'string',
-				'timestamp' => array(
-					ApiBase::PROP_TYPE => 'timestamp',
-					ApiBase::PROP_NULLABLE => true
-				),
-				'ns' => 'namespace',
-				'title' => 'string'
-			)
-		);
-	}
-
 	public function getDescription() {
-		return 'Get a list provided by a QueryPage-based special page';
-	}
-
-	public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
-			array( 'specialpage-cantexecute' )
-		) );
+		return 'Get a list provided by a QueryPage-based special page.';
 	}
 
 	public function getExamples() {
 		return array(
 			'api.php?action=query&list=querypage&qppage=Ancientpages'
 		);
+	}
+
+	public function getHelpUrls() {
+		return 'https://www.mediawiki.org/wiki/API:Querypage';
 	}
 }

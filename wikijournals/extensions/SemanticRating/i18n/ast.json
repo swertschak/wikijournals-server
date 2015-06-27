@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Xuacu"
+		]
+	},
+	"semanticrating-desc": "Permite a los usuarios puntuar los elementos con estrelles",
+	"semanticrating-max": "El númberu máximu d'estrelles de la puntuación"
+}

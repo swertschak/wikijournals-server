@@ -24,8 +24,8 @@
  * @author Aaron Schulz
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
-require_once( __DIR__ . '/deleteArchivedRevisions.inc' );
+require_once __DIR__ . '/Maintenance.php';
+require_once __DIR__ . '/deleteArchivedRevisions.inc';
 
 /**
  * Maintenance script to delete archived (deleted from public) revisions
@@ -36,7 +36,8 @@ require_once( __DIR__ . '/deleteArchivedRevisions.inc' );
 class DeleteArchivedRevisions extends Maintenance {
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Deletes all archived revisions\nThese revisions will no longer be restorable";
+		$this->mDescription =
+			"Deletes all archived revisions\nThese revisions will no longer be restorable";
 		$this->addOption( 'delete', 'Performs the deletion' );
 	}
 
@@ -53,10 +54,11 @@ class DeleteArchivedRevisions extends Maintenance {
 			$dbw = wfGetDB( DB_MASTER );
 			$res = $dbw->selectRow( 'archive', 'COUNT(*) as count', array(), __FUNCTION__ );
 			$this->output( "Found {$res->count} revisions to delete.\n" );
-			$this->output( "Please run the script again with the --delete option to really delete the revisions.\n" );
+			$this->output( "Please run the script again with the --delete option "
+				. "to really delete the revisions.\n" );
 		}
 	}
 }
 
 $maintClass = "DeleteArchivedRevisions";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

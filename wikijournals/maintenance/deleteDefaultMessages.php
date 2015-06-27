@@ -22,7 +22,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that deletes all pages in the MediaWiki namespace
@@ -34,7 +34,7 @@ class DeleteDefaultMessages extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Deletes all pages in the MediaWiki namespace" .
-								" which were last edited by \"MediaWiki default\"";
+			" which were last edited by \"MediaWiki default\"";
 	}
 
 	public function execute() {
@@ -51,9 +51,10 @@ class DeleteDefaultMessages extends Maintenance {
 			)
 		);
 
-		if( $dbr->numRows( $res ) == 0 ) {
+		if ( $dbr->numRows( $res ) == 0 ) {
 			# No more messages left
 			$this->output( "done.\n" );
+
 			return;
 		}
 
@@ -86,4 +87,4 @@ class DeleteDefaultMessages extends Maintenance {
 }
 
 $maintClass = "DeleteDefaultMessages";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

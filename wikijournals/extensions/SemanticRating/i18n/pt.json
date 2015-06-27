@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vitorvicentevalente"
+		]
+	},
+	"semanticrating-desc": "Permite que os utilizadores classifiquem itens com estrelas",
+	"semanticrating-max": "O número máximo de estrelas para uma classificação"
+}

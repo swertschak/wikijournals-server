@@ -22,7 +22,7 @@
  * @ingroup Maintenance
  */
 
-require( __DIR__ . '/Maintenance.php' );
+require __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script to remove old objects from the parser cache.
@@ -37,7 +37,8 @@ class PurgeParserCache extends Maintenance {
 		$this->addDescription( "Remove old objects from the parser cache. " .
 			"This only works when the parser cache is in an SQL database." );
 		$this->addOption( 'expiredate', 'Delete objects expiring before this date.', false, true );
-		$this->addOption( 'age',
+		$this->addOption(
+			'age',
 			'Delete objects created more than this many seconds ago, assuming $wgParserCacheExpireTime ' .
 				'has been consistent.',
 			false, true );
@@ -77,8 +78,8 @@ class PurgeParserCache extends Maintenance {
 		$stars = floor( $percent / 2 );
 		$this->output( '[' . str_repeat( '*', $stars ) . str_repeat( '.', 50 - $stars ) . '] ' .
 			"$percentString%\r" );
-
 	}
 }
+
 $maintClass = 'PurgeParserCache';
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

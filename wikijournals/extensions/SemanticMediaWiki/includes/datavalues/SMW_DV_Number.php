@@ -1,6 +1,8 @@
 <?php
+
+use SMW\NumberFormatter;
+
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
@@ -66,8 +68,8 @@ class SMWNumberValue extends SMWDataValue {
 	 */
 	static protected function parseNumberValue( $value, &$number, &$unit ) {
 		// Parse to find $number and (possibly) $unit
-		$decseparator = wfMsgForContent( 'smw_decseparator' );
-		$kiloseparator = wfMsgForContent( 'smw_kiloseparator' );
+		$decseparator = NumberFormatter::getInstance()->getDecimalSeparatorForContentLanguage();
+		$kiloseparator = NumberFormatter::getInstance()->getThousandsSeparatorForContentLanguage();
 
 		$parts = preg_split( '/([-+]?\s*\d+(?:\\' . $kiloseparator . '\d\d\d)*' .
 		                      '(?:\\' . $decseparator . '\d+)?\s*(?:[eE][-+]?\d+)?)/u',
@@ -103,12 +105,15 @@ class SMWNumberValue extends SMWDataValue {
 		$this->m_unitvalues = false;
 		$number = $unit = '';
 		$error = self::parseNumberValue( $value, $number, $unit );
+
 		if ( $error == 1 ) { // no number found
-			$this->addError( wfMsgForContent( 'smw_nofloat', $value ) );
+			$this->addError( wfMessage( 'smw_nofloat', $value )->inContentLanguage()->text() );
 		} elseif ( $error == 2 ) { // number is too large for this platform
-			$this->addError( wfMsgForContent( 'smw_infinite', $value ) );
+			$this->addError( wfMessage( 'smw_infinite', $value )->inContentLanguage()->text() );
+		} elseif ( $this->getTypeID() === '_num' && $unit !== '' ) {
+			$this->addError( wfMessage( 'smw-datavalue-number-textnotallowed', $unit, $number )->inContentLanguage()->text() );
 		} elseif ( $this->convertToMainUnit( $number, $unit ) === false ) { // so far so good: now convert unit and check if it is allowed
-			$this->addError( wfMsgForContent( 'smw_unitnotallowed', $unit ) );
+			$this->addError( wfMessage( 'smw_unitnotallowed', $unit )->inContentLanguage()->text() );
 		} // note that convertToMainUnit() also sets m_dataitem if valid
 	}
 
@@ -152,7 +157,7 @@ class SMWNumberValue extends SMWDataValue {
 			$sep = '';
 			foreach ( $this->m_unitvalues as $unit => $value ) {
 				if ( $unit != $this->m_unitin ) {
-					$tooltip .= $sep . smwfNumberFormat( $value );
+					$tooltip .= $sep . NumberFormatter::getInstance()->formatNumberToLocalizedText( $value );
 					if ( $unit !== '' ) {
 						$tooltip .= '&#160;' . $unit;
 					}
@@ -164,8 +169,13 @@ class SMWNumberValue extends SMWDataValue {
 				}
 			}
 			if ( $tooltip !== '' ) {
-				SMWOutputs::requireResource( 'ext.smw.tooltips' );
-				return '<span class="smwttinline">' . $this->m_caption . '<span class="smwttcontent">' . $tooltip . '</span></span>';
+				$highlighter = SMW\Highlighter::factory( SMW\Highlighter::TYPE_QUANTITY );
+				$highlighter->setContent( array (
+					'caption' => $this->m_caption,
+					'content' => $tooltip
+				) );
+
+				return $highlighter->getHtml();
 			} else {
 				return $this->m_caption;
 			}
@@ -189,7 +199,7 @@ class SMWNumberValue extends SMWDataValue {
 				} elseif ( $i > 1 ) {
 					$result .= ', ';
 				}
-				$result .= ( $this->m_outformat != '-' ? smwfNumberFormat( $value ) : $value );
+				$result .= ( $this->m_outformat != '-' ? NumberFormatter::getInstance()->formatNumberToLocalizedText( $value ) : $value );
 				if ( $unit !== '' ) {
 					$result .= '&#160;' . $unit;
 				}
@@ -216,7 +226,7 @@ class SMWNumberValue extends SMWDataValue {
 	public function getWikiValue() {
 		if ( $this->isValid() ) {
 			$unit = $this->getUnit();
-			return smwfNumberFormat( $this->m_dataitem->getSerialization() ) . ( $unit !== '' ? ' ' . $unit : '' );
+			return NumberFormatter::getInstance()->formatNumberToLocalizedText( $this->m_dataitem->getSerialization() ) . ( $unit !== '' ? ' ' . $unit : '' );
 		} else {
 			return 'error';
 		}
@@ -308,7 +318,7 @@ class SMWNumberValue extends SMWDataValue {
 	protected function makeUserValue() {
 		$this->m_caption = '';
 		if ( $this->m_outformat != '-u' ) { // -u is the format for displaying the unit only
-			$this->m_caption .= ( ( $this->m_outformat != '-' ) && ( $this->m_outformat != '-n' ) ? smwfNumberFormat( $this->m_dataitem->getNumber() ) : $this->m_dataitem->getNumber() );
+			$this->m_caption .= ( ( $this->m_outformat != '-' ) && ( $this->m_outformat != '-n' ) ? NumberFormatter::getInstance()->formatNumberToLocalizedText( $this->m_dataitem->getNumber() ) : $this->m_dataitem->getNumber() );
 		}
 		// no unit ever, so nothing to do about this
 		$this->m_unitin = '';

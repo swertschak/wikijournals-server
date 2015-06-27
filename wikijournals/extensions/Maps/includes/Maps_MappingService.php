@@ -6,10 +6,8 @@
  *
  * @since 0.6.3
  *
- * @file Maps_MappingService.php
- * @ingroup Maps
- *
- * @author Jeroen De Dauw
+ * @licence GNU GPL v2+
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 abstract class MapsMappingService implements iMappingService {
 
@@ -85,7 +83,7 @@ abstract class MapsMappingService implements iMappingService {
 	 *
 	 * @since 0.7
 	 *
-	 * @param array $parameterInfo
+	 * @param $parameterInfo array of IParam
 	 */
 	public function addParameterInfo( array &$parameterInfo ) {
 	}
@@ -116,7 +114,7 @@ abstract class MapsMappingService implements iMappingService {
 			$parserOrOut->getOutput()->addModules( $this->getResourceModules() );
 		}
 		elseif ( $parserOrOut instanceof OutputPage ) {
-			if ( $dependencies ) {
+			if ( $dependencies !== false ) {
 				$parserOrOut->addHeadItem( md5( $dependencies ), $dependencies );
 			}
 
@@ -153,7 +151,7 @@ abstract class MapsMappingService implements iMappingService {
 		}
 
 		// If there are dependencies, put them all together in a string, otherwise return false.
-		return count( $dependencies ) > 0 ? implode( '', $dependencies ) : false;
+		return $dependencies !== array() ? implode( '', $dependencies ) : false;
 	}
 
 	/**
@@ -194,7 +192,7 @@ abstract class MapsMappingService implements iMappingService {
 		$className = $this->getFeature( $featureName );
 
 		if ( $className === false || !class_exists( $className ) ) {
-			throw new Exception( 'Could not create a mapping feature class instance' );
+			throw new MWException( 'Could not create a mapping feature class instance' );
 		}
 
 		return new $className( $this );

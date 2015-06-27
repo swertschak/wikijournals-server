@@ -4,6 +4,7 @@
  *
  * @group Database
  * @group Dump
+ * @covers BackupDumper
  */
 class BackupDumperPageTest extends DumpTestCase {
 
@@ -34,7 +35,7 @@ class BackupDumperPageTest extends DumpTestCase {
 			$this->talk_namespace = NS_TALK;
 
 			if ( $this->namespace === $this->talk_namespace ) {
-				//@todo: work around this.
+				// @todo work around this.
 				throw new MWException( "The default wikitext namespace is the talk namespace. "
 					. " We can't currently deal with that." );
 			}
@@ -79,7 +80,6 @@ class BackupDumperPageTest extends DumpTestCase {
 			// DumpTestCase
 			$this->exceptionFromAddDBData = $e;
 		}
-
 	}
 
 	protected function setUp() {
@@ -93,7 +93,6 @@ class BackupDumperPageTest extends DumpTestCase {
 			array( $this->pageId2, $this->pageId3, $this->pageId4 ),
 			array( $this->pageId1 + 1, $this->pageId2 + 1, $this->pageId3 + 1 ),
 			"Page ids increasing without holes" );
-
 	}
 
 	function testFullTextPlain() {
@@ -138,7 +137,11 @@ class BackupDumperPageTest extends DumpTestCase {
 		// -> Page is marked deleted. Hence not visible
 
 		// Page 4
-		$this->assertPageStart( $this->pageId4, $this->talk_namespace, $this->pageTitle4->getPrefixedText() );
+		$this->assertPageStart(
+			$this->pageId4,
+			$this->talk_namespace,
+			$this->pageTitle4->getPrefixedText()
+		);
 		$this->assertRevision( $this->revId4_1, "Talk BackupDumperTestP1 Summary1",
 			$this->textId4_1, 35, "nktofwzd0tl192k3zfepmlzxoax1lpe",
 			"Talk about BackupDumperTestP1 Text1" );
@@ -184,7 +187,11 @@ class BackupDumperPageTest extends DumpTestCase {
 		// -> Page is marked deleted. Hence not visible
 
 		// Page 4
-		$this->assertPageStart( $this->pageId4, $this->talk_namespace, $this->pageTitle4->getPrefixedText() );
+		$this->assertPageStart(
+			$this->pageId4,
+			$this->talk_namespace,
+			$this->pageTitle4->getPrefixedText()
+		);
 		$this->assertRevision( $this->revId4_1, "Talk BackupDumperTestP1 Summary1",
 			$this->textId4_1, 35, "nktofwzd0tl192k3zfepmlzxoax1lpe" );
 		$this->assertPageEnd();
@@ -223,7 +230,11 @@ class BackupDumperPageTest extends DumpTestCase {
 		// -> Page is marked deleted. Hence not visible
 
 		// Page 4
-		$this->assertPageStart( $this->pageId4, $this->talk_namespace, $this->pageTitle4->getPrefixedText() );
+		$this->assertPageStart(
+			$this->pageId4,
+			$this->talk_namespace,
+			$this->pageTitle4->getPrefixedText()
+		);
 		$this->assertRevision( $this->revId4_1, "Talk BackupDumperTestP1 Summary1",
 			$this->textId4_1, 35, "nktofwzd0tl192k3zfepmlzxoax1lpe" );
 		$this->assertPageEnd();
@@ -265,14 +276,17 @@ class BackupDumperPageTest extends DumpTestCase {
 		// -> Page is marked deleted. Hence not visible
 
 		// Page 4
-		$this->assertPageStart( $this->pageId4, $this->talk_namespace, $this->pageTitle4->getPrefixedText() );
+		$this->assertPageStart(
+			$this->pageId4,
+			$this->talk_namespace,
+			$this->pageTitle4->getPrefixedText()
+		);
 		$this->assertRevision( $this->revId4_1, "Talk BackupDumperTestP1 Summary1",
 			$this->textId4_1, 35, "nktofwzd0tl192k3zfepmlzxoax1lpe" );
 		$this->assertPageEnd();
 
 		$this->assertDumpEnd();
 	}
-
 
 	function testXmlDumpsBackupUseCase() {
 		// xmldumps-backup typically performs a single dump that that writes
@@ -341,7 +355,11 @@ class BackupDumperPageTest extends DumpTestCase {
 		// -> Page is marked deleted. Hence not visible
 
 		// Page 4
-		$this->assertPageStart( $this->pageId4, $this->talk_namespace, $this->pageTitle4->getPrefixedText() );
+		$this->assertPageStart(
+			$this->pageId4,
+			$this->talk_namespace,
+			$this->pageTitle4->getPrefixedText()
+		);
 		$this->assertRevision( $this->revId4_1, "Talk BackupDumperTestP1 Summary1",
 			$this->textId4_1, 35, "nktofwzd0tl192k3zfepmlzxoax1lpe" );
 		$this->assertPageEnd();
@@ -369,7 +387,11 @@ class BackupDumperPageTest extends DumpTestCase {
 		// -> Page is marked deleted. Hence not visible
 
 		// Page 4
-		$this->assertPageStart( $this->pageId4, $this->talk_namespace, $this->pageTitle4->getPrefixedText() );
+		$this->assertPageStart(
+			$this->pageId4,
+			$this->talk_namespace,
+			$this->pageTitle4->getPrefixedText()
+		);
 		$this->assertRevision( $this->revId4_1, "Talk BackupDumperTestP1 Summary1",
 			$this->textId4_1, 35, "nktofwzd0tl192k3zfepmlzxoax1lpe" );
 		$this->assertPageEnd();
@@ -403,6 +425,4 @@ class BackupDumperPageTest extends DumpTestCase {
 
 		$this->expectETAOutput();
 	}
-
-
 }

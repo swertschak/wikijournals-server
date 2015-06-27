@@ -1,9 +1,15 @@
 <?php
+
 /**
  * @group FileRepo
  * @group medium
  */
 class StoreBatchTest extends MediaWikiTestCase {
+
+	protected $createdFiles;
+	protected $date;
+	/** @var FileRepo */
+	protected $repo;
 
 	protected function setUp() {
 		global $wgFileBackends;
@@ -11,21 +17,23 @@ class StoreBatchTest extends MediaWikiTestCase {
 
 		# Forge a FSRepo object to not have to rely on local wiki settings
 		$tmpPrefix = wfTempDir() . '/storebatch-test-' . time() . '-' . mt_rand();
-		if ( $this->getCliArg( 'use-filebackend=' ) ) {
-			$name = $this->getCliArg( 'use-filebackend=' );
+		if ( $this->getCliArg( 'use-filebackend' ) ) {
+			$name = $this->getCliArg( 'use-filebackend' );
 			$useConfig = array();
 			foreach ( $wgFileBackends as $conf ) {
 				if ( $conf['name'] == $name ) {
 					$useConfig = $conf;
 				}
 			}
+			$useConfig['lockManager'] = LockManagerGroup::singleton()->get( $useConfig['lockManager'] );
+			unset( $useConfig['fileJournal'] );
 			$useConfig['name'] = 'local-testing'; // swap name
 			$class = $useConfig['class'];
 			$backend = new $class( $useConfig );
 		} else {
 			$backend = new FSFileBackend( array(
 				'name' => 'local-testing',
-				'lockManager' => 'nullLockManager',
+				'wikiId' => wfWikiID(),
 				'containerPaths' => array(
 					'unittests-public' => "{$tmpPrefix}-public",
 					'unittests-thumb' => "{$tmpPrefix}-thumb",
@@ -57,9 +65,10 @@ class StoreBatchTest extends MediaWikiTestCase {
 	/**
 	 * Store a file or virtual URL source into a media file name.
 	 *
-	 * @param $originalName string The title of the image
-	 * @param $srcPath string The filepath or virtual URL
-	 * @param $flags integer Flags to pass into repo::store().
+	 * @param string $originalName The title of the image
+	 * @param string $srcPath The filepath or virtual URL
+	 * @param int $flags Flags to pass into repo::store().
+	 * @return FileRepoStatus
 	 */
 	private function storeit( $originalName, $srcPath, $flags ) {
 		$hashPath = $this->repo->getHashPath( $originalName );
@@ -69,16 +78,17 @@ class StoreBatchTest extends MediaWikiTestCase {
 		$result = $this->repo->store( $srcPath, 'temp', $dstRel, $flags );
 		$result->value = $this->repo->getVirtualUrl( 'temp' ) . '/' . $dstUrlRel;
 		$this->createdFiles[] = $result->value;
+
 		return $result;
 	}
 
 	/**
 	 * Test storing a file using different flags.
 	 *
-	 * @param $fn string The title of the image
-	 * @param $infn string The name of the file (in the filesystem)
-	 * @param $otherfn string The name of the different file (in the filesystem)
-	 * @param $fromrepo logical 'true' if we want to copy from a virtual URL out of the Repo.
+	 * @param string $fn The title of the image
+	 * @param string $infn The name of the file (in the filesystem)
+	 * @param string $otherfn The name of the different file (in the filesystem)
+	 * @param bool $fromrepo 'true' if we want to copy from a virtual URL out of the Repo.
 	 */
 	private function storecohort( $fn, $infn, $otherfn, $fromrepo ) {
 		$f = $this->storeit( $fn, $infn, 0 );
@@ -115,9 +125,22 @@ class StoreBatchTest extends MediaWikiTestCase {
 		$this->assertEquals( $f->successCount, 0, "counts wrong {$f->successCount} {$f->failCount}" );
 	}
 
+	/**
+	 * @covers FileRepo::store
+	 */
 	public function teststore() {
 		global $IP;
-		$this->storecohort( "Test1.png", "$IP/skins/monobook/wiki.png", "$IP/skins/monobook/video.png", false );
-		$this->storecohort( "Test2.png", "$IP/skins/monobook/wiki.png", "$IP/skins/monobook/video.png", true );
+		$this->storecohort(
+			"Test1.png",
+			"$IP/tests/phpunit/data/filerepo/wiki.png",
+			"$IP/tests/phpunit/data/filerepo/video.png",
+			false
+		);
+		$this->storecohort(
+			"Test2.png",
+			"$IP/tests/phpunit/data/filerepo/wiki.png",
+			"$IP/tests/phpunit/data/filerepo/video.png",
+			true
+		);
 	}
 }

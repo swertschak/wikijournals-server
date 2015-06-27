@@ -4,15 +4,15 @@
  * @group ContentHandler
  * @group Database
  *
- * @note Declare that we are using the database, because otherwise we'll fail in the "databaseless" test run.
- * This is because the LinkHolderArray used by the parser needs database access.
- *
+ * @note Declare that we are using the database, because otherwise we'll fail in
+ * the "databaseless" test run. This is because the LinkHolderArray used by the
+ * parser needs database access.
  */
 class ContentHandlerTest extends MediaWikiTestCase {
 
-	public function setup() {
+	protected function setUp() {
 		global $wgContLang;
-		parent::setup();
+		parent::setUp();
 
 		$this->setMwGlobals( array(
 			'wgExtraNamespaces' => array(
@@ -38,7 +38,7 @@ class ContentHandlerTest extends MediaWikiTestCase {
 		$wgContLang->resetNamespaces();
 	}
 
-	public function tearDown() {
+	protected function tearDown() {
 		global $wgContLang;
 
 		// Reset namespace cache
@@ -70,6 +70,7 @@ class ContentHandlerTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider dataGetDefaultModelFor
+	 * @covers ContentHandler::getDefaultModelFor
 	 */
 	public function testGetDefaultModelFor( $title, $expectedModelId ) {
 		$title = Title::newFromText( $title );
@@ -78,6 +79,7 @@ class ContentHandlerTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider dataGetDefaultModelFor
+	 * @covers ContentHandler::getForTitle
 	 */
 	public function testGetForTitle( $title, $expectedContentModel ) {
 		$title = Title::newFromText( $title );
@@ -97,6 +99,7 @@ class ContentHandlerTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider dataGetLocalizedName
+	 * @covers ContentHandler::getLocalizedName
 	 */
 	public function testGetLocalizedName( $id, $expected ) {
 		$name = ContentHandler::getLocalizedName( $id );
@@ -131,6 +134,7 @@ class ContentHandlerTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider dataGetPageLanguage
+	 * @covers ContentHandler::getPageLanguage
 	 */
 	public function testGetPageLanguage( $title, $expected ) {
 		if ( is_string( $title ) ) {
@@ -145,62 +149,81 @@ class ContentHandlerTest extends MediaWikiTestCase {
 		$this->assertEquals( $expected->getCode(), $lang->getCode() );
 	}
 
-	public function testGetContentText_Null() {
-		global $wgContentHandlerTextFallback;
+	public static function dataGetContentText_Null() {
+		return array(
+			array( 'fail' ),
+			array( 'serialize' ),
+			array( 'ignore' ),
+		);
+	}
+
+	/**
+	 * @dataProvider dataGetContentText_Null
+	 * @covers ContentHandler::getContentText
+	 */
+	public function testGetContentText_Null( $contentHandlerTextFallback ) {
+		$this->setMwGlobals( 'wgContentHandlerTextFallback', $contentHandlerTextFallback );
 
 		$content = null;
 
-		$wgContentHandlerTextFallback = 'fail';
-		$text = ContentHandler::getContentText( $content );
-		$this->assertEquals( '', $text );
-
-		$wgContentHandlerTextFallback = 'serialize';
-		$text = ContentHandler::getContentText( $content );
-		$this->assertEquals( '', $text );
-
-		$wgContentHandlerTextFallback = 'ignore';
 		$text = ContentHandler::getContentText( $content );
 		$this->assertEquals( '', $text );
 	}
 
-	public function testGetContentText_TextContent() {
-		global $wgContentHandlerTextFallback;
+	public static function dataGetContentText_TextContent() {
+		return array(
+			array( 'fail' ),
+			array( 'serialize' ),
+			array( 'ignore' ),
+		);
+	}
+
+	/**
+	 * @dataProvider dataGetContentText_TextContent
+	 * @covers ContentHandler::getContentText
+	 */
+	public function testGetContentText_TextContent( $contentHandlerTextFallback ) {
+		$this->setMwGlobals( 'wgContentHandlerTextFallback', $contentHandlerTextFallback );
 
 		$content = new WikitextContent( "hello world" );
 
-		$wgContentHandlerTextFallback = 'fail';
-		$text = ContentHandler::getContentText( $content );
-		$this->assertEquals( $content->getNativeData(), $text );
-
-		$wgContentHandlerTextFallback = 'serialize';
-		$text = ContentHandler::getContentText( $content );
-		$this->assertEquals( $content->serialize(), $text );
-
-		$wgContentHandlerTextFallback = 'ignore';
 		$text = ContentHandler::getContentText( $content );
 		$this->assertEquals( $content->getNativeData(), $text );
 	}
 
-	public function testGetContentText_NonTextContent() {
-		global $wgContentHandlerTextFallback;
+	/**
+	 * ContentHandler::getContentText should have thrown an exception for non-text Content object
+	 * @expectedException MWException
+	 * @covers ContentHandler::getContentText
+	 */
+	public function testGetContentText_NonTextContent_fail() {
+		$this->setMwGlobals( 'wgContentHandlerTextFallback', 'fail' );
 
 		$content = new DummyContentForTesting( "hello world" );
 
-		$wgContentHandlerTextFallback = 'fail';
+		ContentHandler::getContentText( $content );
+	}
 
-		try {
-			$text = ContentHandler::getContentText( $content );
+	/**
+	 * @covers ContentHandler::getContentText
+	 */
+	public function testGetContentText_NonTextContent_serialize() {
+		$this->setMwGlobals( 'wgContentHandlerTextFallback', 'serialize' );
 
-			$this->fail( "ContentHandler::getContentText should have thrown an exception for non-text Content object" );
-		} catch ( MWException $ex ) {
-			// as expected
-		}
+		$content = new DummyContentForTesting( "hello world" );
 
-		$wgContentHandlerTextFallback = 'serialize';
 		$text = ContentHandler::getContentText( $content );
 		$this->assertEquals( $content->serialize(), $text );
+	}
 
-		$wgContentHandlerTextFallback = 'ignore';
+	/**
+	 * @covers ContentHandler::getContentText
+	 */
+	public function testGetContentText_NonTextContent_ignore() {
+		$this->setMwGlobals( 'wgContentHandlerTextFallback', 'ignore' );
+
+		$content = new DummyContentForTesting( "hello world" );
+
 		$text = ContentHandler::getContentText( $content );
 		$this->assertNull( $text );
 	}
@@ -215,13 +238,45 @@ class ContentHandlerTest extends MediaWikiTestCase {
 			array( 'hallo', 'MediaWiki:Test.js', null, null, CONTENT_MODEL_JAVASCRIPT, 'hallo', false ),
 			array( serialize( 'hallo' ), 'Dummy:Test', null, null, "testing", 'hallo', false ),
 
-			array( 'hallo', 'Help:Test', null, CONTENT_FORMAT_WIKITEXT, CONTENT_MODEL_WIKITEXT, 'hallo', false ),
-			array( 'hallo', 'MediaWiki:Test.js', null, CONTENT_FORMAT_JAVASCRIPT, CONTENT_MODEL_JAVASCRIPT, 'hallo', false ),
+			array(
+				'hallo',
+				'Help:Test',
+				null,
+				CONTENT_FORMAT_WIKITEXT,
+				CONTENT_MODEL_WIKITEXT,
+				'hallo',
+				false
+			),
+			array(
+				'hallo',
+				'MediaWiki:Test.js',
+				null,
+				CONTENT_FORMAT_JAVASCRIPT,
+				CONTENT_MODEL_JAVASCRIPT,
+				'hallo',
+				false
+			),
 			array( serialize( 'hallo' ), 'Dummy:Test', null, "testing", "testing", 'hallo', false ),
 
 			array( 'hallo', 'Help:Test', CONTENT_MODEL_CSS, null, CONTENT_MODEL_CSS, 'hallo', false ),
-			array( 'hallo', 'MediaWiki:Test.js', CONTENT_MODEL_CSS, null, CONTENT_MODEL_CSS, 'hallo', false ),
-			array( serialize( 'hallo' ), 'Dummy:Test', CONTENT_MODEL_CSS, null, CONTENT_MODEL_CSS, serialize( 'hallo' ), false ),
+			array(
+				'hallo',
+				'MediaWiki:Test.js',
+				CONTENT_MODEL_CSS,
+				null,
+				CONTENT_MODEL_CSS,
+				'hallo',
+				false
+			),
+			array(
+				serialize( 'hallo' ),
+				'Dummy:Test',
+				CONTENT_MODEL_CSS,
+				null,
+				CONTENT_MODEL_CSS,
+				serialize( 'hallo' ),
+				false
+			),
 
 			array( 'hallo', 'Help:Test', CONTENT_MODEL_WIKITEXT, "testing", null, null, true ),
 			array( 'hallo', 'MediaWiki:Test.js', CONTENT_MODEL_CSS, "testing", null, null, true ),
@@ -231,8 +286,11 @@ class ContentHandlerTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider dataMakeContent
+	 * @covers ContentHandler::makeContent
 	 */
-	public function testMakeContent( $data, $title, $modelId, $format, $expectedModelId, $expectedNativeData, $shouldFail ) {
+	public function testMakeContent( $data, $title, $modelId, $format,
+		$expectedModelId, $expectedNativeData, $shouldFail
+	) {
 		$title = Title::newFromText( $title );
 
 		try {
@@ -247,12 +305,28 @@ class ContentHandlerTest extends MediaWikiTestCase {
 		} catch ( MWException $ex ) {
 			if ( !$shouldFail ) {
 				$this->fail( "ContentHandler::makeContent failed unexpectedly: " . $ex->getMessage() );
-			}
-			else {
+			} else {
 				// dummy, so we don't get the "test did not perform any assertions" message.
 				$this->assertTrue( true );
 			}
 		}
+	}
+
+	/*
+	 * Test if we become a "Created blank page" summary from getAutoSummary if no Content added to
+	 * page.
+	 */
+	public function testGetAutosummary() {
+		$content = new DummyContentHandlerForTesting( CONTENT_MODEL_WIKITEXT );
+		$title = Title::newFromText( 'Help:Test' );
+		// Create a new content object with no content
+		$newContent = ContentHandler::makeContent( '', $title, null, null, CONTENT_MODEL_WIKITEXT );
+		// first check, if we become a blank page created summary with the right bitmask
+		$autoSummary = $content->getAutosummary( null, $newContent, 97 );
+		$this->assertEquals( $autoSummary, 'Created blank page' );
+		// now check, what we become with another bitmask
+		$autoSummary = $content->getAutosummary( null, $newContent, 92 );
+		$this->assertEquals( $autoSummary, '' );
 	}
 
 	/*
@@ -261,11 +335,18 @@ class ContentHandlerTest extends MediaWikiTestCase {
 	}
 	*/
 
+	/**
+	 * @covers ContentHandler::runLegacyHooks
+	 */
 	public function testRunLegacyHooks() {
 		Hooks::register( 'testRunLegacyHooks', __CLASS__ . '::dummyHookHandler' );
 
 		$content = new WikitextContent( 'test text' );
-		$ok = ContentHandler::runLegacyHooks( 'testRunLegacyHooks', array( 'foo', &$content, 'bar' ), false );
+		$ok = ContentHandler::runLegacyHooks(
+			'testRunLegacyHooks',
+			array( 'foo', &$content, 'bar' ),
+			false
+		);
 
 		$this->assertTrue( $ok, "runLegacyHooks should have returned true" );
 		$this->assertEquals( "TEST TEXT", $content->getNativeData() );
@@ -289,25 +370,28 @@ class DummyContentHandlerForTesting extends ContentHandler {
 	}
 
 	/**
-	 * Serializes Content object of the type supported by this ContentHandler.
+	 * @see ContentHandler::serializeContent
 	 *
-	 * @param Content $content the Content object to serialize
-	 * @param null $format the desired serialization format
-	 * @return String serialized form of the content
+	 * @param Content $content
+	 * @param string $format
+	 *
+	 * @return string
 	 */
 	public function serializeContent( Content $content, $format = null ) {
 		return $content->serialize();
 	}
 
 	/**
-	 * Unserializes a Content object of the type supported by this ContentHandler.
+	 * @see ContentHandler::unserializeContent
 	 *
-	 * @param $blob String serialized form of the content
-	 * @param null $format the format used for serialization
-	 * @return Content the Content object created by deserializing $blob
+	 * @param string $blob
+	 * @param string $format Unused.
+	 *
+	 * @return Content
 	 */
 	public function unserializeContent( $blob, $format = null ) {
 		$d = unserialize( $blob );
+
 		return new DummyContentForTesting( $d );
 	}
 
@@ -333,23 +417,25 @@ class DummyContentForTesting extends AbstractContent {
 	}
 
 	/**
-	 * @return String a string representing the content in a way useful for building a full text search index.
-	 *         If no useful representation exists, this method returns an empty string.
+	 * @return string A string representing the content in a way useful for
+	 *   building a full text search index. If no useful representation exists,
+	 *   this method returns an empty string.
 	 */
 	public function getTextForSearchIndex() {
 		return '';
 	}
 
 	/**
-	 * @return String the wikitext to include when another page includes this  content, or false if the content is not
-	 *  includable in a wikitext page.
+	 * @return string|bool The wikitext to include when another page includes this  content,
+	 *  or false if the content is not includable in a wikitext page.
 	 */
 	public function getWikitextForTransclusion() {
 		return false;
 	}
 
 	/**
-	 * Returns a textual representation of the content suitable for use in edit summaries and log messages.
+	 * Returns a textual representation of the content suitable for use in edit
+	 * summaries and log messages.
 	 *
 	 * @param int $maxlength Maximum length of the summary text.
 	 * @return string The summary text.
@@ -362,7 +448,7 @@ class DummyContentForTesting extends AbstractContent {
 	 * Returns native represenation of the data. Interpretation depends on the data model used,
 	 * as given by getDataModel().
 	 *
-	 * @return mixed the native representation of the content. Could be a string, a nested array
+	 * @return mixed The native representation of the content. Could be a string, a nested array
 	 *  structure, an object, a binary blob... anything, really.
 	 */
 	public function getNativeData() {
@@ -390,7 +476,7 @@ class DummyContentForTesting extends AbstractContent {
 	 * return $this. That is,  $copy === $original may be true, but only for imutable content
 	 * objects.
 	 *
-	 * @return Content. A copy of this object.
+	 * @return Content A copy of this object
 	 */
 	public function copy() {
 		return $this;
@@ -400,9 +486,9 @@ class DummyContentForTesting extends AbstractContent {
 	 * Returns true if this content is countable as a "real" wiki page, provided
 	 * that it's also in a countable location (e.g. a current revision in the main namespace).
 	 *
-	 * @param boolean $hasLinks if it is known whether this content contains links, provide this information here,
-	 *  to avoid redundant parsing to find out.
-	 * @return boolean
+	 * @param bool $hasLinks If it is known whether this content contains links,
+	 * provide this information here, to avoid redundant parsing to find out.
+	 * @return bool
 	 */
 	public function isCountable( $hasLinks = null ) {
 		return false;
@@ -410,15 +496,30 @@ class DummyContentForTesting extends AbstractContent {
 
 	/**
 	 * @param Title $title
-	 * @param null $revId
+	 * @param int $revId Unused.
 	 * @param null|ParserOptions $options
-	 * @param boolean $generateHtml whether to generate Html (default: true). If false,
-	 *  the result of calling getText() on the ParserOutput object returned by
-	 *   this method is undefined.
+	 * @param bool $generateHtml Whether to generate Html (default: true). If false, the result
+	 *  of calling getText() on the ParserOutput object returned by this method is undefined.
 	 *
 	 * @return ParserOutput
 	 */
-	public function getParserOutput( Title $title, $revId = null, ParserOptions $options = null, $generateHtml = true ) {
+	public function getParserOutput( Title $title, $revId = null,
+		ParserOptions $options = null, $generateHtml = true
+	) {
 		return new ParserOutput( $this->getNativeData() );
+	}
+
+	/**
+	 * @see AbstractContent::fillParserOutput()
+	 *
+	 * @param Title $title Context title for parsing
+	 * @param int|null $revId Revision ID (for {{REVISIONID}})
+	 * @param ParserOptions $options Parser options
+	 * @param bool $generateHtml Whether or not to generate HTML
+	 * @param ParserOutput &$output The output object to fill (reference).
+	 */
+	protected function fillParserOutput( Title $title, $revId,
+			ParserOptions $options, $generateHtml, ParserOutput &$output ) {
+		$output = new ParserOutput( $this->getNativeData() );
 	}
 }

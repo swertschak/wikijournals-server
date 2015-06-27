@@ -22,7 +22,7 @@
  * @author Roan Kattouw
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script to remove cache entries for removed ResourceLoader modules
@@ -36,12 +36,18 @@ class CleanupRemovedModules extends Maintenance {
 		parent::__construct();
 		$this->mDescription = 'Remove cache entries for removed ResourceLoader modules from the database';
 		$this->addOption( 'batchsize', 'Delete rows in batches of this size. Default: 500', false, true );
-		$this->addOption( 'max-slave-lag', 'If the slave lag exceeds this many seconds, wait until it drops below this value. Default: 5', false, true );
+		$this->addOption(
+			'max-slave-lag',
+			'If the slave lag exceeds this many seconds, wait until it drops below this value. '
+				. 'Default: 5',
+			false,
+			true
+		);
 	}
 
 	public function execute() {
 		$dbw = wfGetDB( DB_MASTER );
-		$rl = new ResourceLoader();
+		$rl = new ResourceLoader( ConfigFactory::getDefaultInstance()->makeConfig( 'main' ) );
 		$moduleNames = $rl->getModuleNames();
 		$moduleList = implode( ', ', array_map( array( $dbw, 'addQuotes' ), $moduleNames ) );
 		$limit = max( 1, intval( $this->getOption( 'batchsize', 500 ) ) );
@@ -58,7 +64,7 @@ class CleanupRemovedModules extends Maintenance {
 			$this->output( "Batch $i: $numRows rows\n" );
 			$i++;
 			wfWaitForSlaves( $maxlag );
-		} while( $numRows > 0 );
+		} while ( $numRows > 0 );
 		$this->output( "done\n" );
 
 		$this->output( "Cleaning up msg_resource table...\n" );
@@ -72,7 +78,7 @@ class CleanupRemovedModules extends Maintenance {
 			$this->output( "Batch $i: $numRows rows\n" );
 			$i++;
 			wfWaitForSlaves( $maxlag );
-		} while( $numRows > 0 );
+		} while ( $numRows > 0 );
 		$this->output( "done\n" );
 
 		$this->output( "Cleaning up msg_resource_links table...\n" );
@@ -85,10 +91,10 @@ class CleanupRemovedModules extends Maintenance {
 			$this->output( "Batch $i: $numRows rows\n" );
 			$i++;
 			wfWaitForSlaves( $maxlag );
-		} while( $numRows > 0 );
+		} while ( $numRows > 0 );
 		$this->output( "done\n" );
 	}
 }
 
 $maintClass = "CleanupRemovedModules";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

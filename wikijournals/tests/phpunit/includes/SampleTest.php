@@ -16,6 +16,7 @@ class TestSample extends MediaWikiLangTestCase {
 		$this->setMwGlobals( array(
 			'wgContLang' => Language::factory( 'en' ),
 			'wgLanguageCode' => 'en',
+			'wgCapitalLinks' => true,
 		) );
 	}
 
@@ -33,7 +34,7 @@ class TestSample extends MediaWikiLangTestCase {
 	 * "Agile Documentation" at
 	 * http://www.phpunit.de/manual/3.4/en/other-uses-for-tests.html
 	 */
-	function testTitleObjectStringConversion() {
+	public function testTitleObjectStringConversion() {
 		$title = Title::newFromText( "text" );
 		$this->assertInstanceOf( 'Title', $title, "Title creation" );
 		$this->assertEquals( "Text", $title, "Automatic string conversion" );
@@ -43,10 +44,8 @@ class TestSample extends MediaWikiLangTestCase {
 	}
 
 	/**
-	 * If you want to run a the same test with a variety of data. use a data provider.
+	 * If you want to run a the same test with a variety of data, use a data provider.
 	 * see: http://www.phpunit.de/manual/3.4/en/writing-tests-for-phpunit.html
-	 *
-	 * Note: Data providers are always called statically and outside setUp/tearDown!
 	 */
 	public static function provideTitles() {
 		return array(
@@ -60,7 +59,9 @@ class TestSample extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider provideTitles
-	 * See http://www.phpunit.de/manual/3.4/en/appendixes.annotations.html#appendixes.annotations.dataProvider
+	 * @codingStandardsIgnoreStart Ignore long line warning
+	 * See http://phpunit.de/manual/3.7/en/appendixes.annotations.html#appendixes.annotations.dataProvider
+	 * @codingStandardsIgnoreEnd
 	 */
 	public function testCreateBasicListOfTitles( $titleName, $ns, $text ) {
 		$title = Title::newFromText( $titleName, $ns );
@@ -88,17 +89,19 @@ class TestSample extends MediaWikiLangTestCase {
 
 	/**
 	 * @depends testSetUpMainPageTitleForNextTest
-	 * See http://www.phpunit.de/manual/3.4/en/appendixes.annotations.html#appendixes.annotations.depends
+	 * See http://phpunit.de/manual/3.7/en/appendixes.annotations.html#appendixes.annotations.depends
 	 */
 	public function testCheckMainPageTitleIsConsideredLocal( $title ) {
 		$this->assertTrue( $title->isLocal() );
 	}
 
+	// @codingStandardsIgnoreStart Ignore long line warning
 	/**
 	 * @expectedException MWException object
-	 * See http://www.phpunit.de/manual/3.4/en/appendixes.annotations.html#appendixes.annotations.expectedException
+	 * See http://phpunit.de/manual/3.7/en/appendixes.annotations.html#appendixes.annotations.expectedException
 	 */
-	function testTitleObjectFromObject() {
+	// @codingStandardsIgnoreEnd
+	public function testTitleObjectFromObject() {
 		$title = Title::newFromText( Title::newFromText( "test" ) );
 		$this->assertEquals( "Test", $title->isLocal() );
 	}

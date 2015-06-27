@@ -7,7 +7,7 @@
 
 if ( !defined( 'MEDIAWIKI' ) ) die();
 
-define( 'DATA_TRANSFER_VERSION', '0.3.9' );
+define( 'DATA_TRANSFER_VERSION', '0.6' );
 
 // constants for special properties
 define( 'DT_SP_HAS_XML_GROUPING', 1 );
@@ -20,6 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author'         => 'Yaron Koren',
 	'url'            => 'https://www.mediawiki.org/wiki/Extension:Data_Transfer',
 	'descriptionmsg' => 'datatransfer-desc',
+	'license-name'   => 'GPL-2.0+'
 );
 
 ###
@@ -31,6 +32,8 @@ $dtgIP = dirname( __FILE__ );
 ##
 
 // register all special pages and other classes
+$wgAutoloadClasses['DTPageStructure'] = $dtgIP . '/includes/DT_PageStructure.php';
+$wgAutoloadClasses['DTPage'] = $dtgIP . '/includes/DT_Page.php';
 $wgAutoloadClasses['DTUtils'] = $dtgIP . '/includes/DT_Utils.php';
 $wgSpecialPages['ViewXML'] = 'DTViewXML';
 $wgAutoloadClasses['DTViewXML'] = $dtgIP . '/specials/DT_ViewXML.php';
@@ -43,6 +46,12 @@ $wgAutoloadClasses['DTImportJob'] = $dtgIP . '/includes/DT_ImportJob.php';
 $wgAutoloadClasses['DTXMLParser'] = $dtgIP . '/includes/DT_XMLParser.php';
 $wgHooks['AdminLinks'][] = 'dtfAddToAdminLinks';
 $wgHooks['smwInitProperties'][] = 'dtfInitProperties';
+
+// Only enable spreadsheet import if PHPExcel is installed.
+if ( class_exists( 'PHPExcel' )) {
+	$wgSpecialPages['ImportSpreadsheet'] = 'DTImportSpreadsheet';
+	$wgAutoloadClasses['DTImportSpreadsheet'] = $dtgIP . '/specials/DT_ImportSpreadsheet.php';
+}
 
 ###
 # This is the path to your installation of the Data Transfer extension as
@@ -58,11 +67,16 @@ $dtgScriptPath = $wgScriptPath . '/extensions/DataTransfer';
 $wgGroupPermissions['sysop']['datatransferimport'] = true;
 $wgAvailableRights[] = 'datatransferimport';
 
+// Global settings
+$wgDataTransferViewXMLParseFields = false;
+$wgDataTransferViewXMLParseFreeText = true;
+
 // initialize content language
 require_once($dtgIP . '/languages/DT_Language.php');
 global $wgLanguageCode;
 dtfInitContentLanguage($wgLanguageCode);
 
+$wgMessagesDirs['DataTransfer'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['DataTransfer'] = $dtgIP . '/languages/DT_Messages.php';
 $wgExtensionMessagesFiles['DataTransferAlias'] = $dtgIP . '/languages/DT_Aliases.php';
 
@@ -128,7 +142,7 @@ function dtfInitUserLanguage( $langcode ) {
 function dtfInitProperties() {
 	global $dtgContLang;
 	$dt_props = $dtgContLang->getPropertyLabels();
-	SMWPropertyValue::registerProperty( '_DT_XG', '_str', $dt_props[DT_SP_HAS_XML_GROUPING], true );
+	SMWDIProperty::registerProperty( '_DT_XG', '_str', $dt_props[DT_SP_HAS_XML_GROUPING], true );
 	// TODO - this should set a "backup" English value as well,
 	// so that the phrase "Has XML grouping" works in all languages
 	return true;
@@ -139,7 +153,7 @@ function dtfInitProperties() {
  * extension
  */
 function dtfAddToAdminLinks( $admin_links_tree ) {
-	$import_export_section = $admin_links_tree->getSection( wfMsg( 'adminlinks_importexport' ) );
+	$import_export_section = $admin_links_tree->getSection( wfMessage( 'adminlinks_importexport' )->text() );
 	$main_row = $import_export_section->getRow( 'main' );
 	$main_row->addItem( ALItem::newFromSpecialPage( 'ViewXML' ) );
 	$main_row->addItem( ALItem::newFromSpecialPage( 'ImportXML' ) );

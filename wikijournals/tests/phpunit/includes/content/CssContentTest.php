@@ -5,7 +5,7 @@
  * @group Database
  *        ^--- needed, because we do need the database to test link updates
  */
-class CssContentTest extends MediaWikiTestCase {
+class CssContentTest extends JavaScriptContentTest {
 
 	protected function setUp() {
 		parent::setUp();
@@ -50,12 +50,18 @@ class CssContentTest extends MediaWikiTestCase {
 		);
 	}
 
+	/**
+	 * @covers CssContent::getModel
+	 */
 	public function testGetModel() {
 		$content = $this->newContent( 'hello world.' );
 
 		$this->assertEquals( CONTENT_MODEL_CSS, $content->getModel() );
 	}
 
+	/**
+	 * @covers CssContent::getContentHandler
+	 */
 	public function testGetContentHandler() {
 		$content = $this->newContent( 'hello world.' );
 
@@ -73,9 +79,9 @@ class CssContentTest extends MediaWikiTestCase {
 
 	/**
 	 * @dataProvider dataEquals
+	 * @covers CssContent::equals
 	 */
 	public function testEquals( Content $a, Content $b = null, $equal = false ) {
 		$this->assertEquals( $equal, $a->equals( $b ) );
 	}
-
 }

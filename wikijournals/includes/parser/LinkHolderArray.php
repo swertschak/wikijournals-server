@@ -25,19 +25,27 @@
  * @ingroup Parser
  */
 class LinkHolderArray {
-	var $internals = array(), $interwikis = array();
-	var $size = 0;
-	var $parent;
+	public $internals = array();
+	public $interwikis = array();
+	public $size = 0;
+
+	/**
+	 * @var Parser
+	 */
+	public $parent;
 	protected $tempIdOffset;
 
-	function __construct( $parent ) {
+	/**
+	 * @param Parser $parent
+	 */
+	public function __construct( $parent ) {
 		$this->parent = $parent;
 	}
 
 	/**
 	 * Reduce memory usage to reduce the impact of circular references
 	 */
-	function __destruct() {
+	public function __destruct() {
 		foreach ( $this as $name => $value ) {
 			unset( $this->$name );
 		}
@@ -49,9 +57,9 @@ class LinkHolderArray {
 	 * serializing at present.
 	 *
 	 * Compact the titles, only serialize the text form.
-	  * @return array
-	  */
-	function __sleep() {
+	 * @return array
+	 */
+	public function __sleep() {
 		foreach ( $this->internals as &$nsLinks ) {
 			foreach ( $nsLinks as &$entry ) {
 				unset( $entry['title'] );
@@ -71,7 +79,7 @@ class LinkHolderArray {
 	/**
 	 * Recreate the Title objects
 	 */
-	function __wakeup() {
+	public function __wakeup() {
 		foreach ( $this->internals as &$nsLinks ) {
 			foreach ( $nsLinks as &$entry ) {
 				$entry['title'] = Title::newFromText( $entry['pdbk'] );
@@ -88,9 +96,9 @@ class LinkHolderArray {
 
 	/**
 	 * Merge another LinkHolderArray into this one
-	 * @param $other LinkHolderArray
+	 * @param LinkHolderArray $other
 	 */
-	function merge( $other ) {
+	public function merge( $other ) {
 		foreach ( $other->internals as $ns => $entries ) {
 			$this->size += count( $entries );
 			if ( !isset( $this->internals[$ns] ) ) {
@@ -110,11 +118,11 @@ class LinkHolderArray {
 	 * converted for use in the destination link holder. The resulting array of
 	 * strings will be returned.
 	 *
-	 * @param $other LinkHolderArray
-	 * @param array $texts of strings
-	 * @return Array
+	 * @param LinkHolderArray $other
+	 * @param array $texts Array of strings
+	 * @return array
 	 */
-	function mergeForeign( $other, $texts ) {
+	public function mergeForeign( $other, $texts ) {
 		$this->tempIdOffset = $idOffset = $this->parent->nextLinkID();
 		$maxId = 0;
 
@@ -144,6 +152,10 @@ class LinkHolderArray {
 		return $texts;
 	}
 
+	/**
+	 * @param array $m
+	 * @return string
+	 */
 	protected function mergeForeignCallback( $m ) {
 		return $m[1] . ( $m[2] + $this->tempIdOffset ) . $m[3];
 	}
@@ -151,17 +163,18 @@ class LinkHolderArray {
 	/**
 	 * Get a subset of the current LinkHolderArray which is sufficient to
 	 * interpret the given text.
+	 * @param string $text
 	 * @return LinkHolderArray
 	 */
-	function getSubArray( $text ) {
+	public function getSubArray( $text ) {
 		$sub = new LinkHolderArray( $this->parent );
 
 		# Internal links
 		$pos = 0;
 		while ( $pos < strlen( $text ) ) {
 			if ( !preg_match( '/<!--LINK (\d+):(\d+)-->/',
-				$text, $m, PREG_OFFSET_CAPTURE, $pos ) )
-			{
+				$text, $m, PREG_OFFSET_CAPTURE, $pos )
+			) {
 				break;
 			}
 			$ns = $m[1][0];
@@ -187,7 +200,7 @@ class LinkHolderArray {
 	 * Returns true if the memory requirements of this object are getting large
 	 * @return bool
 	 */
-	function isBig() {
+	public function isBig() {
 		global $wgLinkHolderBatchSize;
 		return $this->size > $wgLinkHolderBatchSize;
 	}
@@ -196,7 +209,7 @@ class LinkHolderArray {
 	 * Clear all stored link holders.
 	 * Make sure you don't have any text left using these link holders, before you call this
 	 */
-	function clear() {
+	public function clear() {
 		$this->internals = array();
 		$this->interwikis = array();
 		$this->size = 0;
@@ -208,14 +221,14 @@ class LinkHolderArray {
 	 * parsing of interwiki links, and secondly to allow all existence checks and
 	 * article length checks (for stub links) to be bundled into a single query.
 	 *
-	 * @param $nt Title
-	 * @param $text String
+	 * @param Title $nt
+	 * @param string $text
 	 * @param array $query [optional]
 	 * @param string $trail [optional]
 	 * @param string $prefix [optional]
 	 * @return string
 	 */
-	function makeHolder( $nt, $text = '', $query = array(), $trail = '', $prefix = '' ) {
+	public function makeHolder( $nt, $text = '', $query = array(), $trail = '', $prefix = '' ) {
 		wfProfileIn( __METHOD__ );
 		if ( !is_object( $nt ) ) {
 			# Fail gracefully
@@ -251,15 +264,16 @@ class LinkHolderArray {
 	}
 
 	/**
-	 * @todo FIXME: Update documentation. makeLinkObj() is deprecated.
 	 * Replace <!--LINK--> link placeholders with actual links, in the buffer
-	 * Placeholders created in Skin::makeLinkObj()
-	 * @return array of link CSS classes, indexed by PDBK.
+	 *
+	 * @param string $text
+	 * @return array Array of link CSS classes, indexed by PDBK.
 	 */
-	function replace( &$text ) {
+	public function replace( &$text ) {
 		wfProfileIn( __METHOD__ );
 
-		$colours = $this->replaceInternal( $text ); // FIXME: replaceInternal doesn't return a value
+		/** @todo FIXME: replaceInternal doesn't return a value */
+		$colours = $this->replaceInternal( $text );
 		$this->replaceInterwiki( $text );
 
 		wfProfileOut( __METHOD__ );
@@ -268,6 +282,7 @@ class LinkHolderArray {
 
 	/**
 	 * Replace internal links
+	 * @param string $text
 	 */
 	protected function replaceInternal( &$text ) {
 		if ( !$this->internals ) {
@@ -275,7 +290,7 @@ class LinkHolderArray {
 		}
 
 		wfProfileIn( __METHOD__ );
-		global $wgContLang;
+		global $wgContLang, $wgContentHandlerUseDB;
 
 		$colours = array();
 		$linkCache = LinkCache::singleton();
@@ -294,6 +309,7 @@ class LinkHolderArray {
 		$queries = array();
 		foreach ( $this->internals as $ns => $entries ) {
 			foreach ( $entries as $entry ) {
+				/** @var Title $title */
 				$title = $entry['title'];
 				$pdbk = $entry['pdbk'];
 
@@ -322,19 +338,26 @@ class LinkHolderArray {
 		}
 		if ( $queries ) {
 			$where = array();
-			foreach( $queries as $ns => $pages ) {
+			foreach ( $queries as $ns => $pages ) {
 				$where[] = $dbr->makeList(
 					array(
 						'page_namespace' => $ns,
-						'page_title' => $pages,
+						'page_title' => array_unique( $pages ),
 					),
 					LIST_AND
 				);
 			}
 
+			$fields = array( 'page_id', 'page_namespace', 'page_title',
+				'page_is_redirect', 'page_len', 'page_latest' );
+
+			if ( $wgContentHandlerUseDB ) {
+				$fields[] = 'page_content_model';
+			}
+
 			$res = $dbr->select(
 				'page',
-				array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect', 'page_len', 'page_latest' ),
+				$fields,
 				$dbr->makeList( $where, LIST_OR ),
 				__METHOD__
 			);
@@ -362,7 +385,7 @@ class LinkHolderArray {
 		wfProfileOut( __METHOD__ . '-check' );
 
 		# Do a second query for different language variants of links and categories
-		if( $wgContLang->hasVariants() ) {
+		if ( $wgContLang->hasVariants() ) {
 			$this->doVariants( $colours );
 		}
 
@@ -377,6 +400,10 @@ class LinkHolderArray {
 				$key = "$ns:$index";
 				$searchkey = "<!--LINK $key-->";
 				$displayText = $entry['text'];
+				if ( isset( $entry['selflink'] ) ) {
+					$replacePairs[$searchkey] = Linker::makeSelfLinkObj( $title, $displayText, $query );
+					continue;
+				}
 				if ( $displayText === '' ) {
 					$displayText = null;
 				}
@@ -406,7 +433,8 @@ class LinkHolderArray {
 		$text = preg_replace_callback(
 			'/(<!--LINK .*?-->)/',
 			$replacer->cb(),
-			$text);
+			$text
+		);
 
 		wfProfileOut( __METHOD__ . '-replace' );
 		wfProfileOut( __METHOD__ );
@@ -414,6 +442,7 @@ class LinkHolderArray {
 
 	/**
 	 * Replace interwiki links
+	 * @param string $text
 	 */
 	protected function replaceInterwiki( &$text ) {
 		if ( empty( $this->interwikis ) ) {
@@ -424,7 +453,7 @@ class LinkHolderArray {
 		# Make interwiki link HTML
 		$output = $this->parent->getOutput();
 		$replacePairs = array();
-		foreach( $this->interwikis as $key => $link ) {
+		foreach ( $this->interwikis as $key => $link ) {
 			$replacePairs[$key] = Linker::link( $link['title'], $link['text'] );
 			$output->addInterwikiLink( $link['title'] );
 		}
@@ -439,9 +468,10 @@ class LinkHolderArray {
 
 	/**
 	 * Modify $this->internals and $colours according to language variant linking rules
+	 * @param array $colours
 	 */
 	protected function doVariants( &$colours ) {
-		global $wgContLang;
+		global $wgContLang, $wgContentHandlerUseDB;
 		$linkBatch = new LinkBatch();
 		$variantMap = array(); // maps $pdbkey_Variant => $keys (of link holders)
 		$output = $this->parent->getOutput();
@@ -454,20 +484,17 @@ class LinkHolderArray {
 		// single string to all variants. This would improve parser's performance
 		// significantly.
 		foreach ( $this->internals as $ns => $entries ) {
+			if ( $ns == NS_SPECIAL ) {
+				continue;
+			}
 			foreach ( $entries as $index => $entry ) {
 				$pdbk = $entry['pdbk'];
 				// we only deal with new links (in its first query)
 				if ( !isset( $colours[$pdbk] ) || $colours[$pdbk] === 'new' ) {
-					$title = $entry['title'];
-					$titleText = $title->getText();
-					$titlesAttrs[] = array(
-						'ns' => $ns,
-						'key' => "$ns:$index",
-						'titleText' => $titleText,
-					);
+					$titlesAttrs[] = array( $index, $entry['title'] );
 					// separate titles with \0 because it would never appears
 					// in a valid title
-					$titlesToBeConverted .= $titleText . "\0";
+					$titlesToBeConverted .= $entry['title']->getText() . "\0";
 				}
 			}
 		}
@@ -478,19 +505,36 @@ class LinkHolderArray {
 		foreach ( $titlesAllVariants as &$titlesVariant ) {
 			$titlesVariant = explode( "\0", $titlesVariant );
 		}
-		$l = count( $titlesAttrs );
+
 		// Then add variants of links to link batch
-		for ( $i = 0; $i < $l; $i ++ ) {
+		$parentTitle = $this->parent->getTitle();
+		foreach ( $titlesAttrs as $i => $attrs ) {
+			/** @var Title $title */
+			list( $index, $title ) = $attrs;
+			$ns = $title->getNamespace();
+			$text = $title->getText();
+
 			foreach ( $allVariantsName as $variantName ) {
 				$textVariant = $titlesAllVariants[$variantName][$i];
-				if ( $textVariant != $titlesAttrs[$i]['titleText'] ) {
-					$variantTitle = Title::makeTitle( $titlesAttrs[$i]['ns'], $textVariant );
-					if( is_null( $variantTitle ) ) {
-						continue;
-					}
-					$linkBatch->addObj( $variantTitle );
-					$variantMap[$variantTitle->getPrefixedDBkey()][] = $titlesAttrs[$i]['key'];
+				if ( $textVariant === $text ) {
+					continue;
 				}
+
+				$variantTitle = Title::makeTitle( $ns, $textVariant );
+				if ( is_null( $variantTitle ) ) {
+					continue;
+				}
+
+				// Self-link checking for mixed/different variant titles. At this point, we
+				// already know the exact title does not exist, so the link cannot be to a
+				// variant of the current title that exists as a separate page.
+				if ( $variantTitle->equals( $parentTitle ) && !$title->hasFragment() ) {
+					$this->internals[$ns][$index]['selflink'] = true;
+					continue 2;
+				}
+
+				$linkBatch->addObj( $variantTitle );
+				$variantMap[$variantTitle->getPrefixedDBkey()][] = "$ns:$index";
 			}
 		}
 
@@ -513,11 +557,18 @@ class LinkHolderArray {
 			}
 		}
 
-		if( !$linkBatch->isEmpty() ) {
+		if ( !$linkBatch->isEmpty() ) {
 			// construct query
 			$dbr = wfGetDB( DB_SLAVE );
+			$fields = array( 'page_id', 'page_namespace', 'page_title',
+				'page_is_redirect', 'page_len', 'page_latest' );
+
+			if ( $wgContentHandlerUseDB ) {
+				$fields[] = 'page_content_model';
+			}
+
 			$varRes = $dbr->select( 'page',
-				array( 'page_id', 'page_namespace', 'page_title', 'page_is_redirect', 'page_len', 'page_latest' ),
+				$fields,
 				$linkBatch->constructSet( 'page', $dbr ),
 				__METHOD__
 			);
@@ -532,14 +583,14 @@ class LinkHolderArray {
 				$vardbk = $variantTitle->getDBkey();
 
 				$holderKeys = array();
-				if( isset( $variantMap[$varPdbk] ) ) {
+				if ( isset( $variantMap[$varPdbk] ) ) {
 					$holderKeys = $variantMap[$varPdbk];
 					$linkCache->addGoodLinkObjFromRow( $variantTitle, $s );
 					$output->addLink( $variantTitle, $s->page_id );
 				}
 
 				// loop over link holders
-				foreach( $holderKeys as $key ) {
+				foreach ( $holderKeys as $key ) {
 					list( $ns, $index ) = explode( ':', $key, 2 );
 					$entry =& $this->internals[$ns][$index];
 					$pdbk = $entry['pdbk'];
@@ -569,12 +620,12 @@ class LinkHolderArray {
 			wfRunHooks( 'GetLinkColours', array( $linkcolour_ids, &$colours ) );
 
 			// rebuild the categories in original order (if there are replacements)
-			if( count( $varCategories ) > 0 ) {
+			if ( count( $varCategories ) > 0 ) {
 				$newCats = array();
 				$originalCats = $output->getCategories();
-				foreach( $originalCats as $cat => $sortkey ) {
+				foreach ( $originalCats as $cat => $sortkey ) {
 					// make the replacement
-					if( array_key_exists( $cat, $varCategories ) ) {
+					if ( array_key_exists( $cat, $varCategories ) ) {
 						$newCats[$varCategories[$cat]] = $sortkey;
 					} else {
 						$newCats[$cat] = $sortkey;
@@ -589,10 +640,10 @@ class LinkHolderArray {
 	 * Replace <!--LINK--> link placeholders with plain text of links
 	 * (not HTML-formatted).
 	 *
-	 * @param $text String
-	 * @return String
+	 * @param string $text
+	 * @return string
 	 */
-	function replaceText( $text ) {
+	public function replaceText( $text ) {
 		wfProfileIn( __METHOD__ );
 
 		$text = preg_replace_callback(
@@ -607,20 +658,20 @@ class LinkHolderArray {
 	/**
 	 * Callback for replaceText()
 	 *
-	 * @param $matches Array
+	 * @param array $matches
 	 * @return string
 	 * @private
 	 */
-	function replaceTextCallback( $matches ) {
+	public function replaceTextCallback( $matches ) {
 		$type = $matches[1];
 		$key = $matches[2];
-		if( $type == 'LINK' ) {
+		if ( $type == 'LINK' ) {
 			list( $ns, $index ) = explode( ':', $key, 2 );
-			if( isset( $this->internals[$ns][$index]['text'] ) ) {
+			if ( isset( $this->internals[$ns][$index]['text'] ) ) {
 				return $this->internals[$ns][$index]['text'];
 			}
-		} elseif( $type == 'IWLINK' ) {
-			if( isset( $this->interwikis[$key]['text'] ) ) {
+		} elseif ( $type == 'IWLINK' ) {
+			if ( isset( $this->interwikis[$key]['text'] ) ) {
 				return $this->interwikis[$key]['text'];
 			}
 		}

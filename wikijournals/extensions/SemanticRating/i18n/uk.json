@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Andriykopanytsia",
+			"Ата"
+		]
+	},
+	"semanticrating-desc": "Дозволяє користувачам оцінювати елементи зірочками",
+	"semanticrating-max": "Максимальна кількість зірок у рейтингу"
+}

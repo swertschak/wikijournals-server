@@ -5,7 +5,6 @@
  * article pages for Concept and Property pages. This is mainly parameter
  * handling and some very basic output control.
  *
- * @file SMW_OrderedListPage.php
  * @ingroup SMW
  *
  * @author Nikolas Iwan
@@ -74,17 +73,15 @@ abstract class SMWOrderedListPage extends Article {
 	protected function showList() {
 		global $wgOut, $wgRequest;
 
-		wfProfileIn( __METHOD__ . ' (SMW)' );
 
 		$this->from = $wgRequest->getVal( 'from', '' );
 		$this->until = $wgRequest->getVal( 'until', '' );
 
 		if ( $this->initParameters() ) {
-			$wgOut->addHTML( "<br id=\"smwfootbr\"/>\n" . $this->getHtml() );
+			$wgOut->addHTML( $this->getHtml() );
 			SMWOutputs::commitToOutputPage( $wgOut );
 		}
 
-		wfProfileOut( __METHOD__ . ' (SMW)' );
 	}
 
 	/**

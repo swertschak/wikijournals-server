@@ -6,14 +6,19 @@
  * @group API
  */
 class PrefixUniquenessTest extends MediaWikiTestCase {
+
 	public function testPrefixes() {
 		$main = new ApiMain( new FauxRequest() );
 		$query = new ApiQuery( $main, 'foo', 'bar' );
-		$modules = $query->getModuleManager()->getNamesWithClasses();
+		$moduleManager = $query->getModuleManager();
+
+		$modules = $moduleManager->getNames();
 		$prefixes = array();
 
-		foreach ( $modules as $name => $class ) {
-			$module = new $class( $main, $name );
+		foreach ( $modules as $name ) {
+			$module = $moduleManager->getModule( $name );
+			$class = get_class( $module );
+
 			$prefix = $module->getModulePrefix();
 			if ( isset( $prefixes[$prefix] ) ) {
 				$this->fail( "Module prefix '{$prefix}' is shared between {$class} and {$prefixes[$prefix]}" );

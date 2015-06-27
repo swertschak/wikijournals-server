@@ -33,7 +33,7 @@
  * based on nukePage by Rob Church
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that removes pages with only one revision from the
@@ -66,7 +66,7 @@ class NukeNS extends Maintenance {
 		foreach ( $res as $row ) {
 			// echo "$ns_name:".$row->page_title, "\n";
 			$title = Title::makeTitle( $ns, $row->page_title );
-			$id   = $title->getArticleID();
+			$id = $title->getArticleID();
 
 			// Get corresponding revisions
 			$res2 = $dbw->query( "SELECT rev_id FROM $tbl_rev WHERE rev_page = $id" );
@@ -91,10 +91,10 @@ class NukeNS extends Maintenance {
 					$child = $this->runChild( 'NukePage', 'nukePage.php' );
 					$child->deleteRevisions( $revs );
 					$this->purgeRedundantText( true );
-					$n_deleted ++;
+					$n_deleted++;
 				}
 			} else {
-			  $this->output( "skip: " . $title->getPrefixedText() . "\n" );
+				$this->output( "skip: " . $title->getPrefixedText() . "\n" );
 			}
 		}
 		$dbw->commit( __METHOD__ );
@@ -119,4 +119,4 @@ class NukeNS extends Maintenance {
 }
 
 $maintClass = "NukeNS";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

@@ -1,10 +1,16 @@
 <?php
+
+/**
+ * Class CollationTest
+ * @covers Collation
+ * @covers IcuCollation
+ * @covers IdentityCollation
+ * @covers UppercaseCollation
+ */
 class CollationTest extends MediaWikiLangTestCase {
 	protected function setUp() {
 		parent::setUp();
-		if ( !extension_loaded( 'intl' ) ) {
-			$this->markTestSkipped( 'These tests require intl extension' );
-		}
+		$this->checkPHPExtension( 'intl' );
 	}
 
 	/**
@@ -14,13 +20,13 @@ class CollationTest extends MediaWikiLangTestCase {
 	 * prefix of "XY". Our collation
 	 * code makes this assumption.
 	 *
-	 * @param $lang String Language code for collator
-	 * @param $base String Base string
-	 * @param $extended String String containing base as a prefix.
+	 * @param string $lang Language code for collator
+	 * @param string $base Base string
+	 * @param string $extended String containing base as a prefix.
 	 *
 	 * @dataProvider prefixDataProvider
 	 */
-	function testIsPrefix( $lang, $base, $extended ) {
+	public function testIsPrefix( $lang, $base, $extended ) {
 		$cp = Collator::create( $lang );
 		$cp->setStrength( Collator::PRIMARY );
 		$baseBin = $cp->getSortKey( $base );
@@ -30,7 +36,7 @@ class CollationTest extends MediaWikiLangTestCase {
 		$this->assertStringStartsWith( $baseBin, $extendedBin, "$base is not a prefix of $extended" );
 	}
 
-	function prefixDataProvider() {
+	public static function prefixDataProvider() {
 		return array(
 			array( 'en', 'A', 'AA' ),
 			array( 'en', 'A', 'AAA' ),
@@ -47,12 +53,13 @@ class CollationTest extends MediaWikiLangTestCase {
 			array( 'en', 'A', 'Aꦲ' ),
 		);
 	}
+
 	/**
 	 * Opposite of testIsPrefix
 	 *
 	 * @dataProvider notPrefixDataProvider
 	 */
-	function testNotIsPrefix( $lang, $base, $extended ) {
+	public function testNotIsPrefix( $lang, $base, $extended ) {
 		$cp = Collator::create( $lang );
 		$cp->setStrength( Collator::PRIMARY );
 		$baseBin = $cp->getSortKey( $base );
@@ -62,7 +69,7 @@ class CollationTest extends MediaWikiLangTestCase {
 		$this->assertStringStartsNotWith( $baseBin, $extendedBin, "$base is a prefix of $extended" );
 	}
 
-	function notPrefixDataProvider() {
+	public static function notPrefixDataProvider() {
 		return array(
 			array( 'en', 'A', 'B' ),
 			array( 'en', 'AC', 'ABC' ),
@@ -74,16 +81,17 @@ class CollationTest extends MediaWikiLangTestCase {
 	/**
 	 * Test correct first letter is fetched.
 	 *
-	 * @param $collation String Collation name (aka uca-en)
-	 * @param $string String String to get first letter of
-	 * @param $firstLetter String Expected first letter.
+	 * @param string $collation Collation name (aka uca-en)
+	 * @param string $string String to get first letter of
+	 * @param string $firstLetter Expected first letter.
 	 *
 	 * @dataProvider firstLetterProvider
 	 */
-	function testGetFirstLetter( $collation, $string, $firstLetter ) {
+	public function testGetFirstLetter( $collation, $string, $firstLetter ) {
 		$col = Collation::factory( $collation );
 		$this->assertEquals( $firstLetter, $col->getFirstLetter( $string ) );
 	}
+
 	function firstLetterProvider() {
 		return array(
 			array( 'uppercase', 'Abc', 'A' ),

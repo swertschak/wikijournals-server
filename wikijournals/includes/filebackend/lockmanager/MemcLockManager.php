@@ -36,31 +36,31 @@
  * @since 1.20
  */
 class MemcLockManager extends QuorumLockManager {
-	/** @var Array Mapping of lock types to the type actually used */
+	/** @var array Mapping of lock types to the type actually used */
 	protected $lockTypeMap = array(
 		self::LOCK_SH => self::LOCK_SH,
 		self::LOCK_UW => self::LOCK_SH,
 		self::LOCK_EX => self::LOCK_EX
 	);
 
-	/** @var Array Map server names to MemcachedBagOStuff objects */
+	/** @var array Map server names to MemcachedBagOStuff objects */
 	protected $bagOStuffs = array();
-	/** @var Array */
-	protected $serversUp = array(); // (server name => bool)
 
-	protected $session = ''; // string; random UUID
+	/** @var array (server name => bool) */
+	protected $serversUp = array();
+
+	/** @var string Random UUID */
+	protected $session = '';
 
 	/**
 	 * Construct a new instance from configuration.
 	 *
-	 * $config paramaters include:
+	 * @param array $config Paramaters include:
 	 *   - lockServers  : Associative array of server names to "<IP>:<port>" strings.
 	 *   - srvsByBucket : Array of 1-16 consecutive integer keys, starting from 0,
 	 *                    each having an odd-numbered list of server names (peers) as values.
 	 *   - memcConfig   : Configuration array for ObjectCache::newFromParams. [optional]
 	 *                    If set, this must use one of the memcached classes.
-	 *
-	 * @param array $config
 	 * @throws MWException
 	 */
 	public function __construct( array $config ) {
@@ -88,11 +88,47 @@ class MemcLockManager extends QuorumLockManager {
 		$this->session = wfRandomString( 32 );
 	}
 
+	// @todo Change this code to work in one batch
+	protected function getLocksOnServer( $lockSrv, array $pathsByType ) {
+		$status = Status::newGood();
+
+		$lockedPaths = array();
+		foreach ( $pathsByType as $type => $paths ) {
+			$status->merge( $this->doGetLocksOnServer( $lockSrv, $paths, $type ) );
+			if ( $status->isOK() ) {
+				$lockedPaths[$type] = isset( $lockedPaths[$type] )
+					? array_merge( $lockedPaths[$type], $paths )
+					: $paths;
+			} else {
+				foreach ( $lockedPaths as $lType => $lPaths ) {
+					$status->merge( $this->doFreeLocksOnServer( $lockSrv, $lPaths, $lType ) );
+				}
+				break;
+			}
+		}
+
+		return $status;
+	}
+
+	// @todo Change this code to work in one batch
+	protected function freeLocksOnServer( $lockSrv, array $pathsByType ) {
+		$status = Status::newGood();
+
+		foreach ( $pathsByType as $type => $paths ) {
+			$status->merge( $this->doFreeLocksOnServer( $lockSrv, $paths, $type ) );
+		}
+
+		return $status;
+	}
+
 	/**
 	 * @see QuorumLockManager::getLocksOnServer()
+	 * @param string $lockSrv
+	 * @param array $paths
+	 * @param string $type
 	 * @return Status
 	 */
-	protected function getLocksOnServer( $lockSrv, array $paths, $type ) {
+	protected function doGetLocksOnServer( $lockSrv, array $paths, $type ) {
 		$status = Status::newGood();
 
 		$memc = $this->getCache( $lockSrv );
@@ -103,6 +139,7 @@ class MemcLockManager extends QuorumLockManager {
 			foreach ( $paths as $path ) {
 				$status->fatal( 'lockmanager-fail-acquirelock', $path );
 			}
+
 			return $status;
 		}
 
@@ -145,7 +182,7 @@ class MemcLockManager extends QuorumLockManager {
 			foreach ( $paths as $path ) {
 				$locksKey = $this->recordKeyForPath( $path );
 				$locksHeld = $lockRecords[$locksKey];
-				$ok = $memc->set( $locksKey, $locksHeld, 7*86400 );
+				$ok = $memc->set( $locksKey, $locksHeld, 7 * 86400 );
 				if ( !$ok ) {
 					$status->fatal( 'lockmanager-fail-acquirelock', $path );
 				} else {
@@ -162,9 +199,12 @@ class MemcLockManager extends QuorumLockManager {
 
 	/**
 	 * @see QuorumLockManager::freeLocksOnServer()
+	 * @param string $lockSrv
+	 * @param array $paths
+	 * @param string $type
 	 * @return Status
 	 */
-	protected function freeLocksOnServer( $lockSrv, array $paths, $type ) {
+	protected function doFreeLocksOnServer( $lockSrv, array $paths, $type ) {
 		$status = Status::newGood();
 
 		$memc = $this->getCache( $lockSrv );
@@ -175,7 +215,8 @@ class MemcLockManager extends QuorumLockManager {
 			foreach ( $paths as $path ) {
 				$status->fatal( 'lockmanager-fail-releaselock', $path );
 			}
-			return;
+
+			return $status;
 		}
 
 		// Fetch all the existing lock records...
@@ -221,6 +262,7 @@ class MemcLockManager extends QuorumLockManager {
 
 	/**
 	 * @see QuorumLockManager::isServerUp()
+	 * @param string $lockSrv
 	 * @return bool
 	 */
 	protected function isServerUp( $lockSrv ) {
@@ -247,11 +289,12 @@ class MemcLockManager extends QuorumLockManager {
 				return null; // server appears to be down
 			}
 		}
+
 		return $memc;
 	}
 
 	/**
-	 * @param $path string
+	 * @param string $path
 	 * @return string
 	 */
 	protected function recordKeyForPath( $path ) {
@@ -259,27 +302,28 @@ class MemcLockManager extends QuorumLockManager {
 	}
 
 	/**
-	 * @return Array An empty lock structure for a key
+	 * @return array An empty lock structure for a key
 	 */
 	protected static function newLockArray() {
 		return array( self::LOCK_SH => array(), self::LOCK_EX => array() );
 	}
 
 	/**
-	 * @param $a array
-	 * @return Array An empty lock structure for a key
+	 * @param array $a
+	 * @return array An empty lock structure for a key
 	 */
 	protected static function sanitizeLockArray( $a ) {
 		if ( is_array( $a ) && isset( $a[self::LOCK_EX] ) && isset( $a[self::LOCK_SH] ) ) {
 			return $a;
 		} else {
 			trigger_error( __METHOD__ . ": reset invalid lock array.", E_USER_WARNING );
+
 			return self::newLockArray();
 		}
 	}
 
 	/**
-	 * @param $memc MemcachedBagOStuff
+	 * @param MemcachedBagOStuff $memc
 	 * @param array $keys List of keys to acquire
 	 * @return bool
 	 */
@@ -297,7 +341,7 @@ class MemcLockManager extends QuorumLockManager {
 		$start = microtime( true );
 		do {
 			if ( ( ++$rounds % 4 ) == 0 ) {
-				usleep( 1000*50 ); // 50 ms
+				usleep( 1000 * 50 ); // 50 ms
 			}
 			foreach ( array_diff( $keys, $lockedKeys ) as $key ) {
 				if ( $memc->add( "$key:mutex", 1, 180 ) ) { // lock record
@@ -317,9 +361,8 @@ class MemcLockManager extends QuorumLockManager {
 	}
 
 	/**
-	 * @param $memc MemcachedBagOStuff
+	 * @param MemcachedBagOStuff $memc
 	 * @param array $keys List of acquired keys
-	 * @return void
 	 */
 	protected function releaseMutexes( MemcachedBagOStuff $memc, array $keys ) {
 		foreach ( $keys as $key ) {

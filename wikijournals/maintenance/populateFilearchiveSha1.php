@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '/Maintenance.php' );
+require_once dirname( __FILE__ ) . '/Maintenance.php';
 
 /**
  * Maintenance script to populate the fa_sha1 field.
@@ -51,6 +51,7 @@ class PopulateFilearchiveSha1 extends LoggedUpdateMaintenance {
 
 		if ( !$dbw->fieldExists( $table, 'fa_sha1', __METHOD__ ) ) {
 			$this->output( "fa_sha1 column does not exist\n\n", true );
+
 			return false;
 		}
 
@@ -86,7 +87,7 @@ class PopulateFilearchiveSha1 extends LoggedUpdateMaintenance {
 			}
 
 			$done += $i;
-			if( $i !== $batchSize ) {
+			if ( $i !== $batchSize ) {
 				break;
 			}
 
@@ -94,7 +95,7 @@ class PopulateFilearchiveSha1 extends LoggedUpdateMaintenance {
 			$this->output( sprintf(
 				"id %d done (up to %d), %5.3f%%  \r", $lastId, $endId, $lastId / $endId * 100 ) );
 			wfWaitForSlaves();
-		} while( true );
+		} while ( true );
 
 		$processingTime = microtime( true ) - $startTime;
 		$this->output( sprintf( "\nDone %d files in %.1f seconds\n", $done, $processingTime ) );
@@ -104,4 +105,4 @@ class PopulateFilearchiveSha1 extends LoggedUpdateMaintenance {
 }
 
 $maintClass = "PopulateFilearchiveSha1";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

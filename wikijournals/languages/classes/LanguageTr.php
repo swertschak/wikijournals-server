@@ -21,7 +21,6 @@
  * @ingroup Language
  */
 
-
 /**
  * Turkish (Türkçe)
  *
@@ -35,10 +34,10 @@
 class LanguageTr extends Language {
 
 	/**
-	 * @param $string string
+	 * @param string $string
 	 * @return string
 	 */
-	function ucfirst ( $string ) {
+	function ucfirst( $string ) {
 		if ( strlen( $string ) && $string[0] == 'i' ) {
 			return 'İ' . substr( $string, 1 );
 		} else {
@@ -47,10 +46,10 @@ class LanguageTr extends Language {
 	}
 
 	/**
-	 * @param $string string
+	 * @param string $string
 	 * @return mixed|string
 	 */
-	function lcfirst ( $string ) {
+	function lcfirst( $string ) {
 		if ( strlen( $string ) && $string[0] == 'I' ) {
 			return 'ı' . substr( $string, 1 );
 		} else {

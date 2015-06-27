@@ -27,17 +27,27 @@
  */
 class ResourceLoaderUserModule extends ResourceLoaderWikiModule {
 
-	/* Protected Methods */
+	/* Protected Members */
+
 	protected $origin = self::ORIGIN_USER_INDIVIDUAL;
 
+	/* Protected Methods */
+
 	/**
-	 * @param $context ResourceLoaderContext
+	 * @param ResourceLoaderContext $context
 	 * @return array
 	 */
 	protected function getPages( ResourceLoaderContext $context ) {
 		$username = $context->getUser();
 
 		if ( $username === null ) {
+			return array();
+		}
+
+		$allowUserJs = $this->getConfig()->get( 'AllowUserJs' );
+		$allowUserCss = $this->getConfig()->get( 'AllowUserCss' );
+
+		if ( !$allowUserJs && !$allowUserCss ) {
 			return array();
 		}
 
@@ -50,14 +60,15 @@ class ResourceLoaderUserModule extends ResourceLoaderWikiModule {
 
 		$userpage = $userpageTitle->getPrefixedDBkey(); // Needed so $excludepages works
 
-		$pages = array(
-			"$userpage/common.js" => array( 'type' => 'script' ),
-			"$userpage/" . $context->getSkin() . '.js' =>
-				array( 'type' => 'script' ),
-			"$userpage/common.css" => array( 'type' => 'style' ),
-			"$userpage/" . $context->getSkin() . '.css' =>
-				array( 'type' => 'style' ),
-		);
+		$pages = array();
+		if ( $allowUserJs ) {
+			$pages["$userpage/common.js"] = array( 'type' => 'script' );
+			$pages["$userpage/" . $context->getSkin() . '.js'] = array( 'type' => 'script' );
+		}
+		if ( $allowUserCss ) {
+			$pages["$userpage/common.css"] = array( 'type' => 'style' );
+			$pages["$userpage/" . $context->getSkin() . '.css'] = array( 'type' => 'style' );
+		}
 
 		// Hack for bug 26283: if we're on a preview page for a CSS/JS page,
 		// we need to exclude that page from this module. In that case, the excludepage

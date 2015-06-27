@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataItems
  */
 
@@ -57,4 +56,11 @@ class SMWDIBlob extends SMWDataItem {
 		return new SMWDIBlob( $serialization );
 	}
 
+	public function equals( SMWDataItem $di ) {
+		if ( !( $di instanceof SMWDIBlob ) ) {
+			return false;
+		}
+
+		return $di->getString() === $this->m_string;
+	}
 }

@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script that syncs one file backend to another based on
@@ -40,6 +40,7 @@ class SyncFileBackend extends Maintenance {
 		$this->addOption( 'posdir', 'Directory to read/record journal positions', false, true );
 		$this->addOption( 'posdump', 'Just dump current journal position into the position dir.' );
 		$this->addOption( 'postime', 'For position dumps, get the ID at this time', false, true );
+		$this->addOption( 'backoff', 'Stop at entries younger than this age (sec).', false, true );
 		$this->addOption( 'verbose', 'Verbose mode', false, false, 'v' );
 		$this->setBatchSize( 50 );
 	}
@@ -70,6 +71,7 @@ class SyncFileBackend extends Maintenance {
 			if ( $this->isQuiet() ) {
 				print $id; // give a single machine-readable number
 			}
+
 			return;
 		}
 
@@ -88,7 +90,13 @@ class SyncFileBackend extends Maintenance {
 		} else {
 			$startFromPosFile = false;
 		}
-		$end = $this->getOption( 'end', INF );
+
+		if ( $this->hasOption( 'backoff' ) ) {
+			$time = time() - $this->getOption( 'backoff', 0 );
+			$end = (int)$src->getJournal()->getPositionAtTime( $time );
+		} else {
+			$end = $this->getOption( 'end', INF );
+		}
 
 		$this->output( "Synchronizing backend '{$dst->getName()}' to '{$src->getName()}'...\n" );
 		$this->output( "Starting journal position is $start.\n" );
@@ -97,7 +105,7 @@ class SyncFileBackend extends Maintenance {
 		}
 
 		// Periodically update the position file
-		$callback = function( $pos ) use ( $startFromPosFile, $posFile, $start ) {
+		$callback = function ( $pos ) use ( $startFromPosFile, $posFile, $start ) {
 			if ( $startFromPosFile && $pos >= $start ) { // successfully advanced
 				file_put_contents( $posFile, $pos, LOCK_EX );
 			}
@@ -134,12 +142,12 @@ class SyncFileBackend extends Maintenance {
 	 * Sync $dst backend to $src backend based on the $src logs given after $start.
 	 * Returns the journal entry ID this advanced to and handled (inclusive).
 	 *
-	 * @param $src FileBackend
-	 * @param $dst FileBackend
-	 * @param $start integer Starting journal position
-	 * @param $end integer Starting journal position
-	 * @param $callback Closure Callback to update any position file
-	 * @return integer|false Journal entry ID or false if there are none
+	 * @param FileBackend $src
+	 * @param FileBackend $dst
+	 * @param int $start Starting journal position
+	 * @param int $end Starting journal position
+	 * @param Closure $callback Callback to update any position file
+	 * @return int|bool Journal entry ID or false if there are none
 	 */
 	protected function syncBackends(
 		FileBackend $src, FileBackend $dst, $start, $end, Closure $callback
@@ -191,9 +199,9 @@ class SyncFileBackend extends Maintenance {
 	/**
 	 * Sync particular files of backend $src to the corresponding $dst backend files
 	 *
-	 * @param $paths Array
-	 * @param $src FileBackend
-	 * @param $dst FileBackend
+	 * @param array $paths
+	 * @param FileBackend $src
+	 * @param FileBackend $dst
 	 * @return Status
 	 */
 	protected function syncFileBatch( array $paths, FileBackend $src, FileBackend $dst ) {
@@ -214,6 +222,9 @@ class SyncFileBackend extends Maintenance {
 			return $status;
 		}
 
+		$src->preloadFileStat( array( 'srcs' => $sPaths, 'latest' => 1 ) );
+		$dst->preloadFileStat( array( 'srcs' => $dPaths, 'latest' => 1 ) );
+
 		$ops = array();
 		$fsFiles = array();
 		foreach ( $sPaths as $i => $sPath ) {
@@ -228,6 +239,7 @@ class SyncFileBackend extends Maintenance {
 				if ( !$fsFile ) {
 					$this->error( "Unable to sync '$dPath': could not get local copy." );
 					$status->fatal( 'backend-fail-internal', $src->getName() );
+
 					return $status;
 				}
 				$fsFiles[] = $fsFile; // keep TempFSFile objects alive as needed
@@ -244,6 +256,7 @@ class SyncFileBackend extends Maintenance {
 			} else { // error
 				$this->error( "Unable to sync '$dPath': could not stat file." );
 				$status->fatal( 'backend-fail-internal', $src->getName() );
+
 				return $status;
 			}
 		}
@@ -266,8 +279,9 @@ class SyncFileBackend extends Maintenance {
 	/**
 	 * Substitute the backend name of storage paths with that of a given one
 	 *
-	 * @param $paths Array|string List of paths or single string path
-	 * @return Array|string
+	 * @param array|string $paths List of paths or single string path
+	 * @param FileBackend $backend
+	 * @return array|string
 	 */
 	protected function replaceNamePaths( $paths, FileBackend $backend ) {
 		return preg_replace(
@@ -289,4 +303,4 @@ class SyncFileBackend extends Maintenance {
 }
 
 $maintClass = "SyncFileBackend";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

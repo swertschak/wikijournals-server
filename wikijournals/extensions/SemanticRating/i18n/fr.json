@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gomoko"
+		]
+	},
+	"semanticrating-desc": "Permet aux utilisateurs de classer les éléments avec des étoiles",
+	"semanticrating-max": "Le nombre maximum d’étoiles dans un classement"
+}

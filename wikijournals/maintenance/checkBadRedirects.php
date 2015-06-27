@@ -21,7 +21,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script to check that pages marked as being redirects really are.
@@ -44,7 +44,7 @@ class CheckBadRedirects extends Maintenance {
 
 		$count = $result->numRows();
 		$this->output( "Found $count redirects.\n" .
-						"Checking for bad redirects:\n\n" );
+			"Checking for bad redirects:\n\n" );
 
 		foreach ( $result as $row ) {
 			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
@@ -61,4 +61,4 @@ class CheckBadRedirects extends Maintenance {
 }
 
 $maintClass = "CheckBadRedirects";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

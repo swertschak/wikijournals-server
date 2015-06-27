@@ -6,6 +6,8 @@
  *
  * @group Output
  *
+ * @todo factor tests in this class into providers and test methods
+ *
  */
 class OutputPageTest extends MediaWikiTestCase {
 	const SCREEN_MEDIA_QUERY = 'screen and (min-width: 982px)';
@@ -19,12 +21,11 @@ class OutputPageTest extends MediaWikiTestCase {
 	 *
 	 * options['printableQuery'] - value of query string for printable, or omitted for none
 	 * options['handheldQuery'] - value of query string for handheld, or omitted for none
-	 * options['handheldForIPhone'] - value of the $wgHandheldForIPhone global
 	 * options['media'] - passed into the method under the same name
 	 * options['expectedReturn'] - expected return value
 	 * options['message'] - PHPUnit message for assertion
 	 *
-	 * @param array $args key-value array of arguments as shown above
+	 * @param array $args Key-value array of arguments as shown above
 	 */
 	protected function assertTransformCssMediaCase( $args ) {
 		$queryData = array();
@@ -37,9 +38,8 @@ class OutputPageTest extends MediaWikiTestCase {
 		}
 
 		$fauxRequest = new FauxRequest( $queryData, false );
-		$this->setMWGlobals( array(
+		$this->setMwGlobals( array(
 			'wgRequest' => $fauxRequest,
-			'wgHandheldForIPhone' => $args['handheldForIPhone']
 		) );
 
 		$actualReturn = OutputPage::transformCssMedia( $args['media'] );
@@ -47,50 +47,32 @@ class OutputPageTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * Tests a case of transformCssMedia with both values of wgHandheldForIPhone.
-	 * Used to verify that behavior is orthogonal to that option.
-	 *
-	 * If the value of wgHandheldForIPhone should matter, use assertTransformCssMediaCase.
-	 *
-	 * @param array $args key-value array of arguments as shown in assertTransformCssMediaCase.
-	 * Will be mutated.
-	 */
-	protected function assertTransformCssMediaCaseWithBothHandheldForIPhone( $args ) {
-		$message = $args['message'];
-		foreach ( array( true, false ) as $handheldForIPhone ) {
-			$args['handheldForIPhone'] = $handheldForIPhone;
-			$stringHandheldForIPhone = var_export( $handheldForIPhone, true );
-			$args['message'] = "$message. \$wgHandheldForIPhone was $stringHandheldForIPhone";
-			$this->assertTransformCssMediaCase( $args );
-		}
-	}
-
-	/**
 	 * Tests print requests
+	 * @covers OutputPage::transformCssMedia
 	 */
 	public function testPrintRequests() {
-		$this->assertTransformCssMediaCaseWithBothHandheldForIPhone( array(
+		$this->assertTransformCssMediaCase( array(
 			'printableQuery' => '1',
 			'media' => 'screen',
 			'expectedReturn' => null,
 			'message' => 'On printable request, screen returns null'
 		) );
 
-		$this->assertTransformCssMediaCaseWithBothHandheldForIPhone( array(
+		$this->assertTransformCssMediaCase( array(
 			'printableQuery' => '1',
 			'media' => self::SCREEN_MEDIA_QUERY,
 			'expectedReturn' => null,
 			'message' => 'On printable request, screen media query returns null'
 		) );
 
-		$this->assertTransformCssMediaCaseWithBothHandheldForIPhone( array(
+		$this->assertTransformCssMediaCase( array(
 			'printableQuery' => '1',
 			'media' => self::SCREEN_ONLY_MEDIA_QUERY,
 			'expectedReturn' => null,
 			'message' => 'On printable request, screen media query with only returns null'
 		) );
 
-		$this->assertTransformCssMediaCaseWithBothHandheldForIPhone( array(
+		$this->assertTransformCssMediaCase( array(
 			'printableQuery' => '1',
 			'media' => 'print',
 			'expectedReturn' => '',
@@ -100,28 +82,34 @@ class OutputPageTest extends MediaWikiTestCase {
 
 	/**
 	 * Tests screen requests, without either query parameter set
+	 * @covers OutputPage::transformCssMedia
 	 */
 	public function testScreenRequests() {
 		$this->assertTransformCssMediaCase( array(
-			'handheldForIPhone' => false,
 			'media' => 'screen',
 			'expectedReturn' => 'screen',
-			'message' => 'On screen request, with handheldForIPhone false, screen media type is preserved'
+			'message' => 'On screen request, screen media type is preserved'
 		) );
 
-		$this->assertTransformCssMediaCaseWithBothHandheldForIPhone( array(
+		$this->assertTransformCssMediaCase( array(
+			'media' => 'handheld',
+			'expectedReturn' => 'handheld',
+			'message' => 'On screen request, handheld media type is preserved'
+		) );
+
+		$this->assertTransformCssMediaCase( array(
 			'media' => self::SCREEN_MEDIA_QUERY,
 			'expectedReturn' => self::SCREEN_MEDIA_QUERY,
 			'message' => 'On screen request, screen media query is preserved.'
 		) );
 
-		$this->assertTransformCssMediaCaseWithBothHandheldForIPhone( array(
+		$this->assertTransformCssMediaCase( array(
 			'media' => self::SCREEN_ONLY_MEDIA_QUERY,
 			'expectedReturn' => self::SCREEN_ONLY_MEDIA_QUERY,
 			'message' => 'On screen request, screen media query with only is preserved.'
 		) );
 
-		$this->assertTransformCssMediaCaseWithBothHandheldForIPhone( array(
+		$this->assertTransformCssMediaCase( array(
 			'media' => 'print',
 			'expectedReturn' => 'print',
 			'message' => 'On screen request, print media type is preserved'
@@ -129,44 +117,157 @@ class OutputPageTest extends MediaWikiTestCase {
 	}
 
 	/**
-	 * Tests handheld and wgHandheldForIPhone behavior
+	 * Tests handheld behavior
+	 * @covers OutputPage::transformCssMedia
 	 */
 	public function testHandheld() {
-		$this->assertTransformCssMediaCaseWithBothHandheldForIPhone( array(
+		$this->assertTransformCssMediaCase( array(
 			'handheldQuery' => '1',
 			'media' => 'handheld',
 			'expectedReturn' => '',
 			'message' => 'On request with handheld querystring and media is handheld, returns empty string'
 		) );
 
-		$this->assertTransformCssMediaCaseWithBothHandheldForIPhone( array(
+		$this->assertTransformCssMediaCase( array(
 			'handheldQuery' => '1',
 			'media' => 'screen',
 			'expectedReturn' => null,
 			'message' => 'On request with handheld querystring and media is screen, returns null'
 		) );
+	}
 
-		// A bit counter-intuitively, $wgHandheldForIPhone should only matter if the query handheld is false or omitted
-		$this->assertTransformCssMediaCase( array(
-			'handheldQuery' => '0',
-			'media' => 'screen',
-			'handheldForIPhone' => true,
-			'expectedReturn' => 'screen and (min-device-width: 481px)',
-			'message' => 'With $wgHandheldForIPhone true, screen media type is transformed'
-		) );
+	public static function provideMakeResourceLoaderLink() {
+		return array(
+			// Load module script only
+			array(
+				array( 'test.foo', ResourceLoaderModule::TYPE_SCRIPTS ),
+				'<script>if(window.mw){
+document.write("\u003Cscript src=\"http://127.0.0.1:8080/w/load.php?debug=false\u0026amp;lang=en\u0026amp;modules=test.foo\u0026amp;only=scripts\u0026amp;skin=fallback\u0026amp;*\"\u003E\u003C/script\u003E");
+}</script>
+'
+			),
+			array(
+				// Don't condition wrap raw modules (like the startup module)
+				array( 'test.raw', ResourceLoaderModule::TYPE_SCRIPTS ),
+				'<script src="http://127.0.0.1:8080/w/load.php?debug=false&amp;lang=en&amp;modules=test.raw&amp;only=scripts&amp;skin=fallback&amp;*"></script>
+'
+			),
+			// Load module styles only
+			// This also tests the order the modules are put into the url
+			array(
+				array( array( 'test.baz', 'test.foo', 'test.bar' ), ResourceLoaderModule::TYPE_STYLES ),
+				'<link rel=stylesheet href="http://127.0.0.1:8080/w/load.php?debug=false&amp;lang=en&amp;modules=test.bar%2Cbaz%2Cfoo&amp;only=styles&amp;skin=fallback&amp;*">
+'
+			),
+			// Load private module (only=scripts)
+			array(
+				array( 'test.quux', ResourceLoaderModule::TYPE_SCRIPTS ),
+				'<script>if(window.mw){
+mw.test.baz({token:123});mw.loader.state({"test.quux":"ready"});
 
-		$this->assertTransformCssMediaCase( array(
-			'media' => 'handheld',
-			'handheldForIPhone' => true,
-			'expectedReturn' => 'handheld, only screen and (max-device-width: 480px)',
-			'message' => 'With $wgHandheldForIPhone true, handheld media type is transformed'
-		) );
+}</script>
+'
+			),
+			// Load private module (combined)
+			array(
+				array( 'test.quux', ResourceLoaderModule::TYPE_COMBINED ),
+				'<script>if(window.mw){
+mw.loader.implement("test.quux",function($,jQuery){mw.test.baz({token:123});},{"css":[".mw-icon{transition:none}\n"]},{});
 
-		$this->assertTransformCssMediaCase( array(
-			'media' => 'handheld',
-			'handheldForIPhone' => false,
-			'expectedReturn' => 'handheld',
-			'message' => 'With $wgHandheldForIPhone false, handheld media type is preserved'
+}</script>
+'
+			),
+			// Load module script with with ESI
+			array(
+				array( 'test.foo', ResourceLoaderModule::TYPE_SCRIPTS, true ),
+				'<script><esi:include src="http://127.0.0.1:8080/w/load.php?debug=false&amp;lang=en&amp;modules=test.foo&amp;only=scripts&amp;skin=fallback&amp;*" /></script>
+'
+			),
+			// Load module styles with with ESI
+			array(
+				array( 'test.foo', ResourceLoaderModule::TYPE_STYLES, true ),
+				'<style><esi:include src="http://127.0.0.1:8080/w/load.php?debug=false&amp;lang=en&amp;modules=test.foo&amp;only=styles&amp;skin=fallback&amp;*" /></style>
+',
+			),
+			// Load no modules
+			array(
+				array( array(), ResourceLoaderModule::TYPE_COMBINED ),
+				'',
+			),
+			// noscript group
+			array(
+				array( 'test.noscript', ResourceLoaderModule::TYPE_STYLES ),
+				'<noscript><link rel=stylesheet href="http://127.0.0.1:8080/w/load.php?debug=false&amp;lang=en&amp;modules=test.noscript&amp;only=styles&amp;skin=fallback&amp;*"></noscript>
+'
+			),
+			// Load two modules in separate groups
+			array(
+				array( array( 'test.group.foo', 'test.group.bar' ), ResourceLoaderModule::TYPE_COMBINED ),
+				'<script src="http://127.0.0.1:8080/w/load.php?debug=false&amp;lang=en&amp;modules=test.group.bar&amp;skin=fallback&amp;*"></script>
+<script src="http://127.0.0.1:8080/w/load.php?debug=false&amp;lang=en&amp;modules=test.group.foo&amp;skin=fallback&amp;*"></script>
+',
+			),
+		);
+	}
+
+	/**
+	 * @dataProvider provideMakeResourceLoaderLink
+	 * @covers OutputPage::makeResourceLoaderLink
+	 */
+	public function testMakeResourceLoaderLink( $args, $expectedHtml ) {
+		$this->setMwGlobals( array(
+			'wgResourceLoaderDebug' => false,
+			'wgResourceLoaderUseESI' => true,
+			'wgLoadScript' => 'http://127.0.0.1:8080/w/load.php',
+			// Affects whether CDATA is inserted
+			'wgWellFormedXml' => false,
 		) );
+		$class = new ReflectionClass( 'OutputPage' );
+		$method = $class->getMethod( 'makeResourceLoaderLink' );
+		$method->setAccessible( true );
+		$ctx = new RequestContext();
+		$ctx->setSkin( SkinFactory::getDefaultInstance()->makeSkin( 'fallback' ) );
+		$ctx->setLanguage( 'en' );
+		$out = new OutputPage( $ctx );
+		$rl = $out->getResourceLoader();
+		$rl->register( array(
+			'test.foo' => new ResourceLoaderTestModule( array(
+				'script' => 'mw.test.foo( { a: true } );',
+				'styles' => '.mw-test-foo { content: "style"; }',
+			)),
+			'test.bar' => new ResourceLoaderTestModule( array(
+				'script' => 'mw.test.bar( { a: true } );',
+				'styles' => '.mw-test-bar { content: "style"; }',
+			)),
+			'test.baz' => new ResourceLoaderTestModule( array(
+				'script' => 'mw.test.baz( { a: true } );',
+				'styles' => '.mw-test-baz { content: "style"; }',
+			)),
+			'test.quux' => new ResourceLoaderTestModule( array(
+				'script' => 'mw.test.baz( { token: 123 } );',
+				'styles' => '/* pref-animate=off */ .mw-icon { transition: none; }',
+				'group' => 'private',
+			)),
+			'test.raw' => new ResourceLoaderTestModule( array(
+				'script' => 'mw.test.baz( { token: 123 } );',
+				'isRaw' => true,
+			)),
+			'test.noscript' => new ResourceLoaderTestModule( array(
+				'styles' => '.mw-test-noscript { content: "style"; }',
+				'group' => 'noscript',
+			)),
+			'test.group.bar' => new ResourceLoaderTestModule( array(
+				'styles' => '.mw-group-bar { content: "style"; }',
+				'group' => 'bar',
+			)),
+			'test.group.foo' => new ResourceLoaderTestModule( array(
+				'styles' => '.mw-group-foo { content: "style"; }',
+				'group' => 'foo',
+			)),
+		) );
+		$links = $method->invokeArgs( $out, $args );
+		// Strip comments to avoid variation due to wgDBname in WikiID and cache key
+		$actualHtml = preg_replace( '#/\*[^*]+\*/#', '', $links['html'] );
+		$this->assertEquals( $expectedHtml, $actualHtml );
 	}
 }

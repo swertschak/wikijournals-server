@@ -30,8 +30,8 @@
  * @ingroup Media
  */
 class JpegMetadataExtractor {
-
 	const MAX_JPEG_SEGMENTS = 200;
+
 	// the max segment is a sanity check.
 	// A jpeg file should never even remotely have
 	// that many segments. Your average file has about 10.
@@ -43,12 +43,12 @@ class JpegMetadataExtractor {
 	 * but gis doesn't support having multiple app1 segments
 	 * and those can't extract xmp on files containing both exif and xmp data
 	 *
-	 * @param string $filename name of jpeg file
-	 * @return Array of interesting segments.
-	 * @throws MWException if given invalid file.
+	 * @param string $filename Name of jpeg file
+	 * @return array Array of interesting segments.
+	 * @throws MWException If given invalid file.
 	 */
-	static function segmentSplitter ( $filename ) {
-		$showXMP = function_exists( 'xml_parser_create_ns' );
+	static function segmentSplitter( $filename ) {
+		$showXMP = XMPReader::isSupported();
 
 		$segmentCount = 0;
 
@@ -83,11 +83,12 @@ class JpegMetadataExtractor {
 				throw new MWException( 'Too many jpeg segments. Aborting' );
 			}
 			if ( $buffer !== "\xFF" ) {
-				throw new MWException( "Error reading jpeg file marker. Expected 0xFF but got " . bin2hex( $buffer ) );
+				throw new MWException( "Error reading jpeg file marker. " .
+					"Expected 0xFF but got " . bin2hex( $buffer ) );
 			}
 
 			$buffer = fread( $fh, 1 );
-			while( $buffer === "\xFF" && !feof( $fh ) ) {
+			while ( $buffer === "\xFF" && !feof( $fh ) ) {
 				// Skip through any 0xFF padding bytes.
 				$buffer = fread( $fh, 1 );
 			}
@@ -111,9 +112,8 @@ class JpegMetadataExtractor {
 				if ( $com === $oldCom ) {
 					$segments["COM"][] = $oldCom;
 				} else {
-					wfDebug( __METHOD__ . ' Ignoring JPEG comment as is garbage.' );
+					wfDebug( __METHOD__ . " Ignoring JPEG comment as is garbage.\n" );
 				}
-
 			} elseif ( $buffer === "\xE1" ) {
 				// APP1 section (Exif, XMP, and XMP extended)
 				// only extract if XMP is enabled.
@@ -140,7 +140,7 @@ class JpegMetadataExtractor {
 					} elseif ( $byteOrderMarker === 'II' ) {
 						$segments['byteOrder'] = 'LE';
 					} else {
-						wfDebug( __METHOD__ . ' Invalid byte ordering?!' );
+						wfDebug( __METHOD__ . " Invalid byte ordering?!\n" );
 					}
 				}
 			} elseif ( $buffer === "\xED" ) {
@@ -155,10 +155,11 @@ class JpegMetadataExtractor {
 			} else {
 				// segment we don't care about, so skip
 				$size = wfUnpack( "nint", fread( $fh, 2 ), 2 );
-				if ( $size['int'] <= 2 ) throw new MWException( "invalid marker size in jpeg" );
+				if ( $size['int'] <= 2 ) {
+					throw new MWException( "invalid marker size in jpeg" );
+				}
 				fseek( $fh, $size['int'] - 2, SEEK_CUR );
 			}
-
 		}
 		// shouldn't get here.
 		throw new MWException( "Reached end of jpeg file unexpectedly" );
@@ -166,9 +167,9 @@ class JpegMetadataExtractor {
 
 	/**
 	 * Helper function for jpegSegmentSplitter
-	 * @param &$fh FileHandle for jpeg file
+	 * @param resource &$fh File handle for JPEG file
 	 * @throws MWException
-	 * @return string data content of segment.
+	 * @return string Data content of segment.
 	 */
 	private static function jpegExtractMarker( &$fh ) {
 		$size = wfUnpack( "nint", fread( $fh, 2 ), 2 );
@@ -179,6 +180,7 @@ class JpegMetadataExtractor {
 		if ( strlen( $segment ) !== $size['int'] - 2 ) {
 			throw new MWException( "Segment shorter than expected" );
 		}
+
 		return $segment;
 	}
 
@@ -191,11 +193,12 @@ class JpegMetadataExtractor {
 	 *
 	 * This should generally be called by BitmapMetadataHandler::doApp13()
 	 *
-	 * @param string $app13 photoshop psir app13 block from jpg.
+	 * @param string $app13 Photoshop psir app13 block from jpg.
 	 * @throws MWException (It gets caught next level up though)
-	 * @return String if the iptc hash is good or not.
+	 * @return string If the iptc hash is good or not. One of 'iptc-no-hash',
+	 *   'iptc-good-hash', 'iptc-bad-hash'.
 	 */
-	public static function doPSIR ( $app13 ) {
+	public static function doPSIR( $app13 ) {
 		if ( !$app13 ) {
 			throw new MWException( "No App13 segment given" );
 		}
@@ -243,7 +246,9 @@ class JpegMetadataExtractor {
 			// PHP can take issue with very large unsigned ints and make them negative.
 			// Which should never ever happen, as this has to be inside a segment
 			// which is limited to a 16 bit number.
-			if ( $lenData['len'] < 0 ) throw new MWException( "Too big PSIR (" . $lenData['len'] . ')' );
+			if ( $lenData['len'] < 0 ) {
+				throw new MWException( "Too big PSIR (" . $lenData['len'] . ')' );
+			}
 
 			$offset += 4; // 4bytes length field;
 
@@ -267,9 +272,10 @@ class JpegMetadataExtractor {
 
 			// if odd, add 1 to length to account for
 			// null pad byte.
-			if ( $lenData['len'] % 2 == 1 ) $lenData['len']++;
+			if ( $lenData['len'] % 2 == 1 ) {
+				$lenData['len']++;
+			}
 			$offset += $lenData['len'];
-
 		}
 
 		if ( !$realHash || !$recordedHash ) {

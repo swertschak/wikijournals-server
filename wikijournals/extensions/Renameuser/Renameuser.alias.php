@@ -156,7 +156,7 @@ $specialPageAliases['hr'] = array(
 
 /** Upper Sorbian (hornjoserbsce) */
 $specialPageAliases['hsb'] = array(
-	'Renameuser' => array( 'Wužiwarja přemjenować' ),
+	'Renameuser' => array( 'Wužiwarja_přemjenować' ),
 );
 
 /** Haitian (Kreyòl ayisyen) */
@@ -316,7 +316,7 @@ $specialPageAliases['sq'] = array(
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎) */
 $specialPageAliases['sr-ec'] = array(
-	'Renameuser' => array( 'Преименуј_корисника' ),
+	'Renameuser' => array( 'ПреименујКорисника', 'Преименуј_корисника' ),
 );
 
 /** Swedish (svenska) */
@@ -361,5 +361,5 @@ $specialPageAliases['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎) */
 $specialPageAliases['zh-hant'] = array(
-	'Renameuser' => array( '重命名用戶' ),
+	'Renameuser' => array( '重命名使用者' ),
 );

@@ -22,47 +22,41 @@
  */
 
 class ApiImageRotate extends ApiBase {
-
 	private $mPageSet = null;
-
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
 
 	/**
 	 * Add all items from $values into the result
-	 * @param array $result output
-	 * @param array $values values to add
-	 * @param string $flag the name of the boolean flag to mark this element
-	 * @param string $name if given, name of the value
+	 * @param array $result Output
+	 * @param array $values Values to add
+	 * @param string $flag The name of the boolean flag to mark this element
+	 * @param string $name If given, name of the value
 	 */
 	private static function addValues( array &$result, $values, $flag = null, $name = null ) {
 		foreach ( $values as $val ) {
-			if( $val instanceof Title ) {
+			if ( $val instanceof Title ) {
 				$v = array();
 				ApiQueryBase::addTitleInfo( $v, $val );
-			} elseif( $name !== null ) {
+			} elseif ( $name !== null ) {
 				$v = array( $name => $val );
 			} else {
 				$v = $val;
 			}
-			if( $flag !== null ) {
+			if ( $flag !== null ) {
 				$v[$flag] = '';
 			}
 			$result[] = $v;
 		}
 	}
 
-
 	public function execute() {
 		$params = $this->extractRequestParams();
-		$rotation = $params[ 'rotation' ];
-		$user = $this->getUser();
+		$rotation = $params['rotation'];
+
+		$this->getResult()->beginContinuation( $params['continue'], array(), array() );
 
 		$pageSet = $this->getPageSet();
 		$pageSet->execute();
 
-		$result = array();
 		$result = array();
 
 		self::addValues( $result, $pageSet->getInvalidTitles(), 'invalid', 'title' );
@@ -111,15 +105,17 @@ class ApiImageRotate extends ApiBase {
 				continue;
 			}
 			$ext = strtolower( pathinfo( "$srcPath", PATHINFO_EXTENSION ) );
-			$tmpFile = TempFSFile::factory( 'rotate_', $ext);
+			$tmpFile = TempFSFile::factory( 'rotate_', $ext );
 			$dstPath = $tmpFile->getPath();
 			$err = $handler->rotate( $file, array(
 				"srcPath" => $srcPath,
 				"dstPath" => $dstPath,
-				"rotation"=> $rotation
+				"rotation" => $rotation
 			) );
 			if ( !$err ) {
-				$comment = wfMessage( 'rotate-comment' )->numParams( $rotation )->text();
+				$comment = wfMessage(
+					'rotate-comment'
+				)->numParams( $rotation )->inContentLanguage()->text();
 				$status = $file->upload( $dstPath,
 					$comment, $comment, 0, false, false, $this->getUser() );
 				if ( $status->isGood() ) {
@@ -137,6 +133,7 @@ class ApiImageRotate extends ApiBase {
 		$apiResult = $this->getResult();
 		$apiResult->setIndexedTagName( $result, 'page' );
 		$apiResult->addValue( null, $this->getModuleName(), $result );
+		$apiResult->endContinuation();
 	}
 
 	/**
@@ -147,23 +144,26 @@ class ApiImageRotate extends ApiBase {
 		if ( $this->mPageSet === null ) {
 			$this->mPageSet = new ApiPageSet( $this, 0, NS_FILE );
 		}
+
 		return $this->mPageSet;
 	}
 
 	/**
 	 * Checks that the user has permissions to perform rotations.
-	 * @param $user User The user to check.
+	 * @param User $user The user to check
+	 * @param Title $title
 	 * @return string|null Permission error message, or null if there is no error
 	 */
 	protected function checkPermissions( $user, $title ) {
 		$permissionErrors = array_merge(
-			$title->getUserPermissionsErrors( 'edit' , $user ),
-			$title->getUserPermissionsErrors( 'upload' , $user )
+			$title->getUserPermissionsErrors( 'edit', $user ),
+			$title->getUserPermissionsErrors( 'upload', $user )
 		);
 
 		if ( $permissionErrors ) {
 			// Just return the first error
 			$msg = $this->parseMsg( $permissionErrors[0] );
+
 			return $msg['info'];
 		}
 
@@ -179,49 +179,35 @@ class ApiImageRotate extends ApiBase {
 	}
 
 	public function getAllowedParams( $flags = 0 ) {
-		$pageSet = $this->getPageSet();
 		$result = array(
 			'rotation' => array(
 				ApiBase::PARAM_TYPE => array( '90', '180', '270' ),
 				ApiBase::PARAM_REQUIRED => true
 			),
-			'token' => array(
-				ApiBase::PARAM_TYPE => 'string',
-				ApiBase::PARAM_REQUIRED => true
-			),
+			'continue' => '',
 		);
 		if ( $flags ) {
 			$result += $this->getPageSet()->getFinalParams( $flags );
 		}
+
 		return $result;
 	}
 
 	public function getParamDescription() {
 		$pageSet = $this->getPageSet();
-		return $pageSet->getParamDescription() + array(
+
+		return $pageSet->getFinalParamDescription() + array(
 			'rotation' => 'Degrees to rotate image clockwise',
-			'token' => 'Edit token. You can get one of these through action=tokens',
+			'continue' => 'When more results are available, use this to continue',
 		);
 	}
 
 	public function getDescription() {
-		return 'Rotate one or more images';
+		return 'Rotate one or more images.';
 	}
 
 	public function needsToken() {
-		return true;
-	}
-
-	public function getTokenSalt() {
-		return '';
-	}
-
-	public function getPossibleErrors() {
-		$pageSet = $this->getPageSet();
-		return array_merge(
-			parent::getPossibleErrors(),
-			$pageSet->getPossibleErrors()
-		);
+		return 'csrf';
 	}
 
 	public function getExamples() {

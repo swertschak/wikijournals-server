@@ -21,8 +21,8 @@
  * @ingroup Language
  */
 
-require_once( __DIR__ . '/../LanguageConverter.php' );
-require_once( __DIR__ . '/LanguageKu_ku.php' );
+require_once __DIR__ . '/../LanguageConverter.php';
+require_once __DIR__ . '/LanguageKu_ku.php';
 
 /**
  * Kurdish converter routines
@@ -41,23 +41,23 @@ class KuConverter extends LanguageConverter {
 
 		/* Doppel- und Halbvokale */
 		'ڵ' => 'll', # ll
-		'ڕ'  => 'rr', # rr
-		'ا'  => 'a',
+		'ڕ' => 'rr', # rr
+		'ا' => 'a',
 		# 'ئێ' => 'ê', # initial e
-		'ە'  => 'e',
-		'ه‌'  => 'e', # with one non-joiner
-		'ه‌‌'  => 'e', # with two non-joiner
-		'ة'  => 'e',
+		'ە' => 'e',
+		'ه‌' => 'e', # with one non-joiner
+		'ه‌‌' => 'e', # with two non-joiner
+		'ة' => 'e',
 		'ێ' => 'ê',
-		'ي'  => 'î',
-		'ی'  => 'î', # U+06CC  db 8c  ARABIC LETTER FARSI YEH
-		'ى'  => 'î', # U+0649  d9 89  ARABIC LETTER ALEF MAKSURA
-		'ۆ'  => 'o',
-		'و'  => 'w',
-		'ئ'  => '', # initial hemze should not be shown
-		'،'  => ',',
-		'ع'  => '\'', # ayn
-		'؟'  => '?',
+		'ي' => 'î',
+		'ی' => 'î', # U+06CC  db 8c  ARABIC LETTER FARSI YEH
+		'ى' => 'î', # U+0649  d9 89  ARABIC LETTER ALEF MAKSURA
+		'ۆ' => 'o',
+		'و' => 'w',
+		'ئ' => '', # initial hemze should not be shown
+		'،' => ',',
+		'ع' => '\'', # ayn
+		'؟' => '?',
 
 		# digits
 		'٠' => '0', # &#x0660;
@@ -113,13 +113,13 @@ class KuConverter extends LanguageConverter {
 		' o' => 'ئۆ ',
 		' u' => 'ئو ',
 		' û' => 'ئوو ',
-		'A'  => 'ئا',
-		'E'  => 'ئە',
-		'Ê'  => 'ئێ',
-		'Î'  => 'ئی',
-		'O'  => 'ئۆ',
-		'U'  => 'ئو',
-		'Û'  => 'ئوو',
+		'A' => 'ئا',
+		'E' => 'ئە',
+		'Ê' => 'ئێ',
+		'Î' => 'ئی',
+		'O' => 'ئۆ',
+		'U' => 'ئو',
+		'Û' => 'ئوو',
 		' A' => 'ئا ',
 		' E' => 'ئە ',
 		' Ê' => 'ئێ ',
@@ -127,7 +127,8 @@ class KuConverter extends LanguageConverter {
 		' O' => 'ئۆ ',
 		' U' => 'ئو ',
 		' Û' => 'ئوو ',
-		# eyn erstmal deaktivieren, einfache Anführungsstriche sind einfach zu häufig, um sie als eyn zu interpretieren
+		# eyn erstmal deaktivieren, einfache Anführungsstriche sind einfach zu
+		# häufig, um sie als eyn zu interpretieren.
 		# '\'' => 'ع',
 
 /*		# deactivated for now, breaks links i.e. in header of Special:Recentchanges :-(
@@ -149,7 +150,7 @@ class KuConverter extends LanguageConverter {
 		$this->mTables = array(
 			'ku-latn' => new ReplacementArray( $this->mArabicToLatin ),
 			'ku-arab' => new ReplacementArray( $this->mLatinToArabic ),
-			'ku'      => new ReplacementArray()
+			'ku' => new ReplacementArray()
 		);
 	}
 
@@ -159,48 +160,32 @@ class KuConverter extends LanguageConverter {
 	 *     names as they were
 	 *   - do not try to find variants for usernames
 	 *
-	 * @param $link string
-	 * @param $nt Title
-	 * @param $ignoreOtherCond bool
+	 * @param string &$link
+	 * @param Title &$nt
+	 * @param bool $ignoreOtherCond
 	 */
 	function findVariantLink( &$link, &$nt, $ignoreOtherCond = false ) {
 		// check for user namespace
 		if ( is_object( $nt ) ) {
 			$ns = $nt->getNamespace();
-			if ( $ns == NS_USER || $ns == NS_USER_TALK )
+			if ( $ns == NS_USER || $ns == NS_USER_TALK ) {
 				return;
+			}
 		}
 
 		$oldlink = $link;
 		parent::findVariantLink( $link, $nt, $ignoreOtherCond );
-		if ( $this->getPreferredVariant() == $this->mMainLanguageCode )
+		if ( $this->getPreferredVariant() == $this->mMainLanguageCode ) {
 			$link = $oldlink;
-	}
-
-	/**
-	 * An ugly function wrapper for parsing Image titles
-	 * (to prevent image name conversion)
-	 *
-	 * @param $text string
-	 * @param $toVariant bool
-	 *
-	 * @return string
-	 */
-	function autoConvert( $text, $toVariant = false ) {
-		global $wgTitle;
-		if ( is_object( $wgTitle ) && $wgTitle->getNameSpace() == NS_FILE ) {
-			$imagename = $wgTitle->getNsText();
-			if ( preg_match( "/^$imagename:/", $text ) ) return $text;
 		}
-		return parent::autoConvert( $text, $toVariant );
 	}
 
 	/**
 	 *  It translates text into variant, specials:
 	 *    - ommiting roman numbers
 	 *
-	 * @param $text string
-	 * @param $toVariant bool
+	 * @param string $text
+	 * @param bool $toVariant
 	 *
 	 * @throws MWException
 	 * @return string
@@ -253,7 +238,7 @@ class LanguageKu extends LanguageKu_ku {
 
 		$variants = array( 'ku', 'ku-arab', 'ku-latn' );
 		$variantfallbacks = array(
-			'ku'      => 'ku-latn',
+			'ku' => 'ku-latn',
 			'ku-arab' => 'ku-latn',
 			'ku-latn' => 'ku-arab',
 		);

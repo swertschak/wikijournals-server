@@ -49,7 +49,7 @@
  * @license GNU General Public License 2.0 or later
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script to parse some wikitext.
@@ -62,7 +62,12 @@ class CLIParser extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Parse a given wikitext";
-		$this->addOption( 'title', 'Title name for the given wikitext (Default: \'CLIParser\')', false, true );
+		$this->addOption(
+			'title',
+			'Title name for the given wikitext (Default: \'CLIParser\')',
+			false,
+			true
+		);
 		$this->addArg( 'file', 'File containing wikitext (Default: stdin)', false );
 	}
 
@@ -85,12 +90,13 @@ class CLIParser extends Maintenance {
 	 */
 	protected function Wikitext() {
 
-		$php_stdin  = 'php://stdin';
+		$php_stdin = 'php://stdin';
 		$input_file = $this->getArg( 0, $php_stdin );
 
-		if( $input_file === $php_stdin ) {
+		if ( $input_file === $php_stdin ) {
 			$ctrl = wfIsWindows() ? 'CTRL+Z' : 'CTRL+D';
-			$this->error( basename(__FILE__) .": warning: reading wikitext from STDIN. Press $ctrl to parse.\n" );
+			$this->error( basename( __FILE__ )
+				. ": warning: reading wikitext from STDIN. Press $ctrl to parse.\n" );
 		}
 
 		return file_get_contents( $input_file );
@@ -107,13 +113,13 @@ class CLIParser extends Maintenance {
 	 * Default title is 'CLIParser', it can be overriden with the option
 	 * --title <Your:Title>
 	 *
-	 * @return Title object
+	 * @return Title
 	 */
 	protected function getTitle() {
-		$title =
-			$this->getOption( 'title' )
+		$title = $this->getOption( 'title' )
 			? $this->getOption( 'title' )
-			: 'CLIParser' ;
+			: 'CLIParser';
+
 		return Title::newFromText( $title );
 	}
 
@@ -123,12 +129,12 @@ class CLIParser extends Maintenance {
 	 */
 	protected function parse( $wikitext ) {
 		return $this->parser->parse(
-			$wikitext
-			, $this->getTitle()
-			, new ParserOptions()
+			$wikitext,
+			$this->getTitle(),
+			new ParserOptions()
 		);
 	}
 }
 
 $maintClass = "CLIParser";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

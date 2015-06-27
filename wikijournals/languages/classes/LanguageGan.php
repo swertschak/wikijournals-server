@@ -21,36 +21,35 @@
  * @ingroup Language
  */
 
-require_once( __DIR__ . '/../LanguageConverter.php' );
-require_once( __DIR__ . '/LanguageZh.php' );
+require_once __DIR__ . '/../LanguageConverter.php';
+require_once __DIR__ . '/LanguageZh.php';
 
 /**
  * @ingroup Language
  */
 class GanConverter extends LanguageConverter {
-
 	/**
-	 * @param $langobj Language
-	 * @param $maincode string
-	 * @param $variants array
-	 * @param $variantfallbacks array
-	 * @param $flags array
-	 * @param $manualLevel array
+	 * @param Language $langobj
+	 * @param string $maincode
+	 * @param array $variants
+	 * @param array $variantfallbacks
+	 * @param array $flags
+	 * @param array $manualLevel
 	 */
 	function __construct( $langobj, $maincode,
-								$variants = array(),
-								$variantfallbacks = array(),
-								$flags = array(),
-								$manualLevel = array() ) {
+		$variants = array(),
+		$variantfallbacks = array(),
+		$flags = array(),
+		$manualLevel = array() ) {
 		$this->mDescCodeSep = '：';
 		$this->mDescVarSep = '；';
 		parent::__construct( $langobj, $maincode,
-									$variants,
-									$variantfallbacks,
-									$flags,
-									$manualLevel );
+			$variants,
+			$variantfallbacks,
+			$flags,
+			$manualLevel );
 		$names = array(
-			'gan'      => '原文',
+			'gan' => '原文',
 			'gan-hans' => '简体',
 			'gan-hant' => '繁體',
 		);
@@ -58,17 +57,17 @@ class GanConverter extends LanguageConverter {
 	}
 
 	function loadDefaultTables() {
-		require( __DIR__ . "/../../includes/ZhConversion.php" );
+		require __DIR__ . '/../../includes/ZhConversion.php';
 		$this->mTables = array(
 			'gan-hans' => new ReplacementArray( $zh2Hans ),
 			'gan-hant' => new ReplacementArray( $zh2Hant ),
-			'gan'      => new ReplacementArray
+			'gan' => new ReplacementArray
 		);
 	}
 
 	/**
-	 * @param $key string
-	 * @return String
+	 * @param string $key
+	 * @return string
 	 */
 	function convertCategoryKey( $key ) {
 		return $this->autoConvert( $key, 'gan' );
@@ -82,72 +81,38 @@ class GanConverter extends LanguageConverter {
  * @ingroup Language
  */
 class LanguageGan extends LanguageZh {
-
 	function __construct() {
 		global $wgHooks;
 		parent::__construct();
 
 		$variants = array( 'gan', 'gan-hans', 'gan-hant' );
 		$variantfallbacks = array(
-			'gan'      => array( 'gan-hans', 'gan-hant' ),
+			'gan' => array( 'gan-hans', 'gan-hant' ),
 			'gan-hans' => array( 'gan' ),
 			'gan-hant' => array( 'gan' ),
 		);
 		$ml = array(
-			'gan'      => 'disable',
+			'gan' => 'disable',
 		);
 
 		$this->mConverter = new GanConverter( $this, 'gan',
-								$variants, $variantfallbacks,
-								array(),
-								$ml );
+			$variants, $variantfallbacks,
+			array(),
+			$ml );
 
 		$wgHooks['PageContentSaveComplete'][] = $this->mConverter;
 	}
 
 	/**
-	 * this should give much better diff info
-	 *
-	 * @param $text string
-	 * @return string
-	 */
-	function segmentForDiff( $text ) {
-		return preg_replace(
-			"/([\\xc0-\\xff][\\x80-\\xbf]*)/e",
-			"' ' .\"$1\"", $text );
-	}
-
-	/**
-	 * @param $text string
-	 * @return string
-	 */
-	function unsegmentForDiff( $text ) {
-		return preg_replace(
-			"/ ([\\xc0-\\xff][\\x80-\\xbf]*)/e",
-			"\"$1\"", $text );
-	}
-
-	/**
 	 * word segmentation
 	 *
-	 * @param $string string
-	 * @param $autoVariant string
-	 * @return String
+	 * @param string $string
+	 * @param string $autoVariant
+	 * @return string
 	 */
 	function normalizeForSearch( $string, $autoVariant = 'gan-hans' ) {
 		// LanguageZh::normalizeForSearch
 		return parent::normalizeForSearch( $string, $autoVariant );
 	}
 
-	/**
-	 * @param $termsArray array
-	 * @return array
-	 */
-	function convertForSearchResult( $termsArray ) {
-		$terms = implode( '|', $termsArray );
-		$terms = self::convertDoubleWidth( $terms );
-		$terms = implode( '|', $this->mConverter->autoConvertToAllVariants( $terms ) );
-		$ret = array_unique( explode( '|', $terms ) );
-		return $ret;
-	}
 }

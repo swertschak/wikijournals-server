@@ -28,7 +28,7 @@
  * @ingroup Maintenance
  */
 
-require_once( __DIR__ . '/Maintenance.php' );
+require_once __DIR__ . '/Maintenance.php';
 
 /**
  * Maintenance script for periodic off-peak updating of the search index.
@@ -42,8 +42,18 @@ class UpdateSearchIndex extends Maintenance {
 		$this->mDescription = "Script for periodic off-peak updating of the search index";
 		$this->addOption( 's', 'starting timestamp', false, true );
 		$this->addOption( 'e', 'Ending timestamp', false, true );
-		$this->addOption( 'p', 'File for saving/loading timestamps, searchUpdate.WIKI_ID.pos by default', false, true );
-		$this->addOption( 'l', 'How long the searchindex and revision tables will be locked for', false, true );
+		$this->addOption(
+			'p',
+			'File for saving/loading timestamps, searchUpdate.WIKI_ID.pos by default',
+			false,
+			true
+		);
+		$this->addOption(
+			'l',
+			'How long the searchindex and revision tables will be locked for',
+			false,
+			true
+		);
 	}
 
 	public function getDbType() {
@@ -60,7 +70,7 @@ class UpdateSearchIndex extends Maintenance {
 			# We can safely delete the file when we're done though.
 			$start = file_get_contents( 'searchUpdate.pos' );
 			unlink( 'searchUpdate.pos' );
-		} elseif( is_readable( $posFile ) ) {
+		} elseif ( is_readable( $posFile ) ) {
 			$start = file_get_contents( $posFile );
 		} else {
 			$start = wfTimestamp( TS_MW, time() - 86400 );
@@ -97,9 +107,8 @@ class UpdateSearchIndex extends Maintenance {
 
 		$page = $dbw->tableName( 'page' );
 		$sql = "SELECT rc_cur_id FROM $recentchanges
-		  JOIN $page ON rc_cur_id=page_id AND rc_this_oldid=page_latest
-		  WHERE rc_type != " . RC_LOG . " AND rc_timestamp BETWEEN '$start' AND '$end'
-		  ";
+			JOIN $page ON rc_cur_id=page_id AND rc_this_oldid=page_latest
+			WHERE rc_type != " . RC_LOG . " AND rc_timestamp BETWEEN '$start' AND '$end'";
 		$res = $dbw->query( $sql, __METHOD__ );
 
 		$this->updateSearchIndex( $maxLockTime, array( $this, 'searchIndexUpdateCallback' ), $dbw, $res );
@@ -113,4 +122,4 @@ class UpdateSearchIndex extends Maintenance {
 }
 
 $maintClass = "UpdateSearchIndex";
-require_once( RUN_MAINTENANCE_IF_MAIN );
+require_once RUN_MAINTENANCE_IF_MAIN;

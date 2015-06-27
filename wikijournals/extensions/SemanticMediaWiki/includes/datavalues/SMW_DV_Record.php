@@ -1,14 +1,26 @@
 <?php
 /**
- * @file
  * @ingroup SMWDataValues
  */
 
 /**
- * SMWDataValue implements the handling of short lists of values,
- * where the order governs the type of each entry.
+ * SMWDataValue implements the handling of small sets of property-value pairs.
+ * The declaration of Records in SMW uses the order of values to encode the
+ * property that should be used, so the user only needs to enter a list of
+ * values. Internally, however, the property-value assignments are not stored
+ * with a particular order; they will only be ordered for display, following
+ * the declaration. This is why it is not supported to have Records using the
+ * same property for more than one value.
+ *
+ * The class uses SMWDIContainer objects to return its inner state. See the
+ * documentation for SMWDIContainer for details on how this "pseudo" data
+ * encapsulated many property assignments. Such data is stored internally
+ * like a page with various property-value assignments. Indeed, record values
+ * can be created from SMWDIWikiPage objects (the missing information will
+ * be fetched from the store).
  *
  * @todo Enforce limitation of maximal number of values.
+ * @todo Enforce uniqueness of properties in declaration.
  * @todo Complete internationalisation.
  *
  * @author Markus Krötzsch
@@ -25,7 +37,7 @@ class SMWRecordValue extends SMWDataValue {
 
 	protected function parseUserValueOrQuery( $value, $queryMode ) {
 		if ( $value === '' ) {
-			$this->addError( wfMsg( 'smw_novalues' ) );
+			$this->addError( wfMessage( 'smw_novalues' )->text() );
 
 			if ( $queryMode ) {
 				return new SMWThingDescription();
@@ -46,6 +58,13 @@ class SMWRecordValue extends SMWDataValue {
 			$semanticData = new SMWContainerSemanticData( $subject );
 		}
 
+		// #664 / T17732
+		$value = str_replace( "\;", "-3B", $value );
+
+		// Bug 21926 / T23926
+		// Values that use html entities are encoded with a semicolon
+		$value = htmlspecialchars_decode( $value, ENT_QUOTES );
+
 		$values = preg_split( '/[\s]*;[\s]*/u', trim( $value ) );
 		$valueIndex = 0; // index in value array
 		$propertyIndex = 0; // index in property list
@@ -56,20 +75,29 @@ class SMWRecordValue extends SMWDataValue {
 				break; // stop if there are no values left
 			}
 
+			$values[$valueIndex] = str_replace( "-3B", ";", $values[$valueIndex] );
+
 			if ( $queryMode ) { // special handling for supporting query parsing
 				$comparator = SMW_CMP_EQ;
-				SMWDataValue::prepareValue( $values[$valueIndex], $comparator );
+				self::prepareValue( $values[$valueIndex], $comparator );
 			}
 
 			// generating the DVs:
 			if ( ( $values[$valueIndex] === '' ) || ( $values[$valueIndex] == '?' ) ) { // explicit omission
 				$valueIndex++;
 			} else {
-				$dataValue = SMWDataValueFactory::newPropertyObjectValue( $diProperty, $values[$valueIndex] );
+				$dataValue = \SMW\DataValueFactory::getInstance()->newPropertyObjectValue( $diProperty, $values[$valueIndex] );
 
 				if ( $dataValue->isValid() ) { // valid DV: keep
 					if ( $queryMode ) {
-						$subdescriptions[] = new SMWSomeProperty( $diProperty, new SMWValueDescription( $dataValue->getDataItem(), $comparator ) );
+						$subdescriptions[] = new SMWSomeProperty(
+							$diProperty,
+							new SMWValueDescription(
+								$dataValue->getDataItem(),
+								$dataValue->getProperty(),
+								$comparator
+							)
+						);
 					} else {
 						$semanticData->addPropertyObjectValue( $diProperty, $dataValue->getDataItem() );
 					}
@@ -90,7 +118,7 @@ class SMWRecordValue extends SMWDataValue {
 		}
 
 		if ( $empty ) {
-			$this->addError( wfMsg( 'smw_novalues' ) );
+			$this->addError( wfMessage( 'smw_novalues' )->text() );
 		}
 
 		if ( $queryMode ) {
@@ -112,6 +140,11 @@ class SMWRecordValue extends SMWDataValue {
 	protected function loadDataItem( SMWDataItem $dataItem ) {
 		if ( $dataItem->getDIType() == SMWDataItem::TYPE_CONTAINER ) {
 			$this->m_dataitem = $dataItem;
+			return true;
+		} elseif ( $dataItem->getDIType() == SMWDataItem::TYPE_WIKIPAGE ) {
+			$semanticData = new SMWContainerSemanticData( $dataItem );
+			$semanticData->copyDataFrom( \SMW\StoreFactory::getStore()->getSemanticData( $dataItem ) );
+			$this->m_dataitem = new SMWDIContainer( $semanticData );
 			return true;
 		} else {
 			return false;
@@ -163,6 +196,19 @@ class SMWRecordValue extends SMWDataValue {
 	public function setProperty( SMWDIProperty $property ) {
 		parent::setProperty( $property );
 		$this->m_diProperties = null;
+	}
+
+	/**
+	 * @since 2.1
+	 *
+	 * @param SMWDIProperty[] $properties
+	 */
+	public function setFieldProperties( array $properties ) {
+		foreach ( $properties as $property ) {
+			if ( $property instanceOf SMWDIProperty ) {
+				$this->m_diProperties[] = $property;
+			}
+		}
 	}
 
 ////// Additional API for value lists
@@ -243,7 +289,7 @@ class SMWRecordValue extends SMWDataValue {
 
 			if ( !is_null( $propertyDiWikiPage ) ) {
 				$listDiProperty = new SMWDIProperty( '_LIST' );
-				$dataItems = smwfGetStore()->getPropertyValues( $propertyDiWikiPage, $listDiProperty );
+				$dataItems = \SMW\StoreFactory::getStore()->getPropertyValues( $propertyDiWikiPage, $listDiProperty );
 
 				if ( count( $dataItems ) == 1 ) {
 					$propertyListValue = new SMWPropertyListValue( '__pls' );
@@ -278,7 +324,7 @@ class SMWRecordValue extends SMWDataValue {
 			$propertyValues = $this->m_dataitem->getSemanticData()->getPropertyValues( $propertyDataItem ); // combining this with next line violates PHP strict standards
 			$dataItem = reset( $propertyValues );
 			if ( $dataItem !== false ) {
-				$dataValue = SMWDataValueFactory::newDataItemValue( $dataItem, $propertyDataItem );
+				$dataValue = \SMW\DataValueFactory::getInstance()->newDataItemValue( $dataItem, $propertyDataItem );
 				$result .= $this->makeValueOutputText( $type, $dataValue, $linker );
 			} else {
 				$result .= '?';
@@ -295,7 +341,7 @@ class SMWRecordValue extends SMWDataValue {
 			case 1: return $dataValue->getShortHTMLText( $linker );
 			case 2: return $dataValue->getShortWikiText( $linker );
 			case 3: return $dataValue->getShortHTMLText( $linker );
-			case 4: return $dataValue->getWikiValue();
+			case 4: return str_replace( ";", "\;", $dataValue->getWikiValue() );
 		}
 	}
 

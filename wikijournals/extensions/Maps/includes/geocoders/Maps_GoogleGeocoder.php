@@ -5,19 +5,15 @@
  * 
  * Webservice documentation: http://code.google.com/apis/maps/documentation/geocoding/
  *
- * @file Maps_GoogleGeocoder.php
- * @ingroup Maps
- * @ingroup Geocoders
- *
- * @licence GNU GPL v3
+ * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  * @author Sergey Chernyshev
  * @author Desiree Gennaro
  */
-final class MapsGoogleGeocoder extends MapsGeocoder {
+final class MapsGoogleGeocoder extends \Maps\Geocoder {
 	
 	/**
-	 * Registeres the geocoder.
+	 * Registers the geocoder.
 	 * 
 	 * No LSB in pre-5.3 PHP *sigh*.
 	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
@@ -25,12 +21,12 @@ final class MapsGoogleGeocoder extends MapsGeocoder {
 	 * @since 0.7
 	 */
 	public static function register() {
-		MapsGeocoders::registerGeocoder( 'google', __CLASS__ );
+		\Maps\Geocoders::registerGeocoder( 'google', __CLASS__ );
 		return true;
 	}		
 	
 	/**
-	 * @see MapsGeocoder::getRequestUrl
+	 * @see \Maps\Geocoder::getRequestUrl
 	 * 
 	 * @since 0.7
 	 * 
@@ -43,7 +39,7 @@ final class MapsGoogleGeocoder extends MapsGeocoder {
 	}
 	
 	/**
-	 * @see MapsGeocoder::parseResponse
+	 * @see \Maps\Geocoder::parseResponse
 	 * 
 	 * @since 0.7
 	 * 
@@ -65,14 +61,14 @@ final class MapsGoogleGeocoder extends MapsGeocoder {
 	}
 	
 	/**
-	 * @see MapsGeocoder::getOverrides
+	 * @see \Maps\Geocoder::getOverrides
 	 * 
 	 * @since 0.7
 	 * 
 	 * @return array
 	 */
 	public static function getOverrides() {
-		return array( 'googlemaps2', 'googlemaps3' );
+		return array( 'googlemaps3' );
 	}
 	
 }

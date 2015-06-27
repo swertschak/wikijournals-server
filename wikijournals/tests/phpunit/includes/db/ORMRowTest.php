@@ -71,11 +71,12 @@ abstract class ORMRowTest extends \MediaWikiTestCase {
 	/**
 	 * @since 1.20
 	 * @param array $data
-	 * @param boolean $loadDefaults
+	 * @param bool $loadDefaults
 	 * @return IORMRow
 	 */
 	protected function getRowInstance( array $data, $loadDefaults ) {
 		$class = $this->getRowClass();
+
 		return new $class( $this->getTableInstance(), $data, $loadDefaults );
 	}
 
@@ -114,7 +115,7 @@ abstract class ORMRowTest extends \MediaWikiTestCase {
 
 	/**
 	 * @since 1.20
-	 * @return array of IORMRow
+	 * @return array Array of IORMRow
 	 */
 	public function instanceProvider() {
 		$instances = array();

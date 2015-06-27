@@ -36,63 +36,55 @@ class ResourceLoaderUserCSSPrefsModule extends ResourceLoaderModule {
 	/* Methods */
 
 	/**
-	 * @param $context ResourceLoaderContext
-	 * @return array|int|Mixed
+	 * @param ResourceLoaderContext $context
+	 * @return array|int|mixed
 	 */
 	public function getModifiedTime( ResourceLoaderContext $context ) {
 		$hash = $context->getHash();
-		if ( isset( $this->modifiedTime[$hash] ) ) {
-			return $this->modifiedTime[$hash];
+		if ( !isset( $this->modifiedTime[$hash] ) ) {
+			global $wgUser;
+			$this->modifiedTime[$hash] = wfTimestamp( TS_UNIX, $wgUser->getTouched() );
 		}
 
-		global $wgUser;
-		return $this->modifiedTime[$hash] = wfTimestamp( TS_UNIX, $wgUser->getTouched() );
+		return $this->modifiedTime[$hash];
 	}
 
 	/**
-	 * @param $context ResourceLoaderContext
+	 * @param ResourceLoaderContext $context
 	 * @return array
 	 */
 	public function getStyles( ResourceLoaderContext $context ) {
-		global $wgAllowUserCssPrefs, $wgUser;
+		global $wgUser;
 
-		if ( $wgAllowUserCssPrefs ) {
-			$options = $wgUser->getOptions();
-
-			// Build CSS rules
-			$rules = array();
-
-			// Underline: 2 = browser default, 1 = always, 0 = never
-			if ( $options['underline'] < 2 ) {
-				$rules[] = "a { text-decoration: " .
-					( $options['underline'] ? 'underline' : 'none' ) . "; }";
-			} else {
-				# The scripts of these languages are very hard to read with underlines
-				$rules[] = 'a:lang(ar), a:lang(ckb), a:lang(fa),a:lang(kk-arab), ' .
-				'a:lang(mzn), a:lang(ps), a:lang(ur) { text-decoration: none; }';
-			}
-			if ( $options['justify'] ) {
-				$rules[] = "#article, #bodyContent, #mw_content { text-align: justify; }\n";
-			}
-			if ( !$options['showtoc'] ) {
-				$rules[] = "#toc { display: none; }\n";
-			}
-			if ( !$options['editsection'] ) {
-				$rules[] = ".editsection { display: none; }\n";
-			}
-			if ( $options['editfont'] !== 'default' ) {
-				// Double-check that $options['editfont'] consists of safe characters only
-				if ( preg_match( '/^[a-zA-Z0-9_, -]+$/', $options['editfont'] ) ) {
-					$rules[] = "textarea { font-family: {$options['editfont']}; }\n";
-				}
-			}
-			$style = implode( "\n", $rules );
-			if ( $this->getFlip( $context ) ) {
-				$style = CSSJanus::transform( $style, true, false );
-			}
-			return array( 'all' => $style );
+		if ( !$this->getConfig()->get( 'AllowUserCssPrefs' ) ) {
+			return array();
 		}
-		return array();
+
+		$options = $wgUser->getOptions();
+
+		// Build CSS rules
+		$rules = array();
+
+		// Underline: 2 = browser default, 1 = always, 0 = never
+		if ( $options['underline'] < 2 ) {
+			$rules[] = "a { text-decoration: " .
+				( $options['underline'] ? 'underline' : 'none' ) . "; }";
+		} else {
+			# The scripts of these languages are very hard to read with underlines
+			$rules[] = 'a:lang(ar), a:lang(kk-arab), a:lang(mzn), ' .
+			'a:lang(ps), a:lang(ur) { text-decoration: none; }';
+		}
+		if ( $options['editfont'] !== 'default' ) {
+			// Double-check that $options['editfont'] consists of safe characters only
+			if ( preg_match( '/^[a-zA-Z0-9_, -]+$/', $options['editfont'] ) ) {
+				$rules[] = "textarea { font-family: {$options['editfont']}; }\n";
+			}
+		}
+		$style = implode( "\n", $rules );
+		if ( $this->getFlip( $context ) ) {
+			$style = CSSJanus::transform( $style, true, false );
+		}
+		return array( 'all' => $style );
 	}
 
 	/**

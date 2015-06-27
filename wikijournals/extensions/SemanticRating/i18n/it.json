@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"semanticrating-desc": "Consente agli utenti di valutare gli elementi con stelle",
+	"semanticrating-max": "Il numero massimo di stelle in una valutazione"
+}

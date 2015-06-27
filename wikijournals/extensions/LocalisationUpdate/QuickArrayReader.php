@@ -4,8 +4,7 @@
  * Quickie parser class that can happily read the subset of PHP we need
  * for our localization arrays safely.
  *
- * About an order of magnitude faster than ConfEditor(), but still an
- * order of magnitude slower than eval().
+ * Still an order of magnitude slower than eval().
  */
 class QuickArrayReader {
 	private $vars = array();
@@ -168,6 +167,7 @@ class QuickArrayReader {
 			// @fixme trim() call is due to mystery bug where whitespace gets
 			// appended to the token; without it we ended up reading in the
 			// extra quote on the end!
+			wfRestoreWarnings();
 			return stripcslashes( substr( trim( $str ), 1, -1 ) );
 		}
 		wfRestoreWarnings();
