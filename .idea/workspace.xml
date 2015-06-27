@@ -3,6 +3,769 @@
   <component name="ChangeListManager">
     <list id="f1d38b6c-19e1-412b-aaca-f03c358b0286" name="Default" comment="" />
     <list default="true" id="523fdffd-b02f-4439-a347-c28329fda1a8" name="wikijournals-server-28 Update to Mediawiki 1.20" comment="New Version of wikijournals">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/images/TwoListboxesArrow.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/images/TwoListboxesCheck.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/images/TwoListboxesDelete.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/images/TwoListboxesDownload.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/images/TwoListboxesMinus.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/images/TwoListboxesPlus.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/.gitmodules" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/.gitreview" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/.gitreview" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/.gitreview" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/.gitreview" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/.gitreview" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/.gitreview" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/.gitreview" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/.gitreview" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/.jshintrc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/HeaderTabs.i18n.magic.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/HeaderTabs_body.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/PageSchemas.i18n.alias.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/README" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/ReplaceTextSearch.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/includes/SD_ParserFunctions.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/skins/SD_info.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/skins/SFI_DateCheck.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/includes/SFI_DateCheck.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/skins/SFI_TwoListBoxes.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/includes/SFI_TwoListBoxes.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/SIO_SubobjectAlias.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/SMARTY_2_BC_NOTES.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/SMARTY_3.0_BC_NOTES.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/SMARTY_3.1_NOTES.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/languages/SemanticDrilldown.i18n.magic.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/Smarty.class.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/SmartyBC.class.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/Widgets.i18n.namespaces.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/af.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/af.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/af.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/af.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/aln.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/aln.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/am.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/an.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ar.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ar.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/ar.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ar.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ar.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/ar.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/ar.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/arc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/arc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/arc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/arz.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/arz.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/arz.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ast.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ast.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ast.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/ast.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ast.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ast.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/ast.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/ast.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/avk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/az.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/az.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/az.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/azb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/azb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ba.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/bcc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/be-tarask.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/be-tarask.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/be-tarask.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/be-tarask.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/be-tarask.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/be-tarask.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/be-tarask.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/be-tarask.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/be.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/bg.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/bg.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/bg.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/bg.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/block.textformat.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/bn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/bn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/bn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/bs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/bs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/bs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/bs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/bs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/bs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/bs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ca.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/ca.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ca.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ca.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/ca.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/ca.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/plugins/cacheresource.apc.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/plugins/cacheresource.memcache.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/plugins/cacheresource.mysql.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ce.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ce.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ce.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ce.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ce.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/change_log.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/crh-cyrl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/crh-latn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/cs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/cs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/cs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/cs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/cs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/cs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/cs.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/cu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/cu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/cu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/cu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/cv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/cv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/cy.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/cy.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/da.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/da.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/libs/datecheck.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/de-formal.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/de-formal.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/de-formal.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/de.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/de.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/de.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/de.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/de.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/de.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/de.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/de.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/debug.tpl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/diq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/diq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/diq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/diq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/diq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/dsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/dsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/dsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/dsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/dsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/dsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/dsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/dsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/en.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/en.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/en.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/en.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/en.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/en.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/en.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/en.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/eo.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/eo.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/eo.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/eo.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/es.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/es.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/es.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/es.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/es.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/es.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/es.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/es.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/et.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/et.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/et.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/et.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/et.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/eu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/eu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/eu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/eu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/eu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/skins/ext.headertabs.bare.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/skins/ext.headertabs.core.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/skins/ext.headertabs.large.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/fa.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/fa.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/fa.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/fa.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/fa.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/fa.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/fa.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/fa.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/fi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/fi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/fi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/fi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/fi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/fi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/fi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/fi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/templates/footer.tpl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/fr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/fr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/fr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/fr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/fr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/fr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/fr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/fr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/frp.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/frp.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/frp.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/frp.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/frp.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/frp.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/frp.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.counter.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.cycle.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.fetch.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.html_checkboxes.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.html_image.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.html_options.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.html_radios.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.html_select_date.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.html_select_time.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.html_table.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.mailto.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/function.math.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/fy.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/fy.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/fy.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/fy.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ga.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ga.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ga.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ga.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/generatepages.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/gl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/gl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/gl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/gl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/gl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/gl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/gl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/gl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/grc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/grc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/gsw.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/gsw.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/gsw.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/gsw.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/gsw.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/gsw.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/gsw.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/gu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/gv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/haw.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/he.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/he.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/he.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/he.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/he.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/he.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/he.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/he.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/templates/header.tpl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/hi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/hi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/hil.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/hil.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/hr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/hr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/hsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/hsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/hsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/hsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/hsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/hsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/hsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/hsb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/hu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/hu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/hu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/hu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/hu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/hu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/hu.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ia.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ia.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ia.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/ia.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ia.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ia.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/ia.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/ia.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/id.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/id.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/id.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/id.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/id.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/id.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/id.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/id.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ig.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ig.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ig.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/index.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/templates/index.tpl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/is.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/it.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/it.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/it.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/it.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/it.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/it.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/it.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/it.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ja.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ja.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ja.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/ja.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ja.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ja.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/ja.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/ja.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/libs/jquery.form-validator.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/libs/jquery.multi-select.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/libs/jquery.quicksearch.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/jv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/jv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ka.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ka.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ka.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ka.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ka.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/ka.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/kk-cyrl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/km.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/km.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/km.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/kn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ko.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ko.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ko.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/ko.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ko.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ko.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/ko.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/ko.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ksh.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ksh.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ksh.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/ksh.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ksh.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ksh.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/ksh.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/ksh.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ku-latn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ku-latn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/lb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/lb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/lb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/lb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/lb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/lb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/lb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/lb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/lt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/lt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/lv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/mg.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/mhr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/min.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/min.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/mk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/mk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/mk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/mk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/mk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/mk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/mk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/mk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ml.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ml.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ml.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ml.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/mn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifier.capitalize.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifier.date_format.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifier.debug_print_var.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifier.escape.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifier.regex_replace.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifier.replace.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifier.spacify.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifier.truncate.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.cat.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.count_characters.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.count_paragraphs.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.count_sentences.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.count_words.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.default.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.escape.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.from_charset.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.indent.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.lower.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.noprint.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.string_format.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.strip.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.strip_tags.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.to_charset.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.unescape.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.upper.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/modifiercompiler.wordwrap.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/mr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/mr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/mr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/ms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/ms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/ms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/mt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/mt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/myv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/nah.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/nb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/nb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/nb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/nb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/nb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/nb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/nb.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/nds.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/nds.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/nds.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/nl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/nl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/nl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/nl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/nl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/nl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/nl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/nl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/nn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/nn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/nn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/nn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/nso.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/oc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/oc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/oc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/oc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/oc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/oc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/oc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/os.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/outputfilter.trimwhitespace.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/pam.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/pdc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/pdc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/pdc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/pfl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/pfl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/pl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/pl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/pl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/pl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/pl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/pl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/pl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/pl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/pms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/pms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/pms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/pms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/pms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/pms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/pms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/pms.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/pnt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ps.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ps.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ps.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ps.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ps.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/pt-br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/pt-br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/pt-br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/pt-br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/pt-br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/pt-br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/pt-br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/pt-br.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/pt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/pt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/pt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/pt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/pt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/pt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/pt.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/qqq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/qqq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/qqq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/qqq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/qqq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/qqq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/qqq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/qqq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/replaceAll.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/plugins/resource.extendsall.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/plugins/resource.mysql.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/plugins/resource.mysqls.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ro.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ro.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ro.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ro.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ro.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/ro.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/roa-tara.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/roa-tara.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/roa-tara.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/roa-tara.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/roa-tara.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/roa-tara.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/roa-tara.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/roa-tara.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ru.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ru.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ru.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/ru.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ru.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ru.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/ru.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/ru.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/rue.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/sa.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/sah.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/sco.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/shared.escape_special_chars.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/shared.literal_compiler_param.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/shared.make_timestamp.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/shared.mb_str_replace.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/shared.mb_unicode.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/shared.mb_wordwrap.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/si.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/si.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/si.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/si.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/si.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/si.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/si.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/sk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/sk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/sk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/sk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/sk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/sl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/sl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/sl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_cacheresource.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_cacheresource_custom.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_cacheresource_keyvaluestore.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_config_source.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_cacheresource_file.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_append.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_assign.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_block.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_break.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_call.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_capture.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_config_load.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_continue.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_debug.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_eval.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_extends.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_for.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_foreach.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_function.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_if.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_include.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_include_php.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_insert.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_ldelim.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_nocache.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_private_block_plugin.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_private_function_plugin.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_private_modifier.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_private_object_block_function.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_private_object_function.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_private_print_expression.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_private_registered_block.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_private_registered_function.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_private_special_variable.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_rdelim.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_section.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_setfilter.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compile_while.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_compilebase.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_config.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_config_file_compiler.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_configfilelexer.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_configfileparser.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_data.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_debug.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_filter_handler.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_function_call_handler.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_get_include_path.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_nocache_insert.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_parsetree.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_resource_eval.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_resource_extends.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_resource_file.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_resource_php.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_resource_registered.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_resource_stream.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_resource_string.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_smartytemplatecompiler.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_template.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_templatebase.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_templatecompilerbase.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_templatelexer.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_templateparser.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_utility.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_internal_write_file.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_resource.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_resource_custom.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_resource_recompiled.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_resource_uncompiled.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/sysplugins/smarty_security.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/sr-ec.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/sr-ec.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/sr-ec.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/sr-ec.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/sr-ec.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/sr-ec.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/sr-el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/sr-el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/sr-el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/sr-el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/sr-el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/sr-el.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/stq.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/sv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/sv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/sv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/sv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/sv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/sv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/sv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/sv.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/sw.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/sw.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/szl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ta.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ta.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ta.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ta.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/ta.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/te.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/te.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/te.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/te.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/demo/configs/test.conf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/tet.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/tg-cyrl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/tg-latn.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/th.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/th.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/tk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/tl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/tl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/tl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/tl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/tl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/tl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/tl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/tl.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/tr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/tr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/tr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/tr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/tr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/tr.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/libs/twolistboxes.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/tzm.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/tzm.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/uk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/uk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/uk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/uk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/uk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/uk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/uk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/uk.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/ur.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/ur.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/ur.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/ur.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/smarty/libs/plugins/variablefilter.htmlspecialchars.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/vep.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/vep.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/vi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/vi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/vi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/vi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/vi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/vi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/vi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/vi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/vo.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/vo.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/yi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/yi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/yi.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/yue.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/zh-hans.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/zh-hans.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/zh-hans.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/zh-hans.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/zh-hans.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/zh-hans.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/zh-hans.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/zh-hans.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/i18n/zh-hant.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/PageSchemas/i18n/zh-hant.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/ReplaceText/i18n/zh-hant.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticCompoundQueries/i18n/zh-hant.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticDrilldown/i18n/zh-hant.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticFormsInputs/i18n/zh-hant.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/SemanticInternalObjects/i18n/zh-hant.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/wikijournals/extensions/Widgets/i18n/zh-hant.json" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/wikijournals/.gitreview" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/HeaderTabs_body.jq.php" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/HeaderTabs_body.yui.php" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/wikijournals/extensions/HeaderTabs/skins-jquery/ext.headertabs.bare.css" afterPath="" />
@@ -328,8 +1091,8 @@
       <file leaf-file-name="design.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikijournals/docs/design.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.5885979" vertical-offset="1031" max-vertical-offset="1680">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="1680">
+              <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -495,7 +1258,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="mw-config" />
+              <option name="myItemId" value="docs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -513,7 +1276,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="databases" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -531,11 +1298,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="extensions" />
+              <option name="myItemId" value="docs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ExternalData" />
+              <option name="myItemId" value="code-coverage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikijournals-server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikijournals-server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wikijournals" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cache" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -558,6 +1343,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="ignore_missing_gitignore" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -574,6 +1360,9 @@
       <BehatRunner />
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
@@ -581,9 +1370,6 @@
       <arguments />
       <pass-parent-envs>true</pass-parent-envs>
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -647,9 +1433,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988167" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -657,20 +1442,21 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24967825" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991913" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29131436" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29131436" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988167" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32988167" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3299595" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -701,6 +1487,207 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/server_requirements.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3780">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/config.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1613" max-vertical-offset="2550">
+          <caret line="128" column="54" selection-start-line="128" selection-start-column="54" selection-end-line="128" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RELEASEHISTORY.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="180">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/docs/design.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/docs/design.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/administrator_account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3255">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/sql_dump/wikijournalscreate.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="320700">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/server_requirements.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3780">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/config.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1613" max-vertical-offset="2550">
+          <caret line="128" column="54" selection-start-line="128" selection-start-column="54" selection-end-line="128" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RELEASEHISTORY.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="180">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/docs/design.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/docs/design.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1680">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/.jshintignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/administrator_account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3255">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/sql_dump/wikijournalscreate.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="320700">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/server_requirements.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3780">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/config.tpl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1613" max-vertical-offset="2550">
+          <caret line="128" column="54" selection-start-line="128" selection-start-column="54" selection-end-line="128" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RELEASEHISTORY.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="180">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/docs/design.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/docs/design.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/administrator_account.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3255">
@@ -849,13 +1836,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wikijournals/.jshintignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wikijournals/installation/install/administrator_account.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3255">
@@ -889,10 +1869,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+      <provider editor-type-id="MarkdownPreviewEditor">
         <state />
       </provider>
-      <provider editor-type-id="MarkdownPreviewEditor">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
@@ -928,14 +1908,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="27255">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/.jshintrc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="649">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikijournals/.jshintignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="649">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wikijournals/docs/design.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.5885979" vertical-offset="1031" max-vertical-offset="1680">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="1680">
+          <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
           <folding />
         </state>
       </provider>
