@@ -14,8 +14,8 @@ Requirements
 ------------
 - Webserver: Apache > 2.0
 - Database: MySQL > 5.0.2
-- Scripting Language: PHP > 5.2.3
-- Minimum space on server: 200 MB
+- Scripting Language: PHP > 5.3.3
+- Minimum space on server: 300 MB
 
 Installation
 ------------
